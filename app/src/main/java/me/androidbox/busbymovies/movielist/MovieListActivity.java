@@ -14,7 +14,7 @@ public class MovieListActivity extends AppCompatActivity {
 
         if(savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.movielist_container, MovieListView.newInstance(), MovieListView.TAG)
+                    .add(R.id.movielist_container, MovieListViewImp.newInstance(), MovieListViewImp.TAG)
                     .commit();
         }
     }

@@ -2,6 +2,7 @@ package me.androidbox.busbymovies.movielist;
 
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -9,28 +10,34 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import me.androidbox.busbymovies.R;
+import me.androidbox.busbymovies.di.BusbyMoviesApplication;
+import timber.log.Timber;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MovieListView extends Fragment {
-    public static final String TAG = MovieListView.class.getSimpleName();
+public class MovieListViewImp extends Fragment implements MovieListViewContract {
+    public static final String TAG = MovieListViewImp.class.getSimpleName();
+
+    @Inject MovieListPresenterImp mMovieListPresenterImp;
 
     @BindView(R.id.tool_bar) Toolbar mToolbar;
 
     private Unbinder mUnbinder;
 
-    public MovieListView() {
+    public MovieListViewImp() {
         // Required empty public constructor
     }
 
     /* Factory method */
-    public static MovieListView newInstance() {
-        return new MovieListView();
+    public static MovieListViewImp newInstance() {
+        return new MovieListViewImp();
     }
 
     @Override
@@ -38,11 +45,24 @@ public class MovieListView extends Fragment {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.movie_list_view, container, false);
 
-        mUnbinder = ButterKnife.bind(MovieListView.this, view);
+        mUnbinder = ButterKnife.bind(MovieListViewImp.this, view);
 
         setupToolbar();
 
         return view;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        ((BusbyMoviesApplication)getActivity().getApplication()).getApplicationComponent().inject(MovieListViewImp.this);
+        if(mMovieListPresenterImp != null) {
+            Timber.d("mMovieListPresenterImp != null");
+        }
+        else {
+            Timber.e("mMovieListPresenterImp == null");
+        }
     }
 
     @Override

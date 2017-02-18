@@ -18,7 +18,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
  * Created by steve on 2/18/17.
  */
 @RunWith(AndroidJUnit4.class)
-public class MovieListViewTest {
+public class MovieListViewImpTest {
 
     @Rule
     public final ActivityTestRule<MovieListActivity> activityTestRule =
