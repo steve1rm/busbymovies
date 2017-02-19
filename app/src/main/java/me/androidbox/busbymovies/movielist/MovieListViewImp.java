@@ -17,6 +17,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import me.androidbox.busbymovies.R;
 import me.androidbox.busbymovies.di.BusbyMoviesApplication;
+import me.androidbox.busbymovies.di.DaggerInjector;
 import timber.log.Timber;
 
 /**
@@ -25,7 +26,7 @@ import timber.log.Timber;
 public class MovieListViewImp extends Fragment implements MovieListViewContract {
     public static final String TAG = MovieListViewImp.class.getSimpleName();
 
-    @Inject MovieListPresenterImp mMovieListPresenterImp;
+    MovieListPresenterImp mMovieListPresenterImp;
 
     @BindView(R.id.tool_bar) Toolbar mToolbar;
 
@@ -56,7 +57,7 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract 
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        ((BusbyMoviesApplication)getActivity().getApplication()).getApplicationComponent().inject(MovieListViewImp.this);
+        DaggerInjector.getApplicationComponent().inject(MovieListViewImp.this);
         if(mMovieListPresenterImp != null) {
             Timber.d("mMovieListPresenterImp != null");
         }
@@ -77,5 +78,25 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract 
     private void setupToolbar() {
         AppCompatActivity appCompatActivity = (AppCompatActivity)getActivity();
         appCompatActivity.setSupportActionBar(mToolbar);
+    }
+
+    @Override
+    public void displayPopularMovies(String movies) {
+
+    }
+
+    @Override
+    public void displayTopRatedMovies(String movies) {
+
+    }
+
+    @Override
+    public void failedToDisplayPopularMovies(String errorMessage) {
+
+    }
+
+    @Override
+    public void failedToDisplayTopRatedMovies(String errorMessage) {
+
     }
 }

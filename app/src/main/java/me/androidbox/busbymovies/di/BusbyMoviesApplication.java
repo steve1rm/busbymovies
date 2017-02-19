@@ -9,7 +9,6 @@ import timber.log.Timber;
  */
 
 public class BusbyMoviesApplication extends Application {
-    private ApplicationComponent mApplicationComponent;
 
     @Override
     public void onCreate() {
@@ -23,14 +22,6 @@ public class BusbyMoviesApplication extends Application {
 
     /* Initialize dependency mapping */
     private void setupDependencyInjection() {
-
-        mApplicationComponent = DaggerApplicationComponent.builder()
-                .applicationModule(new ApplicationModule(BusbyMoviesApplication.this))
-                .presenterModule(new PresenterModule())
-                .build();
-    }
-
-    public ApplicationComponent getApplicationComponent() {
-        return mApplicationComponent;
+        new DaggerInjector(BusbyMoviesApplication.this);
     }
 }

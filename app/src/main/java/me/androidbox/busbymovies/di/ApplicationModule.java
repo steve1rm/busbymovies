@@ -22,13 +22,15 @@ public class ApplicationModule {
     }
 
     /* Get the application context */
-    @Provides @Singleton
+    @Provides
+    @Singleton
     public Context provideContext() {
         return mApplication;
     }
 
     /* Get shared preferences */
-    @Provides @Singleton
+    @Provides
+    @Singleton
     public SharedPreferences provideSharedPreferences(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context);
     }

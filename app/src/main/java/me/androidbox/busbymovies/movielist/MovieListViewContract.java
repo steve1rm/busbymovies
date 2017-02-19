@@ -5,5 +5,9 @@ package me.androidbox.busbymovies.movielist;
  */
 
 public interface MovieListViewContract {
+    void displayPopularMovies(String movies);
+    void displayTopRatedMovies(String movies);
+    void failedToDisplayPopularMovies(String errorMessage);
+    void failedToDisplayTopRatedMovies(String errorMessage);
 
 }

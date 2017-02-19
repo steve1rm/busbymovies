@@ -7,5 +7,6 @@ package me.androidbox.busbymovies.movielist;
 public interface MovieListPresenterContract<MovieListView> {
     void attachView(MovieListView view);
     void detachView();
-    void retrieveMovies();
+    void getPopularMovies();
+    void getTopRatedMovies();
 }
