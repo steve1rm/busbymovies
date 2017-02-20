@@ -4,8 +4,11 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import me.androidbox.busbymovies.BuildConfig;
 import me.androidbox.busbymovies.network.MovieAPIService;
 import me.androidbox.busbymovies.utils.Constants;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -15,16 +18,30 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @Module
 public class ApiModule {
 
-    public Retrofit provideRetrofit(String url) {
+    @Provides
+    public OkHttpClient provideLoggingCapableHttpClient() {
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+
+        loggingInterceptor.setLevel(BuildConfig.DEBUG ?
+                HttpLoggingInterceptor.Level.BODY : HttpLoggingInterceptor.Level.NONE);
+        
+        return new OkHttpClient.Builder()
+                .addInterceptor(loggingInterceptor)
+                .build();
+    }
+
+
+    public Retrofit provideRetrofit(OkHttpClient okHttpClient) {
         return new Retrofit.Builder()
-                .baseUrl(url)
+                .baseUrl(Constants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
+                .client(okHttpClient)
                 .build();
     }
 
     @Provides
     @Singleton
-    public MovieAPIService provideMovieService() {
-        return provideRetrofit(Constants.BASE_URL).create(MovieAPIService.class);
+    public MovieAPIService provideMovieService(OkHttpClient okHttpClient) {
+        return provideRetrofit(okHttpClient).create(MovieAPIService.class);
     }
 }

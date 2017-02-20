@@ -4,7 +4,6 @@ import javax.inject.Inject;
 
 import me.androidbox.busbymovies.di.DaggerInjector;
 import me.androidbox.busbymovies.models.Movie;
-import me.androidbox.busbymovies.models.PopularMovies;
 import me.androidbox.busbymovies.models.Results;
 import me.androidbox.busbymovies.network.MovieAPIService;
 import me.androidbox.busbymovies.utils.Constants;
