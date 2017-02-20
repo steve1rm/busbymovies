@@ -10,6 +10,10 @@ import me.androidbox.busbymovies.utils.Constants;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import rx.Subscriber;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 import timber.log.Timber;
 
 /**
@@ -19,6 +23,7 @@ import timber.log.Timber;
 public class MovieListModelImp implements MovieListModelContract {
 
     @Inject MovieAPIService mMovieAPIService;
+    private Subscription mSubscription;
 
     public MovieListModelImp() {
         DaggerInjector.getApplicationComponent().inject(MovieListModelImp.this);
@@ -29,17 +34,25 @@ public class MovieListModelImp implements MovieListModelContract {
 
     @Override
     public void getPopularMovies(PopularMovieResultsListener popularMovieResultsListener) {
-        mMovieAPIService.getPopular(Constants.MOVIES_API_KEY).enqueue(new Callback<Results>() {
+        mSubscription = mMovieAPIService.getPopular(Constants.MOVIES_API_KEY)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Results>() {
             @Override
-            public void onResponse(Call<Results> call, Response<Results> response) {
-                Timber.d("Response: %s", response.body());
-                popularMovieResultsListener.onSuccess(response.body());
+            public void onCompleted() {
+                Timber.d("onCompleted");
             }
 
             @Override
-            public void onFailure(Call<Results> call, Throwable t) {
-                Timber.e(t, "onFailure");
-                popularMovieResultsListener.onFailure(t.getMessage());
+            public void onError(Throwable e) {
+                Timber.e(e, "onError");
+                popularMovieResultsListener.onFailure(e.getMessage());
+            }
+
+            @Override
+            public void onNext(Results results) {
+                Timber.d("onNext %d", results.getResults().size());
+                popularMovieResultsListener.onSuccess(results);
             }
         });
     }
@@ -49,7 +62,9 @@ public class MovieListModelImp implements MovieListModelContract {
         mMovieAPIService.getMovie(movieId, Constants.MOVIES_API_KEY).enqueue(new Callback<Movie>() {
             @Override
             public void onResponse(Call<Movie> call, Response<Movie> response) {
-                Timber.d("Response: %s", response.body().getTitle());
+                if(response.isSuccessful()) {
+                    Timber.d("Response: %s", response.body().getTitle());
+                }
             }
 
             @Override
@@ -57,5 +72,14 @@ public class MovieListModelImp implements MovieListModelContract {
                 Timber.e(t, "onFailure");
             }
         });
+    }
+
+    @Override
+    public void releaseResources() {
+        Timber.d("releaseResources");
+        if(mSubscription != null && !mSubscription.isUnsubscribed()) {
+            mSubscription.unsubscribe();
+            Timber.d("subscription unsubscribed");
+        }
     }
 }

@@ -3,8 +3,8 @@ package me.androidbox.busbymovies.movielist;
 import javax.inject.Inject;
 
 import me.androidbox.busbymovies.di.DaggerInjector;
-import me.androidbox.busbymovies.models.PopularMovies;
 import me.androidbox.busbymovies.models.Results;
+import timber.log.Timber;
 
 /**
  * Created by steve on 2/18/17.
@@ -29,7 +29,9 @@ public class MovieListPresenterImp implements MovieListPresenterContract<MovieLi
 
     @Override
     public void detachView() {
+        Timber.d("detachView");
         mMovieListViewContract = null;
+        mMovieModelContract.releaseResources();
     }
 
     @Override

@@ -17,7 +17,6 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import me.androidbox.busbymovies.R;
 import me.androidbox.busbymovies.di.DaggerInjector;
-import me.androidbox.busbymovies.models.PopularMovies;
 import me.androidbox.busbymovies.models.Results;
 import timber.log.Timber;
 
@@ -72,7 +71,9 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        Timber.d("onDestroyView");
         mUnbinder.unbind();
+        mMovieListPresenterImp.detachView();
     }
 
     /**

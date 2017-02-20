@@ -1,8 +1,5 @@
 package me.androidbox.busbymovies.movielist;
 
-import java.util.List;
-
-import me.androidbox.busbymovies.models.PopularMovies;
 import me.androidbox.busbymovies.models.Results;
 
 /**
@@ -10,6 +7,7 @@ import me.androidbox.busbymovies.models.Results;
  */
 
 public interface MovieListModelContract {
+    void releaseResources();
 
     interface PopularMovieResultsListener {
         void onFailure(String errorMessage);
@@ -18,7 +16,7 @@ public interface MovieListModelContract {
 
     interface PopulareMovieResultListener {
         void onFailure(String errorMessage);
-        void onSuccess(PopularMovies popularMovies);
+        void onSuccess(Results popularMovies);
     }
 
     void getPopularMovies(PopularMovieResultsListener popularMovieResultsListener);
