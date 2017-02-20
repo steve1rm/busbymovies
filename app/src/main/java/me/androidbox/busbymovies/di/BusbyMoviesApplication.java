@@ -9,6 +9,7 @@ import timber.log.Timber;
  */
 
 public class BusbyMoviesApplication extends Application {
+    private static BusbyMoviesApplication mBusbyMoviesApplication;
 
     @Override
     public void onCreate() {
@@ -16,12 +17,18 @@ public class BusbyMoviesApplication extends Application {
 
         Timber.plant(new Timber.DebugTree());
 
+        mBusbyMoviesApplication = BusbyMoviesApplication.this;
+
         /* Setup dependency injection */
         setupDependencyInjection();
     }
 
     /* Initialize dependency mapping */
     private void setupDependencyInjection() {
-        new DaggerInjector(BusbyMoviesApplication.this);
+        new DaggerInjector(mBusbyMoviesApplication);
+    }
+
+    public static BusbyMoviesApplication getInstance() {
+        return mBusbyMoviesApplication;
     }
 }
