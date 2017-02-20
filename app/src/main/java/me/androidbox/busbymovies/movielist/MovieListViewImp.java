@@ -59,6 +59,7 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract 
         if(mMovieListPresenterImp != null) {
             Timber.d("mMovieListPresenterImp != null");
             mMovieListPresenterImp.attachView(MovieListViewImp.this);
+            mMovieListPresenterImp.getPopularMovies();
         }
         else {
             Timber.e("mMovieListPresenterImp == null");
