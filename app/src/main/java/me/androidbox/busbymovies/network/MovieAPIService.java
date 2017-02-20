@@ -1,5 +1,6 @@
 package me.androidbox.busbymovies.network;
 
+import me.androidbox.busbymovies.models.Movie;
 import me.androidbox.busbymovies.models.PopularMovies;
 import me.androidbox.busbymovies.models.Results;
 import retrofit2.Call;
@@ -18,7 +19,7 @@ public interface MovieAPIService {
 
     /* Return the movie with the matching movie id */
     @GET("movie/{movie_id}")
-    Call<PopularMovies> getMovie(@Path("movie_id") int movie_id, @Query("api_key") String apikey);
+    Call<Movie> getMovie(@Path("movie_id") int movie_id, @Query("api_key") String apikey);
 
     /* Search for a popular movie */
 /*    @GET("movie/popular")

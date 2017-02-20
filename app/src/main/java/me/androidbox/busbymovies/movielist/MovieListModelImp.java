@@ -3,6 +3,8 @@ package me.androidbox.busbymovies.movielist;
 import javax.inject.Inject;
 
 import me.androidbox.busbymovies.di.DaggerInjector;
+import me.androidbox.busbymovies.models.Movie;
+import me.androidbox.busbymovies.models.PopularMovies;
 import me.androidbox.busbymovies.models.Results;
 import me.androidbox.busbymovies.network.MovieAPIService;
 import me.androidbox.busbymovies.utils.Constants;
@@ -37,7 +39,7 @@ public class MovieListModelImp implements MovieListModelContract {
 
             @Override
             public void onFailure(Call<Results> call, Throwable t) {
-                Timber.d(t, "onFailure");
+                Timber.e(t, "onFailure");
                 popularMovieResultsListener.onFailure(t.getMessage());
             }
         });
@@ -45,6 +47,16 @@ public class MovieListModelImp implements MovieListModelContract {
 
     @Override
     public void getMovie(int movieId, PopularMovieResultsListener popularMovieResultsListener) {
-        /* Under development */
+        mMovieAPIService.getMovie(movieId, Constants.MOVIES_API_KEY).enqueue(new Callback<Movie>() {
+            @Override
+            public void onResponse(Call<Movie> call, Response<Movie> response) {
+                Timber.d("Response: %s", response.body().getTitle());
+            }
+
+            @Override
+            public void onFailure(Call<Movie> call, Throwable t) {
+                Timber.e(t, "onFailure");
+            }
+        });
     }
 }
