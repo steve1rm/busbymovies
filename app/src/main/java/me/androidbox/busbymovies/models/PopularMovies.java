@@ -12,13 +12,6 @@ public class PopularMovies {
     private int total_pages;
     private int total_results;
 
-    public PopularMovies(int page, List<Popular> results, int total_pages, int total_results) {
-        this.page = page;
-        this.results = results;
-        this.total_pages = total_pages;
-        this.total_results = total_results;
-    }
-
     public int getPage() {
         return page;
     }
@@ -58,20 +51,6 @@ public class PopularMovies {
         private String title;
         private String backdrop_path;
         private float vote_average;
-
-        public Popular(String poster_path,
-                       String overview,
-                       String release_date,
-                       String title,
-                       String backdrop_path,
-                       float vote_average) {
-            this.poster_path = poster_path;
-            this.overview = overview;
-            this.release_date = release_date;
-            this.title = title;
-            this.backdrop_path = backdrop_path;
-            this.vote_average = vote_average;
-        }
 
         public String getPoster_path() {
             return poster_path;
