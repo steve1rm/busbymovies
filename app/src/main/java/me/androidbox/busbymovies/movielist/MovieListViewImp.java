@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import javax.inject.Inject;
 
@@ -16,6 +17,8 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import me.androidbox.busbymovies.R;
 import me.androidbox.busbymovies.di.DaggerInjector;
+import me.androidbox.busbymovies.models.PopularMovies;
+import me.androidbox.busbymovies.models.Results;
 import timber.log.Timber;
 
 /**
@@ -81,8 +84,9 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract 
     }
 
     @Override
-    public void displayPopularMovies(String movies) {
-
+    public void displayPopularMovies(Results popularMovies) {
+        /* Load adapter with data to be populated in the recycler view */
+        Timber.d("Received %d", popularMovies.getResults().size());
     }
 
     @Override
@@ -92,11 +96,12 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract 
 
     @Override
     public void failedToDisplayPopularMovies(String errorMessage) {
-
+        Toast.makeText(getActivity(), "Failed to get popular movies", Toast.LENGTH_LONG).show();
+        Timber.w("Failed to get popular movies %s", errorMessage);
     }
 
     @Override
     public void failedToDisplayTopRatedMovies(String errorMessage) {
-
+        Timber.d("Failed to get top rated movies %s", errorMessage);
     }
 }

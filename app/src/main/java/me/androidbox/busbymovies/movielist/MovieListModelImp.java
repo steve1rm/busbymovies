@@ -1,11 +1,9 @@
 package me.androidbox.busbymovies.movielist;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import me.androidbox.busbymovies.di.DaggerInjector;
-import me.androidbox.busbymovies.models.PopularMovies;
+import me.androidbox.busbymovies.models.Results;
 import me.androidbox.busbymovies.network.MovieAPIService;
 import me.androidbox.busbymovies.utils.Constants;
 import retrofit2.Call;
@@ -29,19 +27,24 @@ public class MovieListModelImp implements MovieListModelContract {
     }
 
     @Override
-    public void getPopularMovies(MovieResultsListener resultsListener) {
-        mMovieAPIService.getPopular(Constants.MOVIES_API_KEY).enqueue(new Callback<PopularMovies>() {
+    public void getPopularMovies(PopularMovieResultsListener popularMovieResultsListener) {
+        mMovieAPIService.getPopular(Constants.MOVIES_API_KEY).enqueue(new Callback<Results>() {
             @Override
-            public void onResponse(Call<PopularMovies> call, Response<PopularMovies> response) {
+            public void onResponse(Call<Results> call, Response<Results> response) {
                 Timber.d("Response: %s", response.body());
-                resultsListener.onSuccess();
+                popularMovieResultsListener.onSuccess(response.body());
             }
 
             @Override
-            public void onFailure(Call<PopularMovies> call, Throwable t) {
+            public void onFailure(Call<Results> call, Throwable t) {
                 Timber.d(t, "onFailure");
-                resultsListener.onFailure();
+                popularMovieResultsListener.onFailure(t.getMessage());
             }
         });
+    }
+
+    @Override
+    public void getMovie(int movieId, PopularMovieResultsListener popularMovieResultsListener) {
+        /* Under development */
     }
 }
