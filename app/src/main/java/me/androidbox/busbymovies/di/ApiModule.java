@@ -5,6 +5,7 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import me.androidbox.busbymovies.network.MovieAPIService;
+import me.androidbox.busbymovies.utils.Constants;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -23,7 +24,7 @@ public class ApiModule {
 
     @Provides
     @Singleton
-    public MovieAPIService provideMovieService(String url) {
-        return provideRetrofit(url).create(MovieAPIService.class);
+    public MovieAPIService provideMovieService() {
+        return provideRetrofit(Constants.BASE_URL).create(MovieAPIService.class);
     }
 }

@@ -18,20 +18,17 @@ import timber.log.Timber;
 
 public class MovieListModelImp implements MovieListModelContract {
 
- //   @Inject MovieAPIService mMovieAPIService;
+    @Inject MovieAPIService mMovieAPIService;
 
     public MovieListModelImp() {
-/*
         DaggerInjector.getApplicationComponent().inject(MovieListModelImp.this);
         if(mMovieAPIService == null) {
             Timber.e("mMovieAPIService == null");
         }
-*/
     }
 
     @Override
     public void getPopularMovies(MovieResultsListener resultsListener) {
-/*
         mMovieAPIService.getPopular().enqueue(new Callback<List<Popular>>() {
             @Override
             public void onResponse(Call<List<Popular>> call, Response<List<Popular>> response) {
@@ -43,7 +40,5 @@ public class MovieListModelImp implements MovieListModelContract {
                 Timber.d(t, "onFailure");
             }
         });
-*/
     }
-
 }

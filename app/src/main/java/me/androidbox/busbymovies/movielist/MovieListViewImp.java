@@ -1,6 +1,5 @@
 package me.androidbox.busbymovies.movielist;
 
-
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,7 +15,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import me.androidbox.busbymovies.R;
-import me.androidbox.busbymovies.di.BusbyMoviesApplication;
 import me.androidbox.busbymovies.di.DaggerInjector;
 import timber.log.Timber;
 
@@ -26,7 +24,7 @@ import timber.log.Timber;
 public class MovieListViewImp extends Fragment implements MovieListViewContract {
     public static final String TAG = MovieListViewImp.class.getSimpleName();
 
-    MovieListPresenterImp mMovieListPresenterImp;
+    @Inject MovieListPresenterContract<MovieListViewContract> mMovieListPresenterImp;
 
     @BindView(R.id.tool_bar) Toolbar mToolbar;
 
@@ -60,6 +58,7 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract 
         DaggerInjector.getApplicationComponent().inject(MovieListViewImp.this);
         if(mMovieListPresenterImp != null) {
             Timber.d("mMovieListPresenterImp != null");
+            mMovieListPresenterImp.attachView(MovieListViewImp.this);
         }
         else {
             Timber.e("mMovieListPresenterImp == null");
