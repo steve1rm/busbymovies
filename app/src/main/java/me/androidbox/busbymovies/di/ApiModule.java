@@ -11,10 +11,12 @@ import dagger.Provides;
 import me.androidbox.busbymovies.BuildConfig;
 import me.androidbox.busbymovies.network.MovieAPIService;
 import me.androidbox.busbymovies.utils.Constants;
+import me.androidbox.busbymovies.utils.Network;
 import okhttp3.Cache;
 import okhttp3.CacheControl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -38,6 +40,7 @@ public class ApiModule {
         return new OkHttpClient.Builder()
                 .addInterceptor(loggingInterceptor)
                 .addNetworkInterceptor(provideCacheInterceptor())
+                .addInterceptor(provideOfflineCacheInterceptor())
                 .cache(provideCache())
                 .build();
     }
@@ -86,6 +89,27 @@ public class ApiModule {
                 return response.newBuilder()
                         .header(CACHE_CONTROL, cacheControl.toString())
                         .build();
+            }
+        };
+    }
+
+    public static Interceptor provideOfflineCacheInterceptor() {
+        return new Interceptor() {
+            @Override
+            public Response intercept(Chain chain) throws IOException {
+                Request request = chain.request();
+
+                if(!Network.isConnectedToNetwork()) {
+                    final CacheControl cacheControl = new CacheControl.Builder()
+                            .maxStale(7, TimeUnit.DAYS)
+                            .build();
+
+                    request = request.newBuilder()
+                            .cacheControl(cacheControl)
+                            .build();
+                }
+
+                return chain.proceed(request);
             }
         };
     }
