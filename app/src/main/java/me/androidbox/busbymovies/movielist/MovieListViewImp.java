@@ -61,7 +61,6 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract 
         if(mMovieListPresenterImp != null) {
             Timber.d("mMovieListPresenterImp != null");
             mMovieListPresenterImp.attachView(MovieListViewImp.this);
-            mMovieListPresenterImp.getPopularMovies();
         }
         else {
             Timber.e("mMovieListPresenterImp == null");
@@ -82,6 +81,14 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract 
     private void setupToolbar() {
         AppCompatActivity appCompatActivity = (AppCompatActivity)getActivity();
         appCompatActivity.setSupportActionBar(mToolbar);
+    }
+
+    public void getPopularMovies() {
+        mMovieListPresenterImp.getPopularMovies();
+    }
+
+    public void getTopRatedMovies() {
+
     }
 
     @Override

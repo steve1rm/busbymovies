@@ -7,6 +7,7 @@ import me.androidbox.busbymovies.models.Results;
  */
 
 public interface MovieListViewContract {
+    void getPopularMovies();
     void displayPopularMovies(Results popularMovies);
     void displayTopRatedMovies(String movies);
     void failedToDisplayPopularMovies(String errorMessage);

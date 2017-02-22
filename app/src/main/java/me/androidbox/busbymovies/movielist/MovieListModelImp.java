@@ -65,6 +65,9 @@ public class MovieListModelImp implements MovieListModelContract {
                 if(response.isSuccessful()) {
                     Timber.d("Response: %s", response.body().getTitle());
                 }
+                else {
+                    Timber.e("onResponse failed to get movie %s", response.message());
+                }
             }
 
             @Override

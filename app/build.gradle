@@ -40,6 +40,7 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+    compile 'org.mockito:mockito-core:2.7.10'
     /*****************************************************************
      * Support libraries
      ****************************************************************/
