@@ -3,14 +3,10 @@ package me.androidbox.busbymovies.movielist;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
+import org.mockito.Mockito;
 
-import me.androidbox.busbymovies.models.Movie;
 import me.androidbox.busbymovies.models.Results;
 
-import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.anyObject;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -46,6 +42,8 @@ public class MovieListPresenterImpTest {
     public void shouldAttachViewWhenViewIsNotNull() {
         movieListPresenterContract.attachView(mockMovieListViewContract);
         movieListPresenterContract.getPopularMovies();
+        MovieListModelContract.PopularMovieResultsListener mockPopularMoviesResultsListener =
+                Mockito.mock(MovieListModelContract.PopularMovieResultsListener.class);
 
         verify(mockMovieListModelContract, times(1)).getPopularMovies(null);
     }

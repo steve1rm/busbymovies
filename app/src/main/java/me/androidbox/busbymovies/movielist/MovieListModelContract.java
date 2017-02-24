@@ -14,11 +14,6 @@ public interface MovieListModelContract {
         void onSuccess(Results popularMovies);
     }
 
-    interface PopulareMovieResultListener {
-        void onFailure(String errorMessage);
-        void onSuccess(Results popularMovies);
-    }
-
     void getPopularMovies(PopularMovieResultsListener popularMovieResultsListener);
     void getMovie(int movieId, PopularMovieResultsListener popularMovieResultsListener);
 
