@@ -9,7 +9,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import java.util.Collections;
 import java.util.List;
 
 import me.androidbox.busbymovies.models.Movie;
@@ -17,10 +16,15 @@ import me.androidbox.busbymovies.models.Results;
 import me.androidbox.busbymovies.network.MovieAPIService;
 import okhttp3.ResponseBody;
 import retrofit2.Callback;
-import retrofit2.Response;
 import rx.Observable;
+import rx.Scheduler;
+import rx.android.plugins.RxAndroidPlugins;
+import rx.functions.Func1;
+import rx.plugins.RxJavaHooks;
+import rx.schedulers.Schedulers;
 
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -33,26 +37,49 @@ public class MovieListModelImpTest {
     private List<Movie> movieList;
 
     @Mock MovieListViewContract movieListViewContract;
-    @Mock MovieAPIService movieAPIService;
+    @Mock MovieAPIService mockMovieAPIService;
     @Mock Observable<Results> mockCall;
     @Mock ResponseBody responseBody;
+    private MovieListModelContract movieListModelContract;
     @Captor ArgumentCaptor<Callback<List<Results>>> argumentCaptor;
 
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(MovieListModelImpTest.this);
-        movieListPresenterContract = new MovieListPresenterImp();
-        movieList = Collections.singletonList(new Movie());
+
+    //    movieListPresenterContract = new MovieListPresenterImp();
+    //    movieList = Collections.singletonList(new Movie());
+
+        movieListModelContract = new MovieListModelImp();
+
+        RxJavaHooks.setOnIOScheduler(new Func1<Scheduler, Scheduler>() {
+            @Override
+            public Scheduler call(Scheduler scheduler) {
+                return Schedulers.immediate();
+            }
+        });
+    }
+
+    @Test
+    public void shouldDisplayErrorMessageOnFailure() {
+        Results results = new Results();
+        when(mockMovieAPIService.getPopular(anyString())).thenReturn(Observable.just(results));
+
+        /* Mock the listener */
+        MovieListModelContract.PopularMovieResultsListener mockPopularMoviesResultsListener =
+                Mockito.mock(MovieListModelContract.PopularMovieResultsListener.class);
+
+        movieListModelContract.getPopularMovies(mockPopularMoviesResultsListener);
+
+        verify(mockPopularMoviesResultsListener, times(1)).onFailure(anyString());
     }
 
     @Test
     public void shouldShowErrorWhenFailure() {
-        when(movieAPIService.getPopular(anyString())).thenReturn(mockCall);
+        when(mockMovieAPIService.getPopular(anyString())).thenReturn(mockCall);
 
-        movieAPIService.getPopular(anyString());
-
+        mockMovieAPIService.getPopular(anyString());
     }
-
 
     @Test
     public void shouldDisplaySuccessWhenNetworkSucceeds() {
@@ -62,6 +89,9 @@ public class MovieListModelImpTest {
         /* Mock the listener */
         MovieListModelContract.PopularMovieResultsListener mockPopularMoviesResultsListener =
                 Mockito.mock(MovieListModelContract.PopularMovieResultsListener.class);
+
+        MovieListModelContract mockMovieLIstModelContract = mock(MovieListModelContract.class);
+        //  when(mockMovieLIstModelContract.getPopularMovies(mockPopularMoviesResultsListener));
 
         /* Real instance of the model */
         MovieListModelImp movieListModelImp = new MovieListModelImp();
@@ -75,13 +105,14 @@ public class MovieListModelImpTest {
 
     @Test
     public void shouldShowBooksSuccessfully() {
-        when(movieAPIService.getPopular(anyString())).thenReturn(mockCall);
+       // when(movieAPIService.getPopular(anyString())).thenReturn(mockCall);
 
     }
 
     @After
     public void tearDown() throws Exception {
-
+        RxJavaHooks.reset();
+        RxAndroidPlugins.getInstance().reset();
     }
 
 }

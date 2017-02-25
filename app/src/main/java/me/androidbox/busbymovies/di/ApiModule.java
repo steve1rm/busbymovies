@@ -30,6 +30,12 @@ import timber.log.Timber;
 @Module
 public class ApiModule {
     private static final String CACHE_CONTROL = "Cache-Control";
+    private BusbyMoviesApplication mBusbyMovieApplication;
+
+    public ApiModule(BusbyMoviesApplication busbyMoviesApplication) {
+        mBusbyMovieApplication = busbyMoviesApplication;
+    }
+
     @Provides
     public OkHttpClient provideLoggingCapableHttpClient() {
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
@@ -44,6 +50,8 @@ public class ApiModule {
                 .cache(provideCache())
                 .build();
     }
+
+
 
     public Retrofit provideRetrofit(OkHttpClient okHttpClient) {
         return new Retrofit.Builder()

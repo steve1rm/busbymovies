@@ -10,6 +10,7 @@ import me.androidbox.busbymovies.utils.Constants;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -30,6 +31,10 @@ public class MovieListModelImp implements MovieListModelContract {
         if(mMovieAPIService == null) {
             Timber.e("mMovieAPIService == null");
         }
+    }
+
+    public MovieListModelImp(MovieAPIService mMovieAPIService) {
+        this.mMovieAPIService = mMovieAPIService;
     }
 
     @Override
@@ -58,12 +63,13 @@ public class MovieListModelImp implements MovieListModelContract {
     }
 
     @Override
-    public void getMovie(int movieId, PopularMovieResultsListener popularMovieResultsListener) {
-        mMovieAPIService.getMovie(movieId, Constants.MOVIES_API_KEY).enqueue(new Callback<Movie>() {
+    public void getMovie(int movieId, MovieResultsListener movieResultsListener) {
+        mMovieAPIService.getMovieById(movieId, Constants.MOVIES_API_KEY).enqueue(new Callback<Movie>() {
             @Override
             public void onResponse(Call<Movie> call, Response<Movie> response) {
                 if(response.isSuccessful()) {
                     Timber.d("Response: %s", response.body().getTitle());
+                    movieResultsListener.onSuccess(response.body());
                 }
                 else {
                     Timber.e("onResponse failed to get movie %s", response.message());
@@ -85,4 +91,36 @@ public class MovieListModelImp implements MovieListModelContract {
             Timber.d("subscription unsubscribed");
         }
     }
+
+    @Override
+    public Observable<Results> getPopularMovies() {
+        return null;
+    }
+
+/*
+    @Override
+    public Observable<Results> getPopularMovies() {
+
+        mSubscription = mMovieAPIService.getPopular(Constants.MOVIES_API_KEY)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Results>() {
+                    @Override
+                    public void onCompleted() {
+                        Timber.d("onCompleted");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Timber.e(e, "onError");
+
+                    }
+
+                    @Override
+                    public void onNext(Results results) {
+                        Timber.d("onNext %d", results.getResults().size());
+                        return
+                    }
+                });
+    }*/
 }

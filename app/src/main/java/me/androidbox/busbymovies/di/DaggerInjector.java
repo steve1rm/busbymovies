@@ -14,7 +14,7 @@ public class DaggerInjector {
     private static ApplicationComponent sApplicationComponent = DaggerApplicationComponent.builder()
             .presenterModule(new PresenterModule())
             .modelModule(new ModelModule())
-            .apiModule(new ApiModule())
+            .apiModule(new ApiModule(mApplication))
             .applicationModule(new ApplicationModule(mApplication))
             .build();
 

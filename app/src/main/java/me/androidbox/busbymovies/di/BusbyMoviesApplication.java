@@ -1,7 +1,9 @@
 package me.androidbox.busbymovies.di;
 
 import android.app.Application;
+import android.provider.SyncStateContract;
 
+import me.androidbox.busbymovies.utils.Constants;
 import timber.log.Timber;
 
 /**
@@ -30,5 +32,9 @@ public class BusbyMoviesApplication extends Application {
 
     public static BusbyMoviesApplication getInstance() {
         return mBusbyMoviesApplication;
+    }
+
+    public String getBaseUrl() {
+        return Constants.BASE_URL;
     }
 }
