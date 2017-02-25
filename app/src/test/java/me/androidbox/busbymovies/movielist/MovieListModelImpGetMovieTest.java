@@ -13,10 +13,12 @@ import java.util.Collections;
 import me.androidbox.busbymovies.models.Movie;
 import me.androidbox.busbymovies.models.Results;
 import me.androidbox.busbymovies.network.MovieAPIService;
+import okhttp3.MediaType;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
 
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -33,7 +35,6 @@ import static org.mockito.Mockito.when;
  */
 public class MovieListModelImpGetMovieTest {
     private MovieListModelContract movieListModelContract;
-    private Results results;
     private Movie movie;
 
     @Mock MovieAPIService mockMovieAPIService;
@@ -51,17 +52,70 @@ public class MovieListModelImpGetMovieTest {
     }
 
     @Test
-    public void shouldGetMovies() {
+    public void shouldCallSuccessToGetMovies() {
         when(mockMovieAPIService.getMovieById(anyInt(), anyString())).thenReturn(mockCall);
         Response<Movie> response = Response.success(movie);
 
         movieListModelContract.getMovie(eq(anyInt()), mockMovieResultsListener);
 
         verify(mockCall).enqueue(argumentCaptor.capture());
-        argumentCaptor.getValue().onResponse(null, response);
+        argumentCaptor.getValue().onResponse(mockCall, response);
 
         verify(mockMovieResultsListener, times(1)).onSuccess(movie);
         verify(mockMovieResultsListener, never()).onFailure(anyString());
     }
 
+    @Test
+    public void shouldCallFailureOn401Response() {
+        when(mockMovieAPIService.getMovieById(anyInt(), anyString())).thenReturn(mockCall);
+        Response<Movie> response = Response.error(401, mockResponseBody);
+
+        movieListModelContract.getMovie(eq(anyInt()), mockMovieResultsListener);
+
+        verify(mockCall).enqueue(argumentCaptor.capture());
+        argumentCaptor.getValue().onResponse(mockCall, response);
+
+        verify(mockMovieResultsListener, never()).onSuccess(movie);
+        verify(mockMovieResultsListener, times(1)).onFailure(response.message());
+    }
+
+    @Test
+    public void shouldCallFailureOn500Response() {
+        /* Call the mocked version of the service and return the mock call */
+        when(mockMovieAPIService.getMovieById(anyInt(), anyString())).thenReturn(mockCall);
+
+        /* Setup up mock response with a 500 error */
+        Response<Movie> response = Response.error(500, mockResponseBody);
+
+        /* Call the real get movies passing in the mocked interface */
+        movieListModelContract.getMovie(eq(anyInt()), mockMovieResultsListener);
+
+        /* verify the response */
+        verify(mockCall).enqueue(argumentCaptor.capture());
+        argumentCaptor.getValue().onResponse(mockCall, response);
+
+        /* Verify that the correct interface functions where called */
+        verify(mockMovieResultsListener, never()).onSuccess(movie);
+        verify(mockMovieResultsListener, times(1)).onFailure(response.message());
+    }
+
+    @Test
+    public void shouldCallFailureOnRetrofitException() {
+        /* when the mocked call for the service return a mock */
+        when(mockMovieAPIService.getMovieById(anyInt(), anyString())).thenReturn(mockCall);
+
+        /* Create a exception that will be thrown */
+        Throwable runtimeException = new Throwable(new RuntimeException());
+
+        /* Start the actual call to being the test */
+        movieListModelContract.getMovie(eq(anyInt()), mockMovieResultsListener);
+
+        /* Capture the argument that is passed to enqueue */
+        verify(mockCall).enqueue(argumentCaptor.capture());
+        argumentCaptor.getValue().onFailure(mockCall, runtimeException);
+
+        /* Verify correct interface functions where called */
+        verify(mockMovieResultsListener, never()).onSuccess(movie);
+        verify(mockMovieResultsListener, times(1)).onFailure(runtimeException.getMessage());
+    }
 }

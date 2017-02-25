@@ -73,12 +73,14 @@ public class MovieListModelImp implements MovieListModelContract {
                 }
                 else {
                     Timber.e("onResponse failed to get movie %s", response.message());
+                    movieResultsListener.onFailure(response.message());
                 }
             }
 
             @Override
             public void onFailure(Call<Movie> call, Throwable t) {
                 Timber.e(t, "onFailure");
+                movieResultsListener.onFailure(t.getMessage());
             }
         });
     }
