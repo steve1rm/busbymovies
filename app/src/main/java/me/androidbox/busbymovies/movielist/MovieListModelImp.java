@@ -43,23 +43,29 @@ public class MovieListModelImp implements MovieListModelContract {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Results>() {
-            @Override
-            public void onCompleted() {
-                Timber.d("onCompleted");
-            }
+                    @Override
+                    public void onStart() {
+                        super.onStart();
+                        Timber.d("onStart");
+                    }
 
-            @Override
-            public void onError(Throwable e) {
-                Timber.e(e, "onError");
-                popularMovieResultsListener.onFailure(e.getMessage());
-            }
+                    @Override
+                    public void onCompleted() {
+                        Timber.d("onCompleted");
+                    }
 
-            @Override
-            public void onNext(Results results) {
-                Timber.d("onNext %d", results.getResults().size());
-                popularMovieResultsListener.onSuccess(results);
-            }
-        });
+                    @Override
+                    public void onError(Throwable e) {
+                        Timber.e(e, "onError %d", e.getMessage());
+                        popularMovieResultsListener.onFailure(e.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(Results results) {
+                        popularMovieResultsListener.onSuccess(results);
+                        Timber.d("onNext %d", results.getResults().size());
+                    }
+                });
     }
 
     @Override
@@ -98,31 +104,4 @@ public class MovieListModelImp implements MovieListModelContract {
     public Observable<Results> getPopularMovies() {
         return null;
     }
-
-/*
-    @Override
-    public Observable<Results> getPopularMovies() {
-
-        mSubscription = mMovieAPIService.getPopular(Constants.MOVIES_API_KEY)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Results>() {
-                    @Override
-                    public void onCompleted() {
-                        Timber.d("onCompleted");
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Timber.e(e, "onError");
-
-                    }
-
-                    @Override
-                    public void onNext(Results results) {
-                        Timber.d("onNext %d", results.getResults().size());
-                        return
-                    }
-                });
-    }*/
 }
