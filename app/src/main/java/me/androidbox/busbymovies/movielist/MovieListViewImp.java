@@ -4,11 +4,16 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import java.util.Collections;
 
 import javax.inject.Inject;
 
@@ -16,6 +21,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import me.androidbox.busbymovies.R;
+import me.androidbox.busbymovies.adapters.MovieAdapter;
 import me.androidbox.busbymovies.di.DaggerInjector;
 import me.androidbox.busbymovies.models.Results;
 import timber.log.Timber;
@@ -29,8 +35,10 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract 
     @Inject MovieListPresenterContract<MovieListViewContract> mMovieListPresenterImp;
 
     @BindView(R.id.tool_bar) Toolbar mToolbar;
+    @BindView(R.id.rvMovieList) RecyclerView mRvMovieList;
 
     private Unbinder mUnbinder;
+    private MovieAdapter mMovieAdapter;
 
     public MovieListViewImp() {
         // Required empty public constructor
@@ -49,6 +57,7 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract 
         mUnbinder = ButterKnife.bind(MovieListViewImp.this, view);
 
         setupToolbar();
+        setupRecyclerView();
 
         return view;
     }
@@ -61,6 +70,7 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract 
         if(mMovieListPresenterImp != null) {
             Timber.d("mMovieListPresenterImp != null");
             mMovieListPresenterImp.attachView(MovieListViewImp.this);
+            getPopularMovies();
         }
         else {
             Timber.e("mMovieListPresenterImp == null");
@@ -83,7 +93,17 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract 
         appCompatActivity.setSupportActionBar(mToolbar);
     }
 
+    private void setupRecyclerView() {
+        final RecyclerView.LayoutManager gridLayoutManager
+                = new GridLayoutManager(getActivity(), 2, LinearLayoutManager.VERTICAL, false);
+        mRvMovieList.setLayoutManager(gridLayoutManager);
+
+        mMovieAdapter = new MovieAdapter(Collections.emptyList());
+        mRvMovieList.setAdapter(mMovieAdapter);
+    }
+
     public void getPopularMovies() {
+        /* Display progress indicator */
         mMovieListPresenterImp.getPopularMovies();
     }
 
@@ -94,7 +114,10 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract 
     @Override
     public void displayPopularMovies(Results popularMovies) {
         /* Load adapter with data to be populated in the recycler view */
+        /* Hide progress indicator */
         Timber.d("Received %d", popularMovies.getResults().size());
+
+        mMovieAdapter.loadAdapter(popularMovies);
     }
 
     @Override

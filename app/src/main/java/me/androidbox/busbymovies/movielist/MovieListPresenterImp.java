@@ -20,7 +20,6 @@ public class MovieListPresenterImp implements MovieListPresenterContract<MovieLi
 
     /**
      * Attach the view to the presenter
-     * @param MovieListViewContract
      */
     @Override
     public void attachView(MovieListViewContract view) {

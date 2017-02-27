@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/movieListItem"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/ivPosterImage"
+        android:layout_width="192dp"
+        android:layout_height="300dp"
+        android:scaleType="centerCrop"/>
+
+    <View
+        android:id="@+id/palette"
+        android:layout_width="192dp"
+        android:layout_height="60dp"
+        android:layout_below="@id/ivPosterImage"/>
+
+    <TextView
+        android:id="@+id/tvTagLine"
+        android:layout_width="192dp"
+        android:layout_height="60dp"
+        android:layout_below="@id/ivPosterImage"/>
+</RelativeLayout>

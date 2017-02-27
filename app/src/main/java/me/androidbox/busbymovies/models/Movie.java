@@ -5,12 +5,21 @@ package me.androidbox.busbymovies.models;
  */
 
 public class Movie {
+    private int id;
     private String poster_path;
     private String overview;
     private String release_date;
     private String title;
     private String backdrop_path;
     private float vote_average;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getPoster_path() {
         return poster_path;
