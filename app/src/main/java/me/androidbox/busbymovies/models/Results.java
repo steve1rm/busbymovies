@@ -12,8 +12,4 @@ public class Results {
     public List<Movie> getResults() {
         return results;
     }
-
-    public void setResults(List<Movie> results) {
-        this.results = results;
-    }
 }

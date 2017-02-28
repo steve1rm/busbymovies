@@ -17,12 +17,10 @@ import timber.log.Timber;
  */
 
 public class MovieListViewHolder extends RecyclerView.ViewHolder {
-    public @BindView(R.id.ivPosterImage) ImageView mIvPosterImage;
-    public @BindView(R.id.tvTagLine) TextView mTvTagLine;
-    public @BindView(R.id.palette) View mPalette;
+    @BindView(R.id.ivPosterImage) ImageView mIvPosterImage;
+    @BindView(R.id.tvTagLine) TextView mTvTagLine;
+    @BindView(R.id.palette) View mPalette;
 
-    private MovieSelectedListener mMovieSelectedListener;
-    private int mMovieId;
     private MovieAdapter mMovieAdapter;
 
     public MovieListViewHolder(View itemView, MovieAdapter movieAdapter) {
@@ -33,11 +31,15 @@ public class MovieListViewHolder extends RecyclerView.ViewHolder {
         mMovieAdapter = movieAdapter;
     }
 
+    public void bindViewData(String tagline, String posterPath) {
+        mTvTagLine.setText(tagline);
+
+    }
+
     @SuppressWarnings("unused")
     @OnClick(R.id.movieListItem)
     public void onMovieClicked(View view) {
         /* movie has been selected */
-
         Timber.d("Movie ID: %d", mMovieAdapter.getMovieId(getAdapterPosition()));
 
         /*

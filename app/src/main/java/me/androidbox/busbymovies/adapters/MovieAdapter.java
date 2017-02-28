@@ -13,7 +13,6 @@ import me.androidbox.busbymovies.R;
 import me.androidbox.busbymovies.models.Movie;
 import me.androidbox.busbymovies.models.Results;
 import me.androidbox.busbymovies.movielist.MovieListViewHolder;
-import me.androidbox.busbymovies.movielist.MovieSelectedListener;
 
 /**
  * Created by steve on 2/27/17.
@@ -37,7 +36,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieListViewHolder> {
 
     @Override
     public void onBindViewHolder(MovieListViewHolder holder, int position) {
-        holder.mTvTagLine.setText(mMovieList.get(position).getTitle());
+        holder.bindViewData(mMovieList.get(position).getTitle(), mMovieList.get(position).getPoster_path());
     }
 
     public void loadAdapter(Results results) {

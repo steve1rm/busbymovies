@@ -14,11 +14,22 @@
         android:id="@+id/palette"
         android:layout_width="192dp"
         android:layout_height="60dp"
-        android:layout_below="@id/ivPosterImage"/>
+        android:layout_below="@id/ivPosterImage"
+        android:background="@color/primary_light"/>
 
     <TextView
         android:id="@+id/tvTagLine"
         android:layout_width="192dp"
         android:layout_height="60dp"
-        android:layout_below="@id/ivPosterImage"/>
+        android:layout_below="@id/ivPosterImage"
+        android:lines="2"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:textColor="@color/primary_dark"
+        android:textSize="18sp"
+        android:paddingTop="8dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="4dp"
+        android:fontFamily="sans-serif-condensed"/>
+
 </RelativeLayout>

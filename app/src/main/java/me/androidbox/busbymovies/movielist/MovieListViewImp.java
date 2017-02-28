@@ -3,7 +3,9 @@ package me.androidbox.busbymovies.movielist;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -36,6 +38,7 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract 
 
     @BindView(R.id.tool_bar) Toolbar mToolbar;
     @BindView(R.id.rvMovieList) RecyclerView mRvMovieList;
+    @BindView(R.id.pbMovieList) ContentLoadingProgressBar mPbMovieList;
 
     private Unbinder mUnbinder;
     private MovieAdapter mMovieAdapter;
@@ -58,6 +61,10 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract 
 
         setupToolbar();
         setupRecyclerView();
+
+        if(mPbMovieList.isShown()) {
+            mPbMovieList.hide();
+        }
 
         return view;
     }
@@ -97,13 +104,17 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract 
         final RecyclerView.LayoutManager gridLayoutManager
                 = new GridLayoutManager(getActivity(), 2, LinearLayoutManager.VERTICAL, false);
         mRvMovieList.setLayoutManager(gridLayoutManager);
-
+        mRvMovieList.setHasFixedSize(true);
         mMovieAdapter = new MovieAdapter(Collections.emptyList());
         mRvMovieList.setAdapter(mMovieAdapter);
     }
 
     public void getPopularMovies() {
         /* Display progress indicator */
+        if(!mPbMovieList.isShown()) {
+            mPbMovieList.show();
+        }
+
         mMovieListPresenterImp.getPopularMovies();
     }
 
@@ -116,6 +127,10 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract 
         /* Load adapter with data to be populated in the recycler view */
         /* Hide progress indicator */
         Timber.d("Received %d", popularMovies.getResults().size());
+
+        if(mPbMovieList.isShown()) {
+            mPbMovieList.hide();
+        }
 
         mMovieAdapter.loadAdapter(popularMovies);
     }
