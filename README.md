@@ -17,6 +17,6 @@ Shows all the movies that are considered the most popular and top rated
 * [x] mockito - mocking classes for running tests using junit4 running on JVM
 * [x] espresso - running instrumentation UI tests
 
-## Arctecture 
+## Architecture 
 * [x] MVP - Model View Presenter
 
