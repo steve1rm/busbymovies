@@ -21,6 +21,8 @@ public interface MovieAPIService {
     @GET("movie/{movie_id}")
     Call<Movie> getMovieById(@Path("movie_id") int movie_id, @Query("api_key") String apikey);
 
+    @GET("movie/{movie_id}")
+    Observable<Movie> getMovieByIdExt(@Path("movie_id") int movie_id, @Query("api_key") String apikey);
 
     /* Search for a popular movie */
 /*    @GET("movie/popular")

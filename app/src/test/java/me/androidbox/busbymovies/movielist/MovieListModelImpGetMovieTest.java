@@ -30,7 +30,7 @@ public class MovieListModelImpGetMovieTest {
     private Movie movie;
 
     @Mock MovieAPIService mockMovieAPIService;
-    @Mock MovieListModelContract.MovieResultsListener mockMovieResultsListener;
+    @Mock MovieListModelContract.MovieDetailResultsListener mockMovieResultsListener;
     @Mock Call<Movie> mockCall;
     @Mock ResponseBody mockResponseBody;
     @Captor ArgumentCaptor<Callback<Movie>> argumentCaptor;
@@ -48,7 +48,7 @@ public class MovieListModelImpGetMovieTest {
         when(mockMovieAPIService.getMovieById(anyInt(), anyString())).thenReturn(mockCall);
         Response<Movie> response = Response.success(movie);
 
-        movieListModelContract.getMovie(eq(anyInt()), mockMovieResultsListener);
+        movieListModelContract.getMovieDetail(eq(anyInt()), mockMovieResultsListener);
 
         verify(mockCall).enqueue(argumentCaptor.capture());
         argumentCaptor.getValue().onResponse(mockCall, response);
@@ -62,7 +62,7 @@ public class MovieListModelImpGetMovieTest {
         when(mockMovieAPIService.getMovieById(anyInt(), anyString())).thenReturn(mockCall);
         Response<Movie> response = Response.error(401, mockResponseBody);
 
-        movieListModelContract.getMovie(eq(anyInt()), mockMovieResultsListener);
+        movieListModelContract.getMovieDetail(eq(anyInt()), mockMovieResultsListener);
 
         verify(mockCall).enqueue(argumentCaptor.capture());
         argumentCaptor.getValue().onResponse(mockCall, response);
@@ -80,7 +80,7 @@ public class MovieListModelImpGetMovieTest {
         Response<Movie> response = Response.error(500, mockResponseBody);
 
         /* Call the real get movies passing in the mocked interface */
-        movieListModelContract.getMovie(eq(anyInt()), mockMovieResultsListener);
+        movieListModelContract.getMovieDetail(eq(anyInt()), mockMovieResultsListener);
 
         /* verify the response */
         verify(mockCall).enqueue(argumentCaptor.capture());
@@ -100,7 +100,7 @@ public class MovieListModelImpGetMovieTest {
         Throwable runtimeException = new Throwable(new RuntimeException());
 
         /* Start the actual call to being the test */
-        movieListModelContract.getMovie(eq(anyInt()), mockMovieResultsListener);
+        movieListModelContract.getMovieDetail(eq(anyInt()), mockMovieResultsListener);
 
         /* Capture the argument that is passed to enqueue */
         verify(mockCall).enqueue(argumentCaptor.capture());

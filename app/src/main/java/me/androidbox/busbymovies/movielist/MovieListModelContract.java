@@ -11,21 +11,25 @@ import rx.Observable;
 public interface MovieListModelContract {
     void releaseResources();
 
+    /** Get all the popular movies */
     interface PopularMovieResultsListener {
         void onFailure(String errorMessage);
         void onSuccess(Results popularMovies);
     }
-
     void getPopularMovies(PopularMovieResultsListener popularMovieResultsListener);
+
+    /** Get a single movie to display the details by its ID */
+    interface MovieDetailResultsListener {
+        void onFailure(String errorMessage);
+        void onSuccess(Movie movie);
+    }
+    void getMovieDetail(int movieId, MovieDetailResultsListener movieDetailResultsListener);
+
 
     /** Testing only */
     Observable<Results> getPopularMovies();
 
-    interface MovieResultsListener {
-        void onFailure(String errorMessage);
-        void onSuccess(Movie movie);
-    }
-    void getMovie(int movieId, MovieResultsListener movieResultsListener);
+
 
     //void searchPopulareMovies()
 /*    void getTopRatedMovies(MovieResultsListener resultsListener);*/

@@ -69,6 +69,33 @@ public class MovieListModelImp implements MovieListModelContract {
     }
 
     @Override
+    public void getMovieDetail(int movieId, MovieDetailResultsListener movieDetailResultsListener) {
+        mSubscription = mMovieAPIService.getMovieByIdExt(movieId, Constants.MOVIES_API_KEY)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Movie>() {
+                    @Override
+                    public void onCompleted() {
+                        Timber.d("onCompleted");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Timber.e(e, "onError %s", e.getMessage());
+                        movieDetailResultsListener.onFailure(e.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(Movie movie) {
+                        movieDetailResultsListener.onSuccess(movie);
+                        Timber.d("onNext");
+                    }
+                });
+    }
+
+
+    /*
+    @Override
     public void getMovie(int movieId, MovieResultsListener movieResultsListener) {
         mMovieAPIService.getMovieById(movieId, Constants.MOVIES_API_KEY).enqueue(new Callback<Movie>() {
             @Override
@@ -90,6 +117,7 @@ public class MovieListModelImp implements MovieListModelContract {
             }
         });
     }
+*/
 
     @Override
     public void releaseResources() {
