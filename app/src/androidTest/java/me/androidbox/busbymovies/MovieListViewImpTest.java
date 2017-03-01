@@ -37,9 +37,7 @@ public class MovieListViewImpTest {
         IdlingResource idlingResource = OkHttp3IdlingResource.create("okhttp", OkHttpProvider.getOkHttpClientInstance());
 
         Espresso.registerIdlingResources(idlingResource);
-
         onView(withText(R.string.app_name)).check(ViewAssertions.matches(isDisplayed()));
-
         Espresso.unregisterIdlingResources(idlingResource);
     }
 
