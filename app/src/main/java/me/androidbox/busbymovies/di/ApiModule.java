@@ -51,8 +51,6 @@ public class ApiModule {
                 .build();
     }
 
-
-
     public Retrofit provideRetrofit(OkHttpClient okHttpClient) {
         return new Retrofit.Builder()
                 .baseUrl(Constants.BASE_URL)
@@ -68,6 +66,7 @@ public class ApiModule {
         return provideRetrofit(okHttpClient).create(MovieAPIService.class);
     }
 
+    /* Create and stores cache on the device for up to 10MB */
     private static Cache provideCache() {
         Cache cache = null;
 
@@ -83,6 +82,7 @@ public class ApiModule {
         return cache;
     }
 
+    /* Provides a cache that will prevent network calls from within 2 minutes of each other */
     private static Interceptor provideCacheInterceptor() {
         return new Interceptor() {
             @Override
@@ -101,12 +101,14 @@ public class ApiModule {
         };
     }
 
+    /* Will use the offline cache that is not older than 7 days to be used for when the device is offline */
     public static Interceptor provideOfflineCacheInterceptor() {
         return new Interceptor() {
             @Override
             public Response intercept(Chain chain) throws IOException {
                 Request request = chain.request();
 
+                /* if not connected to the network use the offline cache */
                 if(!Network.isConnectedToNetwork()) {
                     final CacheControl cacheControl = new CacheControl.Builder()
                             .maxStale(7, TimeUnit.DAYS)
