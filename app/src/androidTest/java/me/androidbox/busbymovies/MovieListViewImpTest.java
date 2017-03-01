@@ -1,14 +1,19 @@
 package me.androidbox.busbymovies;
 
+import android.support.test.espresso.Espresso;
+import android.support.test.espresso.IdlingResource;
 import android.support.test.espresso.assertion.ViewAssertions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+
+import com.jakewharton.espresso.OkHttp3IdlingResource;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import me.androidbox.busbymovies.movielist.MovieListActivity;
+import me.androidbox.busbymovies.network.OkHttpProvider;
 import me.androidbox.busbymovies.utils.RecyclerViewAssertions;
 
 import static android.support.test.espresso.Espresso.onView;
@@ -29,7 +34,13 @@ public class MovieListViewImpTest {
 
     @Test
     public void shouldDisplayCorrectTitleInToolbar() {
+        IdlingResource idlingResource = OkHttp3IdlingResource.create("okhttp", OkHttpProvider.getOkHttpClientInstance());
+
+        Espresso.registerIdlingResources(idlingResource);
+
         onView(withText(R.string.app_name)).check(ViewAssertions.matches(isDisplayed()));
+
+        Espresso.unregisterIdlingResources(idlingResource);
     }
 
     @Test
