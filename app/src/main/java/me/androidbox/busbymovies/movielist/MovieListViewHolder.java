@@ -1,6 +1,7 @@
 package me.androidbox.busbymovies.movielist;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.support.v7.graphics.Palette;
@@ -19,6 +20,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import me.androidbox.busbymovies.R;
 import me.androidbox.busbymovies.adapters.MovieAdapter;
+import me.androidbox.busbymovies.moviedetails.MovieDetailActivity;
+import me.androidbox.busbymovies.moviedetails.MovieDetailViewImp;
 import me.androidbox.busbymovies.utils.MovieImage;
 import timber.log.Timber;
 
@@ -93,10 +96,14 @@ public class MovieListViewHolder extends RecyclerView.ViewHolder {
     @OnClick(R.id.movieListItem)
     public void onMovieClicked(View view) {
         /* movie has been selected */
-        Timber.d("Movie ID: %d", mMovieAdapter.getMovieId(getAdapterPosition()));
+        final int movieId = mMovieAdapter.getMovieId(getAdapterPosition());
+        Timber.d("Movie ID: %d", movieId);
+
+        final Intent intent = new Intent(mContext.get(), MovieDetailActivity.class);
+        intent.putExtra(MovieDetailViewImp.MOVIE_ID_KEY, movieId);
+        mContext.get().startActivity(intent);
 
         /*
-
         if(mMovieSelectedListener != null) {
             Timber.d("Movie Adapter position: %d", getAdapterPosition());
             mMovieSelectedListener.onMovieSelected(mMovieId);
