@@ -1,12 +1,16 @@
 package me.androidbox.busbymovies.movielist;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import java.lang.ref.WeakReference;
 
@@ -45,7 +49,44 @@ public class MovieListViewHolder extends RecyclerView.ViewHolder {
         final String fullImagePath = MovieImage.build(posterPath, MovieImage.ImageSize.w185);
         Timber.d("%s - %s", tagline, fullImagePath);
 
-        Picasso.with(mContext.get()).load(fullImagePath).into(mIvPosterImage);
+        // Picasso.with(mContext.get()).load(fullImagePath).into(mIvPosterImage);
+
+        Picasso.with(mContext.get())
+                .load(fullImagePath)
+                .resize(200, 300)
+                .centerCrop()
+                .into(new Target() {
+                    @Override
+                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                        mIvPosterImage.setImageBitmap(bitmap);
+                        Palette.from(bitmap)
+                                .maximumColorCount(12)
+                                .generate(new Palette.PaletteAsyncListener() {
+                                    @Override
+                                    public void onGenerated(Palette palette) {
+
+                                        Palette.Swatch titleBackground = palette.getDarkVibrantSwatch();
+                                        if(titleBackground != null) {
+                                            mPalette.setBackgroundColor(titleBackground.getRgb());
+                                            mTvTagLine.setTextColor(titleBackground.getBodyTextColor());
+                                        }
+                                        else {
+                                            Timber.e("titleBackground == null");
+                                        }
+                                    }
+                                });
+                    }
+
+                    @Override
+                    public void onBitmapFailed(Drawable errorDrawable) {
+                        Timber.e("onBitmapFailed");
+                    }
+
+                    @Override
+                    public void onPrepareLoad(Drawable placeHolderDrawable) {
+                        Timber.d("onPrepareLoad");
+                    }
+                });
     }
 
     @SuppressWarnings("unused")

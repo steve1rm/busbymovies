@@ -15,8 +15,7 @@
         android:id="@+id/palette"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_below="@id/ivPosterImage"
-        android:background="@color/primary_light"/>
+        android:layout_below="@id/ivPosterImage" />
 
     <TextView
         android:id="@+id/tvTagLine"
