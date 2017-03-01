@@ -9,7 +9,7 @@ android {
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "me.androidbox.busbymovies.CustomTestRunner"
 
         jackOptions {
             enabled true
@@ -41,10 +41,11 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     androidTestCompile('com.jakewharton.espresso:okhttp3-idling-resource:1.0.0', {
-        exclude group: 'com.android.support',  module: 'support-annotations'
+        exclude group: 'com.android.support', module: 'support-annotations'
         exclude group: 'com.squareup.okio', module: 'okio'
         exclude group: 'com.squareup.okhttp3', module: 'okhttp'
     })
+    androidTestCompile 'com.squareup.okhttp3:mockwebserver:3.6.0'
     testCompile 'com.squareup.okhttp3:mockwebserver:3.6.0'
     testCompile 'org.mockito:mockito-core:2.7.10'
     /*****************************************************************
@@ -80,7 +81,7 @@ dependencies {
      ***************************************************************/
     compile 'io.reactivex:rxandroid:1.2.1'
     /* Because RxAndroid releases are few and far between, it is recommended you also
-                 * explicitly depend on RxJava's latest version for bug fixes and new features */
+                     * explicitly depend on RxJava's latest version for bug fixes and new features */
     compile 'io.reactivex:rxjava:1.2.6'
     /****************************************************************
      * Image utilities
