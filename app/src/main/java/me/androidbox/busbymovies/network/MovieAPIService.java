@@ -21,6 +21,7 @@ public interface MovieAPIService {
     @GET("movie/{movie_id}")
     Call<Movie> getMovieById(@Path("movie_id") int movie_id, @Query("api_key") String apikey);
 
+
     /* Search for a popular movie */
 /*    @GET("movie/popular")
     Call<Results> searchPopular(@Query("api_key") String apikey, @Query("q") String query);*/
