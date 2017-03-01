@@ -18,6 +18,11 @@ public class MovieListPresenterImp implements MovieListPresenterContract<MovieLi
         DaggerInjector.getApplicationComponent().inject(MovieListPresenterImp.this);
     }
 
+    /** Running Junit Testing only */
+    public MovieListPresenterImp(MovieListModelContract mMovieModelContract) {
+        this.mMovieModelContract = mMovieModelContract;
+    }
+
     /**
      * Attach the view to the presenter
      */

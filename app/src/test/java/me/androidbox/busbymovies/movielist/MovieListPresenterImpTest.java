@@ -3,14 +3,13 @@ package me.androidbox.busbymovies.movielist;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
 
 import me.androidbox.busbymovies.models.Results;
 
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 /**
  * Created by steve on 2/22/17.
@@ -27,7 +26,7 @@ public class MovieListPresenterImpTest {
         mockMovieListModelContract = mock(MovieListModelContract.class);
         mockMovieListViewContract = mock(MovieListViewContract.class);
 
-        movieListPresenterContract = new MovieListPresenterImp();
+        movieListPresenterContract = new MovieListPresenterImp(mockMovieListModelContract);
     }
 
     @Test
@@ -36,6 +35,15 @@ public class MovieListPresenterImpTest {
         movieListPresenterContract.getPopularMovies();
 
         verify(mockMovieListModelContract, times(0)).getPopularMovies(null);
+    }
+
+    @Test
+    public void shouldReleaseModelResourcesWhenDetached() {
+        doNothing().when(mockMovieListModelContract).releaseResources();
+
+        movieListPresenterContract.detachView();
+
+        verify(mockMovieListModelContract, times(1)).releaseResources();
     }
 
     @Test
