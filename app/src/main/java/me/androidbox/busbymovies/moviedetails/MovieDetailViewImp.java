@@ -19,6 +19,8 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import jp.wasabeef.blurry.Blurry;
+import jp.wasabeef.glide.transformations.BlurTransformation;
 import me.androidbox.busbymovies.R;
 import me.androidbox.busbymovies.di.DaggerInjector;
 import me.androidbox.busbymovies.models.Movie;
@@ -42,6 +44,7 @@ public class MovieDetailViewImp extends Fragment implements MovieDetailViewContr
     @BindView(R.id.tvRelease) TextView mTvRelease;
     @BindView(R.id.rbVoteAverage) RatingBar mRbVoteAverage;
     @BindView(R.id.tvSynopsis) TextView mTvSynopsis;
+    @BindView(R.id.viewBlur) View mViewBlur;
 
     public MovieDetailViewImp() {
         // Required empty public constructor
@@ -111,7 +114,10 @@ public class MovieDetailViewImp extends Fragment implements MovieDetailViewContr
 
         Glide.with(MovieDetailViewImp.this)
                 .load(MovieImage.build(movie.getBackdrop_path(), MovieImage.ImageSize.w500))
+                .bitmapTransform(new BlurTransformation(getActivity(), 5))
                 .into(mIvBackdropPoster);
+
+
     }
 
     @Override

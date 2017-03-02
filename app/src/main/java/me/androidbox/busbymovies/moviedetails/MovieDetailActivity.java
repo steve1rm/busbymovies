@@ -1,8 +1,11 @@
 package me.androidbox.busbymovies.moviedetails;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import me.androidbox.busbymovies.R;
@@ -15,8 +18,14 @@ public class MovieDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
 
-        if(savedInstanceState == null) {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            final Window window = getWindow();
+            window.setFlags(
+                    WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+                    WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        }
 
+        if(savedInstanceState == null) {
             final Intent intent = getIntent();
 
             if(intent.hasExtra(MovieDetailViewImp.MOVIE_ID_KEY)) {
