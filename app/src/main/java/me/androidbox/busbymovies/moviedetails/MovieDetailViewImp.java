@@ -7,15 +7,22 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RatingBar;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import me.androidbox.busbymovies.R;
 import me.androidbox.busbymovies.di.DaggerInjector;
 import me.androidbox.busbymovies.models.Movie;
+import me.androidbox.busbymovies.utils.MovieImage;
 import timber.log.Timber;
 
 /**
@@ -24,10 +31,17 @@ import timber.log.Timber;
 public class MovieDetailViewImp extends Fragment implements MovieDetailViewContract {
     public static final String TAG = MovieDetailViewImp.class.getSimpleName();
     public static final String MOVIE_ID_KEY = "movie_id_key";
+    private Unbinder mUnbinder;
 
     @Inject MovieDetailPresenterContract<MovieDetailViewContract> mMovieDetailPresenterImp;
 
-    private Unbinder mUnbinder;
+    @BindView(R.id.ivBackdropPoster) ImageView mIvBackdropPoster;
+    @BindView(R.id.tvTagLine) TextView mTvTagLine;
+    @BindView(R.id.ivThumbnail) ImageView mIvThumbnail;
+    @BindView(R.id.tvTitle) TextView mTvTitle;
+    @BindView(R.id.tvRelease) TextView mTvRelease;
+    @BindView(R.id.rbVoteAverage) RatingBar mRbVoteAverage;
+    @BindView(R.id.tvSynopsis) TextView mTvSynopsis;
 
     public MovieDetailViewImp() {
         // Required empty public constructor
@@ -66,6 +80,7 @@ public class MovieDetailViewImp extends Fragment implements MovieDetailViewContr
             DaggerInjector.getApplicationComponent().inject(MovieDetailViewImp.this);
             if(mMovieDetailPresenterImp != null) {
                 if(movieId != -1) {
+                    mMovieDetailPresenterImp.attachView(MovieDetailViewImp.this);
                     mMovieDetailPresenterImp.getMovieDetail(movieId);
                 }
                 else {
@@ -79,9 +94,24 @@ public class MovieDetailViewImp extends Fragment implements MovieDetailViewContr
     }
 
     @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mUnbinder.unbind();
+    }
+
+    @Override
     public void displayMovieDetails(Movie movie) {
         /* Bind the data */
+        mTvTagLine.setText(movie.getTagline());
+        mTvTitle.setText(movie.getTitle());
+        mTvRelease.setText(movie.getRelease_date());
+        mTvSynopsis.setText(movie.getOverview());
 
+        Timber.d(MovieImage.build(movie.getBackdrop_path(), MovieImage.ImageSize.w500));
+
+        Glide.with(MovieDetailViewImp.this)
+                .load(MovieImage.build(movie.getBackdrop_path(), MovieImage.ImageSize.w500))
+                .into(mIvBackdropPoster);
     }
 
     @Override
