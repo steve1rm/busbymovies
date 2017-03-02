@@ -8,5 +8,5 @@ public interface MovieDetailPresenterContract<MovieDetailView> {
     void attachView(MovieDetailView movieDetailView);
     void detachView();
 
-    void getMovieDetail();
+    void getMovieDetail(int movieId);
 }

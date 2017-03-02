@@ -1,6 +1,10 @@
 package me.androidbox.busbymovies.moviedetails;
 
+import javax.inject.Inject;
+
+import me.androidbox.busbymovies.di.DaggerInjector;
 import me.androidbox.busbymovies.models.Movie;
+import timber.log.Timber;
 
 /**
  * Created by steve on 3/2/17.
@@ -9,6 +13,15 @@ import me.androidbox.busbymovies.models.Movie;
 public class MovieDetailPresenterImp implements MovieDetailPresenterContract<MovieDetailViewContract>, MovieDetailModelContract.GetMovieDetailListener {
 
     private MovieDetailViewContract mMovieDetailViewContract;
+
+    @Inject MovieDetailModelContract mMovieDetailModelContract;
+
+    public MovieDetailPresenterImp() {
+        DaggerInjector.getApplicationComponent().inject(MovieDetailPresenterImp.this);
+        if(mMovieDetailModelContract == null) {
+            Timber.e("mMovieDetailModelContract == null");
+        }
+    }
 
     @Override
     public void attachView(MovieDetailViewContract movieDetailViewContract) {
@@ -23,8 +36,8 @@ public class MovieDetailPresenterImp implements MovieDetailPresenterContract<Mov
     }
 
     @Override
-    public void getMovieDetail() {
-
+    public void getMovieDetail(int movieId) {
+        mMovieDetailModelContract.getMovieDetail(movieId, MovieDetailPresenterImp.this);
     }
 
     @Override
@@ -36,6 +49,9 @@ public class MovieDetailPresenterImp implements MovieDetailPresenterContract<Mov
 
     @Override
     public void onGetMovieDetailSuccess(Movie movie) {
-
+        Timber.d("onGetMovieDetailSuccess: %s", movie.getTitle());
+        if(mMovieDetailViewContract != null) {
+            mMovieDetailViewContract.displayMovieDetails(movie);
+        }
     }
 }

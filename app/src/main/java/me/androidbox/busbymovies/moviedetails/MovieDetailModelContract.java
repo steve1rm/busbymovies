@@ -12,4 +12,6 @@ public interface MovieDetailModelContract {
         void onGetMovieDetailSuccess(Movie movie);
     }
     void getMovieDetail(int movieId, GetMovieDetailListener getMovieDetailListener);
+
+    void releaseResources();
 }

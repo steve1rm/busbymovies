@@ -4,6 +4,8 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import me.androidbox.busbymovies.moviedetails.MovieDetailModelContract;
+import me.androidbox.busbymovies.moviedetails.MovieDetailModelImp;
 import me.androidbox.busbymovies.movielist.MovieListModelContract;
 import me.androidbox.busbymovies.movielist.MovieListModelImp;
 
@@ -16,5 +18,11 @@ public class ModelModule {
     @Singleton
     public MovieListModelContract provideMovieListModel() {
         return new MovieListModelImp();
+    }
+
+    @Provides
+    @Singleton
+    public MovieDetailModelContract provideMovieDetailModel() {
+        return new MovieDetailModelImp();
     }
 }
