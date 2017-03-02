@@ -109,7 +109,7 @@ public class ApiModule {
                 Request request = chain.request();
 
                 /* if not connected to the network use the offline cache */
-                if(!Network.isConnectedToNetwork()) {
+                if(!Network.isConnectedToNetwork() && !Network.isOnline()) {
                     final CacheControl cacheControl = new CacheControl.Builder()
                             .maxStale(7, TimeUnit.DAYS)
                             .build();
