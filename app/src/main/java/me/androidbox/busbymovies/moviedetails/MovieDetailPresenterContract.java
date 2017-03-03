@@ -9,4 +9,5 @@ public interface MovieDetailPresenterContract<MovieDetailView> {
     void detachView();
 
     void getMovieDetail(int movieId);
+    float getVoteAverage(float voteAverage);
 }

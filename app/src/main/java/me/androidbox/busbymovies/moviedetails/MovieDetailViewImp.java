@@ -20,6 +20,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 import me.androidbox.busbymovies.R;
 import me.androidbox.busbymovies.di.DaggerInjector;
 import me.androidbox.busbymovies.models.Movie;
@@ -99,21 +100,30 @@ public class MovieDetailViewImp extends Fragment implements MovieDetailViewContr
     public void onDestroyView() {
         super.onDestroyView();
         mUnbinder.unbind();
+        if(mMovieDetailPresenterImp != null) {
+            mMovieDetailPresenterImp.detachView();
+        }
     }
 
     @Override
     public void displayMovieDetails(Movie movie) {
+        Timber.d("displayMovieDetails");
+
         /* Bind the data */
+        Glide.with(MovieDetailViewImp.this)
+                .load(MovieImage.build(movie.getBackdrop_path(), MovieImage.ImageSize.w500))
+                .into(mIvBackdropPoster);
+
+        Glide.with(MovieDetailViewImp.this)
+                .load(MovieImage.build(movie.getPoster_path(), MovieImage.ImageSize.w185))
+                .bitmapTransform(new RoundedCornersTransformation(getActivity(), 16, 4, RoundedCornersTransformation.CornerType.ALL))
+                .into(mIvThumbnail);
+
         mTvTagLine.setText(movie.getTagline());
         mTvTitle.setText(movie.getTitle());
         mTvRelease.setText(movie.getRelease_date());
         mTvSynopsis.setText(movie.getOverview());
-
-        Timber.d(MovieImage.build(movie.getBackdrop_path(), MovieImage.ImageSize.w500));
-
-        Glide.with(MovieDetailViewImp.this)
-                .load(MovieImage.build(movie.getBackdrop_path(), MovieImage.ImageSize.w500))
-                .into(mIvBackdropPoster);
+        mRbVoteAverage.setRating(mMovieDetailPresenterImp.getVoteAverage(movie.getVote_average()));
     }
 
     @Override

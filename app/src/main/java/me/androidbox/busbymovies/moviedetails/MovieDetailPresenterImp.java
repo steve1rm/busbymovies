@@ -48,6 +48,11 @@ public class MovieDetailPresenterImp implements MovieDetailPresenterContract<Mov
     }
 
     @Override
+    public float getVoteAverage(float voteAverage) {
+        return (voteAverage / 10) * 5;
+    }
+
+    @Override
     public void onGetMovieDetailSuccess(Movie movie) {
         Timber.d("onGetMovieDetailSuccess: %s", movie.getTitle());
         if(mMovieDetailViewContract != null) {
