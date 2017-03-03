@@ -10,7 +10,6 @@ import android.widget.Toast;
 
 import me.androidbox.busbymovies.R;
 
-
 public class MovieDetailActivity extends AppCompatActivity {
 
     @Override

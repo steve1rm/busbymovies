@@ -13,6 +13,9 @@ android {
 
         jackOptions {
             enabled true
+
+            renderscriptTargetApi 25
+            renderscriptSupportModeEnabled true
         }
     }
     buildTypes {
@@ -90,5 +93,5 @@ dependencies {
     provided 'javax.annotation:jsr250-api:1.0'
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'jp.wasabeef:glide-transformations:2.0.1'
-    compile 'jp.wasabeef:blurry:2.1.0'
+    compile 'com.wonderkiln:blurkit:1.0.0'
 }
