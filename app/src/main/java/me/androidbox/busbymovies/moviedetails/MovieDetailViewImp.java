@@ -1,19 +1,25 @@
 package me.androidbox.busbymovies.moviedetails;
 
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.graphics.Palette;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import org.w3c.dom.Text;
 
@@ -26,6 +32,7 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 import me.androidbox.busbymovies.R;
 import me.androidbox.busbymovies.di.DaggerInjector;
 import me.androidbox.busbymovies.models.Movie;
+import me.androidbox.busbymovies.utils.Constants;
 import me.androidbox.busbymovies.utils.MovieImage;
 import timber.log.Timber;
 
@@ -49,6 +56,7 @@ public class MovieDetailViewImp extends Fragment implements MovieDetailViewContr
     @BindView(R.id.content) FrameLayout mContent;
     @BindView(R.id.tvHomepage) TextView mTvHomepage;
     @BindView(R.id.tvRuntime) TextView mTvRuntime;
+    @BindView(R.id.svMovieFooter) ScrollView mSvMovieFooter;
 
     public MovieDetailViewImp() {
         // Required empty public constructor
@@ -113,23 +121,76 @@ public class MovieDetailViewImp extends Fragment implements MovieDetailViewContr
     public void displayMovieDetails(Movie movie) {
         Timber.d("displayMovieDetails");
 
+        Glide.with(MovieDetailViewImp.this)
+                .load(MovieImage.build(movie.getPoster_path(), MovieImage.ImageSize.w185))
+                .bitmapTransform(new RoundedCornersTransformation(getActivity(), 16, 4, RoundedCornersTransformation.CornerType.ALL))
+                .into(mIvThumbnail);
+/*
+        final Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                Picasso.with(getActivity())
+                        .load(MovieImage.build(movie.getPoster_path(), MovieImage.ImageSize.w185))
+                        .resize(120, 180)
+                        .centerCrop()
+                        .into(new Target() {
+                            @Override
+                            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                                mIvThumbnail.setImageBitmap(bitmap);
+                                Palette.from(bitmap)
+                                        .maximumColorCount(16)
+                                        .generate(new Palette.PaletteAsyncListener() {
+                                            @Override
+                                            public void onGenerated(Palette palette) {
+                                                Palette.Swatch swatch = palette.getLightVibrantSwatch();
+
+                                                if(swatch != null) {
+                                                    getActivity().runOnUiThread(new Runnable() {
+                                                        @Override
+                                                        public void run() {
+                                                            mSvMovieFooter.setBackgroundColor(swatch.getRgb());
+                                                            mTvSynopsis.setTextColor(swatch.getBodyTextColor());
+                                                            mRbVoteAverage.setBackgroundColor(swatch.getTitleTextColor());
+                                                            mTvHomepage.setTextColor(swatch.getTitleTextColor());
+                                                            mTvRuntime.setTextColor(swatch.getTitleTextColor());
+                                                        }
+                                                    });
+                                                }
+                                            }
+                                        });
+                            }
+
+                            @Override
+                            public void onBitmapFailed(Drawable errorDrawable) {
+                                Timber.e("onBitmapFailed");
+                            }
+
+                            @Override
+                            public void onPrepareLoad(Drawable placeHolderDrawable) {
+                                Timber.d("onPrepareLoad");
+                            }
+                        });
+            }
+        };
+*/
+
+
         /* Bind the data */
         Glide.with(MovieDetailViewImp.this)
                 .load(MovieImage.build(movie.getBackdrop_path(), MovieImage.ImageSize.w500))
                 .into(mIvBackdropPoster);
 
-        Glide.with(MovieDetailViewImp.this)
-                .load(MovieImage.build(movie.getPoster_path(), MovieImage.ImageSize.w185))
-                .bitmapTransform(new RoundedCornersTransformation(getActivity(), 16, 4, RoundedCornersTransformation.CornerType.ALL))
-                .into(mIvThumbnail);
-
         mTvTagLine.setText(movie.getTagline());
         mTvTitle.setText(movie.getTitle());
-        mTvRelease.setText(movie.getRelease_date());
+
+        final String movieDate = mMovieDetailPresenterImp.getMovieFormattedDate(movie.getRelease_date(), Constants.FORMAT_MOVIE_DATE);
+        mTvRelease.setText(movieDate);
+
         mTvSynopsis.setText(movie.getOverview());
         mRbVoteAverage.setRating(mMovieDetailPresenterImp.getVoteAverage(movie.getVote_average()));
         mTvHomepage.setText(movie.getHomepage());
-        final String runningTime = "Running time: " + movie.getRuntime() + " minutes";
+
+        final String runningTime = "Running time " + movie.getRuntime() + " minutes";
         mTvRuntime.setText(runningTime);
     }
 

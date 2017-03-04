@@ -52,8 +52,6 @@ public class MovieListViewHolder extends RecyclerView.ViewHolder {
         final String fullImagePath = MovieImage.build(posterPath, MovieImage.ImageSize.w185);
         Timber.d("%s - %s", tagline, fullImagePath);
 
-        // Picasso.with(mContext.get()).load(fullImagePath).into(mIvPosterImage);
-
         Picasso.with(mContext.get())
                 .load(fullImagePath)
                 .resize(200, 300)
@@ -63,7 +61,7 @@ public class MovieListViewHolder extends RecyclerView.ViewHolder {
                     public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
                         mIvPosterImage.setImageBitmap(bitmap);
                         Palette.from(bitmap)
-                                .maximumColorCount(12)
+                                .maximumColorCount(16)
                                 .generate(new Palette.PaletteAsyncListener() {
                                     @Override
                                     public void onGenerated(Palette palette) {

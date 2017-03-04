@@ -32,10 +32,10 @@
     </FrameLayout>
 
     <ScrollView
+        android:id="@+id/svMovieFooter"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/content"
-        android:background="@color/primary_light">
+        android:layout_below="@id/content">
 
         <RelativeLayout
             android:layout_width="match_parent"

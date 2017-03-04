@@ -1,9 +1,16 @@
 package me.androidbox.busbymovies.moviedetails;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import javax.inject.Inject;
 
 import me.androidbox.busbymovies.di.DaggerInjector;
 import me.androidbox.busbymovies.models.Movie;
+import me.androidbox.busbymovies.utils.Constants;
+import me.androidbox.busbymovies.utils.Misc;
 import timber.log.Timber;
 
 /**
@@ -53,10 +60,17 @@ public class MovieDetailPresenterImp implements MovieDetailPresenterContract<Mov
     }
 
     @Override
+    public String getMovieFormattedDate(String date, String format) {
+        return Misc.formatDate(date, format);
+    }
+
+    @Override
     public void onGetMovieDetailSuccess(Movie movie) {
         Timber.d("onGetMovieDetailSuccess: %s", movie.getTitle());
         if(mMovieDetailViewContract != null) {
             mMovieDetailViewContract.displayMovieDetails(movie);
         }
     }
+
+
 }
