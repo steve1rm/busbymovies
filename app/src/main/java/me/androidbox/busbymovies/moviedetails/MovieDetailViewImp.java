@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
+import org.w3c.dom.Text;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -45,6 +47,8 @@ public class MovieDetailViewImp extends Fragment implements MovieDetailViewContr
     @BindView(R.id.rbVoteAverage) RatingBar mRbVoteAverage;
     @BindView(R.id.tvSynopsis) TextView mTvSynopsis;
     @BindView(R.id.content) FrameLayout mContent;
+    @BindView(R.id.tvHomepage) TextView mTvHomepage;
+    @BindView(R.id.tvRuntime) TextView mTvRuntime;
 
     public MovieDetailViewImp() {
         // Required empty public constructor
@@ -124,6 +128,9 @@ public class MovieDetailViewImp extends Fragment implements MovieDetailViewContr
         mTvRelease.setText(movie.getRelease_date());
         mTvSynopsis.setText(movie.getOverview());
         mRbVoteAverage.setRating(mMovieDetailPresenterImp.getVoteAverage(movie.getVote_average()));
+        mTvHomepage.setText(movie.getHomepage());
+        final String runningTime = "Running time: " + movie.getRuntime() + " minutes";
+        mTvRuntime.setText(runningTime);
     }
 
     @Override

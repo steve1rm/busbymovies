@@ -13,6 +13,8 @@ public class Movie {
     private String backdrop_path;
     private float vote_average;
     private String tagline;
+    private String homepage;
+    private int runtime;
 
     public int getId() {
         return id;
@@ -44,5 +46,13 @@ public class Movie {
 
     public String getTagline() {
         return tagline;
+    }
+
+    public String getHomepage() {
+        return homepage;
+    }
+
+    public int getRuntime() {
+        return runtime;
     }
 }
