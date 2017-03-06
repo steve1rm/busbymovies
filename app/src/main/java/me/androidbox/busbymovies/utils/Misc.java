@@ -1,7 +1,5 @@
 package me.androidbox.busbymovies.utils;
 
-import android.icu.text.DateFormat;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;

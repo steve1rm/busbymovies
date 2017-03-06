@@ -14,8 +14,12 @@ android {
         jackOptions {
             enabled true
 
+            /* Use of rendering for palette library */
             renderscriptTargetApi 25
             renderscriptSupportModeEnabled true
+
+            /* Config only works for Android Gradle Plugin v2.1.0 or higher */
+            vectorDrawables.useSupportLibrary = true
         }
     }
     buildTypes {
@@ -39,6 +43,7 @@ dependencies {
     /*****************************************************************
      * Device and unit testing
      ****************************************************************/
+    androidTestCompile 'com.squareup.okhttp3:mockwebserver:3.6.0'
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
@@ -47,50 +52,56 @@ dependencies {
         exclude group: 'com.squareup.okio', module: 'okio'
         exclude group: 'com.squareup.okhttp3', module: 'okhttp'
     })
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.mockito:mockito-core:2.7.10'
     /*****************************************************************
      * Support libraries
      ****************************************************************/
-    def supportVersion = "25.1.1"
-    compile "com.android.support:appcompat-v7:$supportVersion"
-    compile "com.android.support:support-v4:$supportVersion"
-    compile "com.android.support:design:$supportVersion"
+    def supportVersion = "25.2.0"
+    compile "com.android.support:appcompat-v7:${supportVersion}"
+    compile "com.android.support:support-v4:${supportVersion}"
+    compile "com.android.support:design:${supportVersion}"
+    compile "com.android.support:palette-v7:${supportVersion}"
+    compile "com.android.support:support-v4:${supportVersion}"
+    compile "com.android.support:support-vector-drawable:${supportVersion}"
+    compile "com.android.support:animated-vector-drawable:${supportVersion}"
+    compile 'com.android.support.constraint:constraint-layout:1.0.0-beta5'
     /*****************************************************************
      * View and dependency injection
      ****************************************************************/
+    compile 'com.google.dagger:dagger:2.9'
+    compile 'com.jakewharton:butterknife:8.5.1'
+    provided 'javax.annotation:jsr250-api:1.0'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.9'
     /*****************************************************************
      * Logging support
      ****************************************************************/
+    compile 'com.squareup.okhttp3:logging-interceptor:3.6.0'
+    compile 'com.jakewharton.timber:timber:4.5.1'
     /*****************************************************************
      * Retrofit2 Network
      ****************************************************************/
+    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+
     /****************************************************************
      * RxJava just for a call adapter for retrofit2
      ***************************************************************/
     /* Because RxAndroid releases are few and far between, it is recommended you also
                      * explicitly depend on RxJava's latest version for bug fixes and new features */
-    /****************************************************************
-     * Image utilities
-     ***************************************************************/
-    compile 'com.android.support.constraint:constraint-layout:1.0.0-beta5'
-    compile 'com.jakewharton:butterknife:8.5.1'
-    compile 'com.google.dagger:dagger:2.9'
-    compile 'com.jakewharton.timber:timber:4.5.1'
-    compile 'com.squareup.retrofit2:retrofit:2.1.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
-    compile 'com.squareup.okhttp3:logging-interceptor:3.6.0'
-    compile 'com.squareup.okhttp3:okhttp:3.6.0'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'io.reactivex:rxjava:1.2.6'
+    /****************************************************************
+     * Image utilities
+     ***************************************************************/
+
+    compile 'com.squareup.okhttp3:okhttp:3.6.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'com.android.support:palette-v7:25.1.1'
-    compile 'com.android.support:support-v4:25.1.1'
-    testCompile 'junit:junit:4.12'
-    testCompile 'com.squareup.okhttp3:mockwebserver:3.6.0'
-    testCompile 'org.mockito:mockito-core:2.7.10'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.9'
-    provided 'javax.annotation:jsr250-api:1.0'
+
+
+
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'jp.wasabeef:glide-transformations:2.0.1'
     compile 'com.wonderkiln:blurkit:1.0.0'
