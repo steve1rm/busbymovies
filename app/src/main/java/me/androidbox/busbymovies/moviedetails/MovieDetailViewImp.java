@@ -5,6 +5,8 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.graphics.Palette;
 import android.view.LayoutInflater;
@@ -27,6 +29,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 import me.androidbox.busbymovies.R;
@@ -57,6 +60,7 @@ public class MovieDetailViewImp extends Fragment implements MovieDetailViewContr
     @BindView(R.id.tvHomepage) TextView mTvHomepage;
     @BindView(R.id.tvRuntime) TextView mTvRuntime;
     @BindView(R.id.svMovieFooter) ScrollView mSvMovieFooter;
+    @BindView(R.id.tvVoteAverage) TextView mTvVoteAverage;
 
     public MovieDetailViewImp() {
         // Required empty public constructor
@@ -117,14 +121,28 @@ public class MovieDetailViewImp extends Fragment implements MovieDetailViewContr
         }
     }
 
+    @SuppressWarnings("unused")
+    @OnClick(R.id.fabFavourites)
+    public void addFavourite(View view) {
+        Snackbar.make(view, R.string.add_favourite_movies, Snackbar.LENGTH_LONG)
+                .setAction(R.string.undo, View -> Timber.d("onClick snackbar"))
+                .show();
+
+        /*
+        Snackbar.make(view, R.string.add_favourite_movies, Snackbar.LENGTH_LONG)
+                .setAction(R.string.undo, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Timber.d("onClick snackbar");
+                    }
+                }).show();
+*/
+    }
+
     @Override
     public void displayMovieDetails(Movie movie) {
         Timber.d("displayMovieDetails");
 
-        Glide.with(MovieDetailViewImp.this)
-                .load(MovieImage.build(movie.getPoster_path(), MovieImage.ImageSize.w185))
-                .bitmapTransform(new RoundedCornersTransformation(getActivity(), 16, 4, RoundedCornersTransformation.CornerType.ALL))
-                .into(mIvThumbnail);
 /*
         final Runnable runnable = new Runnable() {
             @Override
@@ -174,12 +192,6 @@ public class MovieDetailViewImp extends Fragment implements MovieDetailViewContr
         };
 */
 
-
-        /* Bind the data */
-        Glide.with(MovieDetailViewImp.this)
-                .load(MovieImage.build(movie.getBackdrop_path(), MovieImage.ImageSize.w500))
-                .into(mIvBackdropPoster);
-
         mTvTagLine.setText(movie.getTagline());
         mTvTitle.setText(movie.getTitle());
 
@@ -192,6 +204,20 @@ public class MovieDetailViewImp extends Fragment implements MovieDetailViewContr
 
         final String runningTime = "Running time " + movie.getRuntime() + " minutes";
         mTvRuntime.setText(runningTime);
+
+        mTvVoteAverage.setText(String.valueOf(movie.getVote_average()));
+        Timber.d("movie.getVote_average %f", movie.getVote_average());
+
+
+        Glide.with(MovieDetailViewImp.this)
+                .load(MovieImage.build(movie.getPoster_path(), MovieImage.ImageSize.w185))
+                .bitmapTransform(new RoundedCornersTransformation(getActivity(), 16, 4, RoundedCornersTransformation.CornerType.ALL))
+                .into(mIvThumbnail);
+
+        /* Bind the data */
+        Glide.with(MovieDetailViewImp.this)
+                .load(MovieImage.build(movie.getBackdrop_path(), MovieImage.ImageSize.w500))
+                .into(mIvBackdropPoster);
     }
 
     @Override

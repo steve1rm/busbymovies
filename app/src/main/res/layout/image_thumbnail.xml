@@ -16,7 +16,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        android:text="8.8"
+        android:text="0.0"
         android:textSize="16sp"
         android:textStyle="bold"
         android:textColor="@android:color/black"

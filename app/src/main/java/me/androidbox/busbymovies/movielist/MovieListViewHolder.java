@@ -56,6 +56,8 @@ public class MovieListViewHolder extends RecyclerView.ViewHolder {
                 .load(fullImagePath)
                 .resize(200, 300)
                 .centerCrop()
+                .placeholder(R.drawable.placeholder_poster)
+                .error(R.drawable.placeholder_poster)
                 .into(new Target() {
                     @Override
                     public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
@@ -81,11 +83,13 @@ public class MovieListViewHolder extends RecyclerView.ViewHolder {
                     @Override
                     public void onBitmapFailed(Drawable errorDrawable) {
                         Timber.e("onBitmapFailed");
+                        mIvPosterImage.setImageDrawable(errorDrawable);
                     }
 
                     @Override
                     public void onPrepareLoad(Drawable placeHolderDrawable) {
                         Timber.d("onPrepareLoad");
+                        mIvPosterImage.setImageDrawable(placeHolderDrawable);
                     }
                 });
     }
