@@ -1,6 +1,8 @@
 package me.androidbox.busbymovies.moviedetails;
 
 
+import android.animation.Animator;
+import android.animation.AnimatorInflater;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -121,12 +123,28 @@ public class MovieDetailViewImp extends Fragment implements MovieDetailViewContr
         }
     }
 
+    private boolean mhasFavourited = false;
+
     @SuppressWarnings("unused")
     @OnClick(R.id.fabFavourites)
     public void addFavourite(View view) {
+/*
         Snackbar.make(view, R.string.add_favourite_movies, Snackbar.LENGTH_LONG)
                 .setAction(R.string.undo, View -> Timber.d("onClick snackbar"))
                 .show();
+*/
+        Animator animator;
+        if(mhasFavourited) {
+            animator = AnimatorInflater.loadAnimator(getActivity(), R.animator.rotate_backwards);
+            mhasFavourited = false;
+        }
+        else {
+            animator = AnimatorInflater.loadAnimator(getActivity(), R.animator.rotate_forward);
+            mhasFavourited = true;
+        }
+
+        animator.setTarget(view);
+        animator.start();
 
         /*
         Snackbar.make(view, R.string.add_favourite_movies, Snackbar.LENGTH_LONG)
