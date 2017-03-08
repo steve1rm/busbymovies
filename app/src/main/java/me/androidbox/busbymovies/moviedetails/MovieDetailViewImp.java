@@ -1,16 +1,9 @@
 package me.androidbox.busbymovies.moviedetails;
 
 
-import android.animation.Animator;
-import android.animation.AnimatorInflater;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v7.graphics.Palette;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,10 +15,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
-
-import org.w3c.dom.Text;
 
 import javax.inject.Inject;
 
@@ -133,7 +122,12 @@ public class MovieDetailViewImp extends Fragment implements MovieDetailViewContr
                 .setAction(R.string.undo, View -> Timber.d("onClick snackbar"))
                 .show();
 */
-        Animator animator;
+
+
+
+
+
+ /*       Animator animator;
         if(mhasFavourited) {
             animator = AnimatorInflater.loadAnimator(getActivity(), R.animator.rotate_backwards);
             mhasFavourited = false;
@@ -145,7 +139,7 @@ public class MovieDetailViewImp extends Fragment implements MovieDetailViewContr
 
         animator.setTarget(view);
         animator.start();
-
+*/
         /*
         Snackbar.make(view, R.string.add_favourite_movies, Snackbar.LENGTH_LONG)
                 .setAction(R.string.undo, new View.OnClickListener() {

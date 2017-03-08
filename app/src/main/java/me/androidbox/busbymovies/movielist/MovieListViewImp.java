@@ -1,7 +1,12 @@
 package me.androidbox.busbymovies.movielist;
 
+import android.animation.Animator;
+import android.animation.AnimatorInflater;
+import android.animation.ObjectAnimator;
+import android.animation.TimeInterpolator;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +18,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AnticipateInterpolator;
+import android.view.animation.BounceInterpolator;
+import android.view.animation.DecelerateInterpolator;
+import android.view.animation.Interpolator;
 import android.widget.Toast;
 
 import java.util.Collections;
@@ -21,12 +31,15 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import me.androidbox.busbymovies.R;
 import me.androidbox.busbymovies.adapters.MovieAdapter;
 import me.androidbox.busbymovies.di.DaggerInjector;
 import me.androidbox.busbymovies.models.Results;
 import timber.log.Timber;
+
+import static android.animation.AnimatorInflater.loadAnimator;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -39,6 +52,8 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract 
     @BindView(R.id.tool_bar) Toolbar mToolbar;
     @BindView(R.id.rvMovieList) RecyclerView mRvMovieList;
     @BindView(R.id.pbMovieList) ContentLoadingProgressBar mPbMovieList;
+    @BindView(R.id.fabPopular) FloatingActionButton mFabPopular;
+    @BindView(R.id.fabTopRated) FloatingActionButton mFabTopRated;
 
     private Unbinder mUnbinder;
     private MovieAdapter mMovieAdapter;
@@ -90,6 +105,93 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract 
         Timber.d("onDestroyView");
         mUnbinder.unbind();
         mMovieListPresenterImp.detachView();
+    }
+
+    @SuppressWarnings("unused")
+    @OnClick(R.id.fabSort)
+    public void openSort() {
+/*        final Animator animator = AnimatorInflater.loadAnimator(getActivity(), R.animator.open_fabs);
+        animator.setTarget(mFabPopular);
+        animator.start();*/
+
+        if(mFabPopular.getVisibility() == View.INVISIBLE && mFabTopRated.getVisibility() == View.INVISIBLE) {
+            Timber.d("BEFORE mFabPopular.getTop(): %d", mFabPopular.getTop());
+            final ObjectAnimator moveFabPopular
+                    = ObjectAnimator.ofFloat(mFabPopular, View.TRANSLATION_Y, mFabPopular.getTop(), -100);
+
+
+            final ObjectAnimator moveFabTopRated = ObjectAnimator.ofFloat(mFabTopRated, View.TRANSLATION_Y, mFabPopular.getY(), -100);
+
+            mFabPopular.setVisibility(View.VISIBLE);
+            moveFabPopular.setDuration(300);
+            moveFabPopular.setInterpolator(new DecelerateInterpolator());
+            moveFabPopular.start();
+
+     //       mFabTopRated.setVisibility(View.VISIBLE);
+            moveFabTopRated.setDuration(300);
+            moveFabTopRated.setInterpolator(new DecelerateInterpolator());
+     //       moveFabTopRated.start();
+        }
+        else {
+            final ObjectAnimator moveFabPopular
+                    = ObjectAnimator.ofFloat(mFabPopular, View.Y, 100);
+
+            moveFabPopular.setDuration(300);
+            moveFabPopular.setInterpolator(new DecelerateInterpolator());
+            moveFabPopular.start();
+
+            final ObjectAnimator moveFabTopRated = ObjectAnimator.ofFloat(mFabTopRated, View.TRANSLATION_Y, 500);
+            moveFabTopRated.setDuration(300);
+            moveFabTopRated.setInterpolator(new DecelerateInterpolator());
+
+            moveFabPopular.addListener(new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animation) {
+
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animation) {
+
+                }
+
+                @Override
+                public void onAnimationRepeat(Animator animation) {
+
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mFabPopular.setVisibility(View.INVISIBLE);
+
+                    moveFabTopRated.addListener(new Animator.AnimatorListener() {
+                        @Override
+                        public void onAnimationStart(Animator animation) {
+
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            mFabTopRated.setVisibility(View.INVISIBLE);
+                        }
+
+                        @Override
+                        public void onAnimationCancel(Animator animation) {
+
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animator animation) {
+
+                        }
+                    });
+                }
+            });
+
+//            moveFabTopRated.start();
+            Timber.d("AFTER mFabPopular.getY(): %f", mFabPopular.getY());
+            Timber.d("reverse animation");
+        }
     }
 
     /**
