@@ -3,6 +3,12 @@
     <objectAnimator
         android:propertyName="translationY"
         android:valueTo="-200dp"
-        android:duration="1000"
+        android:duration="100"
         android:interpolator="@android:anim/bounce_interpolator" />
+
+    <objectAnimator
+        android:propertyName="alpha"
+        android:valueTo="1"
+        android:valueFrom="0"
+        android:duration="300"/>
 </set>

@@ -1,16 +1,11 @@
 package me.androidbox.busbymovies.movielist;
 
-import android.animation.Animator;
-import android.animation.AnimatorInflater;
-import android.animation.ObjectAnimator;
-import android.animation.TimeInterpolator;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,11 +13,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.AnticipateInterpolator;
-import android.view.animation.BounceInterpolator;
-import android.view.animation.DecelerateInterpolator;
-import android.view.animation.Interpolator;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
 import java.util.Collections;
@@ -38,8 +30,6 @@ import me.androidbox.busbymovies.adapters.MovieAdapter;
 import me.androidbox.busbymovies.di.DaggerInjector;
 import me.androidbox.busbymovies.models.Results;
 import timber.log.Timber;
-
-import static android.animation.AnimatorInflater.loadAnimator;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -57,6 +47,7 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract 
 
     private Unbinder mUnbinder;
     private MovieAdapter mMovieAdapter;
+    private boolean mIsSortFabOpen;
 
     public MovieListViewImp() {
         // Required empty public constructor
@@ -77,8 +68,17 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract 
         setupToolbar();
         setupRecyclerView();
 
+        /* Hide the progress bar */
         if(mPbMovieList.isShown()) {
             mPbMovieList.hide();
+        }
+
+        if(mIsSortFabOpen) {
+            mIsSortFabOpen = false;
+/*
+            mFabPopular.setVisibility(View.INVISIBLE);
+            mFabTopRated.setVisibility(View.INVISIBLE);
+*/
         }
 
         return view;
@@ -103,95 +103,57 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract 
     public void onDestroyView() {
         super.onDestroyView();
         Timber.d("onDestroyView");
-        mUnbinder.unbind();
+
+        /* close the fab button if open */
+        if(mIsSortFabOpen) {
+            mIsSortFabOpen = false;
+/*
+            mFabPopular.setVisibility(View.INVISIBLE);
+            mFabTopRated.setVisibility(View.INVISIBLE);
+*/
+        }
+
         mMovieListPresenterImp.detachView();
+        mUnbinder.unbind();
     }
 
     @SuppressWarnings("unused")
     @OnClick(R.id.fabSort)
     public void openSort() {
-/*        final Animator animator = AnimatorInflater.loadAnimator(getActivity(), R.animator.open_fabs);
-        animator.setTarget(mFabPopular);
-        animator.start();*/
 
-        if(mFabPopular.getVisibility() == View.INVISIBLE && mFabTopRated.getVisibility() == View.INVISIBLE) {
-            Timber.d("BEFORE mFabPopular.getTop(): %d", mFabPopular.getTop());
-            final ObjectAnimator moveFabPopular
-                    = ObjectAnimator.ofFloat(mFabPopular, View.TRANSLATION_Y, mFabPopular.getTop(), -100);
+        if(mIsSortFabOpen) {
+            Timber.d("Close the fab");
+            final Animation closePopularFab = AnimationUtils.loadAnimation(getActivity(), R.anim.close_popular_fab);
+            final Animation closeTopRatedFab = AnimationUtils.loadAnimation(getActivity(), R.anim.close_toprated_fab);
 
+            mFabPopular.startAnimation(closePopularFab);
+            mFabTopRated.startAnimation(closeTopRatedFab);
 
-            final ObjectAnimator moveFabTopRated = ObjectAnimator.ofFloat(mFabTopRated, View.TRANSLATION_Y, mFabPopular.getY(), -100);
-
-            mFabPopular.setVisibility(View.VISIBLE);
-            moveFabPopular.setDuration(300);
-            moveFabPopular.setInterpolator(new DecelerateInterpolator());
-            moveFabPopular.start();
-
-     //       mFabTopRated.setVisibility(View.VISIBLE);
-            moveFabTopRated.setDuration(300);
-            moveFabTopRated.setInterpolator(new DecelerateInterpolator());
-     //       moveFabTopRated.start();
+            mIsSortFabOpen = false;
         }
         else {
-            final ObjectAnimator moveFabPopular
-                    = ObjectAnimator.ofFloat(mFabPopular, View.Y, 100);
+            Timber.d("Open the fab");
+            final Animation openPopularFab = AnimationUtils.loadAnimation(getActivity(), R.anim.open_popular_fab);
+            final Animation openTopRatedFab = AnimationUtils.loadAnimation(getActivity(), R.anim.open_toprated_fab);
 
-            moveFabPopular.setDuration(300);
-            moveFabPopular.setInterpolator(new DecelerateInterpolator());
-            moveFabPopular.start();
+            mFabPopular.setVisibility(View.VISIBLE);
+            mFabPopular.startAnimation(openPopularFab);
+            mFabTopRated.startAnimation(openTopRatedFab);
 
-            final ObjectAnimator moveFabTopRated = ObjectAnimator.ofFloat(mFabTopRated, View.TRANSLATION_Y, 500);
-            moveFabTopRated.setDuration(300);
-            moveFabTopRated.setInterpolator(new DecelerateInterpolator());
-
-            moveFabPopular.addListener(new Animator.AnimatorListener() {
-                @Override
-                public void onAnimationStart(Animator animation) {
-
-                }
-
-                @Override
-                public void onAnimationCancel(Animator animation) {
-
-                }
-
-                @Override
-                public void onAnimationRepeat(Animator animation) {
-
-                }
-
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mFabPopular.setVisibility(View.INVISIBLE);
-
-                    moveFabTopRated.addListener(new Animator.AnimatorListener() {
-                        @Override
-                        public void onAnimationStart(Animator animation) {
-
-                        }
-
-                        @Override
-                        public void onAnimationEnd(Animator animation) {
-                            mFabTopRated.setVisibility(View.INVISIBLE);
-                        }
-
-                        @Override
-                        public void onAnimationCancel(Animator animation) {
-
-                        }
-
-                        @Override
-                        public void onAnimationRepeat(Animator animation) {
-
-                        }
-                    });
-                }
-            });
-
-//            moveFabTopRated.start();
-            Timber.d("AFTER mFabPopular.getY(): %f", mFabPopular.getY());
-            Timber.d("reverse animation");
+            mIsSortFabOpen = true;
         }
+    }
+
+    @SuppressWarnings("unused")
+    @OnClick(R.id.fabPopular)
+    public void getPopular() {
+        Timber.d("getPopular");
+    }
+
+    @SuppressWarnings("unused")
+    @OnClick(R.id.fabTopRated)
+    public void getTopRated() {
+        Timber.d("getTopRated");
     }
 
     /**
