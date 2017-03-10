@@ -79,4 +79,11 @@ public class MovieImage {
             }
         });
     }
+
+    /*
+    final float scale = getResources().getDisplayMetrics().density;
+
+    300dp * 2 = 600 then choice 500 or 700
+    300dp * 1 = 300 then choice 342
+    */
 }

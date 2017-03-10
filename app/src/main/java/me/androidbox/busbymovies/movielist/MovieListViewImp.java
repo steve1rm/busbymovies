@@ -1,5 +1,8 @@
 package me.androidbox.busbymovies.movielist;
 
+import android.animation.Animator;
+import android.animation.AnimatorInflater;
+import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -123,22 +126,44 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract 
 
         if(mIsSortFabOpen) {
             Timber.d("Close the fab");
+
+            final Animator closePopularFab = AnimatorInflater.loadAnimator(getActivity(), R.animator.close_popular_fab);
+            closePopularFab.setTarget(mFabPopular);
+            closePopularFab.start();
+
+            final Animator closeTopRatedFab = AnimatorInflater.loadAnimator(getActivity(), R.animator.close_toprated_fab);
+            closeTopRatedFab.setTarget(mFabTopRated);
+            closeTopRatedFab.start();
+
+/*
             final Animation closePopularFab = AnimationUtils.loadAnimation(getActivity(), R.anim.close_popular_fab);
             final Animation closeTopRatedFab = AnimationUtils.loadAnimation(getActivity(), R.anim.close_toprated_fab);
 
             mFabPopular.startAnimation(closePopularFab);
             mFabTopRated.startAnimation(closeTopRatedFab);
+*/
 
             mIsSortFabOpen = false;
         }
         else {
             Timber.d("Open the fab");
+
+            final Animator openPopularFab = AnimatorInflater.loadAnimator(getActivity(), R.animator.open_popular_fab);
+            openPopularFab.setTarget(mFabPopular);
+            openPopularFab.start();
+
+            final Animator openTopRatedTab = AnimatorInflater.loadAnimator(getActivity(), R.animator.open_toprated_fab);
+            openTopRatedTab.setTarget(mFabTopRated);
+            openTopRatedTab.start();
+
+/*
             final Animation openPopularFab = AnimationUtils.loadAnimation(getActivity(), R.anim.open_popular_fab);
             final Animation openTopRatedFab = AnimationUtils.loadAnimation(getActivity(), R.anim.open_toprated_fab);
 
             mFabPopular.setVisibility(View.VISIBLE);
             mFabPopular.startAnimation(openPopularFab);
             mFabTopRated.startAnimation(openTopRatedFab);
+*/
 
             mIsSortFabOpen = true;
         }
