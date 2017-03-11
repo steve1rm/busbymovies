@@ -1,15 +1,9 @@
 package me.androidbox.busbymovies.moviedetails;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-
 import javax.inject.Inject;
 
 import me.androidbox.busbymovies.di.DaggerInjector;
 import me.androidbox.busbymovies.models.Movie;
-import me.androidbox.busbymovies.utils.Constants;
 import me.androidbox.busbymovies.utils.Misc;
 import timber.log.Timber;
 

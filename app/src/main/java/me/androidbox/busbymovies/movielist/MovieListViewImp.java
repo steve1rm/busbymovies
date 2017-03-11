@@ -2,7 +2,6 @@ package me.androidbox.busbymovies.movielist;
 
 import android.animation.Animator;
 import android.animation.AnimatorInflater;
-import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -16,8 +15,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
 import java.util.Collections;
@@ -78,10 +75,6 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract 
 
         if(mIsSortFabOpen) {
             mIsSortFabOpen = false;
-/*
-            mFabPopular.setVisibility(View.INVISIBLE);
-            mFabTopRated.setVisibility(View.INVISIBLE);
-*/
         }
 
         return view;
@@ -135,14 +128,6 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract 
             closeTopRatedFab.setTarget(mFabTopRated);
             closeTopRatedFab.start();
 
-/*
-            final Animation closePopularFab = AnimationUtils.loadAnimation(getActivity(), R.anim.close_popular_fab);
-            final Animation closeTopRatedFab = AnimationUtils.loadAnimation(getActivity(), R.anim.close_toprated_fab);
-
-            mFabPopular.startAnimation(closePopularFab);
-            mFabTopRated.startAnimation(closeTopRatedFab);
-*/
-
             mIsSortFabOpen = false;
         }
         else {
@@ -156,15 +141,6 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract 
             openTopRatedTab.setTarget(mFabTopRated);
             openTopRatedTab.start();
 
-/*
-            final Animation openPopularFab = AnimationUtils.loadAnimation(getActivity(), R.anim.open_popular_fab);
-            final Animation openTopRatedFab = AnimationUtils.loadAnimation(getActivity(), R.anim.open_toprated_fab);
-
-            mFabPopular.setVisibility(View.VISIBLE);
-            mFabPopular.startAnimation(openPopularFab);
-            mFabTopRated.startAnimation(openTopRatedFab);
-*/
-
             mIsSortFabOpen = true;
         }
     }
@@ -173,12 +149,14 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract 
     @OnClick(R.id.fabPopular)
     public void getPopular() {
         Timber.d("getPopular");
+        getPopularMovies();
     }
 
     @SuppressWarnings("unused")
     @OnClick(R.id.fabTopRated)
     public void getTopRated() {
         Timber.d("getTopRated");
+        getTopRatedMovies();
     }
 
     /**
@@ -208,14 +186,19 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract 
     }
 
     public void getTopRatedMovies() {
+        /* Display progress indicator */
+        if(!mPbMovieList.isShown()) {
+            mPbMovieList.show();
+        }
 
+        mMovieListPresenterImp.getTopRatedMovies();
     }
 
     @Override
     public void displayPopularMovies(Results popularMovies) {
         /* Load adapter with data to be populated in the recycler view */
         /* Hide progress indicator */
-        Timber.d("Received %d", popularMovies.getResults().size());
+        Timber.d("displayPopularMovies Received %d", popularMovies.getResults().size());
 
         if(mPbMovieList.isShown()) {
             mPbMovieList.hide();
@@ -225,8 +208,14 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract 
     }
 
     @Override
-    public void displayTopRatedMovies(String movies) {
+    public void displayTopRatedMovies(Results topRatedMovies) {
+        Timber.d("displayTopRatedMovies: %d", topRatedMovies.getResults().size());
 
+        if(mPbMovieList.isShown()) {
+            mPbMovieList.hide();
+        }
+
+        mMovieAdapter.loadAdapter(topRatedMovies);
     }
 
     @Override

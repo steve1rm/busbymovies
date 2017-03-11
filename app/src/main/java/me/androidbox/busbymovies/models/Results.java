@@ -7,9 +7,9 @@ import java.util.List;
  */
 
 public class Results {
-    private List<Movie> results;
+    private List<Movies> results;
 
-    public List<Movie> getResults() {
+    public List<Movies> getResults() {
         return results;
     }
 }

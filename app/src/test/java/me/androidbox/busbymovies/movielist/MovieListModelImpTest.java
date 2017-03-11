@@ -71,8 +71,8 @@ public class MovieListModelImpTest {
 
         movieListModelContract.getPopularMovies(mockPopularMoviesResultsListener);
 
-        verify(mockPopularMoviesResultsListener, times(1)).onFailure(anyString());
-        verify(mockPopularMoviesResultsListener, never()).onSuccess(results);
+        verify(mockPopularMoviesResultsListener, times(1)).onPopularMovieFailure(anyString());
+        verify(mockPopularMoviesResultsListener, never()).onPopularMovieSuccess(results);
     }
 
     @Test
@@ -82,8 +82,8 @@ public class MovieListModelImpTest {
 
         movieListModelContract.getPopularMovies(mockPopularMoviesResultsListener);
 
-        verify(mockPopularMoviesResultsListener, never()).onFailure(anyString());
-        verify(mockPopularMoviesResultsListener, times(1)).onSuccess(results);
+        verify(mockPopularMoviesResultsListener, never()).onPopularMovieFailure(anyString());
+        verify(mockPopularMoviesResultsListener, times(1)).onPopularMovieSuccess(results);
     }
 
     @After

@@ -13,10 +13,17 @@ public interface MovieListModelContract {
 
     /** Get all the popular movies */
     interface PopularMovieResultsListener {
-        void onFailure(String errorMessage);
-        void onSuccess(Results popularMovies);
+        void onPopularMovieFailure(String errorMessage);
+        void onPopularMovieSuccess(Results popularMovies);
     }
     void getPopularMovies(PopularMovieResultsListener popularMovieResultsListener);
+
+    /** Get all the top rated movies */
+    interface TopRatedMovieResultsListener {
+        void onTopRatedMovieFailure(String errorMessage);
+        void onTopRatedMovieSuccess(Results topRatedMovies);
+    }
+    void getTopRatedMovies(TopRatedMovieResultsListener topRatedMovieResultsListener);
 
     /** Get a single movie to display the details by its ID */
     interface MovieDetailResultsListener {

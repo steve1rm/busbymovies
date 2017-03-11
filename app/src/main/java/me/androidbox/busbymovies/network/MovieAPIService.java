@@ -17,6 +17,9 @@ public interface MovieAPIService {
     @GET("movie/popular")
     Observable<Results> getPopular(@Query("api_key") String apikey);
 
+    @GET("movie/top_rated")
+    Observable<Results> getTopRatedMovies(@Query("api_key") String apikey);
+
     /* Return the movie with the matching movie id */
     @GET("movie/{movie_id}")
     Call<Movie> getMovieById(@Path("movie_id") int movie_id, @Query("api_key") String apikey);
@@ -27,4 +30,52 @@ public interface MovieAPIService {
     /* Search for a popular movie */
 /*    @GET("movie/popular")
     Call<Results> searchPopular(@Query("api_key") String apikey, @Query("q") String query);*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

@@ -54,13 +54,38 @@ public class MovieListModelImp implements MovieListModelContract {
                     @Override
                     public void onError(Throwable e) {
                         Timber.e(e, "onError %d", e.getMessage());
-                        popularMovieResultsListener.onFailure(e.getMessage());
+                        popularMovieResultsListener.onPopularMovieFailure(e.getMessage());
                     }
 
                     @Override
                     public void onNext(Results results) {
-                        popularMovieResultsListener.onSuccess(results);
-                        Timber.d("onNext %d", results.getResults().size());
+                        Timber.d("onNext");
+                        popularMovieResultsListener.onPopularMovieSuccess(results);
+                    }
+                });
+    }
+
+
+    @Override
+    public void getTopRatedMovies(TopRatedMovieResultsListener topRatedMovieResultsListener) {
+        mSubscription = mMovieAPIService.getTopRatedMovies(Constants.MOVIES_API_KEY)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Results>() {
+                    @Override
+                    public void onCompleted() {
+                        Timber.d("onCompleted");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        topRatedMovieResultsListener.onTopRatedMovieFailure(e.getMessage());
+                        Timber.e(e, e.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(Results movies) {
+                        topRatedMovieResultsListener.onTopRatedMovieSuccess(movies);
                     }
                 });
     }

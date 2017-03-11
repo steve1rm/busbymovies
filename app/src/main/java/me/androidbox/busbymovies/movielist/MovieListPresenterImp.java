@@ -10,7 +10,11 @@ import timber.log.Timber;
  * Created by steve on 2/18/17.
  */
 
-public class MovieListPresenterImp implements MovieListPresenterContract<MovieListViewContract>, MovieListModelContract.PopularMovieResultsListener {
+public class MovieListPresenterImp implements
+        MovieListPresenterContract<MovieListViewContract>,
+        MovieListModelContract.PopularMovieResultsListener,
+        MovieListModelContract.TopRatedMovieResultsListener {
+
     private MovieListViewContract mMovieListViewContract;
     @Inject MovieListModelContract mMovieModelContract;
 
@@ -40,23 +44,24 @@ public class MovieListPresenterImp implements MovieListPresenterContract<MovieLi
 
     @Override
     public void getPopularMovies() {
-        if(mMovieListViewContract != null) {
+        if(mMovieModelContract != null) {
             mMovieModelContract.getPopularMovies(MovieListPresenterImp.this);
         }
     }
 
     @Override
     public void getTopRatedMovies() {
-        if(mMovieListViewContract != null) {
-            mMovieListViewContract.displayTopRatedMovies("top rated");
+        if(mMovieModelContract != null) {
+            mMovieModelContract.getTopRatedMovies(MovieListPresenterImp.this);
         }
     }
 
     /**
      * Wait for the response to be called back in the Model on failure
      */
+
     @Override
-    public void onFailure(String errorMessage) {
+    public void onPopularMovieFailure(String errorMessage) {
         mMovieListViewContract.failedToDisplayPopularMovies(errorMessage);
     }
 
@@ -64,7 +69,25 @@ public class MovieListPresenterImp implements MovieListPresenterContract<MovieLi
      * Wait for the response to be called back in the model on success
      */
     @Override
-    public void onSuccess(Results popularMovies) {
+    public void onPopularMovieSuccess(Results popularMovies) {
         mMovieListViewContract.displayPopularMovies(popularMovies);
+    }
+
+    /**
+     * Wait for the response to be called back in the model for getting top rated movies
+     * @param errorMessage
+     */
+    @Override
+    public void onTopRatedMovieFailure(String errorMessage) {
+        mMovieListViewContract.failedToDisplayTopRatedMovies(errorMessage);
+    }
+
+    /**
+     * Wait for the response to be called back in the model for getting top rated movies
+     * @param topRatedMovies
+     */
+    @Override
+    public void onTopRatedMovieSuccess(Results topRatedMovies) {
+        mMovieListViewContract.displayTopRatedMovies(topRatedMovies);
     }
 }

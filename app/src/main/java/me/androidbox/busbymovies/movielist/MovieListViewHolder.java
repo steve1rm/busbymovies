@@ -104,15 +104,5 @@ public class MovieListViewHolder extends RecyclerView.ViewHolder {
         final Intent intent = new Intent(mContext.get(), MovieDetailActivity.class);
         intent.putExtra(MovieDetailViewImp.MOVIE_ID_KEY, movieId);
         mContext.get().startActivity(intent);
-
-        /*
-        if(mMovieSelectedListener != null) {
-            Timber.d("Movie Adapter position: %d", getAdapterPosition());
-            mMovieSelectedListener.onMovieSelected(mMovieId);
-        }
-        else {
-            Timber.e("Failed to get the movie position");
-        }
-*/
     }
 }

@@ -1,12 +1,10 @@
 package me.androidbox.busbymovies.utils;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.graphics.Palette;
 import android.widget.ImageView;
 
-import static me.androidbox.busbymovies.R.id.palette;
 import static me.androidbox.busbymovies.utils.MovieImage.ImageSize.w154;
 import static me.androidbox.busbymovies.utils.MovieImage.ImageSize.w185;
 import static me.androidbox.busbymovies.utils.MovieImage.ImageSize.w342;

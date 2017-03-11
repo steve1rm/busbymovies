@@ -10,7 +10,7 @@ import java.util.Collections;
 import java.util.List;
 
 import me.androidbox.busbymovies.R;
-import me.androidbox.busbymovies.models.Movie;
+import me.androidbox.busbymovies.models.Movies;
 import me.androidbox.busbymovies.models.Results;
 import me.androidbox.busbymovies.movielist.MovieListViewHolder;
 
@@ -20,9 +20,9 @@ import me.androidbox.busbymovies.movielist.MovieListViewHolder;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieListViewHolder> {
 
-    private List<Movie> mMovieList = Collections.emptyList();
+    private List<Movies> mMovieList = Collections.emptyList();
 
-    public MovieAdapter(List<Movie> movieList) {
+    public MovieAdapter(List<Movies> movieList) {
         mMovieList = new ArrayList<>(movieList);
     }
 
@@ -40,8 +40,16 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieListViewHolder> {
     }
 
     public void loadAdapter(Results results) {
+        clearAllMovies();
+
         mMovieList.addAll(results.getResults());
         notifyItemRangeInserted(0, results.getResults().size());
+    }
+
+    public void clearAllMovies() {
+        int count = getItemCount();
+        mMovieList.clear();
+        notifyItemRangeRemoved(0, count);
     }
 
     @Override
