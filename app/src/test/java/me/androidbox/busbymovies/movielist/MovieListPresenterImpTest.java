@@ -19,7 +19,6 @@ public class MovieListPresenterImpTest {
     private MovieListModelContract mockMovieListModelContract;
     private MovieListViewContract mockMovieListViewContract;
     private MovieListPresenterContract<MovieListViewContract> movieListPresenterContract;
-    private Results movies;
 
     @Before
     public void setUp() throws Exception {
