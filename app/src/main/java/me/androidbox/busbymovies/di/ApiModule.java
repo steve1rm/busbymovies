@@ -119,7 +119,13 @@ public class ApiModule {
                             .build();
                 }
 
-                return chain.proceed(request);
+                try {
+                    return chain.proceed(request);
+                }
+                catch(Exception e) {
+                    Timber.e(e, e.getMessage());
+                    return null;
+                }
             }
         };
     }

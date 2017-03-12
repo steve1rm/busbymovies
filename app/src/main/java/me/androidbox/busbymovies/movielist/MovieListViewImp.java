@@ -2,6 +2,7 @@ package me.androidbox.busbymovies.movielist;
 
 import android.animation.Animator;
 import android.animation.AnimatorInflater;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -174,9 +175,19 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract 
     /**
      * Setup toolbar
      */
+    @SuppressWarnings("all")
     private void setupToolbar() {
         AppCompatActivity appCompatActivity = (AppCompatActivity)getActivity();
         appCompatActivity.setSupportActionBar(mToolbar);
+        appCompatActivity.getSupportActionBar().setLogo(R.mipmap.ic_launcher);
+        appCompatActivity.getSupportActionBar().setDisplayUseLogoEnabled(true);
+
+        try {
+            appCompatActivity.getSupportActionBar().setDisplayShowTitleEnabled(true);
+        }
+        catch(NullPointerException e) {
+            Timber.e(e, e.getMessage());
+        }
     }
 
     private void setupRecyclerView() {
