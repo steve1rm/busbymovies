@@ -1,9 +1,14 @@
 package me.androidbox.busbymovies.moviedetails;
 
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.customtabs.CustomTabsIntent;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -124,9 +129,6 @@ public class MovieDetailViewImp extends Fragment implements MovieDetailViewContr
 */
 
 
-
-
-
  /*       Animator animator;
         if(mhasFavourited) {
             animator = AnimatorInflater.loadAnimator(getActivity(), R.animator.rotate_backwards);
@@ -235,5 +237,23 @@ public class MovieDetailViewImp extends Fragment implements MovieDetailViewContr
     @Override
     public void displayErrorFailedToGetMovie(String errMessage) {
         Toast.makeText(getActivity(), "Failed to get Movie " + errMessage, Toast.LENGTH_LONG).show();
+    }
+
+    /* Open the movie homepage using chrome custom tabs */
+    @SuppressWarnings("unused")
+    @OnClick(R.id.tvHomepage)
+    public void openHomePage() {
+        final CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+        builder.setToolbarColor(ContextCompat.getColor(getActivity(), R.color.primary));
+        final Bitmap backButton = BitmapFactory.decodeResource(getResources(), R.drawable.ic_action_name);
+        builder.setCloseButtonIcon(backButton);
+
+        builder.setShowTitle(true);
+  //      builder.setStartAnimations(getActivity(), android.R.anim.slide_out_right, android.R.anim.slide_out_right);
+        builder.setExitAnimations(getActivity(), android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+
+        final CustomTabsIntent customTabsIntent = builder.build();
+
+        customTabsIntent.launchUrl(getActivity(), Uri.parse(mTvHomepage.getText().toString()));
     }
 }

@@ -113,35 +113,45 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract 
         mUnbinder.unbind();
     }
 
+    /* Close the sort Fab */
+    private void closeSortFab() {
+        Timber.d("Close the fab");
+
+        final Animator closePopularFab = AnimatorInflater.loadAnimator(getActivity(), R.animator.close_popular_fab);
+        closePopularFab.setTarget(mFabPopular);
+        closePopularFab.start();
+
+        final Animator closeTopRatedFab = AnimatorInflater.loadAnimator(getActivity(), R.animator.close_toprated_fab);
+        closeTopRatedFab.setTarget(mFabTopRated);
+        closeTopRatedFab.start();
+
+        mIsSortFabOpen = false;
+    }
+
+    /* Open the sort Fab */
+    private void openSortFab() {
+        Timber.d("Close the fab");
+
+        final Animator openPopularFab = AnimatorInflater.loadAnimator(getActivity(), R.animator.open_popular_fab);
+        openPopularFab.setTarget(mFabPopular);
+        openPopularFab.start();
+
+        final Animator openTopRatedTab = AnimatorInflater.loadAnimator(getActivity(), R.animator.open_toprated_fab);
+        openTopRatedTab.setTarget(mFabTopRated);
+        openTopRatedTab.start();
+
+        mIsSortFabOpen = true;
+    }
+
     @SuppressWarnings("unused")
     @OnClick(R.id.fabSort)
     public void openSort() {
 
         if(mIsSortFabOpen) {
-            Timber.d("Close the fab");
-
-            final Animator closePopularFab = AnimatorInflater.loadAnimator(getActivity(), R.animator.close_popular_fab);
-            closePopularFab.setTarget(mFabPopular);
-            closePopularFab.start();
-
-            final Animator closeTopRatedFab = AnimatorInflater.loadAnimator(getActivity(), R.animator.close_toprated_fab);
-            closeTopRatedFab.setTarget(mFabTopRated);
-            closeTopRatedFab.start();
-
-            mIsSortFabOpen = false;
+            closeSortFab();
         }
         else {
-            Timber.d("Open the fab");
-
-            final Animator openPopularFab = AnimatorInflater.loadAnimator(getActivity(), R.animator.open_popular_fab);
-            openPopularFab.setTarget(mFabPopular);
-            openPopularFab.start();
-
-            final Animator openTopRatedTab = AnimatorInflater.loadAnimator(getActivity(), R.animator.open_toprated_fab);
-            openTopRatedTab.setTarget(mFabTopRated);
-            openTopRatedTab.start();
-
-            mIsSortFabOpen = true;
+            openSortFab();
         }
     }
 
@@ -150,6 +160,7 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract 
     public void getPopular() {
         Timber.d("getPopular");
         getPopularMovies();
+        closeSortFab();
     }
 
     @SuppressWarnings("unused")
@@ -157,6 +168,7 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract 
     public void getTopRated() {
         Timber.d("getTopRated");
         getTopRatedMovies();
+        closeSortFab();
     }
 
     /**

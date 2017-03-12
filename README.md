@@ -16,6 +16,8 @@ Shows all the movies that are considered the most popular and top rated
 * [x] Palette - Creating dynamic vibrant colors based on the image poster
 * [x] mockito - mocking classes for running tests using junit4 running on JVM
 * [x] espresso - running instrumentation UI tests
+* [x] blurkit - creating a blur effect
+* [x] chrome custom tabs - opening the movie home page
 
 ## Architecture 
 * [x] MVP - Model View Presenter

@@ -70,10 +70,10 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginTop="8dp"
                 android:textSize="14sp"
-                android:textColorLink="@color/primary"
+                android:textColor="@color/primary"
                 android:fontFamily="sans-serif"
                 android:ellipsize="end"
-                android:autoLink="web"/>
+                android:clickable="true"/>
 
             <TextView
                 android:id="@+id/tvRuntime"
