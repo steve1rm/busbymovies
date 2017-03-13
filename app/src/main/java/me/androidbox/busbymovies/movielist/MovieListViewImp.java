@@ -3,6 +3,7 @@ package me.androidbox.busbymovies.movielist;
 import android.animation.Animator;
 import android.animation.AnimatorInflater;
 import android.annotation.SuppressLint;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -25,6 +26,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Optional;
 import butterknife.Unbinder;
 import me.androidbox.busbymovies.R;
 import me.androidbox.busbymovies.adapters.MovieAdapter;
@@ -40,7 +42,7 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract 
 
     @Inject MovieListPresenterContract<MovieListViewContract> mMovieListPresenterImp;
 
-    @BindView(R.id.tool_bar) Toolbar mToolbar;
+    @Nullable @BindView(R.id.tool_bar) Toolbar mToolbar;
     @BindView(R.id.rvMovieList) RecyclerView mRvMovieList;
     @BindView(R.id.pbMovieList) ContentLoadingProgressBar mPbMovieList;
     @BindView(R.id.fabPopular) FloatingActionButton mFabPopular;
@@ -66,7 +68,11 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract 
 
         mUnbinder = ButterKnife.bind(MovieListViewImp.this, view);
 
-        setupToolbar();
+        /* Don't display the toolbar if when in landscape mode to create more real-estate */
+        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            setupToolbar();
+        }
+
         setupRecyclerView();
 
         /* Hide the progress bar */
@@ -191,8 +197,15 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract 
     }
 
     private void setupRecyclerView() {
+
+        /* Portrait mode 2 columns as there is less width to display movies
+           Landscape mode 3 columns as there is more width to display movies
+         */
+        final int columnCount = (getResources().getConfiguration().orientation
+                == Configuration.ORIENTATION_PORTRAIT) ? 2 : 3;
+
         final RecyclerView.LayoutManager gridLayoutManager
-                = new GridLayoutManager(getActivity(), 2, LinearLayoutManager.VERTICAL, false);
+                = new GridLayoutManager(getActivity(), columnCount, LinearLayoutManager.VERTICAL, false);
         mRvMovieList.setLayoutManager(gridLayoutManager);
         mRvMovieList.setHasFixedSize(true);
         mMovieAdapter = new MovieAdapter(Collections.emptyList());
