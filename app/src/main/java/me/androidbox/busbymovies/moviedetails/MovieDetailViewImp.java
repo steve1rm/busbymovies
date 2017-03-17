@@ -12,6 +12,7 @@ import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.URLUtil;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -243,17 +244,22 @@ public class MovieDetailViewImp extends Fragment implements MovieDetailViewContr
     @SuppressWarnings("unused")
     @OnClick(R.id.tvHomepage)
     public void openHomePage() {
-        final CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
-        builder.setToolbarColor(ContextCompat.getColor(getActivity(), R.color.primary));
-        final Bitmap backButton = BitmapFactory.decodeResource(getResources(), R.drawable.ic_action_name);
-        builder.setCloseButtonIcon(backButton);
+        if(URLUtil.isValidUrl(mTvHomepage.getText().toString())) {
+            final CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+            final Bitmap backButton = BitmapFactory.decodeResource(getResources(), R.drawable.ic_arrow_back_white_24dp);
+            builder.setToolbarColor(ContextCompat.getColor(getActivity(), R.color.primary));
+            builder.setCloseButtonIcon(backButton);
+            builder.setShowTitle(true);
 
-        builder.setShowTitle(true);
-  //      builder.setStartAnimations(getActivity(), android.R.anim.slide_out_right, android.R.anim.slide_out_right);
-        builder.setExitAnimations(getActivity(), android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+            builder.setStartAnimations(getActivity(), R.anim.slide_in_right, R.anim.slide_out_left);
+            builder.setExitAnimations(getActivity(), R.anim.slide_in_left, R.anim.slide_out_right);
 
-        final CustomTabsIntent customTabsIntent = builder.build();
-
-        customTabsIntent.launchUrl(getActivity(), Uri.parse(mTvHomepage.getText().toString()));
+            final CustomTabsIntent customTabsIntent = builder.build();
+            customTabsIntent.launchUrl(getActivity(), Uri.parse(mTvHomepage.getText().toString()));
+        }
+        else {
+            Toast.makeText(getActivity(), "Invalid URL", Toast.LENGTH_LONG).show();
+            Timber.e("Invalid URL %s", mTvHomepage.getText().toString());
+        }
     }
 }
