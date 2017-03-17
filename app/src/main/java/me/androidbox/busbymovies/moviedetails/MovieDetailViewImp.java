@@ -9,7 +9,10 @@ import android.support.annotation.Nullable;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.URLUtil;
@@ -58,6 +61,7 @@ public class MovieDetailViewImp extends Fragment implements MovieDetailViewContr
     @BindView(R.id.tvRuntime) TextView mTvRuntime;
     @BindView(R.id.svMovieFooter) ScrollView mSvMovieFooter;
     @BindView(R.id.tvVoteAverage) TextView mTvVoteAverage;
+    @BindView(R.id.tool_bar) Toolbar mToolBar;
 
     public MovieDetailViewImp() {
         // Required empty public constructor
@@ -81,7 +85,17 @@ public class MovieDetailViewImp extends Fragment implements MovieDetailViewContr
 
         mUnbinder = ButterKnife.bind(MovieDetailViewImp.this, view);
 
+        setupToolBar();
+
         return view;
+    }
+
+    private void setupToolBar() {
+        final AppCompatActivity appCompatActivity = (AppCompatActivity)getActivity();
+        appCompatActivity.setSupportActionBar(mToolBar);
+        appCompatActivity.getSupportActionBar().setDisplayShowHomeEnabled(true);
+        appCompatActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        appCompatActivity.getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
     }
 
     @Override
@@ -261,5 +275,13 @@ public class MovieDetailViewImp extends Fragment implements MovieDetailViewContr
             Toast.makeText(getActivity(), "Invalid URL", Toast.LENGTH_LONG).show();
             Timber.e("Invalid URL %s", mTvHomepage.getText().toString());
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == android.R.id.home) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
