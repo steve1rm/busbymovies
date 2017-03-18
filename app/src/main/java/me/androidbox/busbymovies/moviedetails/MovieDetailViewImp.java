@@ -12,7 +12,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.URLUtil;
@@ -275,13 +274,5 @@ public class MovieDetailViewImp extends Fragment implements MovieDetailViewContr
             Toast.makeText(getActivity(), "Invalid URL", Toast.LENGTH_LONG).show();
             Timber.e("Invalid URL %s", mTvHomepage.getText().toString());
         }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == android.R.id.home) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 }
