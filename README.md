@@ -3,9 +3,11 @@ Shows all the movies that are considered the most popular and top rated
 
 ## User Stories:
 
-* [x] Show a list of currently playing movies
-* [ ] Show the detail of a selected movie
-
+* [x] Shows a list of popular movies
+* [x] Shows a list of top rated movies
+* [x] Show the detail of a selected popular or top rated movie
+* [x] Caches movies for offline viewing for a period of 7 days
+* [x] Only requests fresh movies after a 120 second period has expired
 
 ## Libraries used
 * [x] Dagger2 - Dependency Injection
@@ -21,4 +23,7 @@ Shows all the movies that are considered the most popular and top rated
 
 ## Architecture 
 * [x] MVP - Model View Presenter
+
+## API KEY INPUT
+* Enter your API Key in utils/Constants.java file
 
