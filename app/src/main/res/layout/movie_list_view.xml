@@ -19,6 +19,7 @@
             android:layout_height="?attr/actionBarSize"
             android:minHeight="?attr/actionBarSize"
             android:background="@color/primary"
+            app:contentInsetStart="8dp"
             app:titleTextColor="@android:color/white"
             app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
@@ -85,12 +86,3 @@
         app:layout_anchorGravity="bottom|right"/>
 
 </android.support.design.widget.CoordinatorLayout>
-
-<!--
-<include
-android:fitsSystemWindows="true"
-android:layout_marginTop="24dp"
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-layout="@layout/toolbar" />
--->

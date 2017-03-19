@@ -17,15 +17,6 @@ public class MovieDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
 
-/*
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            final Window window = getWindow();
-            window.setFlags(
-                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
-                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        }
-*/
-
         if(savedInstanceState == null) {
             final Intent intent = getIntent();
 
