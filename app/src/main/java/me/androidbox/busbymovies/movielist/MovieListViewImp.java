@@ -187,13 +187,8 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract 
         appCompatActivity.setSupportActionBar(mToolbar);
         appCompatActivity.getSupportActionBar().setLogo(R.mipmap.ic_launcher);
         appCompatActivity.getSupportActionBar().setDisplayUseLogoEnabled(true);
-
-        try {
-            appCompatActivity.getSupportActionBar().setDisplayShowTitleEnabled(true);
-        }
-        catch(NullPointerException e) {
-            Timber.e(e, e.getMessage());
-        }
+        appCompatActivity.getSupportActionBar().setDisplayShowTitleEnabled(true);
+        appCompatActivity.getSupportActionBar().setTitle(R.string.app_name);
     }
 
     private void setupRecyclerView() {
