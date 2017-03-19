@@ -36,83 +36,97 @@ public class MovieListModelImp implements MovieListModelContract {
 
     @Override
     public void getPopularMovies(PopularMovieResultsListener popularMovieResultsListener) {
-        mSubscription = mMovieAPIService.getPopular(Constants.MOVIES_API_KEY)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Results>() {
-                    @Override
-                    public void onStart() {
-                        super.onStart();
-                        Timber.d("onStart");
-                    }
+        if(Constants.MOVIES_API_KEY.isEmpty()) {
+            popularMovieResultsListener.onPopularMovieFailure("Empty API Key");
+        }
+        else {
+            mSubscription = mMovieAPIService.getPopular(Constants.MOVIES_API_KEY)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Subscriber<Results>() {
+                        @Override
+                        public void onStart() {
+                            super.onStart();
+                            Timber.d("onStart");
+                        }
 
-                    @Override
-                    public void onCompleted() {
-                        Timber.d("onCompleted");
-                    }
+                        @Override
+                        public void onCompleted() {
+                            Timber.d("onCompleted");
+                        }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        Timber.e(e, "onError %d", e.getMessage());
-                        popularMovieResultsListener.onPopularMovieFailure(e.getMessage());
-                    }
+                        @Override
+                        public void onError(Throwable e) {
+                            Timber.e(e, "onError %d", e.getMessage());
+                            popularMovieResultsListener.onPopularMovieFailure(e.getMessage());
+                        }
 
-                    @Override
-                    public void onNext(Results results) {
-                        Timber.d("onNext");
-                        popularMovieResultsListener.onPopularMovieSuccess(results);
-                    }
-                });
+                        @Override
+                        public void onNext(Results results) {
+                            Timber.d("onNext");
+                            popularMovieResultsListener.onPopularMovieSuccess(results);
+                        }
+                    });
+        }
     }
-
 
     @Override
     public void getTopRatedMovies(TopRatedMovieResultsListener topRatedMovieResultsListener) {
-        mSubscription = mMovieAPIService.getTopRatedMovies(Constants.MOVIES_API_KEY)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Results>() {
-                    @Override
-                    public void onCompleted() {
-                        Timber.d("onCompleted");
-                    }
+        if(Constants.MOVIES_API_KEY.isEmpty()) {
+            topRatedMovieResultsListener.onTopRatedMovieFailure("Empty API Key");
+        }
+        else {
+            mSubscription = mMovieAPIService.getTopRatedMovies(Constants.MOVIES_API_KEY)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Subscriber<Results>() {
+                        @Override
+                        public void onCompleted() {
+                            Timber.d("onCompleted");
+                        }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        topRatedMovieResultsListener.onTopRatedMovieFailure(e.getMessage());
-                        Timber.e(e, e.getMessage());
-                    }
+                        @Override
+                        public void onError(Throwable e) {
+                            topRatedMovieResultsListener.onTopRatedMovieFailure(e.getMessage());
+                            Timber.e(e, e.getMessage());
+                        }
 
-                    @Override
-                    public void onNext(Results movies) {
-                        topRatedMovieResultsListener.onTopRatedMovieSuccess(movies);
-                    }
-                });
+                        @Override
+                        public void onNext(Results movies) {
+                            topRatedMovieResultsListener.onTopRatedMovieSuccess(movies);
+                        }
+                    });
+        }
     }
 
     @Override
     public void getMovieDetail(int movieId, MovieDetailResultsListener movieDetailResultsListener) {
-        mSubscription = mMovieAPIService.getMovieByIdExt(movieId, Constants.MOVIES_API_KEY)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Movie>() {
-                    @Override
-                    public void onCompleted() {
-                        Timber.d("onCompleted");
-                    }
+        if(Constants.MOVIES_API_KEY.isEmpty()) {
+            movieDetailResultsListener.onFailure("Empty API Key");
+        }
+        else {
+            mSubscription = mMovieAPIService.getMovieByIdExt(movieId, Constants.MOVIES_API_KEY)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Subscriber<Movie>() {
+                        @Override
+                        public void onCompleted() {
+                            Timber.d("onCompleted");
+                        }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        Timber.e(e, "onError %s", e.getMessage());
-                        movieDetailResultsListener.onFailure(e.getMessage());
-                    }
+                        @Override
+                        public void onError(Throwable e) {
+                            Timber.e(e, "onError %s", e.getMessage());
+                            movieDetailResultsListener.onFailure(e.getMessage());
+                        }
 
-                    @Override
-                    public void onNext(Movie movie) {
-                        movieDetailResultsListener.onSuccess(movie);
-                        Timber.d("onNext");
-                    }
-                });
+                        @Override
+                        public void onNext(Movie movie) {
+                            movieDetailResultsListener.onSuccess(movie);
+                            Timber.d("onNext");
+                        }
+                    });
+        }
     }
 
 

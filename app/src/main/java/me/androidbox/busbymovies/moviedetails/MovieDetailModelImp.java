@@ -32,27 +32,32 @@ public class MovieDetailModelImp implements MovieDetailModelContract {
 
     @Override
     public void getMovieDetail(int movieId, GetMovieDetailListener getMovieDetailListener) {
-        mSubscription = mMovieAPIService.getMovieByIdExt(movieId, Constants.MOVIES_API_KEY)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Movie>() {
-                    @Override
-                    public void onCompleted() {
-                        Timber.d("onCompleted");
-                    }
+        if(Constants.MOVIES_API_KEY.isEmpty()) {
+            getMovieDetailListener.onGetMovieDetailFailure("Empty API Key");
+        }
+        else {
+            mSubscription = mMovieAPIService.getMovieByIdExt(movieId, Constants.MOVIES_API_KEY)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Subscriber<Movie>() {
+                        @Override
+                        public void onCompleted() {
+                            Timber.d("onCompleted");
+                        }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        Timber.e(e, e.getMessage());
-                        getMovieDetailListener.onGetMovieDetailFailure(e.getMessage());
-                    }
+                        @Override
+                        public void onError(Throwable e) {
+                            Timber.e(e, e.getMessage());
+                            getMovieDetailListener.onGetMovieDetailFailure(e.getMessage());
+                        }
 
-                    @Override
-                    public void onNext(Movie movie) {
-                        Timber.d("onNext");
-                        getMovieDetailListener.onGetMovieDetailSuccess(movie);
-                    }
-                });
+                        @Override
+                        public void onNext(Movie movie) {
+                            Timber.d("onNext");
+                            getMovieDetailListener.onGetMovieDetailSuccess(movie);
+                        }
+                    });
+        }
     }
 
     @Override

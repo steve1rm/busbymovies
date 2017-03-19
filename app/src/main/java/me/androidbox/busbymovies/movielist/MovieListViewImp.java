@@ -248,12 +248,15 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract 
 
     @Override
     public void failedToDisplayPopularMovies(String errorMessage) {
-        Toast.makeText(getActivity(), "Failed to get popular movies", Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), "Failed to get popular movies\n" + errorMessage, Toast.LENGTH_LONG).show();
+        mPbMovieList.hide();
         Timber.w("Failed to get popular movies %s", errorMessage);
     }
 
     @Override
     public void failedToDisplayTopRatedMovies(String errorMessage) {
+        Toast.makeText(getActivity(), "Failed to get top rated movies\n" + errorMessage, Toast.LENGTH_LONG).show();
+        mPbMovieList.hide();
         Timber.d("Failed to get top rated movies %s", errorMessage);
     }
 }
