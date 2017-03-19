@@ -94,6 +94,7 @@ public class MovieDetailViewImp extends Fragment implements MovieDetailViewContr
         appCompatActivity.setSupportActionBar(mToolBar);
         appCompatActivity.getSupportActionBar().setDisplayShowHomeEnabled(true);
         appCompatActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        appCompatActivity.getSupportActionBar().setDisplayShowTitleEnabled(false);
         appCompatActivity.getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
     }
 
