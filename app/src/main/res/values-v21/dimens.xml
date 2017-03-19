@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="toolbarHeight">24dp</dimen>
+    <dimen name="fabSortMarginBottom">64dp</dimen>
+</resources>
