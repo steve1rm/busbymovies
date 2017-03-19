@@ -20,8 +20,7 @@
             android:minHeight="?attr/actionBarSize"
             android:background="@color/primary"
             app:contentInsetStart="8dp"
-            app:titleTextColor="@android:color/white"
-            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
         </android.support.v7.widget.Toolbar>
 

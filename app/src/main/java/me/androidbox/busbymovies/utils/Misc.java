@@ -1,5 +1,7 @@
 package me.androidbox.busbymovies.utils;
 
+import android.content.res.Resources;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -30,5 +32,18 @@ public final class Misc {
         }
 
         return simpleDateFormat.format(tempDate);
+    }
+
+    /* Get the height of the status bar as every device is different to set the marginTop for the toolbar */
+    public static int getStatusBarHeight(Resources resources) {
+        int height = 24;
+        final int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
+        Timber.d("getStatusBarHeight: resourceId %d", resourceId);
+        if(resourceId > 0) {
+            height = resources.getDimensionPixelSize(resourceId);
+            Timber.d("getStatusBarHeight: height %d", height);
+        }
+
+        return height;
     }
 }
