@@ -19,7 +19,7 @@ public final class Network {
                 (ConnectivityManager)BusbyMoviesApplication.getInstance().getSystemService(Context.CONNECTIVITY_SERVICE);
         final NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
 
-        return networkInfo != null && networkInfo.isConnected();
+        return networkInfo != null && networkInfo.isConnectedOrConnecting();
     }
 
     public static boolean isOnline() {

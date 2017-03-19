@@ -2,7 +2,6 @@ package me.androidbox.busbymovies.movielist;
 
 import android.animation.Animator;
 import android.animation.AnimatorInflater;
-import android.annotation.SuppressLint;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -26,13 +25,11 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Optional;
 import butterknife.Unbinder;
 import me.androidbox.busbymovies.R;
 import me.androidbox.busbymovies.adapters.MovieAdapter;
 import me.androidbox.busbymovies.di.DaggerInjector;
 import me.androidbox.busbymovies.models.Results;
-import me.androidbox.busbymovies.utils.Misc;
 import timber.log.Timber;
 
 /**
@@ -189,10 +186,6 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract 
         appCompatActivity.getSupportActionBar().setLogo(R.mipmap.ic_launcher);
         appCompatActivity.getSupportActionBar().setDisplayUseLogoEnabled(true);
         appCompatActivity.getSupportActionBar().setDisplayShowTitleEnabled(true);
-
-        /* Set the marginTop as this is independant on each device as when status is transparent */
-    //    mToolbar.setTitleMarginTop(Misc.getStatusBarHeight(getResources()));
-      //  mToolbar.setPadding(0, Misc.getStatusBarHeight(getResources()), 0, 0);
     }
 
     private void setupRecyclerView() {

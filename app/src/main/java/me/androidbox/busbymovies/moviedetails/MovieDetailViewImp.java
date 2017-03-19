@@ -276,4 +276,6 @@ public class MovieDetailViewImp extends Fragment implements MovieDetailViewContr
             Timber.e("Invalid URL %s", mTvHomepage.getText().toString());
         }
     }
+
+
 }

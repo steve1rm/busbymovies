@@ -1,5 +1,6 @@
 package me.androidbox.busbymovies.movielist;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -101,5 +102,6 @@ public class MovieListViewHolder extends RecyclerView.ViewHolder {
         final Intent intent = new Intent(mContext.get(), MovieDetailActivity.class);
         intent.putExtra(MovieDetailViewImp.MOVIE_ID_KEY, movieId);
         mContext.get().startActivity(intent);
+        ((Activity)mContext.get()).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 }

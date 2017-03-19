@@ -1,14 +1,13 @@
 package me.androidbox.busbymovies.moviedetails;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Window;
-import android.view.WindowManager;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import me.androidbox.busbymovies.R;
+import timber.log.Timber;
 
 public class MovieDetailActivity extends AppCompatActivity {
 
@@ -35,5 +34,25 @@ public class MovieDetailActivity extends AppCompatActivity {
                 Toast.makeText(this, "No movie to display", Toast.LENGTH_LONG).show();
             }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Timber.d("onBackPressed");
+
+        finish();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == android.R.id.home) {
+            finish();
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+            return true;
+        }
+        
+        return super.onOptionsItemSelected(item);
     }
 }
