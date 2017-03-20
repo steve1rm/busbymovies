@@ -28,5 +28,6 @@ Shows all the movies that are considered the most popular and top rated
 * Enter your API Key in utils/Constants.java file
 
 ## Video Walkthrough
+* Video walkthrough of some of the features that have been implemented
 <img src='https://github.com/steve1rm/busbymovies/blob/master/busbymoviepart1.gif' title='Video Walkthrough' alt='Video Walkthrough' />
 
