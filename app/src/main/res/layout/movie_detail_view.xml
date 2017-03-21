@@ -20,10 +20,10 @@
 
         <com.wonderkiln.blurkit.BlurLayout xmlns:blurkit="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="@dimen/blur_layout_height"
             android:layout_gravity="bottom"
-            android:paddingBottom="4dp"
-            android:paddingTop="4dp"
+            android:paddingBottom="@dimen/blur_layout_padding_buttom"
+            android:paddingTop="@dimen/blur_layout_paddingtop"
             blurkit:blurRadius="3">
 
             <include layout="@layout/movie_details_header" />
@@ -37,13 +37,13 @@
         android:layout_marginTop="@dimen/toolbarHeight"
         android:id="@+id/tool_bar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:minHeight="?attr/actionBarSize"
+        android:layout_height="?android:attr/actionBarSize"
+        android:minHeight="?android:attr/actionBarSize"
         android:background="@drawable/background_translucent"
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:contentInsetStart="8dp"
-        app:contentInsetEnd="4dp"
+        app:contentInsetStart="@dimen/toolbar_inset_start"
+        app:contentInsetEnd="@dimen/toolbar_inset_end"
         app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
     </android.support.v7.widget.Toolbar>
 
@@ -61,8 +61,8 @@
                 android:id="@+id/include_image_thumbnail"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="8dp"
+                android:layout_marginTop="@dimen/include_image_thumbnail_margintop"
+                android:layout_marginEnd="@dimen/detail_movie_marginend"
                 android:layout_alignParentEnd="true"
                 layout="@layout/image_thumbnail"/>
 
@@ -71,8 +71,8 @@
                 style="@style/Base.Widget.AppCompat.RatingBar.Indicator"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp" />
+                android:layout_marginStart="@dimen/detail_movie_marginstart"
+                android:layout_marginTop="@dimen/detail_marginTop" />
 
             <TextView
                 android:id="@+id/tvHomepage"
@@ -81,10 +81,10 @@
                 android:layout_below="@id/rbVoteAverage"
                 android:layout_toStartOf="@id/include_image_thumbnail"
                 android:layout_alignParentStart="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginTop="8dp"
-                android:textSize="14sp"
+                android:layout_marginStart="@dimen/detail_movie_marginstart"
+                android:layout_marginEnd="@dimen/detail_movie_marginend"
+                android:layout_marginTop="@dimen/detail_marginTop"
+                android:textSize="@dimen/homepage_textsize"
                 android:textColor="@color/primary"
                 android:fontFamily="sans-serif"
                 android:ellipsize="end"
@@ -97,10 +97,10 @@
                 android:layout_below="@id/tvHomepage"
                 android:layout_toStartOf="@id/ivThumbnail"
                 android:layout_alignParentStart="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginTop="8dp"
-                android:textSize="18sp"
+                android:layout_marginStart="@dimen/detail_movie_marginstart"
+                android:layout_marginEnd="@dimen/detail_movie_marginend"
+                android:layout_marginTop="@dimen/detail_marginTop"
+                android:textSize="@dimen/runtime_textsize"
                 android:fontFamily="sans-serif-condensed"/>
 
             <TextView
@@ -108,12 +108,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/include_image_thumbnail"
-                android:paddingTop="8dp"
-                android:paddingEnd="8dp"
-                android:paddingStart="8dp"
-                android:paddingBottom="16dp"
+                android:paddingTop="@dimen/detail_marginTop"
+                android:paddingEnd="@dimen/detail_movie_marginend"
+                android:paddingStart="@dimen/detail_movie_marginstart"
+                android:paddingBottom="@dimen/synopsis_paddingBottom"
                 android:fontFamily="sans-serif"
-                android:textSize="18sp" />
+                android:textSize="@dimen/synopsis_textsize" />
         </RelativeLayout>
     </ScrollView>
 
@@ -121,17 +121,17 @@
         android:id="@+id/fabFavourites"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="@dimen/detail_fab_marginend"
+        android:layout_marginBottom="@dimen/detail_fab_marginbottom"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:clickable="true"
         android:alpha="0.6"
         app:srcCompat="@drawable/ic_add_black_24dp"
-        android:tint="@android:color/white"
-        app:borderWidth="0dp"
-        app:elevation="6dp"
+        android:tint="@color/detail_fab_tintColor"
+        app:borderWidth="@dimen/fab_borderWidth"
+        app:elevation="@dimen/fab_elevation"
         app:fabSize="normal"
-        app:pressedTranslationZ="16dp"/>
+        app:pressedTranslationZ="@dimen/fab_translationZ"/>
 
 </RelativeLayout>

@@ -7,29 +7,29 @@
     <ImageView
         android:id="@+id/ivPosterImage"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="@dimen/image_poster_height"
         android:scaleType="centerCrop"
         android:adjustViewBounds="true"/>
 
     <View
         android:id="@+id/palette"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="@dimen/palette_height"
         android:layout_below="@id/ivPosterImage" />
 
     <TextView
         android:id="@+id/tvTagLine"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="@dimen/tagline_height"
         android:layout_below="@id/ivPosterImage"
         android:lines="2"
         android:maxLines="2"
         android:ellipsize="end"
         android:textColor="@color/primary_dark"
-        android:textSize="18sp"
-        android:paddingTop="8dp"
-        android:paddingStart="8dp"
-        android:paddingEnd="4dp"
+        android:textSize="@dimen/tagline_textsize"
+        android:paddingTop="@dimen/tagline_paddingTop"
+        android:paddingStart="@dimen/tagline_paddingStart"
+        android:paddingEnd="@dimen/tagline_paddingEnd"
         android:fontFamily="sans-serif-condensed"/>
 
 </RelativeLayout>
