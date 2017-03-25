@@ -10,4 +10,16 @@
         <item name="colorAccent">@color/accent</item>
     </style>
 
+    <style name="AppThemeTransparentStatusBarNavBar" parent="BaseTheme">
+    </style>
+
+    <style name="AppThemeTransparentStatusBar" parent="BaseTheme">
+    </style>
+
+    <style name="AppThemeTransparentNavBar" parent="BaseTheme">
+    </style>
+
+    <style name="AppThemeNoTransparency" parent="BaseTheme">
+    </style>
+
 </resources>

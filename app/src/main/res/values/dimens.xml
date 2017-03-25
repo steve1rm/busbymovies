@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <dimen name="fabSortMarginBottom">32dp</dimen>
+    <dimen name="toolbarHeight">24dp</dimen>
     <dimen name="thumbnail_width">120dp</dimen>
     <dimen name="thumbnail_height">180dp</dimen>
     <dimen name="thumbnail_marginTop">12dp</dimen>

@@ -9,7 +9,7 @@
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        
+
         <android.support.v7.widget.Toolbar
             xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -23,7 +23,6 @@
             app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
         </android.support.v7.widget.Toolbar>
-
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v7.widget.RecyclerView
@@ -73,7 +72,7 @@
         android:id="@+id/fabSort"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/fab_margins"
+        android:layout_marginBottom="@dimen/fabSortMarginBottom"
         android:layout_marginEnd="@dimen/fab_margins"
         android:clickable="true"
         app:srcCompat="@drawable/ic_sort_black_24dp"
@@ -81,7 +80,7 @@
         app:fabSize="normal"
         app:pressedTranslationZ="@dimen/fab_translationZ"
         app:elevation="@dimen/fab_borderWidth"
+        app:borderWidth="@dimen/fab_borderWidth"
         app:layout_anchor="@id/rvMovieList"
         app:layout_anchorGravity="bottom|right"/>
-
 </android.support.design.widget.CoordinatorLayout>

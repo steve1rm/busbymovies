@@ -15,7 +15,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".movielist.MovieListActivity"
-            android:theme="@style/AppThemeTransparentStatusBarNavBar">
+            android:theme="@style/AppThemeTransparentStatusBarNavBar"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

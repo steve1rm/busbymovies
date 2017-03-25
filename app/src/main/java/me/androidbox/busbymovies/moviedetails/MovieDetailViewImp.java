@@ -89,6 +89,17 @@ public class MovieDetailViewImp extends Fragment implements MovieDetailViewContr
         return view;
     }
 
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+    }
+
     private void setupToolBar() {
         final AppCompatActivity appCompatActivity = (AppCompatActivity)getActivity();
         appCompatActivity.setSupportActionBar(mToolBar);
