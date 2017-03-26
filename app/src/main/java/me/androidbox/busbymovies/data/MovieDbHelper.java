@@ -20,16 +20,16 @@ public class MovieDbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         final String CREATE_TABLE = "CREATE TABLE " +
                 MovieContract.MovieEntry.TABLE_NAME + "( " +
-                MovieContract.MovieEntry._ID + "INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                MovieContract.MovieEntry.MOVIE_ID + "INTEGER NOT NULL, " +
-                MovieContract.MovieEntry.POSTER_PATH + "TEXT, " +
-                MovieContract.MovieEntry.RELEASE_DATE + "TEXT NOT NULL, " +
-                MovieContract.MovieEntry.TITLE + "TEXT NOT NULL, " +
-                MovieContract.MovieEntry.BACKDROP_PATH + "TEXT, " +
-                MovieContract.MovieEntry.VOTE_AVERAGE + "FLOAT, " +
-                MovieContract.MovieEntry.TAGLINE + "TEXT, " +
-                MovieContract.MovieEntry.HOMEPATH + "TEXT, " +
-                MovieContract.MovieEntry.RUNTIME + "INTEGER" + ");";
+                MovieContract.MovieEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                MovieContract.MovieEntry.MOVIE_ID + " INTEGER NOT NULL, " +
+                MovieContract.MovieEntry.POSTER_PATH + " TEXT, " +
+                MovieContract.MovieEntry.RELEASE_DATE + " TEXT NOT NULL, " +
+                MovieContract.MovieEntry.TITLE + " TEXT NOT NULL, " +
+                MovieContract.MovieEntry.BACKDROP_PATH + " TEXT, " +
+                MovieContract.MovieEntry.VOTE_AVERAGE + " REAL, " +
+                MovieContract.MovieEntry.TAGLINE + " TEXT, " +
+                MovieContract.MovieEntry.HOMEPATH + " TEXT, " +
+                MovieContract.MovieEntry.RUNTIME + " INTEGER" + ");";
 
         db.execSQL(CREATE_TABLE);
     }

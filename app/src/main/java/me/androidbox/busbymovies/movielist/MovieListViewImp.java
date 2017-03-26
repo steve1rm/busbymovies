@@ -28,6 +28,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import me.androidbox.busbymovies.R;
 import me.androidbox.busbymovies.adapters.MovieAdapter;
+import me.androidbox.busbymovies.data.MovieFavouritesPresenterContract;
 import me.androidbox.busbymovies.di.DaggerInjector;
 import me.androidbox.busbymovies.models.Results;
 import timber.log.Timber;
@@ -39,6 +40,7 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract 
     public static final String TAG = MovieListViewImp.class.getSimpleName();
 
     @Inject MovieListPresenterContract<MovieListViewContract> mMovieListPresenterImp;
+    @Inject MovieFavouritesPresenterContract<MovieListViewContract> mMovieFavouritePresenterImp;
 
     @Nullable @BindView(R.id.tool_bar) Toolbar mToolbar;
     @BindView(R.id.rvMovieList) RecyclerView mRvMovieList;
@@ -90,6 +92,13 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract 
         super.onActivityCreated(savedInstanceState);
 
         DaggerInjector.getApplicationComponent().inject(MovieListViewImp.this);
+
+        if(mMovieFavouritePresenterImp != null) {
+            Timber.d("mMovieFavouritePresenterImp != null");
+            mMovieFavouritePresenterImp.attachView(MovieListViewImp.this);
+            mMovieFavouritePresenterImp.getFavouriteMovies();
+        }
+
         if(mMovieListPresenterImp != null) {
             Timber.d("mMovieListPresenterImp != null");
             mMovieListPresenterImp.attachView(MovieListViewImp.this);

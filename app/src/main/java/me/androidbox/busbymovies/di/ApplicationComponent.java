@@ -3,6 +3,8 @@ package me.androidbox.busbymovies.di;
 import javax.inject.Singleton;
 
 import dagger.Component;
+import me.androidbox.busbymovies.data.MovieFavouriteModelImp;
+import me.androidbox.busbymovies.data.MovieFavouritePresenterImp;
 import me.androidbox.busbymovies.moviedetails.MovieDetailModelImp;
 import me.androidbox.busbymovies.moviedetails.MovieDetailPresenterImp;
 import me.androidbox.busbymovies.moviedetails.MovieDetailViewImp;
@@ -15,7 +17,13 @@ import me.androidbox.busbymovies.movielist.MovieListViewImp;
  */
 
 @Singleton
-@Component(modules = {PresenterModule.class, ModelModule.class, ApplicationModule.class, ApiModule.class, PresenterDetailModule.class})
+@Component(modules = {
+        PresenterModule.class,
+        ModelModule.class,
+        ApplicationModule.class,
+        ApiModule.class,
+        PresenterDetailModule.class})
+
 public interface ApplicationComponent {
     void inject(MovieListViewImp target);
     void inject(BusbyMoviesApplication target);
@@ -24,4 +32,6 @@ public interface ApplicationComponent {
     void inject(MovieDetailModelImp target);
     void inject(MovieDetailViewImp target);
     void inject(MovieDetailPresenterImp target);
+    void inject(MovieFavouriteModelImp target);
+    void inject(MovieFavouritePresenterImp target);
 }

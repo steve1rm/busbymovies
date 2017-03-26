@@ -13,7 +13,6 @@ import org.junit.runner.RunWith;
 
 import java.lang.reflect.Field;
 
-import me.androidbox.busbymovies.data.MovieContract;
 import me.androidbox.busbymovies.data.MovieContract.MovieEntry;
 import me.androidbox.busbymovies.data.MovieDbHelper;
 

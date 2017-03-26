@@ -14,7 +14,6 @@ import org.junit.runner.RunWith;
 
 import me.androidbox.busbymovies.movielist.MovieListActivity;
 import me.androidbox.busbymovies.network.OkHttpProvider;
-import me.androidbox.busbymovies.utils.Constants;
 import me.androidbox.busbymovies.utils.RecyclerViewAssertions;
 
 import static android.support.test.espresso.Espresso.onView;

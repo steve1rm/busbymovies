@@ -4,6 +4,8 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import me.androidbox.busbymovies.data.MovieFavouritePresenterImp;
+import me.androidbox.busbymovies.data.MovieFavouritesPresenterContract;
 import me.androidbox.busbymovies.movielist.MovieListPresenterContract;
 import me.androidbox.busbymovies.movielist.MovieListPresenterImp;
 import me.androidbox.busbymovies.movielist.MovieListViewContract;
@@ -20,6 +22,11 @@ public class PresenterModule {
         return new MovieListPresenterImp();
     }
 
+    @Provides
+    @Singleton
+    public MovieFavouritesPresenterContract<MovieListViewContract> provideMovieFavouritePresenter() {
+        return new MovieFavouritePresenterImp();
+    }
 /*
     @Provides
     @Singleton
