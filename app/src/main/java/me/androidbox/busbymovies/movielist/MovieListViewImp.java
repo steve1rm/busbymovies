@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import java.util.Collections;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -30,6 +31,7 @@ import me.androidbox.busbymovies.R;
 import me.androidbox.busbymovies.adapters.MovieAdapter;
 import me.androidbox.busbymovies.data.MovieFavouritesPresenterContract;
 import me.androidbox.busbymovies.di.DaggerInjector;
+import me.androidbox.busbymovies.models.Favourite;
 import me.androidbox.busbymovies.models.Results;
 import timber.log.Timber;
 
@@ -267,5 +269,41 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract 
         Toast.makeText(getActivity(), "Failed to get top rated movies\n" + errorMessage, Toast.LENGTH_LONG).show();
         mPbMovieList.hide();
         Timber.d("Failed to get top rated movies %s", errorMessage);
+    }
+
+    @Override
+    public void displayFavouriteMovies(List<Favourite> favouriteList) {
+        Timber.d("displayTopRatedMovies: %d", favouriteList.size());
+
+        if(mPbMovieList.isShown()) {
+            mPbMovieList.hide();
+        }
+
+    //    mMovieAdapter.loadAdapter(favouriteList);
+    }
+
+    @Override
+    public void failedDisplayFavouriteMovies(String errorMessage) {
+        Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void failedFavouriteMovieDelete(String errorMessage) {
+        Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void successFavouriteMovieDelete() {
+
+    }
+
+    @Override
+    public void failedFavouriteMovieInsert(String errorMessage) {
+        Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void successFavouriteMovieInsert() {
+
     }
 }

@@ -1,5 +1,6 @@
 package me.androidbox.busbymovies.data;
 
+import me.androidbox.busbymovies.models.Favourite;
 import me.androidbox.busbymovies.movielist.MovieListViewContract;
 
 /**
@@ -11,6 +12,6 @@ public interface MovieFavouritesPresenterContract<View extends MovieListViewCont
     void detachView();
 
     void getFavouriteMovies();
-    void insertFavouriteMovie();
-    void deleteFavouriteMovie();
+    void insertFavouriteMovie(Favourite favourite);
+    void deleteFavouriteMovie(int movieId);
 }

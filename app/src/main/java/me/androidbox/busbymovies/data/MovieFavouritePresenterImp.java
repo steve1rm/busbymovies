@@ -35,52 +35,69 @@ public class MovieFavouritePresenterImp implements
     @Override
     public void detachView() {
         mMovieListViewContract = null;
+        mMovieFavouriteModelContract.closeDown();
     }
 
     @Override
     public void getFavouriteMovies() {
-        if(mMovieListViewContract != null) {
+        if(mMovieFavouriteModelContract != null) {
             mMovieFavouriteModelContract.retrieve(MovieFavouritePresenterImp.this);
         }
     }
 
     @Override
-    public void insertFavouriteMovie() {
-
+    public void insertFavouriteMovie(Favourite favourite) {
+        if(mMovieFavouriteModelContract != null) {
+            mMovieFavouriteModelContract.insert(favourite, MovieFavouritePresenterImp.this);
+        }
     }
 
     @Override
-    public void deleteFavouriteMovie() {
-
+    public void deleteFavouriteMovie(int movieId) {
+        if(mMovieFavouriteModelContract != null) {
+            mMovieFavouriteModelContract.delete(movieId, MovieFavouritePresenterImp.this);
+        }
     }
 
     @Override
     public void onInsertFailed() {
-
+        if(mMovieListViewContract != null) {
+            mMovieListViewContract.failedFavouriteMovieInsert("Failed to insert favourite");
+        }
     }
 
     @Override
     public void onInsertSuccess() {
-
+        if(mMovieListViewContract != null) {
+            mMovieListViewContract.successFavouriteMovieInsert();
+        }
     }
 
     @Override
     public void onRetrieveFailed() {
-
+        if(mMovieListViewContract != null) {
+            mMovieListViewContract.failedDisplayFavouriteMovies("Failed to get favourite movies");
+        }
     }
 
     @Override
     public void onRetrievedSuccess(List<Favourite> favouriteList) {
-
+        if(mMovieListViewContract != null) {
+            mMovieListViewContract.displayFavouriteMovies(favouriteList);
+        }
     }
 
     @Override
     public void onDeleteFailed() {
-
+        if(mMovieListViewContract != null) {
+            mMovieListViewContract.failedFavouriteMovieDelete("Failed to delete favourite movie");
+        }
     }
 
     @Override
     public void onDeleteSuccess() {
-
+        if(mMovieListViewContract != null) {
+            mMovieListViewContract.successFavouriteMovieDelete();
+        }
     }
 }

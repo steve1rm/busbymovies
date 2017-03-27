@@ -12,6 +12,7 @@ import javax.inject.Inject;
 
 import me.androidbox.busbymovies.data.MovieContract.MovieEntry;
 import me.androidbox.busbymovies.models.Favourite;
+import timber.log.Timber;
 
 /**
  * Created by steve on 3/26/17.
@@ -58,9 +59,11 @@ public class MovieFavouriteModelImp implements MovieFavouriteModelContract {
         contentValues.put(MovieEntry.VOTE_AVERAGE, favourite.getVoteAverage());
 
         if(mDb.insert(MovieEntry.TABLE_NAME, null, contentValues) > 0) {
+            Timber.d("Success to insert movie %d into database", favourite.getMovieId());
             insertListener.onInsertSuccess();
         }
         else {
+            Timber.e("Failed to insert movie %d into database", favourite.getMovieId());
             insertListener.onInsertFailed();
         }
 
@@ -75,6 +78,7 @@ public class MovieFavouriteModelImp implements MovieFavouriteModelContract {
         final Cursor cursor = mDb.rawQuery(sqlSelectAll, null);
 
         if(cursor == null) {
+            Timber.e("Failed to retrieve movies from db");
             retrieveListener.onRetrieveFailed();
         }
         else {
@@ -97,7 +101,7 @@ public class MovieFavouriteModelImp implements MovieFavouriteModelContract {
             }
 
             cursor.close();
-
+            Timber.d("Movies retrieved from the db %d", favouriteList.size());
             retrieveListener.onRetrievedSuccess(favouriteList);
         }
 
@@ -109,9 +113,11 @@ public class MovieFavouriteModelImp implements MovieFavouriteModelContract {
         mDb = mMovieDbHelper.getWritableDatabase();
 
         if(mDb.delete(MovieEntry.TABLE_NAME, "WHERE movieId = " + movieId, null) == 1) {
+            Timber.d("Deleted movie %d from the database", movieId);
             deleteListener.onDeleteSuccess();
         }
         else {
+            Timber.e("Failed to delete movie %d from the database", movieId);
             deleteListener.onDeleteFailed();
         }
 
