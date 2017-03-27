@@ -20,7 +20,6 @@ import me.androidbox.busbymovies.movielist.MovieListViewImp;
 @Component(modules = {
         PresenterModule.class,
         ModelModule.class,
-        ApplicationModule.class,
         ApiModule.class,
         PresenterDetailModule.class})
 
