@@ -54,10 +54,11 @@ dependencies {
     })
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-core:2.7.10'
+    testCompile 'org.robolectric:robolectric:3.3.1'
     /*****************************************************************
      * Support libraries
      ****************************************************************/
-    def supportVersion = "25.2.0"
+    def supportVersion = "25.3.0"
     compile "com.android.support:appcompat-v7:${supportVersion}"
     compile "com.android.support:support-v4:${supportVersion}"
     compile "com.android.support:design:${supportVersion}"
@@ -90,7 +91,7 @@ dependencies {
      * RxJava just for a call adapter for retrofit2
      ***************************************************************/
     /* Because RxAndroid releases are few and far between, it is recommended you also
-                     * explicitly depend on RxJava's latest version for bug fixes and new features */
+                         * explicitly depend on RxJava's latest version for bug fixes and new features */
     compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'io.reactivex:rxjava:1.2.6'
