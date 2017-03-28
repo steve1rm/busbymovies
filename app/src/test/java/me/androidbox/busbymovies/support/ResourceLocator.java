@@ -12,5 +12,4 @@ public final class ResourceLocator {
     public static String getString(int resId) {
         return RuntimeEnvironment.application.getString(resId);
     }
-
 }
