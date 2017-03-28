@@ -1,6 +1,8 @@
 package me.androidbox.busbymovies.moviedetails;
 
 
+import android.animation.Animator;
+import android.animation.AnimatorInflater;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -148,6 +150,19 @@ public class MovieDetailViewImp extends Fragment implements MovieDetailViewContr
     @SuppressWarnings("unused")
     @OnClick(R.id.fabFavourites)
     public void addFavourite(View view) {
+
+        final Animator animator;
+        if(mhasFavourited) {
+            animator = AnimatorInflater.loadAnimator(getActivity(), R.animator.rotate_remove_favourite);
+            mhasFavourited = false;
+        }
+        else {
+            animator = AnimatorInflater.loadAnimator(getActivity(), R.animator.rotate_add_favourite);
+            mhasFavourited = true;
+        }
+
+        animator.setTarget(view);
+        animator.start();
 /*
         Snackbar.make(view, R.string.add_favourite_movies, Snackbar.LENGTH_LONG)
                 .setAction(R.string.undo, View -> Timber.d("onClick snackbar"))
@@ -157,11 +172,11 @@ public class MovieDetailViewImp extends Fragment implements MovieDetailViewContr
 
  /*       Animator animator;
         if(mhasFavourited) {
-            animator = AnimatorInflater.loadAnimator(getActivity(), R.animator.rotate_backwards);
+            animator = AnimatorInflater.loadAnimator(getActivity(), R.animator.rotate_add_favourite);
             mhasFavourited = false;
         }
         else {
-            animator = AnimatorInflater.loadAnimator(getActivity(), R.animator.rotate_forward);
+            animator = AnimatorInflater.loadAnimator(getActivity(), R.animator.rotate_remove_favourite);
             mhasFavourited = true;
         }
 
