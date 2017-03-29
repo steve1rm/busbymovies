@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.customtabs.CustomTabsIntent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -63,6 +64,7 @@ public class MovieDetailViewImp extends Fragment implements MovieDetailViewContr
     @BindView(R.id.svMovieFooter) ScrollView mSvMovieFooter;
     @BindView(R.id.tvVoteAverage) TextView mTvVoteAverage;
     @BindView(R.id.tool_bar) Toolbar mToolBar;
+    @BindView(R.id.fabMovieFavourite) FloatingActionButton mFabMovieFavourite;
 
     public MovieDetailViewImp() {
         // Required empty public constructor
@@ -154,10 +156,21 @@ public class MovieDetailViewImp extends Fragment implements MovieDetailViewContr
         final Animator animator;
         if(mhasFavourited) {
             animator = AnimatorInflater.loadAnimator(getActivity(), R.animator.rotate_remove_favourite);
+
+            Animator removeFavouriteMovie = AnimatorInflater.loadAnimator(getActivity(), R.animator.remove_favourite_movie);
+            removeFavouriteMovie.setTarget(mFabMovieFavourite);
+            removeFavouriteMovie.start();
+
             mhasFavourited = false;
         }
         else {
             animator = AnimatorInflater.loadAnimator(getActivity(), R.animator.rotate_add_favourite);
+
+            /* Add the favourite button to the image */
+            Animator moveFavourite = AnimatorInflater.loadAnimator(getActivity(), R.animator.add_favourite_movie);
+            moveFavourite.setTarget(mFabMovieFavourite);
+            moveFavourite.start();
+
             mhasFavourited = true;
         }
 

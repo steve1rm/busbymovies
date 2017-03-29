@@ -117,8 +117,8 @@
         </RelativeLayout>
     </ScrollView>
 
-<!--
     <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabMovieFavourite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/detail_fab_marginend"
@@ -132,7 +132,6 @@
         app:elevation="@dimen/fab_elevation"
         app:fabSize="normal"
         app:pressedTranslationZ="@dimen/fab_translationZ" />
--->
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fabFavourites"
