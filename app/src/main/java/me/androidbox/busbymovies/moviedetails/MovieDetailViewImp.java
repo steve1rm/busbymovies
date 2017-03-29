@@ -38,6 +38,7 @@ import me.androidbox.busbymovies.R;
 import me.androidbox.busbymovies.di.DaggerInjector;
 import me.androidbox.busbymovies.models.Movie;
 import me.androidbox.busbymovies.utils.Constants;
+import me.androidbox.busbymovies.utils.Misc;
 import me.androidbox.busbymovies.utils.MovieImage;
 import timber.log.Timber;
 
@@ -160,6 +161,9 @@ public class MovieDetailViewImp extends Fragment implements MovieDetailViewContr
             Animator removeFavouriteMovie = AnimatorInflater.loadAnimator(getActivity(), R.animator.remove_favourite_movie);
             removeFavouriteMovie.setTarget(mFabMovieFavourite);
             removeFavouriteMovie.start();
+
+            Timber.d("Height %f Width %f", Misc.getHeightInDp(getResources()), Misc.getWidthInDp(getResources()));
+
 
             mhasFavourited = false;
         }

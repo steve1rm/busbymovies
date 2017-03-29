@@ -16,8 +16,6 @@
     <dimen name="include_image_thumbnail_margintop">10dp</dimen>
     <dimen name="detail_movie_marginend">8dp</dimen>
     <dimen name="detail_movie_marginstart">8dp</dimen>
-    <dimen name="detail_fab_marginend">16dp</dimen>
-    <dimen name="detail_fab_marginbottom">16dp</dimen>
     <dimen name="fab_elevation">6dp</dimen>
     <dimen name="fab_translationZ">16dp</dimen>
     <dimen name="homepage_textsize">14sp</dimen>

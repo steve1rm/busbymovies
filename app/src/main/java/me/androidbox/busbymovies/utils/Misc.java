@@ -1,6 +1,7 @@
 package me.androidbox.busbymovies.utils;
 
 import android.content.res.Resources;
+import android.util.DisplayMetrics;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -14,6 +15,8 @@ import timber.log.Timber;
  */
 
 public final class Misc {
+    /* Private constructor prevents creating object of class */
+    private Misc() {}
 
     /* Format date */
     public static String formatDate(String date, String format) {
@@ -45,5 +48,24 @@ public final class Misc {
         }
 
         return height;
+    }
+
+    // heightPixels 1776 density 480 =
+    // heightPixels 1184 density 320
+
+    // 592 = 1776 * (160 / 480)
+    // 592 = 1184 * (160 / 320)
+
+    // Height 592.000000 Width 384.000000
+
+    public static float getHeightInDp(Resources resources) {
+        final DisplayMetrics displayMetrics = resources.getDisplayMetrics();
+        Timber.d("heightPixels %d density %f", displayMetrics.heightPixels, displayMetrics.density);
+        return displayMetrics.heightPixels / displayMetrics.density;
+    }
+
+    public static float getWidthInDp(Resources resources) {
+        final DisplayMetrics displayMetrics = resources.getDisplayMetrics();
+        return displayMetrics.widthPixels / displayMetrics.density;
     }
 }
