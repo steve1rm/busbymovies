@@ -29,6 +29,29 @@
             <include layout="@layout/movie_details_header" />
 
         </com.wonderkiln.blurkit.BlurLayout>
+
+        <FrameLayout
+            android:id="@+id/youtubeFragmentContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="70dp"
+            android:visibility="invisible">
+
+            <fragment
+                android:id="@+id/youtubeFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:name="com.google.android.youtube.player.YouTubePlayerFragment"/>
+        </FrameLayout>
+
+        <ImageView
+            android:id="@+id/ivPlayTrailer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:tint="@android:color/white"
+            app:srcCompat="@drawable/ic_play_circle_outline_black_64dp"/>
+
     </FrameLayout>
 
     <android.support.v7.widget.Toolbar
