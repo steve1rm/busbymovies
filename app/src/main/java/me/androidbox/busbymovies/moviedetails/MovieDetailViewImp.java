@@ -10,7 +10,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -26,6 +26,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.youtube.player.YouTubeInitializationResult;
+import com.google.android.youtube.player.YouTubePlayer;
+import com.google.android.youtube.player.YouTubePlayerFragment;
 
 import javax.inject.Inject;
 
@@ -65,7 +68,9 @@ public class MovieDetailViewImp extends Fragment implements MovieDetailViewContr
     @BindView(R.id.svMovieFooter) ScrollView mSvMovieFooter;
     @BindView(R.id.tvVoteAverage) TextView mTvVoteAverage;
     @BindView(R.id.tool_bar) Toolbar mToolBar;
-    @BindView(R.id.fabMovieFavourite) FloatingActionButton mFabMovieFavourite;
+    @BindView(R.id.ivPlayTrailer) ImageView mIvPlayTrailer;
+    @BindView(R.id.youtubeFragmentContainer) FrameLayout mYoutubeFragmentContainer;
+    @Nullable @BindView(R.id.fabMovieFavourite) FloatingActionButton mFabMovieFavourite;
 
     public MovieDetailViewImp() {
         // Required empty public constructor
@@ -90,9 +95,65 @@ public class MovieDetailViewImp extends Fragment implements MovieDetailViewContr
         mUnbinder = ButterKnife.bind(MovieDetailViewImp.this, view);
 
         setupToolBar();
-
+        setupYoutubePlayer();
         return view;
     }
+
+    private void setupYoutubePlayer() {
+       final YouTubePlayerFragment youTubePlayerFragment = YouTubePlayerFragment.newInstance();
+        getFragmentManager().beginTransaction()
+                .add(R.id.youtubeFragmentContainer, youTubePlayerFragment)
+                .commit();
+
+        youTubePlayerFragment.initialize(Constants.YOUTUBE_API_KEY, new YouTubePlayer.OnInitializedListener() {
+            @Override
+            public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
+                Timber.d("onInitializationSuccess");
+
+                youTubePlayer.setPlaybackEventListener(new YouTubePlayer.PlaybackEventListener() {
+                    @Override
+                    public void onPlaying() {
+                        mYoutubeFragmentContainer.setVisibility(View.VISIBLE);
+                        mToolBar.setVisibility(View.INVISIBLE);
+                        mIvPlayTrailer.setVisibility(View.INVISIBLE);
+
+                        Timber.d("onPlaying");
+                    }
+
+                    @Override
+                    public void onPaused() {
+
+                    }
+
+                    @Override
+                    public void onStopped() {
+                        Timber.d("onStopped");
+                        mToolBar.setVisibility(View.VISIBLE);
+                        mIvPlayTrailer.setVisibility(View.VISIBLE);
+                        mYoutubeFragmentContainer.setVisibility(View.INVISIBLE);
+                    }
+
+                    @Override
+                    public void onBuffering(boolean b) {
+
+                    }
+
+                    @Override
+                    public void onSeekTo(int i) {
+
+                    }
+                });
+
+                youTubePlayer.loadVideo("JLRsDTBKTFk");
+            }
+
+            @Override
+            public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
+                Timber.e("Failed to initialize %s", youTubeInitializationResult.toString());
+            }
+        });
+    }
+
 
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
