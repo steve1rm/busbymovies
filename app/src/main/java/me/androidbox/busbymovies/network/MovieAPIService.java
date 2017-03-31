@@ -1,7 +1,11 @@
 package me.androidbox.busbymovies.network;
 
+import java.util.List;
+
 import me.androidbox.busbymovies.models.Movie;
 import me.androidbox.busbymovies.models.Results;
+import me.androidbox.busbymovies.models.ResultsTrailer;
+import me.androidbox.busbymovies.models.Trailer;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -27,12 +31,12 @@ public interface MovieAPIService {
     @GET("movie/{movie_id}")
     Observable<Movie> getMovieByIdExt(@Path("movie_id") int movie_id, @Query("api_key") String apikey);
 
+    @GET("movie/{movie_id}/videos")
+    Observable<ResultsTrailer<Trailer>> getMovieTrailers(@Path("movie_id") int movie_id, @Query("api_key") String apiKey);
+
     /* Search for a popular movie */
 /*    @GET("movie/popular")
     Call<Results> searchPopular(@Query("api_key") String apikey, @Query("q") String query);*/
-
-
-
 
 
 

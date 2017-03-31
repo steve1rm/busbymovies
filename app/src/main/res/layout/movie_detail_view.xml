@@ -44,6 +44,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:tint="@android:color/white"
+            android:clickable="true"
+            android:visibility="visible"
             app:srcCompat="@drawable/ic_play_circle_outline_black_64dp"/>
     </FrameLayout>
 

@@ -30,6 +30,8 @@ import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerFragment;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -40,6 +42,8 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 import me.androidbox.busbymovies.R;
 import me.androidbox.busbymovies.di.DaggerInjector;
 import me.androidbox.busbymovies.models.Movie;
+import me.androidbox.busbymovies.models.ResultsTrailer;
+import me.androidbox.busbymovies.models.Trailer;
 import me.androidbox.busbymovies.utils.Constants;
 import me.androidbox.busbymovies.utils.Misc;
 import me.androidbox.busbymovies.utils.MovieImage;
@@ -95,11 +99,29 @@ public class MovieDetailViewImp extends Fragment implements MovieDetailViewContr
         mUnbinder = ButterKnife.bind(MovieDetailViewImp.this, view);
 
         setupToolBar();
-        setupYoutubePlayer();
+   //     setupYoutubePlayer();
         return view;
     }
 
-    private void setupYoutubePlayer() {
+    @SuppressWarnings("unsued")
+    @OnClick(R.id.ivPlayTrailer)
+    public void requestStartMovieTrailer() {
+        Timber.d("requestStartMovieTrailer");
+        mMovieDetailPresenterImp.requestMovieTrailer(269149);
+    }
+
+    @Override
+    public void failedToGetMovieTrailers(String errorMessage) {
+        Timber.e("failedToGetMovieTrailers %s", errorMessage);
+    }
+
+    @Override
+    public void startPlayingMovieTrailer(ResultsTrailer<Trailer> trailerList) {
+        String key = trailerList.getMovieTrailers().get(0).getKey();
+        setupYoutubePlayer(key);
+    }
+
+    private void setupYoutubePlayer(String key) {
        final YouTubePlayerFragment youTubePlayerFragment = YouTubePlayerFragment.newInstance();
         getFragmentManager().beginTransaction()
                 .add(R.id.youtubeFragmentContainer, youTubePlayerFragment)
@@ -144,7 +166,7 @@ public class MovieDetailViewImp extends Fragment implements MovieDetailViewContr
                     }
                 });
 
-                youTubePlayer.loadVideo("JLRsDTBKTFk");
+                youTubePlayer.loadVideo(key);
             }
 
             @Override

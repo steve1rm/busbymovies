@@ -1,9 +1,13 @@
 package me.androidbox.busbymovies.moviedetails;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import me.androidbox.busbymovies.di.DaggerInjector;
 import me.androidbox.busbymovies.models.Movie;
+import me.androidbox.busbymovies.models.ResultsTrailer;
+import me.androidbox.busbymovies.models.Trailer;
 import me.androidbox.busbymovies.utils.Misc;
 import timber.log.Timber;
 
@@ -11,7 +15,10 @@ import timber.log.Timber;
  * Created by steve on 3/2/17.
  */
 
-public class MovieDetailPresenterImp implements MovieDetailPresenterContract<MovieDetailViewContract>, MovieDetailModelContract.GetMovieDetailListener {
+public class MovieDetailPresenterImp implements
+        MovieDetailPresenterContract<MovieDetailViewContract>,
+        MovieDetailModelContract.GetMovieDetailListener,
+        MovieDetailModelContract.GetMovieTrailerListener {
 
     private MovieDetailViewContract mMovieDetailViewContract;
 
@@ -33,6 +40,7 @@ public class MovieDetailPresenterImp implements MovieDetailPresenterContract<Mov
     public void detachView() {
         if(mMovieDetailViewContract != null) {
             mMovieDetailViewContract = null;
+            mMovieDetailModelContract.releaseResources();
         }
     }
 
@@ -66,5 +74,25 @@ public class MovieDetailPresenterImp implements MovieDetailPresenterContract<Mov
         }
     }
 
+    @Override
+    public void requestMovieTrailer(int movieId) {
+        Timber.d("requestMovieTrailers %d", movieId);
+        if(mMovieDetailModelContract != null) {
+            mMovieDetailModelContract.getMovieTrailer(movieId, MovieDetailPresenterImp.this);
+        }
+    }
 
+    @Override
+    public void onGetMovieTrailerSuccess(ResultsTrailer<Trailer> trailers) {
+        if(mMovieDetailViewContract != null) {
+            mMovieDetailViewContract.startPlayingMovieTrailer(trailers);
+        }
+    }
+
+    @Override
+    public void onGetMovieTrailerFailure(String errorMessage) {
+        if(mMovieDetailViewContract != null) {
+            mMovieDetailViewContract.failedToGetMovieTrailers(errorMessage);
+        }
+    }
 }
