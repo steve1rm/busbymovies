@@ -56,6 +56,7 @@ public class MovieDetailViewImp extends Fragment implements MovieDetailViewContr
     public static final String TAG = MovieDetailViewImp.class.getSimpleName();
     public static final String MOVIE_ID_KEY = "movie_id_key";
     private Unbinder mUnbinder;
+    private int mMovieId;
 
     @Inject MovieDetailPresenterContract<MovieDetailViewContract> mMovieDetailPresenterImp;
 
@@ -99,7 +100,7 @@ public class MovieDetailViewImp extends Fragment implements MovieDetailViewContr
         mUnbinder = ButterKnife.bind(MovieDetailViewImp.this, view);
 
         setupToolBar();
-   //     setupYoutubePlayer();
+
         return view;
     }
 
@@ -107,7 +108,7 @@ public class MovieDetailViewImp extends Fragment implements MovieDetailViewContr
     @OnClick(R.id.ivPlayTrailer)
     public void requestStartMovieTrailer() {
         Timber.d("requestStartMovieTrailer");
-        mMovieDetailPresenterImp.requestMovieTrailer(269149);
+        mMovieDetailPresenterImp.requestMovieTrailer(mMovieId);
     }
 
     @Override
@@ -144,7 +145,7 @@ public class MovieDetailViewImp extends Fragment implements MovieDetailViewContr
 
                     @Override
                     public void onPaused() {
-
+                        Timber.d("onPaused");
                     }
 
                     @Override
@@ -157,15 +158,16 @@ public class MovieDetailViewImp extends Fragment implements MovieDetailViewContr
 
                     @Override
                     public void onBuffering(boolean b) {
-
+                        Timber.d("onBuffering %b", b);
                     }
 
                     @Override
                     public void onSeekTo(int i) {
-
+                        Timber.d("onSeekTo %d", i);
                     }
                 });
 
+                /* Start playing the youtube video */
                 youTubePlayer.loadVideo(key);
             }
 
@@ -211,6 +213,7 @@ public class MovieDetailViewImp extends Fragment implements MovieDetailViewContr
                 if(movieId != -1) {
                     mMovieDetailPresenterImp.attachView(MovieDetailViewImp.this);
                     mMovieDetailPresenterImp.getMovieDetail(movieId);
+                    mMovieId = movieId;
                 }
                 else {
                     Timber.e("Invalid movie id '-1'");
