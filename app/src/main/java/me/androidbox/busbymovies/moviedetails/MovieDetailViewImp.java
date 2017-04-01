@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.customtabs.CustomTabsIntent;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.FloatingActionButton;
 import android.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -30,8 +31,6 @@ import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerFragment;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -42,7 +41,7 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 import me.androidbox.busbymovies.R;
 import me.androidbox.busbymovies.di.DaggerInjector;
 import me.androidbox.busbymovies.models.Movie;
-import me.androidbox.busbymovies.models.ResultsTrailer;
+import me.androidbox.busbymovies.models.Results;
 import me.androidbox.busbymovies.models.Trailer;
 import me.androidbox.busbymovies.utils.Constants;
 import me.androidbox.busbymovies.utils.Misc;
@@ -76,6 +75,7 @@ public class MovieDetailViewImp extends Fragment implements MovieDetailViewContr
     @BindView(R.id.ivPlayTrailer) ImageView mIvPlayTrailer;
     @BindView(R.id.youtubeFragmentContainer) FrameLayout mYoutubeFragmentContainer;
     @Nullable @BindView(R.id.fabMovieFavourite) FloatingActionButton mFabMovieFavourite;
+    @BindView(R.id.bottomSheet) FrameLayout mRvTrailerList;
 
     public MovieDetailViewImp() {
         // Required empty public constructor
@@ -100,9 +100,16 @@ public class MovieDetailViewImp extends Fragment implements MovieDetailViewContr
         mUnbinder = ButterKnife.bind(MovieDetailViewImp.this, view);
 
         setupToolBar();
+        setupBottomSheet();
 
         return view;
     }
+
+    private void setupBottomSheet() {
+        BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(mRvTrailerList);
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+    }
+
 
     @SuppressWarnings("unsued")
     @OnClick(R.id.ivPlayTrailer)
@@ -117,8 +124,8 @@ public class MovieDetailViewImp extends Fragment implements MovieDetailViewContr
     }
 
     @Override
-    public void startPlayingMovieTrailer(ResultsTrailer<Trailer> trailerList) {
-        String key = trailerList.getMovieTrailers().get(0).getKey();
+    public void startPlayingMovieTrailer(Results<Trailer> trailerList) {
+        String key = trailerList.getResults().get(0).getKey();
         setupYoutubePlayer(key);
     }
 

@@ -3,5 +3,6 @@
     <string name="add_favourite_movies">Add to favourite movies</string>
     <string name="undo">UNDO</string>
     <string name="initialize_vote">0.0</string>
+    <string name="play_trailer_icon">Play trailer icon</string>
 
 </resources>

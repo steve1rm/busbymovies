@@ -1,12 +1,10 @@
 package me.androidbox.busbymovies.moviedetails;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import me.androidbox.busbymovies.di.DaggerInjector;
 import me.androidbox.busbymovies.models.Movie;
-import me.androidbox.busbymovies.models.ResultsTrailer;
+import me.androidbox.busbymovies.models.Results;
 import me.androidbox.busbymovies.models.Trailer;
 import me.androidbox.busbymovies.network.MovieAPIService;
 import me.androidbox.busbymovies.utils.Constants;
@@ -73,7 +71,7 @@ public class MovieDetailModelImp implements MovieDetailModelContract {
             mSubscription = mMovieAPIService.getMovieTrailers(movieId, Constants.MOVIES_API_KEY)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Subscriber<ResultsTrailer<Trailer>>() {
+                    .subscribe(new Subscriber<Results<Trailer>>() {
                         @Override
                         public void onCompleted() {
                             Timber.d("onCompleted");
@@ -86,7 +84,7 @@ public class MovieDetailModelImp implements MovieDetailModelContract {
                         }
 
                         @Override
-                        public void onNext(ResultsTrailer<Trailer> trailers) {
+                        public void onNext(Results<Trailer> trailers) {
                             getMovieTrailerListener.onGetMovieTrailerSuccess(trailers);
                         }
                     });

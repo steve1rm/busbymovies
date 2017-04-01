@@ -1,12 +1,10 @@
 package me.androidbox.busbymovies.moviedetails;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import me.androidbox.busbymovies.di.DaggerInjector;
 import me.androidbox.busbymovies.models.Movie;
-import me.androidbox.busbymovies.models.ResultsTrailer;
+import me.androidbox.busbymovies.models.Results;
 import me.androidbox.busbymovies.models.Trailer;
 import me.androidbox.busbymovies.utils.Misc;
 import timber.log.Timber;
@@ -83,7 +81,7 @@ public class MovieDetailPresenterImp implements
     }
 
     @Override
-    public void onGetMovieTrailerSuccess(ResultsTrailer<Trailer> trailers) {
+    public void onGetMovieTrailerSuccess(Results<Trailer> trailers) {
         if(mMovieDetailViewContract != null) {
             mMovieDetailViewContract.startPlayingMovieTrailer(trailers);
         }

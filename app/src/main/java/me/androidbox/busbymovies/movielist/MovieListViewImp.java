@@ -32,6 +32,7 @@ import me.androidbox.busbymovies.adapters.MovieAdapter;
 import me.androidbox.busbymovies.data.MovieFavouritesPresenterContract;
 import me.androidbox.busbymovies.di.DaggerInjector;
 import me.androidbox.busbymovies.models.Favourite;
+import me.androidbox.busbymovies.models.Movies;
 import me.androidbox.busbymovies.models.Results;
 import timber.log.Timber;
 
@@ -234,7 +235,7 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract 
     }
 
     @Override
-    public void displayPopularMovies(Results popularMovies) {
+    public void displayPopularMovies(Results<Movies> popularMovies) {
         /* Load adapter with data to be populated in the recycler view */
         /* Hide progress indicator */
         Timber.d("displayPopularMovies Received %d", popularMovies.getResults().size());
@@ -247,7 +248,7 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract 
     }
 
     @Override
-    public void displayTopRatedMovies(Results topRatedMovies) {
+    public void displayTopRatedMovies(Results<Movies> topRatedMovies) {
         Timber.d("displayTopRatedMovies: %d", topRatedMovies.getResults().size());
 
         if(mPbMovieList.isShown()) {
