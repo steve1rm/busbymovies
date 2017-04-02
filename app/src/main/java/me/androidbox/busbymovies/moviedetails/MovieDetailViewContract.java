@@ -11,6 +11,6 @@ import me.androidbox.busbymovies.models.Trailer;
 public interface MovieDetailViewContract {
     void displayMovieDetails(Movie movie);
     void displayErrorFailedToGetMovie(String errMessage);
-    void startPlayingMovieTrailer(Results<Trailer> trailerList);
+    void receivedMovieTrailers(Results<Trailer> trailerList);
     void failedToGetMovieTrailers(String errorMessage);
 }
