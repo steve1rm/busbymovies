@@ -33,6 +33,12 @@
                 android:value=".movielist.MovieListActivity">
             </meta-data>
         </activity>
+
+        <provider
+            android:authorities="me.androidbox.busbymovies"
+            android:name="me.androidbox.busbymovies.data.MovieContentProvider"
+            android:exported="false">
+        </provider>
     </application>
 
 </manifest>
