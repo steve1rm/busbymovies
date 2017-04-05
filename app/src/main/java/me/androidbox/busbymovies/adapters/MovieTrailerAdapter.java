@@ -21,6 +21,7 @@ public class MovieTrailerAdapter extends RecyclerView.Adapter<MovieTrailerViewHo
 
     private List<Trailer> mTrailerList = Collections.emptyList();
     private MovieTrailerListener mMovieTrailerListener;
+    private MovieTrailerViewHolder mMovieTrailerViewHolder;
 
     public MovieTrailerAdapter(List<Trailer> trailerList, MovieTrailerListener movieTrailerListener) {
         this.mTrailerList = trailerList;
@@ -32,12 +33,15 @@ public class MovieTrailerAdapter extends RecyclerView.Adapter<MovieTrailerViewHo
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         final View view = inflater.inflate(R.layout.trailer_item, parent, false);
 
-        return new MovieTrailerViewHolder(view, mMovieTrailerListener);
+        mMovieTrailerViewHolder = new MovieTrailerViewHolder(view, mMovieTrailerListener);
+
+        return mMovieTrailerViewHolder;
     }
 
     @Override
     public void onBindViewHolder(MovieTrailerViewHolder holder, int position) {
-        holder.mTvTrailerName.setText(mTrailerList.get(position).getName());
+        Trailer trailer = mTrailerList.get(position);
+        mMovieTrailerViewHolder.setViewData(trailer);
     }
 
     @Override

@@ -107,7 +107,7 @@ public class MovieDetailViewImp extends Fragment implements MovieDetailViewContr
 
     private void setupBottomSheet() {
         BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(mRvTrailerList);
-        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
     }
 
 

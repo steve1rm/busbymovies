@@ -9,15 +9,16 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.androidbox.busbymovies.R;
+import me.androidbox.busbymovies.models.Trailer;
 
 /**
  * Created by steve on 3/31/17.
  */
 
 public class MovieTrailerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-    public @BindView(R.id.tvTrailerName) TextView mTvTrailerName;
-    public @BindView(R.id.youtubeFragmentContainerItem) FrameLayout mYoutubeFragmentContainerItem;
-    public @BindView(R.id.ivPlayTrailerItem) ImageView mIvPlayTrailerItem;
+    @BindView(R.id.tvTrailerName) TextView mTvTrailerName;
+    @BindView(R.id.youtubeFragmentContainerItem) FrameLayout mYoutubeFragmentContainerItem;
+    @BindView(R.id.ivPlayTrailerItem) ImageView mIvPlayTrailerItem;
 
     private MovieTrailerListener mMovieTrailerListener;
 
@@ -32,5 +33,9 @@ public class MovieTrailerViewHolder extends RecyclerView.ViewHolder implements V
     @Override
     public void onClick(View v) {
         mMovieTrailerListener.onMovieTrailer("");
+    }
+
+    public void setViewData(Trailer trailer) {
+        mTvTrailerName.setText(trailer.getName());
     }
 }
