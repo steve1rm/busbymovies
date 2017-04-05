@@ -1,9 +1,12 @@
 package me.androidbox.busbymovies.data;
 
 import android.content.ContentProvider;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
+import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -50,7 +53,30 @@ public class MovieContentProvider extends ContentProvider {
     @Nullable
     @Override
     public Uri insert(@NonNull Uri uri, @Nullable ContentValues values) {
-        return null;
+        final SQLiteDatabase db = mMoveDbHelper.getWritableDatabase();
+
+        final int match = sUriMatcher.match(uri);
+        Uri insertUri;
+
+        switch(match) {
+            case MOVIES: {
+                final long id = db.insert(MovieContract.MovieEntry.TABLE_NAME, null, values);
+                if(id > 0) {
+                    insertUri = ContentUris.withAppendedId(MovieContract.BASE_CONTENT_URI, id);
+                }
+                else {
+                    throw new SQLException("Failed to insert into DB");
+                }
+            }
+            break;
+
+            default:
+                throw new UnsupportedOperationException("Incorrect matcher");
+        }
+
+        getContext().getContentResolver().notifyChange(uri, null);
+
+        return insertUri;
     }
 
     @Override
