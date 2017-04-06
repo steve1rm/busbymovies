@@ -3,22 +3,29 @@ package me.androidbox.busbymovies.moviedetails;
 
 import android.animation.Animator;
 import android.animation.AnimatorInflater;
+import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationSet;
+import android.view.animation.BounceInterpolator;
+import android.view.animation.OvershootInterpolator;
 import android.webkit.URLUtil;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -154,16 +161,45 @@ public class MovieDetailViewImp extends Fragment implements MovieDetailViewContr
     @OnClick(R.id.fabMovieFavourite)
     public void addMovieFavourite(View view) {
  /*       final Animator animator = AnimatorInflater.loadAnimator(getActivity(), R.animator.add_favourite_movie);
-        animator.setTarget(view);
+        animator.setTarget(view);)
         animator.start();
  */
-        PropertyValuesHolder propertyValuesHolderX = PropertyValuesHolder.ofFloat(View.SCALE_X, 1.2f);
-        PropertyValuesHolder propertyValuesHolderY = PropertyValuesHolder.ofFloat(View.SCALE_Y, 1.2f);
+/*
+        AnimatorSet animatorSet = new AnimatorSet();
+        PropertyValuesHolder propertyValuesHolderX = PropertyValuesHolder.ofFloat(View.SCALE_X, 1.1f);
+        PropertyValuesHolder propertyValuesHolderY = PropertyValuesHolder.ofFloat(View.SCALE_Y, 1.1f);
         ObjectAnimator objectAnimator = ObjectAnimator.ofPropertyValuesHolder(view, propertyValuesHolderX, propertyValuesHolderY);
-        objectAnimator.setDuration(100);
+        objectAnimator.setDuration(300);
+        objectAnimator.setInterpolator(new OvershootInterpolator(10f));
+*/
+
+        /*
         objectAnimator.setRepeatCount(1);
         objectAnimator.setRepeatMode(ObjectAnimator.REVERSE);
+*/
+
+/*
+        PropertyValuesHolder propertyValuesHolderX2 = PropertyValuesHolder.ofFloat(View.SCALE_X, 0.9f);
+        PropertyValuesHolder propertyValuesHolderY2 = PropertyValuesHolder.ofFloat(View.SCALE_Y, 0.9f);
+        ObjectAnimator objectAnimator2 = ObjectAnimator.ofPropertyValuesHolder(view, propertyValuesHolderX2, propertyValuesHolderY2);
+        objectAnimator.setDuration(300);
+        objectAnimator2.setInterpolator(new OvershootInterpolator(10f));
+
+        animatorSet.playSequentially(objectAnimator, objectAnimator2);
         objectAnimator.start();
+*/
+
+      //  view.BackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.primary));
+        //view.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.primary));
+
+        if(Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+            Timber.d("start translationZ");
+            ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(view, View.TRANSLATION_Z, 12f);
+            objectAnimator.setDuration(300);
+            objectAnimator.setInterpolator(new OvershootInterpolator(10f));
+            objectAnimator.setTarget(view);
+            objectAnimator.start();
+        }
     }
 
     private boolean mhasFavourited = false;
