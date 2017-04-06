@@ -3,6 +3,7 @@ package me.androidbox.busbymovies.moviedetails;
 
 import android.animation.Animator;
 import android.animation.AnimatorInflater;
+import android.app.Fragment;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -11,7 +12,6 @@ import android.support.annotation.Nullable;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.FloatingActionButton;
-import android.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -141,7 +141,7 @@ public class MovieDetailViewImp extends Fragment implements
 
     private void setupBottomSheet() {
         BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(mBottomSheet);
-        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
     }
 
     @Override
@@ -151,7 +151,7 @@ public class MovieDetailViewImp extends Fragment implements
 
     private void loadMovieTrailers(Results<Trailer> trailerList) {
         mRvTrailerList.setHasFixedSize(true);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         mRvTrailerList.setLayoutManager(linearLayoutManager);
         mMovieTrailerAdapter = new MovieTrailerAdapter(trailerList, MovieDetailViewImp.this);
         mRvTrailerList.setAdapter(mMovieTrailerAdapter);
@@ -177,6 +177,7 @@ public class MovieDetailViewImp extends Fragment implements
 
    //     setupYoutubePlayer(key);
     }
+
 
     private void setupYoutubePlayer(String key) {
        final YouTubePlayerFragment youTubePlayerFragment = YouTubePlayerFragment.newInstance();
