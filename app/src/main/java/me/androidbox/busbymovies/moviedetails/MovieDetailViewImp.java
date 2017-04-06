@@ -3,6 +3,8 @@ package me.androidbox.busbymovies.moviedetails;
 
 import android.animation.Animator;
 import android.animation.AnimatorInflater;
+import android.animation.ObjectAnimator;
+import android.animation.PropertyValuesHolder;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -146,6 +148,22 @@ public class MovieDetailViewImp extends Fragment implements MovieDetailViewContr
         if(mMovieDetailPresenterImp != null) {
             mMovieDetailPresenterImp.detachView();
         }
+    }
+
+    @SuppressWarnings("unused")
+    @OnClick(R.id.fabMovieFavourite)
+    public void addMovieFavourite(View view) {
+ /*       final Animator animator = AnimatorInflater.loadAnimator(getActivity(), R.animator.add_favourite_movie);
+        animator.setTarget(view);
+        animator.start();
+ */
+        PropertyValuesHolder propertyValuesHolderX = PropertyValuesHolder.ofFloat(View.SCALE_X, 1.2f);
+        PropertyValuesHolder propertyValuesHolderY = PropertyValuesHolder.ofFloat(View.SCALE_Y, 1.2f);
+        ObjectAnimator objectAnimator = ObjectAnimator.ofPropertyValuesHolder(view, propertyValuesHolderX, propertyValuesHolderY);
+        objectAnimator.setDuration(100);
+        objectAnimator.setRepeatCount(1);
+        objectAnimator.setRepeatMode(ObjectAnimator.REVERSE);
+        objectAnimator.start();
     }
 
     private boolean mhasFavourited = false;

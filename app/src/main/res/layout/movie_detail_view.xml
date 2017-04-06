@@ -29,7 +29,27 @@
             <include layout="@layout/movie_details_header" />
 
         </com.wonderkiln.blurkit.BlurLayout>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabMovieFavourite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="47dp"
+            android:layout_gravity="bottom|end"
+            android:tint="@color/primary_light"
+            app:backgroundTint="@android:color/white"
+            android:alpha="1"
+            android:clickable="true"
+            app:srcCompat="@drawable/ic_favorite_black_24dp"
+            app:borderWidth="@dimen/fab_borderWidth"
+            app:elevation="@dimen/fab_elevation"
+            app:fabSize="normal"
+            app:pressedTranslationZ="@dimen/fab_translationZ" />
+
     </FrameLayout>
+
+
 
     <android.support.v7.widget.Toolbar
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -117,21 +137,6 @@
         </RelativeLayout>
     </ScrollView>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fabMovieFavourite"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/detail_fab_marginend"
-        android:layout_marginBottom="@dimen/detail_fab_marginbottom"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:tint="@color/detail_fab_tintColor"
-        android:alpha="0"
-        app:srcCompat="@drawable/ic_favorite_black_24dp"
-        app:borderWidth="@dimen/fab_borderWidth"
-        app:elevation="@dimen/fab_elevation"
-        app:fabSize="normal"
-        app:pressedTranslationZ="@dimen/fab_translationZ" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fabFavourites"
