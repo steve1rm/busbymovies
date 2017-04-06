@@ -12,6 +12,7 @@ import com.google.android.youtube.player.YouTubeThumbnailView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.androidbox.busbymovies.R;
+
 import me.androidbox.busbymovies.adapters.MovieTrailerAdapter;
 import me.androidbox.busbymovies.models.Trailer;
 import me.androidbox.busbymovies.utils.Constants;
@@ -71,5 +72,9 @@ public class MovieTrailerViewHolder extends RecyclerView.ViewHolder implements V
                 Timber.e("onInitializationFailure %s", youTubeInitializationResult.toString());
             }
         });
+    }
+
+    public void setViewData(Trailer trailer) {
+        mTvTrailerName.setText(trailer.getName());
     }
 }
