@@ -5,23 +5,37 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tvTrailerName"
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:fontFamily="sans-serif-medium"
-        android:textSize="@dimen/title_textsize" />
+        android:layout_height="match_parent"
+        android:layout_margin="8dp"
+        app:elevation="8dp"
+        app:cardCornerRadius="4dp">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        <com.google.android.youtube.player.YouTubeThumbnailView
+            android:id="@+id/youtubeThumbnail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:visibility="visible"/>
 
+<!--
         <FrameLayout
             android:id="@+id/youtubeFragmentContainerItem"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="visible"/>
+            android:visibility="gone"/>
+-->
+
+        <TextView
+            android:id="@+id/tvTrailerName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:fontFamily="sans-serif-light"
+            android:textSize="@dimen/title_textsize"
+            android:textColor="@android:color/white"/>
 
         <ImageView
             android:id="@+id/ivPlayTrailerItem"
@@ -33,6 +47,6 @@
             android:visibility="visible"
             app:srcCompat="@drawable/ic_play_circle_outline_black_64dp"
             android:contentDescription="@string/play_trailer_icon"/>
-    </FrameLayout>
+    </android.support.v7.widget.CardView>
 
 </LinearLayout>
