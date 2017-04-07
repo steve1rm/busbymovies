@@ -80,9 +80,11 @@ public class MovieDetailViewImp extends Fragment implements
     @BindView(R.id.tool_bar) Toolbar mToolBar;
     @BindView(R.id.ivPlayTrailer) ImageView mIvPlayTrailer;
     @BindView(R.id.youtubeFragmentContainer) FrameLayout mYoutubeFragmentContainer;
+    @BindView(R.id.youtubeFragmentContainerItem) FrameLayout mYoutubeFragmentContainerItem;
     @Nullable @BindView(R.id.fabMovieFavourite) FloatingActionButton mFabMovieFavourite;
     @BindView(R.id.bottomSheet) FrameLayout mBottomSheet;
     @BindView(R.id.rvTrailerList) RecyclerView mRvTrailerList;
+    @BindView(R.id.ivPlayTrailerItem) ImageView mIvPlayTrailerItem;
 
     public MovieDetailViewImp() {
         // Required empty public constructor
@@ -178,6 +180,61 @@ public class MovieDetailViewImp extends Fragment implements
    //     setupYoutubePlayer(key);
     }
 
+    private void setupYoutubePlayerTrailer(String key) {
+        final YouTubePlayerFragment youTubePlayerFragment = YouTubePlayerFragment.newInstance();
+        getFragmentManager().beginTransaction()
+                .add(R.id.youtubeFragmentContainerItem, youTubePlayerFragment)
+                .commit();
+
+        youTubePlayerFragment.initialize(Constants.YOUTUBE_API_KEY, new YouTubePlayer.OnInitializedListener() {
+            @Override
+            public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
+                Timber.d("onInitializationSuccess");
+
+                youTubePlayer.setPlaybackEventListener(new YouTubePlayer.PlaybackEventListener() {
+                    @Override
+                    public void onPlaying() {
+                        mYoutubeFragmentContainerItem.setVisibility(View.VISIBLE);
+//                        mToolBar.setVisibility(View.INVISIBLE);
+                        mIvPlayTrailerItem.setVisibility(View.INVISIBLE);
+
+                        Timber.d("onPlaying");
+                    }
+
+                    @Override
+                    public void onPaused() {
+                        Timber.d("onPaused");
+                    }
+
+                    @Override
+                    public void onStopped() {
+                        Timber.d("onStopped");
+  //                      mToolBar.setVisibility(View.VISIBLE);
+                        mIvPlayTrailerItem.setVisibility(View.VISIBLE);
+                        mYoutubeFragmentContainerItem.setVisibility(View.INVISIBLE);
+                    }
+
+                    @Override
+                    public void onBuffering(boolean b) {
+                        Timber.d("onBuffering %b", b);
+                    }
+
+                    @Override
+                    public void onSeekTo(int i) {
+                        Timber.d("onSeekTo %d", i);
+                    }
+                });
+
+                /* Start playing the youtube video */
+                youTubePlayer.loadVideo(key);
+            }
+
+            @Override
+            public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
+                Timber.e("Failed to initialize %s", youTubeInitializationResult.toString());
+            }
+        });
+    }
 
     private void setupYoutubePlayer(String key) {
        final YouTubePlayerFragment youTubePlayerFragment = YouTubePlayerFragment.newInstance();
