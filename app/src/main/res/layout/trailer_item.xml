@@ -19,13 +19,11 @@
             android:scaleType="centerCrop"
             android:visibility="visible"/>
 
-<!--
         <FrameLayout
             android:id="@+id/youtubeFragmentContainerItem"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone"/>
--->
+            android:visibility="invisible"/>
 
         <TextView
             android:id="@+id/tvTrailerName"
