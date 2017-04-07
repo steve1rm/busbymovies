@@ -83,7 +83,7 @@ public class MovieDetailPresenterImp implements
     @Override
     public void onGetMovieTrailerSuccess(Results<Trailer> trailers) {
         if(mMovieDetailViewContract != null) {
-            mMovieDetailViewContract.startPlayingMovieTrailer(trailers);
+            mMovieDetailViewContract.receivedMovieTrailers(trailers);
         }
     }
 
