@@ -163,25 +163,18 @@
             app:fabSize="normal"
             app:pressedTranslationZ="@dimen/fab_translationZ"
             app:srcCompat="@drawable/ic_favorite_black_24dp" />
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fabFavourites"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginBottom="@dimen/detail_fab_marginbottom"
-            android:layout_marginEnd="@dimen/detail_fab_marginend"
-            android:alpha="0.6"
-            android:clickable="true"
-            android:tint="@color/detail_fab_tintColor"
-            app:borderWidth="@dimen/fab_borderWidth"
-            app:elevation="@dimen/fab_elevation"
-            app:fabSize="normal"
-            app:pressedTranslationZ="@dimen/fab_translationZ"
-            app:srcCompat="@drawable/ic_add_black_24dp" />
     </RelativeLayout>
 
+    <include
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        app:behavior_peekHeight="32dp"
+        app:elevation="6dp"
+        app:layout_behavior="@string/bottom_sheet_behavior"
+        layout="@layout/bottomsheet"/>
+
+<!--
     <FrameLayout
         android:id="@+id/bottomSheet"
         android:layout_width="match_parent"
@@ -200,6 +193,7 @@
         </android.support.v7.widget.RecyclerView>
 
     </FrameLayout>
+-->
 
 <!--
     <include
