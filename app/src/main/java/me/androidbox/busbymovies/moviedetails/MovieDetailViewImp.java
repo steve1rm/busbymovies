@@ -1,9 +1,8 @@
 package me.androidbox.busbymovies.moviedetails;
 
 
-import android.animation.Animator;
-import android.animation.AnimatorInflater;
 import android.app.Fragment;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -38,6 +37,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Optional;
 import butterknife.Unbinder;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 import me.androidbox.busbymovies.R;
@@ -47,7 +47,6 @@ import me.androidbox.busbymovies.models.Movie;
 import me.androidbox.busbymovies.models.Results;
 import me.androidbox.busbymovies.models.Trailer;
 import me.androidbox.busbymovies.utils.Constants;
-import me.androidbox.busbymovies.utils.Misc;
 import me.androidbox.busbymovies.utils.MovieImage;
 import timber.log.Timber;
 
@@ -78,12 +77,12 @@ public class MovieDetailViewImp extends Fragment implements
     @BindView(R.id.svMovieFooter) ScrollView mSvMovieFooter;
     @BindView(R.id.tvVoteAverage) TextView mTvVoteAverage;
     @BindView(R.id.tool_bar) Toolbar mToolBar;
-    @BindView(R.id.ivPlayTrailer) ImageView mIvPlayTrailer;
+    @Nullable @BindView(R.id.ivPlayTrailer) ImageView mIvPlayTrailer;
     @BindView(R.id.youtubeFragmentContainer) FrameLayout mYoutubeFragmentContainer;
 
     @Nullable @BindView(R.id.fabMovieFavourite) FloatingActionButton mFabMovieFavourite;
-    @BindView(R.id.bottomSheet) FrameLayout mBottomSheet;
-    @BindView(R.id.rvTrailerList) RecyclerView mRvTrailerList;
+    @Nullable @BindView(R.id.bottomSheet) FrameLayout mBottomSheet;
+    @Nullable @BindView(R.id.rvTrailerList) RecyclerView mRvTrailerList;
 
     public MovieDetailViewImp() {
         // Required empty public constructor
@@ -108,7 +107,10 @@ public class MovieDetailViewImp extends Fragment implements
         mUnbinder = ButterKnife.bind(MovieDetailViewImp.this, view);
 
         setupToolBar();
-        setupBottomSheet();
+
+        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            setupBottomSheet();
+        }
 
         return view;
     }
@@ -142,7 +144,7 @@ public class MovieDetailViewImp extends Fragment implements
 
     private void setupBottomSheet() {
         BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(mBottomSheet);
-        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
     }
 
     @Override
@@ -151,18 +153,27 @@ public class MovieDetailViewImp extends Fragment implements
     }
 
     private void loadMovieTrailers(Results<Trailer> trailerList) {
-        mRvTrailerList.setHasFixedSize(true);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
-        mRvTrailerList.setLayoutManager(linearLayoutManager);
-        mMovieTrailerAdapter = new MovieTrailerAdapter(trailerList, MovieDetailViewImp.this);
-        mRvTrailerList.setAdapter(mMovieTrailerAdapter);
+        if(mRvTrailerList != null) {
+            mRvTrailerList.setHasFixedSize(true);
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+            mRvTrailerList.setLayoutManager(linearLayoutManager);
+            mMovieTrailerAdapter = new MovieTrailerAdapter(trailerList, MovieDetailViewImp.this);
+            mRvTrailerList.setAdapter(mMovieTrailerAdapter);
+        }
+        else {
+            Timber.e("mRvTrailerList == null");
+        }
     }
 
     @SuppressWarnings("unused")
+    @Optional
     @OnClick(R.id.ivPlayTrailer)
     public void playIntoMovieTrailer() {
         Timber.d("requestStartMovieTrailer");
-        setupYoutubePlayer(mMovieTrailerAdapter.getTrailerFromPosition(0).getKey());
+        /* Only play the header movie trailer in portrait mode as the landscape version has not room */
+        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+            setupYoutubePlayer(mMovieTrailerAdapter.getTrailerFromPosition(0).getKey());
+        }
     }
 
     @Override
