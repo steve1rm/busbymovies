@@ -3,6 +3,7 @@ package me.androidbox.busbymovies.movielist;
 import javax.inject.Inject;
 
 import me.androidbox.busbymovies.di.DaggerInjector;
+import me.androidbox.busbymovies.models.Movies;
 import me.androidbox.busbymovies.models.Results;
 import timber.log.Timber;
 
@@ -69,7 +70,7 @@ public class MovieListPresenterImp implements
      * Wait for the response to be called back in the model on success
      */
     @Override
-    public void onPopularMovieSuccess(Results popularMovies) {
+    public void onPopularMovieSuccess(Results<Movies> popularMovies) {
         mMovieListViewContract.displayPopularMovies(popularMovies);
     }
 
@@ -87,7 +88,7 @@ public class MovieListPresenterImp implements
      * @param topRatedMovies
      */
     @Override
-    public void onTopRatedMovieSuccess(Results topRatedMovies) {
+    public void onTopRatedMovieSuccess(Results<Movies> topRatedMovies) {
         mMovieListViewContract.displayTopRatedMovies(topRatedMovies);
     }
 }

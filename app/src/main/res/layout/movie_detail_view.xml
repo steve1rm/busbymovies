@@ -1,153 +1,165 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="me.androidbox.busbymovies.moviedetails.MovieDetailViewImp">
 
-    <FrameLayout
-        android:id="@+id/content"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="240dp"
-        android:background="@android:color/transparent">
+        android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/ivBackdropPoster"
+        <FrameLayout
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="240dp"
+            android:background="@android:color/transparent">
+
+            <ImageView
+                android:id="@+id/ivBackdropPoster"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop" />
+
+            <com.wonderkiln.blurkit.BlurLayout xmlns:blurkit="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/blur_layout_height"
+                android:layout_gravity="bottom"
+                android:paddingBottom="@dimen/blur_layout_padding_buttom"
+                android:paddingTop="@dimen/blur_layout_paddingtop"
+                blurkit:blurRadius="3">
+
+                <include layout="@layout/movie_details_header" />
+
+            </com.wonderkiln.blurkit.BlurLayout>
+
+            <FrameLayout
+                android:id="@+id/youtubeFragmentContainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="70dp"
+                android:visibility="invisible"/>
+
+            <ImageView
+                android:id="@+id/ivPlayTrailer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:clickable="true"
+                android:tint="@android:color/white"
+                android:visibility="visible"
+                app:srcCompat="@drawable/ic_play_circle_outline_black_64dp" />
+        </FrameLayout>
+
+        <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/tool_bar"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            android:layout_marginTop="@dimen/toolbarHeight"
+            android:background="@drawable/background_translucent"
+            android:minHeight="?android:attr/actionBarSize"
+            app:contentInsetEnd="@dimen/toolbar_inset_end"
+            app:contentInsetStart="@dimen/toolbar_inset_start"
+            app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
+
+        <ScrollView
+            android:id="@+id/svMovieFooter"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:adjustViewBounds="true"
-            android:scaleType="centerCrop"/>
+            android:layout_below="@id/content">
 
-        <com.wonderkiln.blurkit.BlurLayout xmlns:blurkit="http://schemas.android.com/apk/res-auto"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/blur_layout_height"
-            android:layout_gravity="bottom"
-            android:paddingBottom="@dimen/blur_layout_padding_buttom"
-            android:paddingTop="@dimen/blur_layout_paddingtop"
-            blurkit:blurRadius="3">
-
-            <include layout="@layout/movie_details_header" />
-
-        </com.wonderkiln.blurkit.BlurLayout>
-    </FrameLayout>
-
-    <android.support.v7.widget.Toolbar
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_marginTop="@dimen/toolbarHeight"
-        android:id="@+id/tool_bar"
-        android:layout_width="match_parent"
-        android:layout_height="?android:attr/actionBarSize"
-        android:minHeight="?android:attr/actionBarSize"
-        android:background="@drawable/background_translucent"
-        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:contentInsetStart="@dimen/toolbar_inset_start"
-        app:contentInsetEnd="@dimen/toolbar_inset_end"
-        app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
-    </android.support.v7.widget.Toolbar>
-
-    <ScrollView
-        android:id="@+id/svMovieFooter"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/content">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <include
-                android:id="@+id/include_image_thumbnail"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:layout_marginTop="@dimen/include_image_thumbnail_margintop"
-                android:layout_marginEnd="@dimen/detail_movie_marginend"
-                android:layout_alignParentEnd="true"
-                layout="@layout/image_thumbnail"/>
-
-            <RatingBar
-                android:id="@+id/rbVoteAverage"
-                style="@style/Base.Widget.AppCompat.RatingBar.Indicator"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/detail_movie_marginstart"
-                android:layout_marginTop="@dimen/detail_marginTop" />
-
-            <TextView
-                android:id="@+id/tvHomepage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/rbVoteAverage"
-                android:layout_toStartOf="@id/include_image_thumbnail"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="@dimen/detail_movie_marginstart"
-                android:layout_marginEnd="@dimen/detail_movie_marginend"
-                android:layout_marginTop="@dimen/detail_marginTop"
-                android:textSize="@dimen/homepage_textsize"
-                android:textColor="@color/primary"
-                android:fontFamily="sans-serif"
-                android:ellipsize="end"
-                android:clickable="true"/>
-
-            <TextView
-                android:id="@+id/tvRuntime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tvHomepage"
-                android:layout_toStartOf="@id/ivThumbnail"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="@dimen/detail_movie_marginstart"
-                android:layout_marginEnd="@dimen/detail_movie_marginend"
-                android:layout_marginTop="@dimen/detail_marginTop"
-                android:textSize="@dimen/runtime_textsize"
-                android:fontFamily="sans-serif-condensed"/>
-
-            <TextView
-                android:id="@+id/tvSynopsis"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/include_image_thumbnail"
-                android:paddingTop="@dimen/detail_marginTop"
-                android:paddingEnd="@dimen/detail_movie_marginend"
-                android:paddingStart="@dimen/detail_movie_marginstart"
-                android:paddingBottom="@dimen/synopsis_paddingBottom"
-                android:fontFamily="sans-serif"
-                android:textSize="@dimen/synopsis_textsize" />
-        </RelativeLayout>
-    </ScrollView>
+                android:layout_height="wrap_content">
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fabMovieFavourite"
-        android:layout_width="wrap_content"
+                <include
+                    android:id="@+id/include_image_thumbnail"
+                    layout="@layout/image_thumbnail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="@dimen/detail_movie_marginend"
+                    android:layout_marginTop="@dimen/include_image_thumbnail_margintop" />
+
+                <RatingBar
+                    android:id="@+id/rbVoteAverage"
+                    style="@style/Base.Widget.AppCompat.RatingBar.Indicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/detail_movie_marginstart"
+                    android:layout_marginTop="@dimen/detail_marginTop" />
+
+                <TextView
+                    android:id="@+id/tvHomepage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@id/rbVoteAverage"
+                    android:layout_marginEnd="@dimen/detail_movie_marginend"
+                    android:layout_marginStart="@dimen/detail_movie_marginstart"
+                    android:layout_marginTop="@dimen/detail_marginTop"
+                    android:layout_toStartOf="@id/include_image_thumbnail"
+                    android:clickable="true"
+                    android:ellipsize="end"
+                    android:fontFamily="sans-serif"
+                    android:textColor="@color/primary"
+                    android:textSize="@dimen/homepage_textsize" />
+
+                <TextView
+                    android:id="@+id/tvRuntime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@id/tvHomepage"
+                    android:layout_marginEnd="@dimen/detail_movie_marginend"
+                    android:layout_marginStart="@dimen/detail_movie_marginstart"
+                    android:layout_marginTop="@dimen/detail_marginTop"
+                    android:layout_toStartOf="@id/ivThumbnail"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textSize="@dimen/runtime_textsize" />
+
+                <TextView
+                    android:id="@+id/tvSynopsis"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/include_image_thumbnail"
+                    android:fontFamily="sans-serif"
+                    android:paddingBottom="@dimen/synopsis_paddingBottom"
+                    android:paddingEnd="@dimen/detail_movie_marginend"
+                    android:paddingStart="@dimen/detail_movie_marginstart"
+                    android:paddingTop="@dimen/detail_marginTop"
+                    android:textSize="@dimen/synopsis_textsize" />
+            </RelativeLayout>
+        </ScrollView>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabMovieFavourite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="@dimen/detail_fab_marginbottom"
+            android:layout_marginEnd="@dimen/detail_fab_marginend"
+            android:alpha="0"
+            android:tint="@color/detail_fab_tintColor"
+            app:borderWidth="@dimen/fab_borderWidth"
+            app:elevation="@dimen/fab_elevation"
+            app:fabSize="normal"
+            app:pressedTranslationZ="@dimen/fab_translationZ"
+            app:srcCompat="@drawable/ic_favorite_black_24dp" />
+    </RelativeLayout>
+
+    <include
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/detail_fab_marginend"
-        android:layout_marginBottom="@dimen/detail_fab_marginbottom"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:tint="@color/detail_fab_tintColor"
-        android:alpha="0"
-        app:srcCompat="@drawable/ic_favorite_black_24dp"
-        app:borderWidth="@dimen/fab_borderWidth"
-        app:elevation="@dimen/fab_elevation"
-        app:fabSize="normal"
-        app:pressedTranslationZ="@dimen/fab_translationZ" />
+        app:behavior_peekHeight="32dp"
+        app:elevation="6dp"
+        app:layout_behavior="@string/bottom_sheet_behavior"
+        layout="@layout/bottomsheet"/>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fabFavourites"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/detail_fab_marginend"
-        android:layout_marginBottom="@dimen/detail_fab_marginbottom"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:clickable="true"
-        android:alpha="0.6"
-        app:srcCompat="@drawable/ic_add_black_24dp"
-        android:tint="@color/detail_fab_tintColor"
-        app:borderWidth="@dimen/fab_borderWidth"
-        app:elevation="@dimen/fab_elevation"
-        app:fabSize="normal"
-        app:pressedTranslationZ="@dimen/fab_translationZ"/>
-
-</RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>

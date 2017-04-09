@@ -29,7 +29,7 @@ public class DatabaseTest {
     private final Context mContext = InstrumentationRegistry.getTargetContext();
 
     /* Class reference to help load the constructor on runtime */
-    private final Class mMovieDbHelper = MovieDbHelper.class;
+    private final Class<MovieDbHelper> mMovieDbHelper = MovieDbHelper.class;
 
     /**
      * Run before every test begins to create a clean state before testing
@@ -64,7 +64,7 @@ public class DatabaseTest {
     public void shouldCreateDatabase() throws Exception {
         /* Use reflection to try to run the correct constructor whenever implemented */
         final SQLiteOpenHelper sqLiteOpenHelper =
-                (SQLiteOpenHelper)mMovieDbHelper.getConstructor(Context.class).newInstance(mContext);
+                mMovieDbHelper.getConstructor(Context.class).newInstance(mContext);
 
         /* Use MovieDBHelper to get access to a writable database */
         final SQLiteDatabase sqLiteDatabase = sqLiteOpenHelper.getWritableDatabase();

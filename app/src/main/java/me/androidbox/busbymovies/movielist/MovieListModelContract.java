@@ -1,6 +1,7 @@
 package me.androidbox.busbymovies.movielist;
 
 import me.androidbox.busbymovies.models.Movie;
+import me.androidbox.busbymovies.models.Movies;
 import me.androidbox.busbymovies.models.Results;
 import rx.Observable;
 
@@ -14,14 +15,14 @@ public interface MovieListModelContract {
     /** Get all the popular movies */
     interface PopularMovieResultsListener {
         void onPopularMovieFailure(String errorMessage);
-        void onPopularMovieSuccess(Results popularMovies);
+        void onPopularMovieSuccess(Results<Movies> popularMovies);
     }
     void getPopularMovies(PopularMovieResultsListener popularMovieResultsListener);
 
     /** Get all the top rated movies */
     interface TopRatedMovieResultsListener {
         void onTopRatedMovieFailure(String errorMessage);
-        void onTopRatedMovieSuccess(Results topRatedMovies);
+        void onTopRatedMovieSuccess(Results<Movies> topRatedMovies);
     }
     void getTopRatedMovies(TopRatedMovieResultsListener topRatedMovieResultsListener);
 
@@ -34,7 +35,7 @@ public interface MovieListModelContract {
 
 
     /** Testing only */
-    Observable<Results> getPopularMovies();
+    Observable<Results<Movies>> getPopularMovies();
 
 
 
