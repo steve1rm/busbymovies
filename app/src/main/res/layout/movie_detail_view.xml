@@ -122,18 +122,6 @@
                     android:fontFamily="sans-serif-condensed"
                     android:textSize="@dimen/runtime_textsize" />
 
-<!--
-                <Spinner
-                    android:id="@+id/spTrailerList"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@id/tvRuntime"
-                    android:layout_marginEnd="@dimen/detail_movie_marginend"
-                    android:layout_marginStart="@dimen/detail_movie_marginstart"
-                    android:layout_marginTop="@dimen/detail_marginTop" />
--->
-
                 <TextView
                     android:id="@+id/tvSynopsis"
                     android:layout_width="match_parent"
@@ -163,54 +151,15 @@
             app:fabSize="normal"
             app:pressedTranslationZ="@dimen/fab_translationZ"
             app:srcCompat="@drawable/ic_favorite_black_24dp" />
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fabFavourites"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginBottom="@dimen/detail_fab_marginbottom"
-            android:layout_marginEnd="@dimen/detail_fab_marginend"
-            android:alpha="0.6"
-            android:clickable="true"
-            android:tint="@color/detail_fab_tintColor"
-            app:borderWidth="@dimen/fab_borderWidth"
-            app:elevation="@dimen/fab_elevation"
-            app:fabSize="normal"
-            app:pressedTranslationZ="@dimen/fab_translationZ"
-            app:srcCompat="@drawable/ic_add_black_24dp" />
     </RelativeLayout>
 
-    <FrameLayout
-        android:id="@+id/bottomSheet"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        app:behavior_peekHeight="60dp"
-        app:behavior_hideable="true"
-        app:layout_behavior="@string/bottom_sheet_behavior"
-        app:elevation="6dp"
-        android:background="@color/primary_light">
-
-        <android.support.v7.widget.RecyclerView
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/rvTrailerList"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        </android.support.v7.widget.RecyclerView>
-
-    </FrameLayout>
-
-<!--
     <include
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        app:behavior_peekHeight="60dp"
-        app:behavior_hideable="true"
-        app:layout_behavior="@string/bottom_sheet_behavior"
+        android:layout_height="wrap_content"
+        app:behavior_peekHeight="32dp"
         app:elevation="6dp"
-        android:background="@color/primary_light"
-        layout="@layout/movie_trailer_list"/>
--->
+        app:layout_behavior="@string/bottom_sheet_behavior"
+        layout="@layout/bottomsheet"/>
 
 </android.support.design.widget.CoordinatorLayout>

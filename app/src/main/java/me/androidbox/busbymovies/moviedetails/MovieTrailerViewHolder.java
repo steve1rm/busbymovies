@@ -1,11 +1,15 @@
 package me.androidbox.busbymovies.moviedetails;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.youtube.player.YouTubeInitializationResult;
+import com.google.android.youtube.player.YouTubeStandalonePlayer;
 import com.google.android.youtube.player.YouTubeThumbnailLoader;
 import com.google.android.youtube.player.YouTubeThumbnailView;
 
@@ -23,8 +27,6 @@ import timber.log.Timber;
  */
 
 public class MovieTrailerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-    @BindView(R.id.tvTrailerName) TextView mTvTrailerName;
-    /*@BindView(R.id.youtubeFragmentContainerItem) FrameLayout mYoutubeFragmentContainerItem;*/
     @BindView(R.id.youtubeThumbnail) YouTubeThumbnailView mYoutubeThumbnail;
     @BindView(R.id.ivPlayTrailerItem) ImageView mIvPlayTrailerItem;
 
@@ -44,15 +46,16 @@ public class MovieTrailerViewHolder extends RecyclerView.ViewHolder implements V
 
     @Override
     public void onClick(View v) {
+
         final Trailer trailer = mMovieTrailerAdapter.getTrailerFromPosition(getAdapterPosition());
-        mMovieTrailerListener.onStartMovieTrailer(trailer.getKey());
+//        mMovieTrailerListener.onStartMovieTrailer(trailer.getKey(), mYoutubeFragmentContainerItem, mIvPlayTrailerItem);
+
+        final Intent intent = YouTubeStandalonePlayer.createVideoIntent((Activity)itemView.getContext(), Constants.YOUTUBE_API_KEY, trailer.getKey());
+        itemView.getContext().startActivity(intent);
     }
 
     public void setViewData(Trailer trailer) {
-        mTvTrailerName.setText(trailer.getName());
-
         mYoutubeThumbnail.initialize(Constants.YOUTUBE_API_KEY, new YouTubeThumbnailView.OnInitializedListener() {
-
             @Override
             public void onInitializationSuccess(YouTubeThumbnailView youTubeThumbnailView, YouTubeThumbnailLoader youTubeThumbnailLoader) {
                 Timber.d("onInitializationSuccess");
