@@ -1,7 +1,5 @@
 package me.androidbox.busbymovies.moviedetails;
 
-import android.support.annotation.MainThread;
-
 import javax.inject.Inject;
 
 import me.androidbox.busbymovies.di.DaggerInjector;
@@ -122,8 +120,8 @@ public class MovieDetailModelImp implements MovieDetailModelContract {
 
                         @Override
                         public void onNext(Results<Reviews> reviewsResults) {
-                            movieReviewsListener.onGetMovieReviewsSuccess(reviewsResults);
                             Timber.d("onNext");
+                            movieReviewsListener.onGetMovieReviewsSuccess(reviewsResults);
                         }
                     });
         }

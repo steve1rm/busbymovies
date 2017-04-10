@@ -1,13 +1,16 @@
 package me.androidbox.busbymovies.moviedetails;
 
+import org.assertj.core.api.exception.RuntimeIOException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.internal.exceptions.ExceptionIncludingMockitoWarnings;
 
 import me.androidbox.busbymovies.models.Results;
 import me.androidbox.busbymovies.models.Reviews;
+import me.androidbox.busbymovies.models.Trailer;
 import me.androidbox.busbymovies.network.MovieAPIService;
 import okhttp3.ResponseBody;
 import rx.Observable;
@@ -38,7 +41,9 @@ public class MovieDetailModelImpTest {
     @Mock Observable<Reviews> mockCall;
     @Mock ResponseBody mockResponseBody;
     @Mock MovieDetailModelContract.MovieReviewsListener mockMovieReviewsListener;
+    @Mock MovieDetailModelContract.GetMovieTrailerListener mockMovieTrailerListener;
     @Mock Results<Reviews> mockReviews;
+    @Mock Results<Trailer> mockTrailers;
 
     private MovieDetailModelContract mMovieDetailModelContract;
 
@@ -77,17 +82,56 @@ public class MovieDetailModelImpTest {
     @Test
     public void shouldDisplaySuccessWhenReviewsRetrieved() throws Exception {
         /* Stub the method call for getting reviews */
-        Results<Reviews> reviews = new Results<>();
-
         when(mockMovieAPIService.getMovieReview(anyInt(), anyString()))
-                .thenReturn(Observable.just(eq(reviews)));
+                .thenReturn(Observable.just(eq(mockReviews)));
 
         /* Actual call to get movie reviews */
         mMovieDetailModelContract.getMovieReviews(anyInt(), mockMovieReviewsListener);
 
         /* Verify that the result was correct */
-        verify(mockMovieReviewsListener, times(1)).onGetMovieReviewsSuccess(reviews);
+        verify(mockMovieReviewsListener, times(1)).onGetMovieReviewsSuccess(mockReviews);
         verify(mockMovieReviewsListener, never()).onGetMovieReviewsFailure(anyString());
+    }
+
+    @Test
+    public void shouldDisplayErrorWhenFailureToGetTrailers() throws Exception {
+        /* Stub the function that gets the movie trailers */
+        when(mockMovieAPIService.getMovieTrailers(anyInt(), anyString()))
+                .thenReturn(Observable.error(new Throwable(new RuntimeIOException(eq("Failed to get movie trailers")))));
+
+        /* Actual call */
+        mMovieDetailModelContract.getMovieTrailer(anyInt(), mockMovieTrailerListener);
+
+        /* Verify the results */
+        verify(mockMovieTrailerListener, times(1)).onGetMovieTrailerFailure(anyString());
+        verify(mockMovieTrailerListener, never()).onGetMovieTrailerSuccess(mockTrailers);
+    }
+/*
+
+    @Test
+    public void shouldDisplaySuccessMessageOnSuccess() {
+        when(mockMovieAPIService.getPopular(anyString()))
+                 .thenReturn(Observable.just(mockMovies));
+
+        movieListModelContract.getPopularMovies(mockPopularMoviesResultsListener);
+
+        verify(mockPopularMoviesResultsListener, never()).onPopularMovieFailure(anyString());
+        verify(mockPopularMoviesResultsListener, times(1)).onPopularMovieSuccess(mockMovies);
+    }
+*/
+
+    @Test
+    public void shouldGetAllMovieTrailersOnSuccessfulCall() throws Exception {
+        /* Stub the function that will get the movie trailers */
+        when(mockMovieAPIService.getMovieTrailers(anyInt(), anyString()))
+                .thenReturn(Observable.just(eq(mockTrailers)));
+
+        /* The actual call to get the movie trailers */
+        mMovieDetailModelContract.getMovieTrailer(anyInt(), mockMovieTrailerListener);
+
+        /* Verify the results are correct */
+        verify(mockMovieTrailerListener, times(1)).onGetMovieTrailerSuccess(mockTrailers);
+        verify(mockMovieTrailerListener, never()).onGetMovieTrailerFailure(anyString());
     }
 
     @After
