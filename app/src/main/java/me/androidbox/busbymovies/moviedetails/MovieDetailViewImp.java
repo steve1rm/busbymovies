@@ -45,6 +45,7 @@ import me.androidbox.busbymovies.adapters.MovieTrailerAdapter;
 import me.androidbox.busbymovies.di.DaggerInjector;
 import me.androidbox.busbymovies.models.Movie;
 import me.androidbox.busbymovies.models.Results;
+import me.androidbox.busbymovies.models.Reviews;
 import me.androidbox.busbymovies.models.Trailer;
 import me.androidbox.busbymovies.utils.Constants;
 import me.androidbox.busbymovies.utils.MovieImage;
@@ -129,6 +130,7 @@ public class MovieDetailViewImp extends Fragment implements
                     mMovieDetailPresenterImp.attachView(MovieDetailViewImp.this);
                     mMovieDetailPresenterImp.getMovieDetail(movieId);
                     mMovieDetailPresenterImp.requestMovieTrailer(movieId);
+                    mMovieDetailPresenterImp.requestMovieReviews(movieId);
                 }
                 else {
                     Timber.e("Invalid movie id '-1'");
@@ -387,5 +389,13 @@ public class MovieDetailViewImp extends Fragment implements
         }
     }
 
+    @Override
+    public void receivedMovieReviews(Results<Reviews> reviews) {
+        Timber.d("receiveMovieReviews: %d", reviews.getResults().size());
+    }
 
+    @Override
+    public void failedToReceiveMovieReviews(String errorMessage) {
+        Timber.e("failedToReceiveMovieReviews %s", errorMessage);
+    }
 }
