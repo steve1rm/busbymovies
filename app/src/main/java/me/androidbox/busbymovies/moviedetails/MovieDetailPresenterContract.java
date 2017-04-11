@@ -12,4 +12,5 @@ public interface MovieDetailPresenterContract<MovieDetailView> {
     float getVoteAverage(float voteAverage);
     String getMovieFormattedDate(String date, String format);
     void requestMovieTrailer(int movieId);
+    void requestMovieReviews(int movieId);
 }

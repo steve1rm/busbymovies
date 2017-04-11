@@ -5,6 +5,7 @@ import javax.inject.Inject;
 import me.androidbox.busbymovies.di.DaggerInjector;
 import me.androidbox.busbymovies.models.Movie;
 import me.androidbox.busbymovies.models.Results;
+import me.androidbox.busbymovies.models.Reviews;
 import me.androidbox.busbymovies.models.Trailer;
 import me.androidbox.busbymovies.utils.Misc;
 import timber.log.Timber;
@@ -16,7 +17,8 @@ import timber.log.Timber;
 public class MovieDetailPresenterImp implements
         MovieDetailPresenterContract<MovieDetailViewContract>,
         MovieDetailModelContract.GetMovieDetailListener,
-        MovieDetailModelContract.GetMovieTrailerListener {
+        MovieDetailModelContract.GetMovieTrailerListener,
+        MovieDetailModelContract.MovieReviewsListener {
 
     private MovieDetailViewContract mMovieDetailViewContract;
 
@@ -91,6 +93,27 @@ public class MovieDetailPresenterImp implements
     public void onGetMovieTrailerFailure(String errorMessage) {
         if(mMovieDetailViewContract != null) {
             mMovieDetailViewContract.failedToGetMovieTrailers(errorMessage);
+        }
+    }
+
+    @Override
+    public void onGetMovieReviewsSuccess(Results<Reviews> movieReviews) {
+        if(mMovieDetailViewContract != null) {
+            mMovieDetailViewContract.receivedMovieReviews(movieReviews);
+        }
+    }
+
+    @Override
+    public void onGetMovieReviewsFailure(String errorMessage) {
+        if(mMovieDetailViewContract != null) {
+            mMovieDetailViewContract.failedToReceiveMovieReviews(errorMessage);
+        }
+    }
+
+    @Override
+    public void requestMovieReviews(int movieId) {
+        if(mMovieDetailModelContract != null) {
+            mMovieDetailModelContract.getMovieReviews(movieId, MovieDetailPresenterImp.this);
         }
     }
 }
