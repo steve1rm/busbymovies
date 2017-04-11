@@ -128,15 +128,14 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_below="@id/tvRuntime"
+                    android:layout_toStartOf="@id/include_image_thumbnail"
                     android:layout_marginEnd="@dimen/detail_fab_marginend"
                     android:layout_marginStart="@dimen/detail_movie_marginstart"
                     android:layout_marginTop="@dimen/detail_marginTop"
-                    android:layout_toStartOf="@id/ivThumbnail"
                     android:fontFamily="sans-serif-condensed"
-                    android:autoLink="all"
-                    android:linksClickable="true"
+                    android:clickable="true"
                     android:textSize="@dimen/runtime_textsize"
-                    android:text="There are 3 reviews for this movie"/>
+                    android:text="Contains 3 reviews" />
 
                 <TextView
                     android:id="@+id/tvTrailers"

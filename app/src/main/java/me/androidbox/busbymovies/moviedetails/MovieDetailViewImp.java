@@ -2,6 +2,7 @@ package me.androidbox.busbymovies.moviedetails;
 
 
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -16,6 +17,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
+import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +35,8 @@ import com.bumptech.glide.Glide;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerFragment;
+
+import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 
@@ -61,6 +67,7 @@ public class MovieDetailViewImp extends Fragment implements
     public static final String MOVIE_ID_KEY = "movie_id_key";
     private Unbinder mUnbinder;
     private MovieTrailerAdapter mMovieTrailerAdapter;
+    private int mMovieId;
 
     @Inject MovieDetailPresenterContract<MovieDetailViewContract> mMovieDetailPresenterImp;
 
@@ -77,12 +84,14 @@ public class MovieDetailViewImp extends Fragment implements
     @BindView(R.id.svMovieFooter) ScrollView mSvMovieFooter;
     @BindView(R.id.tvVoteAverage) TextView mTvVoteAverage;
     @BindView(R.id.tool_bar) Toolbar mToolBar;
-    @Nullable @BindView(R.id.ivPlayTrailer) ImageView mIvPlayTrailer;
     @BindView(R.id.youtubeFragmentContainer) FrameLayout mYoutubeFragmentContainer;
-
+    @BindView(R.id.tvTrailers) TextView mTvTrailers;
+    @BindView(R.id.tvReviews) TextView mTvReviews;
+    @Nullable @BindView(R.id.ivPlayTrailer) ImageView mIvPlayTrailer;
     @Nullable @BindView(R.id.fabMovieFavourite) FloatingActionButton mFabMovieFavourite;
     @Nullable @BindView(R.id.bottomSheet) FrameLayout mBottomSheet;
     @Nullable @BindView(R.id.rvTrailerList) RecyclerView mRvTrailerList;
+
 
     public MovieDetailViewImp() {
         // Required empty public constructor
@@ -99,12 +108,36 @@ public class MovieDetailViewImp extends Fragment implements
         return movieDetailViewImp;
     }
 
+    /**
+     * Set the text has link clickable
+     */
+    private void setupTextViewAsLinkClickable() {
+ /*       if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+
+            mTvReviews.setText(Html.fromHtml("Contains 3 reviews", Html.FROM_HTML_MODE_LEGACY));
+        }
+        else {
+            mTvReviews.setMovementMethod(LinkMovementMethod.getInstance());
+            mTvReviews.setText(Html.fromHtml("Contains 3 reviews"));
+        }
+ */
+/*
+        String url = "Contains 3 reviews";
+        Pattern pattern = Pattern.compile(url);
+        Linkify.addLinks(mTvReviews, pattern, "http://");
+        mTvReviews.setText(Html.fromHtml("<a href='http://\"+url+\"'>http://\"+url+\"</a>"));
+*/
+        mTvReviews.setText("<a>Contains 3 reviews</a>");
+        mTvReviews.setMovementMethod(LinkMovementMethod.getInstance());
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.movie_detail_view, container, false);
 
         mUnbinder = ButterKnife.bind(MovieDetailViewImp.this, view);
+        setupTextViewAsLinkClickable();
 
         setupToolBar();
 
@@ -130,7 +163,7 @@ public class MovieDetailViewImp extends Fragment implements
                     mMovieDetailPresenterImp.attachView(MovieDetailViewImp.this);
                     mMovieDetailPresenterImp.getMovieDetail(movieId);
                     mMovieDetailPresenterImp.requestMovieTrailer(movieId);
-                    mMovieDetailPresenterImp.requestMovieReviews(movieId);
+                    mMovieId = movieId;
                 }
                 else {
                     Timber.e("Invalid movie id '-1'");
@@ -165,6 +198,13 @@ public class MovieDetailViewImp extends Fragment implements
         else {
             Timber.e("mRvTrailerList == null");
         }
+    }
+
+    @SuppressWarnings("unused")
+    @OnClick(R.id.tvReviews)
+    public void openMovieReviews() {
+        /* Open fragment dialog box */
+        mMovieDetailPresenterImp.requestMovieReviews(mMovieId);
     }
 
     @SuppressWarnings("unused")
@@ -392,6 +432,10 @@ public class MovieDetailViewImp extends Fragment implements
     @Override
     public void receivedMovieReviews(Results<Reviews> reviews) {
         Timber.d("receiveMovieReviews: %d", reviews.getResults().size());
+        /* Open movie reviews dialog fragment */
+        FragmentManager fragmentManager = getFragmentManager();
+        MovieReviewsDialog movieReviewsDialog = MovieReviewsDialog.newInstance("", "", "");
+        movieReviewsDialog.show(fragmentManager, MovieReviewsDialog.class.getSimpleName());
     }
 
     @Override
