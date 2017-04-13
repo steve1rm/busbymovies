@@ -1,6 +1,9 @@
 package me.androidbox.busbymovies.moviedetails;
 
 import me.androidbox.busbymovies.models.Movie;
+import me.androidbox.busbymovies.models.Results;
+import me.androidbox.busbymovies.models.Review;
+import me.androidbox.busbymovies.models.Trailer;
 
 /**
  * Created by steve on 3/2/17.
@@ -9,4 +12,8 @@ import me.androidbox.busbymovies.models.Movie;
 public interface MovieDetailViewContract {
     void displayMovieDetails(Movie movie);
     void displayErrorFailedToGetMovie(String errMessage);
+    void receivedMovieTrailers(Results<Trailer> trailerList);
+    void failedToGetMovieTrailers(String errorMessage);
+    void receivedMovieReviews(Results<Review> reviews);
+    void failedToReceiveMovieReviews(String errorMessage);
 }

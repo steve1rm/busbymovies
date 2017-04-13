@@ -37,7 +37,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieListViewHolder> {
         holder.bindViewData(mMovieList.get(position).getTitle(), mMovieList.get(position).getPoster_path());
     }
 
-    public void loadAdapter(Results results) {
+    public void loadAdapter(Results<Movies> results) {
         clearAllMovies();
 
         mMovieList.addAll(results.getResults());

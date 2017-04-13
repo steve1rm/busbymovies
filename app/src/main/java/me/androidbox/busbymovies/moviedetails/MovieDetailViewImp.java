@@ -1,12 +1,9 @@
 package me.androidbox.busbymovies.moviedetails;
 
 
-import android.animation.Animator;
-import android.animation.AnimatorInflater;
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
-import android.animation.PropertyValuesHolder;
-import android.content.res.ColorStateList;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -14,12 +11,15 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.customtabs.CustomTabsIntent;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,29 +35,40 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.youtube.player.YouTubeInitializationResult;
+import com.google.android.youtube.player.YouTubePlayer;
+import com.google.android.youtube.player.YouTubePlayerFragment;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Optional;
 import butterknife.Unbinder;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 import me.androidbox.busbymovies.R;
+import me.androidbox.busbymovies.adapters.MovieTrailerAdapter;
 import me.androidbox.busbymovies.di.DaggerInjector;
 import me.androidbox.busbymovies.models.Movie;
+import me.androidbox.busbymovies.models.Results;
+import me.androidbox.busbymovies.models.Review;
+import me.androidbox.busbymovies.models.Trailer;
 import me.androidbox.busbymovies.utils.Constants;
-import me.androidbox.busbymovies.utils.Misc;
 import me.androidbox.busbymovies.utils.MovieImage;
 import timber.log.Timber;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MovieDetailViewImp extends Fragment implements MovieDetailViewContract {
+public class MovieDetailViewImp extends Fragment implements
+        MovieDetailViewContract,
+        StartMovieTrailerListener {
     public static final String TAG = MovieDetailViewImp.class.getSimpleName();
     public static final String MOVIE_ID_KEY = "movie_id_key";
     private Unbinder mUnbinder;
+    private MovieTrailerAdapter mMovieTrailerAdapter;
+    private int mMovieId;
 
     @Inject MovieDetailPresenterContract<MovieDetailViewContract> mMovieDetailPresenterImp;
 
@@ -74,7 +85,14 @@ public class MovieDetailViewImp extends Fragment implements MovieDetailViewContr
     @BindView(R.id.svMovieFooter) ScrollView mSvMovieFooter;
     @BindView(R.id.tvVoteAverage) TextView mTvVoteAverage;
     @BindView(R.id.tool_bar) Toolbar mToolBar;
-    @BindView(R.id.fabMovieFavourite) FloatingActionButton mFabMovieFavourite;
+    @BindView(R.id.youtubeFragmentContainer) FrameLayout mYoutubeFragmentContainer;
+    @BindView(R.id.tvTrailers) TextView mTvTrailers;
+    @BindView(R.id.tvReviews) TextView mTvReviews;
+    @Nullable @BindView(R.id.ivPlayTrailer) ImageView mIvPlayTrailer;
+    @Nullable @BindView(R.id.fabMovieFavourite) FloatingActionButton mFabMovieFavourite;
+    @Nullable @BindView(R.id.bottomSheet) FrameLayout mBottomSheet;
+    @Nullable @BindView(R.id.rvTrailerList) RecyclerView mRvTrailerList;
+
 
     public MovieDetailViewImp() {
         // Required empty public constructor
@@ -91,17 +109,187 @@ public class MovieDetailViewImp extends Fragment implements MovieDetailViewContr
         return movieDetailViewImp;
     }
 
+    /**
+     * Set the text has link clickable
+     */
+    private void setupTextViewAsLinkClickable() {
+ /*       if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+
+            mTvReviews.setText(Html.fromHtml("Contains 3 reviews", Html.FROM_HTML_MODE_LEGACY));
+        }
+        else {
+            mTvReviews.setMovementMethod(LinkMovementMethod.getInstance());
+            mTvReviews.setText(Html.fromHtml("Contains 3 reviews"));
+        }
+ */
+/*
+        String url = "Contains 3 reviews";
+        Pattern pattern = Pattern.compile(url);
+        Linkify.addLinks(mTvReviews, pattern, "http://");
+        mTvReviews.setText(Html.fromHtml("<a href='http://\"+url+\"'>http://\"+url+\"</a>"));
+*/
+        mTvReviews.setText("<a>Contains 3 reviews</a>");
+        mTvReviews.setMovementMethod(LinkMovementMethod.getInstance());
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.movie_detail_view, container, false);
 
         mUnbinder = ButterKnife.bind(MovieDetailViewImp.this, view);
+        setupTextViewAsLinkClickable();
 
         setupToolBar();
 
+        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            setupBottomSheet();
+        }
+
         return view;
     }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        final Bundle args = getArguments();
+        if(args != null) {
+            final int movieId = args.getInt(MOVIE_ID_KEY, -1);
+            Timber.d("onActivityCreated %d", movieId);
+
+            DaggerInjector.getApplicationComponent().inject(MovieDetailViewImp.this);
+            if(mMovieDetailPresenterImp != null) {
+                if(movieId != -1) {
+                    mMovieDetailPresenterImp.attachView(MovieDetailViewImp.this);
+                    mMovieDetailPresenterImp.getMovieDetail(movieId);
+                    mMovieDetailPresenterImp.requestMovieTrailer(movieId);
+                    mMovieId = movieId;
+                }
+                else {
+                    Timber.e("Invalid movie id '-1'");
+                }
+            }
+            else {
+                Timber.e("mMovieDetailPresenterIm == null");
+            }
+        }
+    }
+
+    private void setupBottomSheet() {
+        if(mBottomSheet != null) {
+            BottomSheetBehavior<FrameLayout> bottomSheetBehavior = BottomSheetBehavior.from(mBottomSheet);
+            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        }
+    }
+
+    @Override
+    public void onStartMovieTrailer(String key, FrameLayout youtubeFragmentContainer, ImageView ivPlayerTrailerItem) {
+//        setupYoutubePlayerTrailer(key, youtubeFragmentContainer, ivPlayerTrailerItem);
+    }
+
+    private void loadMovieTrailers(Results<Trailer> trailerList) {
+        if(mRvTrailerList != null) {
+            mRvTrailerList.setHasFixedSize(true);
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+            mRvTrailerList.setLayoutManager(linearLayoutManager);
+            mMovieTrailerAdapter = new MovieTrailerAdapter(trailerList, MovieDetailViewImp.this);
+            mRvTrailerList.setAdapter(mMovieTrailerAdapter);
+        }
+        else {
+            Timber.e("mRvTrailerList == null");
+        }
+    }
+
+    @SuppressWarnings("unused")
+    @OnClick(R.id.tvReviews)
+    public void openMovieReviews() {
+        /* Open fragment dialog box */
+        mMovieDetailPresenterImp.requestMovieReviews(mMovieId);
+    }
+
+    @SuppressWarnings("unused")
+    @Optional
+    @OnClick(R.id.ivPlayTrailer)
+    public void playIntoMovieTrailer() {
+        Timber.d("requestStartMovieTrailer");
+        /* Only play the header movie trailer in portrait mode as the landscape version has not room */
+        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+            setupYoutubePlayer(mMovieTrailerAdapter.getTrailerFromPosition(0).getKey());
+        }
+    }
+
+    @Override
+    public void failedToGetMovieTrailers(String errorMessage) {
+        Timber.e("failedToGetMovieTrailers %s", errorMessage);
+    }
+
+    @Override
+    public void receivedMovieTrailers(Results<Trailer> trailerList) {
+        loadMovieTrailers(trailerList);
+
+ //       String key = trailerList.getResults().get(0).getKey();
+
+   //     setupYoutubePlayer(key);
+    }
+
+
+    private void setupYoutubePlayer(String key) {
+       final YouTubePlayerFragment youTubePlayerFragment = YouTubePlayerFragment.newInstance();
+        getFragmentManager().beginTransaction()
+                .add(R.id.youtubeFragmentContainer, youTubePlayerFragment)
+                .commit();
+
+        youTubePlayerFragment.initialize(Constants.YOUTUBE_API_KEY, new YouTubePlayer.OnInitializedListener() {
+            @Override
+            public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
+                Timber.d("onInitializationSuccess");
+
+                youTubePlayer.setPlaybackEventListener(new YouTubePlayer.PlaybackEventListener() {
+                    @Override
+                    public void onPlaying() {
+                        mYoutubeFragmentContainer.setVisibility(View.VISIBLE);
+                        mToolBar.setVisibility(View.INVISIBLE);
+                        mIvPlayTrailer.setVisibility(View.INVISIBLE);
+
+                        Timber.d("onPlaying");
+                    }
+
+                    @Override
+                    public void onPaused() {
+                        Timber.d("onPaused");
+                    }
+
+                    @Override
+                    public void onStopped() {
+                        Timber.d("onStopped");
+                        mToolBar.setVisibility(View.VISIBLE);
+                        mIvPlayTrailer.setVisibility(View.VISIBLE);
+                        mYoutubeFragmentContainer.setVisibility(View.INVISIBLE);
+                    }
+
+                    @Override
+                    public void onBuffering(boolean b) {
+                        Timber.d("onBuffering %b", b);
+                    }
+
+                    @Override
+                    public void onSeekTo(int i) {
+                        Timber.d("onSeekTo %d", i);
+                    }
+                });
+
+                /* Start playing the youtube video */
+                youTubePlayer.loadVideo(key);
+            }
+
+            @Override
+            public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
+                Timber.e("Failed to initialize %s", youTubeInitializationResult.toString());
+            }
+        });
+    }
+
 
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
@@ -123,30 +311,6 @@ public class MovieDetailViewImp extends Fragment implements MovieDetailViewContr
         appCompatActivity.getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        final Bundle args = getArguments();
-        if(args != null) {
-            final int movieId = args.getInt(MOVIE_ID_KEY, -1);
-            Timber.d("onActivityCreated %d", movieId);
-
-            DaggerInjector.getApplicationComponent().inject(MovieDetailViewImp.this);
-            if(mMovieDetailPresenterImp != null) {
-                if(movieId != -1) {
-                    mMovieDetailPresenterImp.attachView(MovieDetailViewImp.this);
-                    mMovieDetailPresenterImp.getMovieDetail(movieId);
-                }
-                else {
-                    Timber.e("Invalid movie id '-1'");
-                }
-            }
-            else {
-                Timber.e("mMovieDetailPresenterIm == null");
-            }
-        }
-    }
 
     @Override
     public void onDestroyView() {
@@ -155,114 +319,6 @@ public class MovieDetailViewImp extends Fragment implements MovieDetailViewContr
         if(mMovieDetailPresenterImp != null) {
             mMovieDetailPresenterImp.detachView();
         }
-    }
-
-    @SuppressWarnings("unused")
-    @OnClick(R.id.fabMovieFavourite)
-    public void addMovieFavourite(View view) {
- /*       final Animator animator = AnimatorInflater.loadAnimator(getActivity(), R.animator.add_favourite_movie);
-        animator.setTarget(view);)
-        animator.start();
- */
-/*
-        AnimatorSet animatorSet = new AnimatorSet();
-        PropertyValuesHolder propertyValuesHolderX = PropertyValuesHolder.ofFloat(View.SCALE_X, 1.1f);
-        PropertyValuesHolder propertyValuesHolderY = PropertyValuesHolder.ofFloat(View.SCALE_Y, 1.1f);
-        ObjectAnimator objectAnimator = ObjectAnimator.ofPropertyValuesHolder(view, propertyValuesHolderX, propertyValuesHolderY);
-        objectAnimator.setDuration(300);
-        objectAnimator.setInterpolator(new OvershootInterpolator(10f));
-*/
-
-        /*
-        objectAnimator.setRepeatCount(1);
-        objectAnimator.setRepeatMode(ObjectAnimator.REVERSE);
-*/
-
-/*
-        PropertyValuesHolder propertyValuesHolderX2 = PropertyValuesHolder.ofFloat(View.SCALE_X, 0.9f);
-        PropertyValuesHolder propertyValuesHolderY2 = PropertyValuesHolder.ofFloat(View.SCALE_Y, 0.9f);
-        ObjectAnimator objectAnimator2 = ObjectAnimator.ofPropertyValuesHolder(view, propertyValuesHolderX2, propertyValuesHolderY2);
-        objectAnimator.setDuration(300);
-        objectAnimator2.setInterpolator(new OvershootInterpolator(10f));
-
-        animatorSet.playSequentially(objectAnimator, objectAnimator2);
-        objectAnimator.start();
-*/
-
-      //  view.BackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.primary));
-        //view.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.primary));
-
-        if(Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
-            Timber.d("start translationZ");
-            ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(view, View.TRANSLATION_Z, 12f);
-            objectAnimator.setDuration(300);
-            objectAnimator.setInterpolator(new OvershootInterpolator(10f));
-            objectAnimator.setTarget(view);
-            objectAnimator.start();
-        }
-    }
-
-    private boolean mhasFavourited = false;
-
-    @SuppressWarnings("unused")
-    @OnClick(R.id.fabFavourites)
-    public void addFavourite(View view) {
-
-        final Animator animator;
-        if(mhasFavourited) {
-            animator = AnimatorInflater.loadAnimator(getActivity(), R.animator.rotate_remove_favourite);
-
-            Animator removeFavouriteMovie = AnimatorInflater.loadAnimator(getActivity(), R.animator.remove_favourite_movie);
-            removeFavouriteMovie.setTarget(mFabMovieFavourite);
-            removeFavouriteMovie.start();
-
-            Timber.d("Height %f Width %f", Misc.getHeightInDp(getResources()), Misc.getWidthInDp(getResources()));
-
-
-            mhasFavourited = false;
-        }
-        else {
-            animator = AnimatorInflater.loadAnimator(getActivity(), R.animator.rotate_add_favourite);
-
-            /* Add the favourite button to the image */
-            Animator moveFavourite = AnimatorInflater.loadAnimator(getActivity(), R.animator.add_favourite_movie);
-            moveFavourite.setTarget(mFabMovieFavourite);
-            moveFavourite.start();
-
-            mhasFavourited = true;
-        }
-
-        animator.setTarget(view);
-        animator.start();
-/*
-        Snackbar.make(view, R.string.add_favourite_movies, Snackbar.LENGTH_LONG)
-                .setAction(R.string.undo, View -> Timber.d("onClick snackbar"))
-                .show();
-*/
-
-
- /*       Animator animator;
-        if(mhasFavourited) {
-            animator = AnimatorInflater.loadAnimator(getActivity(), R.animator.rotate_add_favourite);
-            mhasFavourited = false;
-        }
-        else {
-            animator = AnimatorInflater.loadAnimator(getActivity(), R.animator.rotate_remove_favourite);
-            mhasFavourited = true;
-        }
-
-        animator.setTarget(view);
-        animator.start();
-*/
-        /*
-        Snackbar.make(view, R.string.add_favourite_movies, Snackbar.LENGTH_LONG)
-                .setAction(R.string.undo, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Timber.d("onClick snackbar");
-                    }
-                }).show();
-*/
     }
 
     @Override
@@ -374,5 +430,17 @@ public class MovieDetailViewImp extends Fragment implements MovieDetailViewContr
         }
     }
 
+    @Override
+    public void receivedMovieReviews(Results<Review> reviews) {
+        Timber.d("receiveMovieReviews: %d", reviews.getResults().size());
+        /* Open movie reviews dialog fragment */
+        FragmentManager fragmentManager = getFragmentManager();
+        MovieReviewsDialog movieReviewsDialog = MovieReviewsDialog.newInstance(reviews);
+        movieReviewsDialog.show(fragmentManager, MovieReviewsDialog.class.getSimpleName());
+    }
 
+    @Override
+    public void failedToReceiveMovieReviews(String errorMessage) {
+        Timber.e("failedToReceiveMovieReviews %s", errorMessage);
+    }
 }

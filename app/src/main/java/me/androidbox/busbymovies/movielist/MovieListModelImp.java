@@ -4,6 +4,7 @@ import javax.inject.Inject;
 
 import me.androidbox.busbymovies.di.DaggerInjector;
 import me.androidbox.busbymovies.models.Movie;
+import me.androidbox.busbymovies.models.Movies;
 import me.androidbox.busbymovies.models.Results;
 import me.androidbox.busbymovies.network.MovieAPIService;
 import me.androidbox.busbymovies.utils.Constants;
@@ -43,7 +44,7 @@ public class MovieListModelImp implements MovieListModelContract {
             mSubscription = mMovieAPIService.getPopular(Constants.MOVIES_API_KEY)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Subscriber<Results>() {
+                    .subscribe(new Subscriber<Results<Movies>>() {
                         @Override
                         public void onStart() {
                             super.onStart();
@@ -62,7 +63,7 @@ public class MovieListModelImp implements MovieListModelContract {
                         }
 
                         @Override
-                        public void onNext(Results results) {
+                        public void onNext(Results<Movies> results) {
                             Timber.d("onNext");
                             popularMovieResultsListener.onPopularMovieSuccess(results);
                         }
@@ -79,7 +80,7 @@ public class MovieListModelImp implements MovieListModelContract {
             mSubscription = mMovieAPIService.getTopRatedMovies(Constants.MOVIES_API_KEY)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Subscriber<Results>() {
+                    .subscribe(new Subscriber<Results<Movies>>() {
                         @Override
                         public void onCompleted() {
                             Timber.d("onCompleted");
@@ -92,7 +93,7 @@ public class MovieListModelImp implements MovieListModelContract {
                         }
 
                         @Override
-                        public void onNext(Results movies) {
+                        public void onNext(Results<Movies> movies) {
                             topRatedMovieResultsListener.onTopRatedMovieSuccess(movies);
                         }
                     });
@@ -165,7 +166,7 @@ public class MovieListModelImp implements MovieListModelContract {
     }
 
     @Override
-    public Observable<Results> getPopularMovies() {
+    public Observable<Results<Movies>> getPopularMovies() {
         return null;
     }
 }
