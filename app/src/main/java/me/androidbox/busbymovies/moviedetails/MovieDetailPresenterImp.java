@@ -5,7 +5,7 @@ import javax.inject.Inject;
 import me.androidbox.busbymovies.di.DaggerInjector;
 import me.androidbox.busbymovies.models.Movie;
 import me.androidbox.busbymovies.models.Results;
-import me.androidbox.busbymovies.models.Reviews;
+import me.androidbox.busbymovies.models.Review;
 import me.androidbox.busbymovies.models.Trailer;
 import me.androidbox.busbymovies.utils.Misc;
 import timber.log.Timber;
@@ -97,7 +97,7 @@ public class MovieDetailPresenterImp implements
     }
 
     @Override
-    public void onGetMovieReviewsSuccess(Results<Reviews> movieReviews) {
+    public void onGetMovieReviewsSuccess(Results<Review> movieReviews) {
         if(mMovieDetailViewContract != null) {
             mMovieDetailViewContract.receivedMovieReviews(movieReviews);
         }

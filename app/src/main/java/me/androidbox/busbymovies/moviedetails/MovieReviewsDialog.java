@@ -1,46 +1,43 @@
 package me.androidbox.busbymovies.moviedetails;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.app.DialogFragment;
+import android.os.Bundle;
+import android.os.Parcelable;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.TextView;
+
+import org.parceler.Parcels;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import me.androidbox.busbymovies.R;
+import me.androidbox.busbymovies.adapters.MovieReviewAdapter;
+import me.androidbox.busbymovies.models.Results;
+import me.androidbox.busbymovies.models.Review;
 
 /**
  * Created by steve on 4/11/17.
  */
 
 public class MovieReviewsDialog extends DialogFragment {
-    @BindView(R.id.tvAuthor) TextView mTvAuthor;
-    @BindView(R.id.tvContent) TextView mTvContent;
-    @BindView(R.id.tvUrl) TextView mTvUrl;
-//    @BindView(R.id.rvMovieReviews) RecyclerView mRvMovieReviews;
+    @BindView(R.id.rvMovieReviews) RecyclerView mRvMovieReviews;
 
-    public static final String AUTHOR_KEY = "author";
-    public static final String CONTENT_KEY = "content";
-    public static final String URL_KEY = "url";
-
+    private Results<Review> mReviewList;
+    private static final String MOVIE_REVIEW_KEY = "movie_review";
     private Unbinder mUnbinder;
 
     public MovieReviewsDialog() {
         /* no-op */
     }
 
-    public static MovieReviewsDialog newInstance(String author, String content, String url) {
+    public static MovieReviewsDialog newInstance(Results<Review> reviews) {
         final Bundle args = new Bundle();
-        args.putString(AUTHOR_KEY, author);
-        args.putString(CONTENT_KEY, content);
-        args.putString(URL_KEY, content);
+        args.putParcelable(MOVIE_REVIEW_KEY, reviews);
 
         final MovieReviewsDialog movieReviewsDialog = new MovieReviewsDialog();
         movieReviewsDialog.setArguments(args);
@@ -51,15 +48,28 @@ public class MovieReviewsDialog extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.movie_review_item, container, false);
+        final View view = inflater.inflate(R.layout.movie_reviews, container, false);
 
         mUnbinder = ButterKnife.bind(MovieReviewsDialog.this, view);
 
-        //mRvMovieReviews.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        final Bundle args = getArguments();
+        if(args != null) {
+            if(args.containsKey(MOVIE_REVIEW_KEY)) {
+                mReviewList = args.getParcelable(MOVIE_REVIEW_KEY);
+            }
+        }
+
+        setupRecyclerView();
 
         setStyle(DialogFragment.STYLE_NORMAL, R.style.AppDialogTheme);
 
         return view;
+    }
+
+    private void setupRecyclerView() {
+        mRvMovieReviews.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        mRvMovieReviews.setHasFixedSize(true);
+        mRvMovieReviews.setAdapter(MovieReviewAdapter.newInstance(null));
     }
 
     @Override

@@ -17,9 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.Html;
 import android.text.method.LinkMovementMethod;
-import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,8 +34,6 @@ import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerFragment;
 
-import java.util.regex.Pattern;
-
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -51,7 +47,7 @@ import me.androidbox.busbymovies.adapters.MovieTrailerAdapter;
 import me.androidbox.busbymovies.di.DaggerInjector;
 import me.androidbox.busbymovies.models.Movie;
 import me.androidbox.busbymovies.models.Results;
-import me.androidbox.busbymovies.models.Reviews;
+import me.androidbox.busbymovies.models.Review;
 import me.androidbox.busbymovies.models.Trailer;
 import me.androidbox.busbymovies.utils.Constants;
 import me.androidbox.busbymovies.utils.MovieImage;
@@ -430,11 +426,11 @@ public class MovieDetailViewImp extends Fragment implements
     }
 
     @Override
-    public void receivedMovieReviews(Results<Reviews> reviews) {
+    public void receivedMovieReviews(Results<Review> reviews) {
         Timber.d("receiveMovieReviews: %d", reviews.getResults().size());
         /* Open movie reviews dialog fragment */
         FragmentManager fragmentManager = getFragmentManager();
-        MovieReviewsDialog movieReviewsDialog = MovieReviewsDialog.newInstance("", "", "");
+        MovieReviewsDialog movieReviewsDialog = MovieReviewsDialog.newInstance(reviews);
         movieReviewsDialog.show(fragmentManager, MovieReviewsDialog.class.getSimpleName());
     }
 

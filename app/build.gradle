@@ -83,29 +83,35 @@ dependencies {
     annotationProcessor 'com.google.dagger:dagger-compiler:2.9'
     /** ***************************************************************
      *  Logging support
-     *************************************************************** */
+     *****************************************************************/
     compile 'com.squareup.okhttp3:logging-interceptor:3.6.0'
     compile 'com.jakewharton.timber:timber:4.5.1'
     /** ***************************************************************
      *  Retrofit2 Network
-     *************************************************************** */
+     *****************************************************************/
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
     compile 'com.squareup.okhttp3:okhttp:3.6.0'
     /** **************************************************************
      *  RxJava just for a call adapter for retrofit2
-     ************************************************************** */
+     ****************************************************************/
     /* Because RxAndroid releases are few and far between, it is recommended you also
-     * explicitly depend on RxJava's latest version for bug fixes and new features */
+         * explicitly depend on RxJava's latest version for bug fixes and new features */
     compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'io.reactivex:rxjava:1.2.6'
     /** **************************************************************
      *  Image utilities
-     ************************************************************** */
+     ****************************************************************/
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'jp.wasabeef:glide-transformations:2.0.1'
     compile 'com.wonderkiln:blurkit:1.0.0'
     compile files('libs/YouTubeAndroidPlayerApi.jar')
+
+    /******************************************************************
+     * Misc
+     *****************************************************************/
+    compile 'org.parceler:parceler-api:1.1.6'
+    annotationProcessor 'org.parceler:parceler:1.1.6'
 }

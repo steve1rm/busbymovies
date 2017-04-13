@@ -2,7 +2,7 @@ package me.androidbox.busbymovies.moviedetails;
 
 import me.androidbox.busbymovies.models.Movie;
 import me.androidbox.busbymovies.models.Results;
-import me.androidbox.busbymovies.models.Reviews;
+import me.androidbox.busbymovies.models.Review;
 import me.androidbox.busbymovies.models.Trailer;
 
 /**
@@ -23,7 +23,7 @@ public interface MovieDetailModelContract {
     void getMovieTrailer(int movieId, GetMovieTrailerListener getMovieTrailerListener);
 
     interface MovieReviewsListener {
-        void onGetMovieReviewsSuccess(Results<Reviews> movieReviews);
+        void onGetMovieReviewsSuccess(Results<Review> movieReviews);
         void onGetMovieReviewsFailure(String errorMessage);
     }
     void getMovieReviews(int movieId, MovieReviewsListener movieReviewsListener);
