@@ -69,7 +69,7 @@ public class MovieReviewsDialog extends DialogFragment {
     private void setupRecyclerView() {
         mRvMovieReviews.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         mRvMovieReviews.setHasFixedSize(true);
-        mRvMovieReviews.setAdapter(MovieReviewAdapter.newInstance(null));
+        mRvMovieReviews.setAdapter(MovieReviewAdapter.newInstance(mReviewList));
     }
 
     @Override

@@ -28,7 +28,7 @@ public class MovieReviewAdapter extends RecyclerView.Adapter<MovieReviewViewHold
     @Override
     public MovieReviewViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.movie_reviews, parent, false);
+                .inflate(R.layout.movie_review_item, parent, false);
 
         return new MovieReviewViewHolder(view);
     }
