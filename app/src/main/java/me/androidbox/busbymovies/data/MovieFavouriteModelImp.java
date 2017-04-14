@@ -4,7 +4,9 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,17 +23,18 @@ import timber.log.Timber;
 public class MovieFavouriteModelImp implements MovieFavouriteModelContract {
     private SQLiteDatabase mDb;
     private MovieDbHelper mMovieDbHelper;
-    private Context mContext;
+    private WeakReference<Context> mContext;
 
+    /* Constructor injector */
     @Inject
     public MovieFavouriteModelImp(Context context) {
-        mContext = context;
+        mContext = new WeakReference<>(context);
     }
 
     @Override
     public void startup() {
         if(mContext != null) {
-            mMovieDbHelper = new MovieDbHelper(mContext);
+            mMovieDbHelper = new MovieDbHelper(mContext.get());
         }
     }
 
@@ -40,11 +43,38 @@ public class MovieFavouriteModelImp implements MovieFavouriteModelContract {
         if(mDb.isOpen()) {
             mDb.close();
         }
+
         mMovieDbHelper.close();
+        mContext.clear();
     }
 
     @Override
     public void insert(Favourite favourite, InsertListener insertListener) {
+
+        final ContentValues contentValues = new ContentValues();
+        contentValues.put(MovieEntry.MOVIE_ID, favourite.getMovieId());
+        contentValues.put(MovieEntry.BACKDROP_PATH, favourite.getBackdropPath());
+        contentValues.put(MovieEntry.HOMEPATH, favourite.getHomepage());
+        contentValues.put(MovieEntry.POSTER_PATH, favourite.getPosterPath());
+        contentValues.put(MovieEntry.RELEASE_DATE, favourite.getReleaseData());
+        contentValues.put(MovieEntry.RUNTIME, favourite.getRuntime());
+        contentValues.put(MovieEntry.TAGLINE, favourite.getTagline());
+        contentValues.put(MovieEntry.TITLE, favourite.getTitle());
+        contentValues.put(MovieEntry.VOTE_AVERAGE, favourite.getVoteAverage());
+
+        if(mContext.get().getContentResolver().insert(MovieEntry.CONTENT_URI, contentValues) != null) {
+            Timber.d("Success to insert movie %d into database", favourite.getMovieId());
+            insertListener.onInsertSuccess();
+        }
+        else {
+            Timber.e("Failed to insert movie %d into database", favourite.getMovieId());
+            insertListener.onInsertFailed();
+        }
+
+        contentValues.clear();
+
+
+/*
         mDb = mMovieDbHelper.getWritableDatabase();
 
         final ContentValues contentValues = new ContentValues();
@@ -68,6 +98,7 @@ public class MovieFavouriteModelImp implements MovieFavouriteModelContract {
         }
 
         mDb.close();
+*/
     }
 
     @Override
@@ -110,9 +141,11 @@ public class MovieFavouriteModelImp implements MovieFavouriteModelContract {
 
     @Override
     public void delete(int movieId, DeleteListener deleteListener) {
-        mDb = mMovieDbHelper.getWritableDatabase();
+        final String strMovieId = String.valueOf(movieId);
 
-        if(mDb.delete(MovieEntry.TABLE_NAME, "WHERE movieId = " + movieId, null) == 1) {
+        final Uri uri = MovieEntry.CONTENT_URI.buildUpon().appendPath(strMovieId).build();
+
+        if(mContext.get().getContentResolver().delete(uri, null, null) != 0) {
             Timber.d("Deleted movie %d from the database", movieId);
             deleteListener.onDeleteSuccess();
         }
@@ -121,6 +154,18 @@ public class MovieFavouriteModelImp implements MovieFavouriteModelContract {
             deleteListener.onDeleteFailed();
         }
 
+/*
+        mDb = mMovieDbHelper.getWritableDatabase();
+        if(mDb.delete(MovieEntry.TABLE_NAME, "WHERE movieId = " + movieId, null) == 1) {
+            Timber.d("Deleted movie %d from the database", movieId);
+            deleteListener.onDeleteSuccess();
+        }
+        else {
+            Timber.e("Failed to delete movie %d from the database", movieId);
+            deleteListener.onDeleteFailed();
+        }
         mDb.close();
+*/
+
     }
 }
