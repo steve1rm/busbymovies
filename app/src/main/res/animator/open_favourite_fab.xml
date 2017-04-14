@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <objectAnimator xmlns:android="http://schemas.android.com/apk/res/android"
     android:propertyName="translationY"
-    android:valueFrom="0dp" android:valueTo="-110dp"
+    android:valueFrom="0dp" android:valueTo="-160dp"
     android:duration="300"
     android:interpolator="@android:anim/decelerate_interpolator">
 </objectAnimator>

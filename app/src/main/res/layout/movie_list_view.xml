@@ -39,6 +39,21 @@
         android:layout_gravity="center"/>
 
     <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabFavourite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:tint="@color/detail_fab_tintColor"
+        app:backgroundTint="@color/primary_dark"
+        app:layout_anchor="@+id/fabSort"
+        app:layout_anchorGravity="center"
+        app:srcCompat="@drawable/ic_favorite_black_24dp"
+        app:fabSize="mini"
+        app:borderWidth="@dimen/fab_borderWidth"
+        app:elevation="@dimen/fab_elevation"
+        app:pressedTranslationZ="@dimen/fab_translationZ"/>
+
+    <android.support.design.widget.FloatingActionButton
         android:id="@+id/fabTopRated"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

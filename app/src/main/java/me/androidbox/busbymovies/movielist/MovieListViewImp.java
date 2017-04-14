@@ -50,6 +50,7 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract 
     @BindView(R.id.pbMovieList) ContentLoadingProgressBar mPbMovieList;
     @BindView(R.id.fabPopular) FloatingActionButton mFabPopular;
     @BindView(R.id.fabTopRated) FloatingActionButton mFabTopRated;
+    @BindView(R.id.fabFavourite) FloatingActionButton mFabFavourite;
 
     private Unbinder mUnbinder;
     private MovieAdapter mMovieAdapter;
@@ -142,6 +143,10 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract 
         closeTopRatedFab.setTarget(mFabTopRated);
         closeTopRatedFab.start();
 
+        final Animator openFavourite = AnimatorInflater.loadAnimator(getActivity(), R.animator.close_favourite_fab);
+        openFavourite.setTarget(mFabFavourite);
+        openFavourite.start();
+
         mIsSortFabOpen = false;
     }
 
@@ -156,6 +161,10 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract 
         final Animator openTopRatedTab = AnimatorInflater.loadAnimator(getActivity(), R.animator.open_toprated_fab);
         openTopRatedTab.setTarget(mFabTopRated);
         openTopRatedTab.start();
+
+        final Animator openFavourite = AnimatorInflater.loadAnimator(getActivity(), R.animator.open_favourite_fab);
+        openFavourite.setTarget(mFabFavourite);
+        openFavourite.start();
 
         mIsSortFabOpen = true;
     }
