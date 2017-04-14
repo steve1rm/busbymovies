@@ -5,7 +5,7 @@ import javax.inject.Inject;
 import me.androidbox.busbymovies.di.DaggerInjector;
 import me.androidbox.busbymovies.models.Movie;
 import me.androidbox.busbymovies.models.Results;
-import me.androidbox.busbymovies.models.Reviews;
+import me.androidbox.busbymovies.models.Review;
 import me.androidbox.busbymovies.models.Trailer;
 import me.androidbox.busbymovies.network.MovieAPIService;
 import me.androidbox.busbymovies.utils.Constants;
@@ -106,7 +106,7 @@ public class MovieDetailModelImp implements MovieDetailModelContract {
             mSubscription = mMovieAPIService.getMovieReview(movieId, Constants.MOVIES_API_KEY)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Subscriber<Results<Reviews>>() {
+                    .subscribe(new Subscriber<Results<Review>>() {
                         @Override
                         public void onCompleted() {
                             Timber.d("onCompleted");
@@ -119,7 +119,7 @@ public class MovieDetailModelImp implements MovieDetailModelContract {
                         }
 
                         @Override
-                        public void onNext(Results<Reviews> reviewsResults) {
+                        public void onNext(Results<Review> reviewsResults) {
                             Timber.d("onNext");
                             movieReviewsListener.onGetMovieReviewsSuccess(reviewsResults);
                         }

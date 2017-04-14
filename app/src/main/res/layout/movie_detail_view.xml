@@ -23,6 +23,7 @@
                 android:scaleType="centerCrop" />
 
             <com.wonderkiln.blurkit.BlurLayout xmlns:blurkit="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/blur"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/blur_layout_height"
                 android:layout_gravity="bottom"
@@ -50,6 +51,21 @@
                 android:tint="@android:color/white"
                 android:visibility="visible"
                 app:srcCompat="@drawable/ic_play_circle_outline_black_64dp" />
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fabMovieFavourite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_marginBottom="48dp"
+                android:layout_marginEnd="16dp"
+                android:tint="@color/detail_fab_tintColor"
+                app:borderWidth="@dimen/fab_borderWidth"
+                app:elevation="@dimen/fab_elevation"
+                app:fabSize="normal"
+                app:pressedTranslationZ="@dimen/fab_translationZ"
+                app:srcCompat="@drawable/ic_favorite_black_24dp" />
+
         </FrameLayout>
 
         <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
@@ -123,6 +139,34 @@
                     android:textSize="@dimen/runtime_textsize" />
 
                 <TextView
+                    android:id="@+id/tvReviews"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@id/tvRuntime"
+                    android:layout_toStartOf="@id/include_image_thumbnail"
+                    android:layout_marginEnd="@dimen/detail_fab_marginend"
+                    android:layout_marginStart="@dimen/detail_movie_marginstart"
+                    android:layout_marginTop="@dimen/detail_marginTop"
+                    android:fontFamily="sans-serif-condensed"
+                    android:clickable="true"
+                    android:textSize="@dimen/runtime_textsize"
+                    android:text="Contains 3 reviews" />
+
+                <TextView
+                    android:id="@+id/tvTrailers"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@id/tvReviews"
+                    android:layout_marginEnd="@dimen/detail_fab_marginend"
+                    android:layout_marginStart="@dimen/detail_movie_marginstart"
+                    android:layout_marginTop="@dimen/detail_marginTop"
+                    android:layout_toStartOf="@id/ivThumbnail"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textSize="@dimen/runtime_textsize"/>
+
+                <TextView
                     android:id="@+id/tvSynopsis"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -136,21 +180,6 @@
             </RelativeLayout>
         </ScrollView>
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fabMovieFavourite"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginBottom="@dimen/detail_fab_marginbottom"
-            android:layout_marginEnd="@dimen/detail_fab_marginend"
-            android:alpha="0"
-            android:tint="@color/detail_fab_tintColor"
-            app:borderWidth="@dimen/fab_borderWidth"
-            app:elevation="@dimen/fab_elevation"
-            app:fabSize="normal"
-            app:pressedTranslationZ="@dimen/fab_translationZ"
-            app:srcCompat="@drawable/ic_favorite_black_24dp" />
     </RelativeLayout>
 
     <include

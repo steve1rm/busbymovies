@@ -3,9 +3,8 @@ package me.androidbox.busbymovies.network;
 import me.androidbox.busbymovies.models.Movie;
 import me.androidbox.busbymovies.models.Movies;
 import me.androidbox.busbymovies.models.Results;
-import me.androidbox.busbymovies.models.Reviews;
+import me.androidbox.busbymovies.models.Review;
 import me.androidbox.busbymovies.models.Trailer;
-import me.androidbox.busbymovies.utils.Constants;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -40,7 +39,7 @@ public interface MovieAPIService {
 
     /* Get the movie reviews based on the movie id */
     @GET("movie/{movie_id}/reviews")
-    Observable<Results<Reviews>> getMovieReview(@Path("movie_id") int movieId, @Query("api_key") String apiKey);
+    Observable<Results<Review>> getMovieReview(@Path("movie_id") int movieId, @Query("api_key") String apiKey);
 
 
 

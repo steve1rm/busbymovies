@@ -10,4 +10,12 @@
     <color name="primary_transparent">#662196F3</color>
     <color name="vote_average_textcolor">@android:color/black</color>
     <color name="detail_fab_tintColor">@android:color/white</color>
+
+    <color name="dark_blue">#180065</color>
+    <color name="light_blue">#334ee9ff</color>
+    <color name="medium_green">#3d853e</color>
+    <color name="light_green">#3c2ae668</color>
+
+    <color name="fb_color_active">#007de4</color>
+    <color name="fb_color_passive">#ffffff</color>
 </resources>

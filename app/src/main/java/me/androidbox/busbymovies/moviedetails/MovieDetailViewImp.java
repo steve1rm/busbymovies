@@ -1,24 +1,43 @@
 package me.androidbox.busbymovies.moviedetails;
 
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Path;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewCompat;
+import android.support.v4.view.animation.PathInterpolatorCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AnimationSet;
+import android.view.animation.BounceInterpolator;
+import android.view.animation.Interpolator;
+import android.view.animation.OvershootInterpolator;
+import android.view.animation.PathInterpolator;
 import android.webkit.URLUtil;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -45,6 +64,7 @@ import me.androidbox.busbymovies.adapters.MovieTrailerAdapter;
 import me.androidbox.busbymovies.di.DaggerInjector;
 import me.androidbox.busbymovies.models.Movie;
 import me.androidbox.busbymovies.models.Results;
+import me.androidbox.busbymovies.models.Review;
 import me.androidbox.busbymovies.models.Trailer;
 import me.androidbox.busbymovies.utils.Constants;
 import me.androidbox.busbymovies.utils.MovieImage;
@@ -60,6 +80,7 @@ public class MovieDetailViewImp extends Fragment implements
     public static final String MOVIE_ID_KEY = "movie_id_key";
     private Unbinder mUnbinder;
     private MovieTrailerAdapter mMovieTrailerAdapter;
+    private int mMovieId;
 
     @Inject MovieDetailPresenterContract<MovieDetailViewContract> mMovieDetailPresenterImp;
 
@@ -76,12 +97,14 @@ public class MovieDetailViewImp extends Fragment implements
     @BindView(R.id.svMovieFooter) ScrollView mSvMovieFooter;
     @BindView(R.id.tvVoteAverage) TextView mTvVoteAverage;
     @BindView(R.id.tool_bar) Toolbar mToolBar;
-    @Nullable @BindView(R.id.ivPlayTrailer) ImageView mIvPlayTrailer;
     @BindView(R.id.youtubeFragmentContainer) FrameLayout mYoutubeFragmentContainer;
-
+    @BindView(R.id.tvTrailers) TextView mTvTrailers;
+    @BindView(R.id.tvReviews) TextView mTvReviews;
+    @Nullable @BindView(R.id.ivPlayTrailer) ImageView mIvPlayTrailer;
     @Nullable @BindView(R.id.fabMovieFavourite) FloatingActionButton mFabMovieFavourite;
     @Nullable @BindView(R.id.bottomSheet) FrameLayout mBottomSheet;
     @Nullable @BindView(R.id.rvTrailerList) RecyclerView mRvTrailerList;
+
 
     public MovieDetailViewImp() {
         // Required empty public constructor
@@ -98,14 +121,39 @@ public class MovieDetailViewImp extends Fragment implements
         return movieDetailViewImp;
     }
 
+    /**
+     * Set the text has link clickable
+     */
+    private void setupTextViewAsLinkClickable() {
+ /*       if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+
+            mTvReviews.setText(Html.fromHtml("Contains 3 reviews", Html.FROM_HTML_MODE_LEGACY));
+        }
+        else {
+            mTvReviews.setMovementMethod(LinkMovementMethod.getInstance());
+            mTvReviews.setText(Html.fromHtml("Contains 3 reviews"));
+        }
+ */
+/*
+        String url = "Contains 3 reviews";
+        Pattern pattern = Pattern.compile(url);
+        Linkify.addLinks(mTvReviews, pattern, "http://");
+        mTvReviews.setText(Html.fromHtml("<a href='http://\"+url+\"'>http://\"+url+\"</a>"));
+*/
+        mTvReviews.setText("<a>Contains 3 reviews</a>");
+        mTvReviews.setMovementMethod(LinkMovementMethod.getInstance());
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.movie_detail_view, container, false);
 
         mUnbinder = ButterKnife.bind(MovieDetailViewImp.this, view);
+        setupTextViewAsLinkClickable();
 
         setupToolBar();
+        setupFavourite();
 
         if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             setupBottomSheet();
@@ -129,6 +177,7 @@ public class MovieDetailViewImp extends Fragment implements
                     mMovieDetailPresenterImp.attachView(MovieDetailViewImp.this);
                     mMovieDetailPresenterImp.getMovieDetail(movieId);
                     mMovieDetailPresenterImp.requestMovieTrailer(movieId);
+                    mMovieId = movieId;
                 }
                 else {
                     Timber.e("Invalid movie id '-1'");
@@ -166,6 +215,13 @@ public class MovieDetailViewImp extends Fragment implements
     }
 
     @SuppressWarnings("unused")
+    @OnClick(R.id.tvReviews)
+    public void openMovieReviews() {
+        /* Open fragment dialog box */
+        mMovieDetailPresenterImp.requestMovieReviews(mMovieId);
+    }
+
+    @SuppressWarnings("unused")
     @Optional
     @OnClick(R.id.ivPlayTrailer)
     public void playIntoMovieTrailer() {
@@ -176,6 +232,74 @@ public class MovieDetailViewImp extends Fragment implements
         }
     }
 
+    private boolean isActive = false;
+
+    private void setupFavourite() {
+        @ColorInt final int colorActive = ContextCompat.getColor(getActivity(), R.color.fb_color_active);
+        @ColorInt final int colorPassive = ContextCompat.getColor(getActivity(), R.color.fb_color_passive);
+
+        final float from = 1.0f;
+        final float to = 1.3f;
+
+        ObjectAnimator scaleX = ObjectAnimator.ofFloat(mFabMovieFavourite, View.SCALE_X, from, to);
+        ObjectAnimator scaleY = ObjectAnimator.ofFloat(mFabMovieFavourite, View.SCALE_Y,  from, to);
+        ObjectAnimator translationZ = ObjectAnimator.ofFloat(mFabMovieFavourite, View.TRANSLATION_Z, from, to);
+
+        AnimatorSet set1 = new AnimatorSet();
+        set1.playTogether(scaleX, scaleY, translationZ);
+        set1.setDuration(100);
+        set1.setInterpolator(new AccelerateInterpolator());
+
+        set1.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mFabMovieFavourite.setImageResource(isActive ? R.drawable.heart_active : R.drawable.heart_passive);
+                mFabMovieFavourite.setBackgroundTintList(ColorStateList.valueOf(isActive ? colorActive : colorPassive));
+                isActive = !isActive;
+            }
+        });
+
+        ObjectAnimator scaleXBack = ObjectAnimator.ofFloat(mFabMovieFavourite, View.SCALE_X, to, from);
+        ObjectAnimator scaleYBack = ObjectAnimator.ofFloat(mFabMovieFavourite, View.SCALE_Y, to, from);
+        ObjectAnimator translationZBack = ObjectAnimator.ofFloat(mFabMovieFavourite, View.TRANSLATION_Z, to, from);
+
+        Path path = new Path();
+        path.moveTo(0.0f, 0.0f);
+        path.lineTo(0.5f, 1.3f);
+        path.lineTo(0.75f, 0.8f);
+        path.lineTo(1.0f, 1.0f);
+        PathInterpolator pathInterpolator = new PathInterpolator(path);
+
+        AnimatorSet set2 = new AnimatorSet();
+        set2.playTogether(scaleXBack, scaleYBack, translationZBack);
+        set2.setDuration(300);
+        set2.setInterpolator(pathInterpolator);
+
+        final AnimatorSet set = new AnimatorSet();
+        set.playSequentially(set1, set2);
+
+        set.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mFabMovieFavourite.setClickable(true);
+            }
+
+            @Override
+            public void onAnimationStart(Animator animation) {
+                mFabMovieFavourite.setClickable(false);
+            }
+        });
+
+
+        mFabMovieFavourite.setOnClickListener(v -> set.start());
+    }
+
+    @SuppressWarnings("unused")
+    @OnClick(R.id.fabMovieFavourite)
+    public void addFavouriteMovie() {
+
+    }
+
     @Override
     public void failedToGetMovieTrailers(String errorMessage) {
         Timber.e("failedToGetMovieTrailers %s", errorMessage);
@@ -184,12 +308,7 @@ public class MovieDetailViewImp extends Fragment implements
     @Override
     public void receivedMovieTrailers(Results<Trailer> trailerList) {
         loadMovieTrailers(trailerList);
-
- //       String key = trailerList.getResults().get(0).getKey();
-
-   //     setupYoutubePlayer(key);
     }
-
 
     private void setupYoutubePlayer(String key) {
        final YouTubePlayerFragment youTubePlayerFragment = YouTubePlayerFragment.newInstance();
@@ -387,5 +506,17 @@ public class MovieDetailViewImp extends Fragment implements
         }
     }
 
+    @Override
+    public void receivedMovieReviews(Results<Review> reviews) {
+        Timber.d("receiveMovieReviews: %d", reviews.getResults().size());
+        /* Open movie reviews dialog fragment */
+        FragmentManager fragmentManager = getFragmentManager();
+        MovieReviewsDialog movieReviewsDialog = MovieReviewsDialog.newInstance(reviews);
+        movieReviewsDialog.show(fragmentManager, MovieReviewsDialog.class.getSimpleName());
+    }
 
+    @Override
+    public void failedToReceiveMovieReviews(String errorMessage) {
+        Timber.e("failedToReceiveMovieReviews %s", errorMessage);
+    }
 }

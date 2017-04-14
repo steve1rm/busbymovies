@@ -6,10 +6,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.internal.exceptions.ExceptionIncludingMockitoWarnings;
 
 import me.androidbox.busbymovies.models.Results;
-import me.androidbox.busbymovies.models.Reviews;
+import me.androidbox.busbymovies.models.Review;
 import me.androidbox.busbymovies.models.Trailer;
 import me.androidbox.busbymovies.network.MovieAPIService;
 import okhttp3.ResponseBody;
@@ -17,13 +16,11 @@ import rx.Observable;
 import rx.Scheduler;
 import rx.android.plugins.RxAndroidPlugins;
 import rx.android.plugins.RxAndroidSchedulersHook;
-import rx.functions.Func1;
 import rx.plugins.RxJavaHooks;
 import rx.schedulers.Schedulers;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyObject;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doThrow;
@@ -38,11 +35,11 @@ import static org.mockito.Mockito.when;
 public class MovieDetailModelImpTest {
 
     @Mock MovieAPIService mockMovieAPIService;
-    @Mock Observable<Reviews> mockCall;
+    @Mock Observable<Review> mockCall;
     @Mock ResponseBody mockResponseBody;
     @Mock MovieDetailModelContract.MovieReviewsListener mockMovieReviewsListener;
     @Mock MovieDetailModelContract.GetMovieTrailerListener mockMovieTrailerListener;
-    @Mock Results<Reviews> mockReviews;
+    @Mock Results<Review> mockReviews;
     @Mock Results<Trailer> mockTrailers;
 
     private MovieDetailModelContract mMovieDetailModelContract;
