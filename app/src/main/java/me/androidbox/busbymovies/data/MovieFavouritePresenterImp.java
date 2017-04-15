@@ -60,9 +60,9 @@ public class MovieFavouritePresenterImp implements
     }
 
     @Override
-    public void onInsertFailed() {
+    public void onInsertFailed(String errorMessage) {
         if(mMovieListViewContract != null) {
-            mMovieListViewContract.failedFavouriteMovieInsert("Failed to insert favourite");
+            mMovieListViewContract.failedFavouriteMovieInsert(errorMessage);
         }
     }
 
@@ -74,9 +74,9 @@ public class MovieFavouritePresenterImp implements
     }
 
     @Override
-    public void onRetrieveFailed() {
+    public void onRetrieveFailed(String errorMessage) {
         if(mMovieListViewContract != null) {
-            mMovieListViewContract.failedDisplayFavouriteMovies("Failed to get favourite movies");
+            mMovieListViewContract.failedDisplayFavouriteMovies(errorMessage);
         }
     }
 
@@ -88,9 +88,9 @@ public class MovieFavouritePresenterImp implements
     }
 
     @Override
-    public void onDeleteFailed() {
+    public void onDeleteFailed(String errorMessage) {
         if(mMovieListViewContract != null) {
-            mMovieListViewContract.failedFavouriteMovieDelete("Failed to delete favourite movie");
+            mMovieListViewContract.failedFavouriteMovieDelete(errorMessage);
         }
     }
 

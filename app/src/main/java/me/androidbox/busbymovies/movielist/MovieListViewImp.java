@@ -3,6 +3,7 @@ package me.androidbox.busbymovies.movielist;
 import android.animation.Animator;
 import android.animation.AnimatorInflater;
 import android.content.res.Configuration;
+import android.graphics.SurfaceTexture;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -197,6 +198,25 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract 
         closeSortFab();
     }
 
+    @SuppressWarnings("unused")
+    @OnClick(R.id.fabFavourite)
+    public void getFavourites() {
+        Timber.d("getFavourites");
+
+        Favourite favourite = new Favourite(
+                1234,
+                "poster path",
+                "today",
+                "star wars 8",
+                "backdroppath",
+                8.8f,
+                "the force is back again",
+                "the homepage",
+                120);
+
+        mMovieFavouritePresenterImp.insertFavouriteMovie(favourite);
+    }
+
     /**
      * Setup toolbar
      */
@@ -289,7 +309,7 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract 
             mPbMovieList.hide();
         }
 
-    //    mMovieAdapter.loadAdapter(favouriteList);
+        mMovieAdapter.loadAdapter(favouriteList);
     }
 
     @Override
@@ -304,16 +324,19 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract 
 
     @Override
     public void successFavouriteMovieDelete() {
-
+        Timber.d("Movie deleted from favourites");
+        Toast.makeText(getActivity(), "Movie favourite movie deleted", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void failedFavouriteMovieInsert(String errorMessage) {
+        Timber.e("failedFavouriteMovieInsert %s", errorMessage);
         Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void successFavouriteMovieInsert() {
-
+        Timber.d("successFavouriteMovieInsert");
+        Toast.makeText(getActivity(), "Insert favourite movie", Toast.LENGTH_SHORT).show();
     }
 }
