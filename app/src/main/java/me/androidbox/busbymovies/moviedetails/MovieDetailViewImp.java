@@ -5,16 +5,15 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Path;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
@@ -22,21 +21,19 @@ import android.support.customtabs.CustomTabsIntent;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewCompat;
-import android.support.v4.view.animation.PathInterpolatorCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
-import android.view.animation.AnimationSet;
-import android.view.animation.BounceInterpolator;
-import android.view.animation.Interpolator;
-import android.view.animation.OvershootInterpolator;
 import android.view.animation.PathInterpolator;
 import android.webkit.URLUtil;
 import android.widget.FrameLayout;
@@ -144,14 +141,36 @@ public class MovieDetailViewImp extends Fragment implements
         mTvReviews.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
+
+    ClickableSpan clickableSpan = new ClickableSpan() {
+        @Override
+        public void onClick(View widget) {
+            Timber.d("clickableSpan");
+        }
+
+        @Override
+        public void updateDrawState(TextPaint ds) {
+            super.updateDrawState(ds);
+            Timber.d("updateDrawState");
+            ds.setUnderlineText(false);
+        }
+    };
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.movie_detail_view, container, false);
 
         mUnbinder = ButterKnife.bind(MovieDetailViewImp.this, view);
-        setupTextViewAsLinkClickable();
 
+        SpannableString spannableString = new SpannableString("Contains 3 reviews");
+        spannableString.setSpan(clickableSpan, 0, 18, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        mTvReviews.setText(spannableString);
+        mTvReviews.setMovementMethod(LinkMovementMethod.getInstance());
+        mTvReviews.setTextColor(ColorStateList.valueOf(R.color.primary_dark));
+
+
+    //    setupTextViewAsLinkClickable();
         setupToolBar();
         setupFavourite();
 
@@ -519,4 +538,6 @@ public class MovieDetailViewImp extends Fragment implements
     public void failedToReceiveMovieReviews(String errorMessage) {
         Timber.e("failedToReceiveMovieReviews %s", errorMessage);
     }
+
+
 }

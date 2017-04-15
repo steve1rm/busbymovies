@@ -138,6 +138,14 @@
                     android:fontFamily="sans-serif-condensed"
                     android:textSize="@dimen/runtime_textsize" />
 
+                <include
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_below="@id/tvRuntime"
+                    android:layout_toStartOf="@id/include_image_thumbnail"
+                    android:layout_alignParentStart="true"
+                    layout="@layout/trailer_reviews"/>
+<!--
                 <TextView
                     android:id="@+id/tvReviews"
                     android:layout_width="wrap_content"
@@ -148,9 +156,10 @@
                     android:layout_marginEnd="@dimen/detail_fab_marginend"
                     android:layout_marginStart="@dimen/detail_movie_marginstart"
                     android:layout_marginTop="@dimen/detail_marginTop"
-                    android:fontFamily="sans-serif-condensed"
+                    android:fontFamily="sans-serif"
                     android:clickable="true"
-                    android:textSize="@dimen/runtime_textsize"
+                    android:textSize="@dimen/homepage_textsize"
+                    android:textColor="@color/primary_dark"
                     android:text="Contains 3 reviews" />
 
                 <TextView
@@ -165,6 +174,7 @@
                     android:layout_toStartOf="@id/ivThumbnail"
                     android:fontFamily="sans-serif-condensed"
                     android:textSize="@dimen/runtime_textsize"/>
+-->
 
                 <TextView
                     android:id="@+id/tvSynopsis"

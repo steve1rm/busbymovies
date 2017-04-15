@@ -10,7 +10,7 @@ android {
     }
     defaultConfig {
         applicationId "me.androidbox.busbymovies"
-        minSdkVersion 21
+        minSdkVersion 17
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
@@ -72,6 +72,7 @@ dependencies {
     compile "com.android.support:animated-vector-drawable:${supportVersion}"
     compile "com.android.support:customtabs:${supportVersion}"
     compile "com.android.support:cardview-v7:${supportVersion}"
+    compile "com.android.support:gridlayout-v7:${supportVersion}"
     /** ***************************************************************
      *  View and dependency injection
      *************************************************************** */

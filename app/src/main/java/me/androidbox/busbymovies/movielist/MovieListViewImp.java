@@ -3,7 +3,6 @@ package me.androidbox.busbymovies.movielist;
 import android.animation.Animator;
 import android.animation.AnimatorInflater;
 import android.content.res.Configuration;
-import android.graphics.SurfaceTexture;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -206,6 +205,7 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract 
         Favourite favourite = new Favourite(
                 1234,
                 "poster path",
+                "overview",
                 "today",
                 "star wars 8",
                 "backdroppath",
@@ -309,7 +309,7 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract 
             mPbMovieList.hide();
         }
 
-        mMovieAdapter.loadAdapter(favouriteList);
+      //  mMovieAdapter.loadAdapter(favouriteList);
     }
 
     @Override

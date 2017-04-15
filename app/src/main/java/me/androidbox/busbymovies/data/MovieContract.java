@@ -30,6 +30,7 @@ public final class MovieContract {
         public static final String TABLE_NAME = "movie";
         public static final String MOVIE_ID = "movieId";
         public static final String POSTER_PATH = "poster_path";
+        public static final String OVERVIEW = "overview";
         public static final String RELEASE_DATE = "release_date";
         public static final String TITLE = "title";
         public static final String BACKDROP_PATH = "backdrop_path";

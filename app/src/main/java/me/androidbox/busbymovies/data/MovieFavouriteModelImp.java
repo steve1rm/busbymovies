@@ -46,23 +46,23 @@ public class MovieFavouriteModelImp implements MovieFavouriteModelContract {
     public void insert(Favourite favourite, InsertListener insertListener) {
 
         final ContentValues contentValues = new ContentValues();
-        contentValues.put(MovieEntry.MOVIE_ID, favourite.getMovieId());
-        contentValues.put(MovieEntry.BACKDROP_PATH, favourite.getBackdropPath());
+        contentValues.put(MovieEntry.MOVIE_ID, favourite.getId());
+        contentValues.put(MovieEntry.BACKDROP_PATH, favourite.getBackdrop_path());
         contentValues.put(MovieEntry.HOMEPATH, favourite.getHomepage());
-        contentValues.put(MovieEntry.POSTER_PATH, favourite.getPosterPath());
-        contentValues.put(MovieEntry.RELEASE_DATE, favourite.getReleaseData());
+        contentValues.put(MovieEntry.POSTER_PATH, favourite.getPoster_path());
+        contentValues.put(MovieEntry.RELEASE_DATE, favourite.getRelease_date());
         contentValues.put(MovieEntry.RUNTIME, favourite.getRuntime());
         contentValues.put(MovieEntry.TAGLINE, favourite.getTagline());
         contentValues.put(MovieEntry.TITLE, favourite.getTitle());
-        contentValues.put(MovieEntry.VOTE_AVERAGE, favourite.getVoteAverage());
+        contentValues.put(MovieEntry.VOTE_AVERAGE, favourite.getVote_average());
 
         if(mContext.get().getContentResolver().insert(MovieEntry.CONTENT_URI, contentValues) != null) {
-            Timber.d("Success to insert movie %d into database", favourite.getMovieId());
+            Timber.d("Success to insert movie %d into database", favourite.getId());
 
             insertListener.onInsertSuccess();
         }
         else {
-            Timber.e("Failed to insert movie %d into database", favourite.getMovieId());
+            Timber.e("Failed to insert movie %d into database", favourite.getId());
             insertListener.onInsertFailed("Failed to insert movie into database");
         }
 
@@ -88,6 +88,7 @@ public class MovieFavouriteModelImp implements MovieFavouriteModelContract {
                     final Favourite favourite = new Favourite(
                             cursor.getInt(cursor.getColumnIndex(MovieEntry.MOVIE_ID)),
                             cursor.getString(cursor.getColumnIndex(MovieEntry.POSTER_PATH)),
+                            cursor.getString(cursor.getColumnIndex(MovieEntry.OVERVIEW)),
                             cursor.getString(cursor.getColumnIndex(MovieEntry.RELEASE_DATE)),
                             cursor.getString(cursor.getColumnIndex(MovieEntry.TITLE)),
                             cursor.getString(cursor.getColumnIndex(MovieEntry.BACKDROP_PATH)),
