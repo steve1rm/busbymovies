@@ -1,9 +1,11 @@
 package me.androidbox.busbymovies.data;
 
+import android.annotation.TargetApi;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -69,15 +71,16 @@ public class MovieFavouriteModelImp implements MovieFavouriteModelContract {
         contentValues.clear();
     }
 
-    @Override
-    public void retrieve(RetrieveListener retrieveListener) {
-
-        try (Cursor cursor = mContext.get().getContentResolver().query(
-                MovieEntry.CONTENT_URI,
-                null,
-                null,
-                null,
-                MovieEntry.MOVIE_ID)) {
+    /* try with resources don't work for API under API 19 */
+    private void retrieveAPI16(RetrieveListener retrieveListener) {
+        Cursor cursor = null;
+        try {
+            cursor = mContext.get().getContentResolver().query(
+                    MovieEntry.CONTENT_URI,
+                    null,
+                    null,
+                    null,
+                    MovieEntry.MOVIE_ID);
 
             if (cursor != null) {
                 /* Return the favourite movies */
@@ -106,9 +109,63 @@ public class MovieFavouriteModelImp implements MovieFavouriteModelContract {
                 retrieveListener.onRetrieveFailed("Failed to retrieve from database");
             }
         }
-        catch(Exception e) {
+        catch (Exception e) {
             Timber.d(e, "Failed to query database: %s", e.getMessage());
             retrieveListener.onRetrieveFailed(e.getMessage());
+        }
+        finally {
+            if(cursor != null) {
+                cursor.close();
+            }
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    @Override
+    public void retrieve(RetrieveListener retrieveListener) {
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            try (Cursor cursor = mContext.get().getContentResolver().query(
+                    MovieEntry.CONTENT_URI,
+                    null,
+                    null,
+                    null,
+                    MovieEntry.MOVIE_ID)) {
+
+                if (cursor != null) {
+                /* Return the favourite movies */
+                    final List<Favourite> favouriteList = new ArrayList<>();
+
+                    cursor.moveToFirst();
+                    while (cursor.moveToNext()) {
+                        final Favourite favourite = new Favourite(
+                                cursor.getInt(cursor.getColumnIndex(MovieEntry.MOVIE_ID)),
+                                cursor.getString(cursor.getColumnIndex(MovieEntry.POSTER_PATH)),
+                                cursor.getString(cursor.getColumnIndex(MovieEntry.OVERVIEW)),
+                                cursor.getString(cursor.getColumnIndex(MovieEntry.RELEASE_DATE)),
+                                cursor.getString(cursor.getColumnIndex(MovieEntry.TITLE)),
+                                cursor.getString(cursor.getColumnIndex(MovieEntry.BACKDROP_PATH)),
+                                cursor.getFloat(cursor.getColumnIndex(MovieEntry.VOTE_AVERAGE)),
+                                cursor.getString(cursor.getColumnIndex(MovieEntry.TAGLINE)),
+                                cursor.getString(cursor.getColumnIndex(MovieEntry.HOMEPATH)),
+                                cursor.getInt(cursor.getColumnIndex(MovieEntry.RUNTIME)));
+
+                        favouriteList.add(favourite);
+                    }
+
+                    retrieveListener.onRetrievedSuccess(favouriteList);
+                }
+                else {
+                    retrieveListener.onRetrieveFailed("Failed to retrieve from database");
+                }
+            } catch (Exception e) {
+                Timber.d(e, "Failed to query database: %s", e.getMessage());
+                retrieveListener.onRetrieveFailed(e.getMessage());
+            }
+        }
+        else {
+            /* Target api 16 as try - resources only works with API 19 and above */
+            retrieveAPI16(retrieveListener);
         }
     }
 
@@ -118,9 +175,10 @@ public class MovieFavouriteModelImp implements MovieFavouriteModelContract {
 
         final Uri uri = MovieEntry.CONTENT_URI.buildUpon().appendPath(strMovieId).build();
 
-        if(mContext.get().getContentResolver().delete(uri, null, null) != 0) {
+        int rowId = mContext.get().getContentResolver().delete(uri, null, null);
+        if(rowId != 0) {
             Timber.d("Deleted movie %d from the database", movieId);
-            deleteListener.onDeleteSuccess();
+            deleteListener.onDeleteSuccess(rowId);
         }
         else {
             Timber.e("Failed to delete movie %d from the database", movieId);

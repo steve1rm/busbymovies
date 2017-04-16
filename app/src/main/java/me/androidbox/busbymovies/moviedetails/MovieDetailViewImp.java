@@ -54,7 +54,10 @@ import butterknife.Unbinder;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 import me.androidbox.busbymovies.R;
 import me.androidbox.busbymovies.adapters.MovieTrailerAdapter;
+import me.androidbox.busbymovies.data.MovieFavouritePresenterImp;
+import me.androidbox.busbymovies.data.MovieFavouritesPresenterContract;
 import me.androidbox.busbymovies.di.DaggerInjector;
+import me.androidbox.busbymovies.models.Favourite;
 import me.androidbox.busbymovies.models.Movie;
 import me.androidbox.busbymovies.models.Results;
 import me.androidbox.busbymovies.models.Review;
@@ -78,6 +81,7 @@ public class MovieDetailViewImp extends Fragment implements
     private Results<Trailer> mTrailerList;
 
     @Inject MovieDetailPresenterContract<MovieDetailViewContract> mMovieDetailPresenterImp;
+    @Inject MovieFavouritesPresenterContract<MovieDetailViewContract> mMovieFavouritePresenterContact;
 
     @BindView(R.id.ivBackdropPoster) ImageView mIvBackdropPoster;
     @BindView(R.id.tvTagLine) TextView mTvTagLine;
@@ -275,6 +279,21 @@ public class MovieDetailViewImp extends Fragment implements
     @SuppressWarnings("unused")
     @OnClick(R.id.fabMovieFavourite)
     public void addFavouriteMovie() {
+        Timber.d("getFavourites");
+
+        Favourite favourite = new Favourite(
+                1234,
+                "poster path",
+                "overview",
+                "today",
+                "star wars 8",
+                "backdroppath",
+                8.8f,
+                "the force is back again",
+                "the homepage",
+                120);
+
+        mMovieFavouritePresenterContact.insertFavouriteMovie(favourite);
 
     }
 

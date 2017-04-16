@@ -201,20 +201,7 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract 
     @OnClick(R.id.fabFavourite)
     public void getFavourites() {
         Timber.d("getFavourites");
-
-        Favourite favourite = new Favourite(
-                1234,
-                "poster path",
-                "overview",
-                "today",
-                "star wars 8",
-                "backdroppath",
-                8.8f,
-                "the force is back again",
-                "the homepage",
-                120);
-
-        mMovieFavouritePresenterImp.insertFavouriteMovie(favourite);
+        closeSortFab();
     }
 
     /**
@@ -261,6 +248,14 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract 
         }
 
         mMovieListPresenterImp.getTopRatedMovies();
+    }
+
+    public void getFavouriteMovies() {
+        if(!mPbMovieList.isShown()) {
+            mPbMovieList.show();
+        }
+
+        mMovieFavouritePresenterImp.getFavouriteMovies();
     }
 
     @Override
