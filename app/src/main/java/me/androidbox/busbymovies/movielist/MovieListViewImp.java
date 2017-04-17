@@ -43,7 +43,7 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
     public static final String TAG = MovieListViewImp.class.getSimpleName();
 
     @Inject MovieListPresenterContract<MovieListViewContract> mMovieListPresenterImp;
-    /*@Inject*/ MovieFavouritesPresenterContract mMovieFavouritePresenterImp;
+    @Inject MovieFavouritesPresenterContract mMovieFavouritePresenterImp;
 
     @Nullable @BindView(R.id.tool_bar) Toolbar mToolbar;
     @BindView(R.id.rvMovieList) RecyclerView mRvMovieList;
@@ -97,18 +97,15 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
 
         DaggerInjector.getApplicationComponent().inject(MovieListViewImp.this);
 
-        if(mMovieFavouritePresenterImp != null) {
-            Timber.d("mMovieFavouritePresenterImp != null");
-/*
-            mMovieFavouritePresenterImp.attachView(MovieListViewImp.this);
-*/
-            mMovieFavouritePresenterImp.getFavouriteMovies(MovieListViewImp.this);
-        }
-
         if(mMovieListPresenterImp != null) {
             Timber.d("mMovieListPresenterImp != null");
             mMovieListPresenterImp.attachView(MovieListViewImp.this);
             getPopularMovies();
+
+            if(mMovieFavouritePresenterImp != null) {
+                Timber.d("mMovieFavouritePresenterImp != null");
+                mMovieFavouritePresenterImp.getFavouriteMovies(MovieListViewImp.this);
+            }
         }
         else {
             Timber.e("mMovieListPresenterImp == null");
@@ -339,7 +336,7 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
 
     @Override
     public void onGetFavouriteMoviesSuccess(Results<Favourite> favouriteList) {
-
+        Timber.d("onGetFavouriteMovieSuccess %d", favouriteList.getResults().size());
     }
 
     @Override

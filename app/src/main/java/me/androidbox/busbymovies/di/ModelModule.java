@@ -36,9 +36,9 @@ public class ModelModule {
         return new MovieDetailModelImp();
     }
 
-/*    @Provides
+    @Provides
     @Singleton
     public MovieFavouriteModelContract provideMovieFavouriteModel() {
         return new MovieFavouriteModelImp(mApplication);
-    }*/
+    }
 }
