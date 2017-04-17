@@ -39,11 +39,11 @@ import timber.log.Timber;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MovieListViewImp extends Fragment implements MovieListViewContract {
+public class MovieListViewImp extends Fragment implements MovieListViewContract, MovieFavouritesPresenterContract.DbOperationsListener {
     public static final String TAG = MovieListViewImp.class.getSimpleName();
 
     @Inject MovieListPresenterContract<MovieListViewContract> mMovieListPresenterImp;
-    @Inject MovieFavouritesPresenterContract<MovieListViewContract> mMovieFavouritePresenterImp;
+    /*@Inject*/ MovieFavouritesPresenterContract mMovieFavouritePresenterImp;
 
     @Nullable @BindView(R.id.tool_bar) Toolbar mToolbar;
     @BindView(R.id.rvMovieList) RecyclerView mRvMovieList;
@@ -99,8 +99,10 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract 
 
         if(mMovieFavouritePresenterImp != null) {
             Timber.d("mMovieFavouritePresenterImp != null");
+/*
             mMovieFavouritePresenterImp.attachView(MovieListViewImp.this);
-            mMovieFavouritePresenterImp.getFavouriteMovies();
+*/
+            mMovieFavouritePresenterImp.getFavouriteMovies(MovieListViewImp.this);
         }
 
         if(mMovieListPresenterImp != null) {
@@ -255,7 +257,7 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract 
             mPbMovieList.show();
         }
 
-        mMovieFavouritePresenterImp.getFavouriteMovies();
+        mMovieFavouritePresenterImp.getFavouriteMovies(MovieListViewImp.this);
     }
 
     @Override
@@ -333,5 +335,35 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract 
     public void successFavouriteMovieInsert() {
         Timber.d("successFavouriteMovieInsert");
         Toast.makeText(getActivity(), "Insert favourite movie", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onGetFavouriteMoviesSuccess(Results<Favourite> favouriteList) {
+
+    }
+
+    @Override
+    public void onGetFavouriteMoviesFailure(String errorMessage) {
+
+    }
+
+    @Override
+    public void onInsertFavouriteSuccess() {
+
+    }
+
+    @Override
+    public void onInsertFavouriteFailure(String errorMessage) {
+
+    }
+
+    @Override
+    public void onDeleteFavouriteMovieSuccess(int rowDeletedId) {
+
+    }
+
+    @Override
+    public void onDeleteFavouriteMovieFailure(String errorMessage) {
+
     }
 }

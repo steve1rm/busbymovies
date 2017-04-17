@@ -71,7 +71,9 @@ import timber.log.Timber;
  */
 public class MovieDetailViewImp extends Fragment implements
         MovieDetailViewContract,
-        StartMovieTrailerListener {
+        StartMovieTrailerListener,
+        MovieFavouritesPresenterContract.DbOperationsListener {
+
     public static final String TAG = MovieDetailViewImp.class.getSimpleName();
     public static final String MOVIE_ID_KEY = "movie_id_key";
     private Unbinder mUnbinder;
@@ -81,7 +83,7 @@ public class MovieDetailViewImp extends Fragment implements
     private Results<Trailer> mTrailerList;
 
     @Inject MovieDetailPresenterContract<MovieDetailViewContract> mMovieDetailPresenterImp;
-    @Inject MovieFavouritesPresenterContract<MovieDetailViewContract> mMovieFavouritePresenterContact;
+    /*@Inject */ MovieFavouritesPresenterContract mMovieFavouritePresenterContact;
 
     @BindView(R.id.ivBackdropPoster) ImageView mIvBackdropPoster;
     @BindView(R.id.tvTagLine) TextView mTvTagLine;
@@ -293,7 +295,7 @@ public class MovieDetailViewImp extends Fragment implements
                 "the homepage",
                 120);
 
-        mMovieFavouritePresenterContact.insertFavouriteMovie(favourite);
+        mMovieFavouritePresenterContact.insertFavouriteMovie(favourite, MovieDetailViewImp.this);
 
     }
 
@@ -549,5 +551,33 @@ public class MovieDetailViewImp extends Fragment implements
         Timber.e("failedToReceiveMovieReviews %s", errorMessage);
     }
 
+    @Override
+    public void onGetFavouriteMoviesSuccess(Results<Favourite> favouriteList) {
 
+    }
+
+    @Override
+    public void onGetFavouriteMoviesFailure(String errorMessage) {
+
+    }
+
+    @Override
+    public void onInsertFavouriteSuccess() {
+
+    }
+
+    @Override
+    public void onInsertFavouriteFailure(String errorMessage) {
+
+    }
+
+    @Override
+    public void onDeleteFavouriteMovieSuccess(int rowDeletedId) {
+
+    }
+
+    @Override
+    public void onDeleteFavouriteMovieFailure(String errorMessage) {
+
+    }
 }
