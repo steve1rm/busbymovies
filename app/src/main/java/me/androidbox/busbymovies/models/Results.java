@@ -12,8 +12,22 @@ import java.util.List;
 public class Results<T> implements Parcelable {
     private List<T> results;
 
+    public Results(List<T> data) {
+        this.results = data;
+    }
+
+    public Results(){}
+
+    public static Results newInstance() {
+        return new Results();
+    }
+
     public List<T> getResults() {
         return results;
+    }
+
+    public void setResults(List<T> data) {
+        results = data;
     }
 
     private Results(Parcel src) {

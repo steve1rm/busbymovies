@@ -15,7 +15,6 @@ public class DaggerInjector {
                 .modelModule(new ModelModule(application))
                 .apiModule(new ApiModule(application))
                 .build();
-
     }
 
     public static ApplicationComponent getApplicationComponent() {

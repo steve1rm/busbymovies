@@ -31,6 +31,6 @@ public interface ApplicationComponent {
     void inject(MovieDetailModelImp target);
     void inject(MovieDetailViewImp target);
     void inject(MovieDetailPresenterImp target);
-    void inject(MovieFavouriteModelImp target);
-    void inject(MovieFavouritePresenterImp target);
+   // void inject(MovieFavouriteModelImp target);
+    // void inject(MovieFavouritePresenterImp target);
 }

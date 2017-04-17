@@ -15,6 +15,7 @@ import javax.inject.Inject;
 
 import me.androidbox.busbymovies.data.MovieContract.MovieEntry;
 import me.androidbox.busbymovies.models.Favourite;
+import me.androidbox.busbymovies.models.Results;
 import timber.log.Timber;
 
 /**
@@ -103,7 +104,8 @@ public class MovieFavouriteModelImp implements MovieFavouriteModelContract {
                     favouriteList.add(favourite);
                 }
 
-                retrieveListener.onRetrievedSuccess(favouriteList);
+                Results<Favourite> data = new Results<>();
+                retrieveListener.onRetrievedSuccess(data);
             }
             else {
                 retrieveListener.onRetrieveFailed("Failed to retrieve from database");
@@ -153,7 +155,8 @@ public class MovieFavouriteModelImp implements MovieFavouriteModelContract {
                         favouriteList.add(favourite);
                     }
 
-                    retrieveListener.onRetrievedSuccess(favouriteList);
+                    Results<Favourite> data = new Results<>();
+                    retrieveListener.onRetrievedSuccess(data);
                 }
                 else {
                     retrieveListener.onRetrieveFailed("Failed to retrieve from database");
