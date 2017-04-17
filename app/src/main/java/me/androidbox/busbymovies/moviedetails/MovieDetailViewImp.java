@@ -41,9 +41,6 @@ import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerFragment;
 
-import java.util.Collections;
-import java.util.List;
-
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -54,7 +51,6 @@ import butterknife.Unbinder;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 import me.androidbox.busbymovies.R;
 import me.androidbox.busbymovies.adapters.MovieTrailerAdapter;
-import me.androidbox.busbymovies.data.MovieFavouritePresenterImp;
 import me.androidbox.busbymovies.data.MovieFavouritesPresenterContract;
 import me.androidbox.busbymovies.di.DaggerInjector;
 import me.androidbox.busbymovies.models.Favourite;
@@ -83,7 +79,7 @@ public class MovieDetailViewImp extends Fragment implements
     private Results<Trailer> mTrailerList;
 
     @Inject MovieDetailPresenterContract<MovieDetailViewContract> mMovieDetailPresenterImp;
-    /*@Inject */ MovieFavouritesPresenterContract mMovieFavouritePresenterContact;
+    @Inject MovieFavouritesPresenterContract mMovieFavouritePresenterContact;
 
     @BindView(R.id.ivBackdropPoster) ImageView mIvBackdropPoster;
     @BindView(R.id.tvTagLine) TextView mTvTagLine;
@@ -553,22 +549,22 @@ public class MovieDetailViewImp extends Fragment implements
 
     @Override
     public void onGetFavouriteMoviesSuccess(Results<Favourite> favouriteList) {
-
+        /* no-op */
     }
 
     @Override
     public void onGetFavouriteMoviesFailure(String errorMessage) {
-
+        /* no-op */
     }
 
     @Override
     public void onInsertFavouriteSuccess() {
-
+        Timber.d("onInsertFavouriteSuccess");
     }
 
     @Override
     public void onInsertFavouriteFailure(String errorMessage) {
-
+        Timber.e("onInsertFavouriteFailure %s", errorMessage);
     }
 
     @Override

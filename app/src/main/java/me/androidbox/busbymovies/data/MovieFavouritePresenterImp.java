@@ -1,7 +1,5 @@
 package me.androidbox.busbymovies.data;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import me.androidbox.busbymovies.di.DaggerInjector;

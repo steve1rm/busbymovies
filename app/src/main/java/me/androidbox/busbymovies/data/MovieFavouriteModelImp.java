@@ -104,7 +104,7 @@ public class MovieFavouriteModelImp implements MovieFavouriteModelContract {
                     favouriteList.add(favourite);
                 }
 
-                Results<Favourite> data = new Results<>();
+                Results<Favourite> data = new Results<>(favouriteList);
                 retrieveListener.onRetrievedSuccess(data);
             }
             else {
@@ -135,9 +135,8 @@ public class MovieFavouriteModelImp implements MovieFavouriteModelContract {
                     MovieEntry.MOVIE_ID)) {
 
                 if (cursor != null) {
-                /* Return the favourite movies */
+                    /* Return the favourite movies */
                     final List<Favourite> favouriteList = new ArrayList<>();
-                 //   final Results<Favourite> resultsData = new Results<>();
 
                     cursor.moveToFirst();
                     while (cursor.moveToNext()) {
@@ -154,7 +153,6 @@ public class MovieFavouriteModelImp implements MovieFavouriteModelContract {
                                 cursor.getInt(cursor.getColumnIndex(MovieEntry.RUNTIME)));
 
                         favouriteList.add(favourite);
-               //         resultsData.getResults().add(favourite);
                     }
 
                     Results<Favourite> data = new Results<>(favouriteList);
