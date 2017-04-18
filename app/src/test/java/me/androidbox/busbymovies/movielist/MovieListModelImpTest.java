@@ -10,6 +10,7 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.List;
 
+import me.androidbox.busbymovies.models.Movies;
 import me.androidbox.busbymovies.models.Results;
 import me.androidbox.busbymovies.network.MovieAPIService;
 import okhttp3.ResponseBody;
@@ -35,10 +36,12 @@ public class MovieListModelImpTest {
 
     @Mock MovieAPIService mockMovieAPIService;
     @Mock Observable<Results> mockCall;
+    @Mock Results<Movies> mockMovies;
     @Mock ResponseBody responseBody;
     @Mock MovieListModelContract.PopularMovieResultsListener mockPopularMoviesResultsListener;
-    private MovieListModelContract movieListModelContract;
     @Captor ArgumentCaptor<Callback<List<Results>>> argumentCaptor;
+
+    private MovieListModelContract movieListModelContract;
 
     @Before
     public void setUp() throws Exception {
@@ -65,25 +68,23 @@ public class MovieListModelImpTest {
 
     @Test
     public void shouldDisplayFailureMessageOnError() {
-        Results results = new Results();
         when(mockMovieAPIService.getPopular(anyString()))
                 .thenReturn(Observable.error(new Throwable(new RuntimeException())));
 
         movieListModelContract.getPopularMovies(mockPopularMoviesResultsListener);
 
         verify(mockPopularMoviesResultsListener, times(1)).onPopularMovieFailure(anyString());
-        verify(mockPopularMoviesResultsListener, never()).onPopularMovieSuccess(results);
+        verify(mockPopularMoviesResultsListener, never()).onPopularMovieSuccess(mockMovies);
     }
 
     @Test
     public void shouldDisplaySuccessMessageOnSuccess() {
-        final Results results = new Results();
-        when(mockMovieAPIService.getPopular(anyString())).thenReturn(Observable.just(results));
+        when(mockMovieAPIService.getPopular(anyString())).thenReturn(Observable.just(mockMovies));
 
         movieListModelContract.getPopularMovies(mockPopularMoviesResultsListener);
 
         verify(mockPopularMoviesResultsListener, never()).onPopularMovieFailure(anyString());
-        verify(mockPopularMoviesResultsListener, times(1)).onPopularMovieSuccess(results);
+        verify(mockPopularMoviesResultsListener, times(1)).onPopularMovieSuccess(mockMovies);
     }
 
     @After

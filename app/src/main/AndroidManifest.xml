@@ -15,7 +15,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".movielist.MovieListActivity"
-            android:theme="@style/AppThemeTransparentStatusBarNavBar">
+            android:theme="@style/AppThemeTransparentStatusBarNavBar"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -32,6 +33,12 @@
                 android:value=".movielist.MovieListActivity">
             </meta-data>
         </activity>
+
+        <provider
+            android:authorities="me.androidbox.busbymovies"
+            android:name="me.androidbox.busbymovies.data.MovieContentProvider"
+            android:exported="false">
+        </provider>
     </application>
 
 </manifest>

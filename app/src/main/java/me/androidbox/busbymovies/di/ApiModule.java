@@ -30,10 +30,9 @@ import timber.log.Timber;
 @Module
 public class ApiModule {
     private static final String CACHE_CONTROL = "Cache-Control";
-    private BusbyMoviesApplication mBusbyMovieApplication;
 
     public ApiModule(BusbyMoviesApplication busbyMoviesApplication) {
-        mBusbyMovieApplication = busbyMoviesApplication;
+        /*mBusbyMovieApplication = busbyMoviesApplication;*/
     }
 
     @Provides

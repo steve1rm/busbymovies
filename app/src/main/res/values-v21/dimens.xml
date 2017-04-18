@@ -2,4 +2,6 @@
 <resources>
     <dimen name="toolbarHeight">24dp</dimen>
     <dimen name="fabSortMarginBottom">64dp</dimen>
+    <dimen name="detail_fab_marginbottom">16dp</dimen>
+    <dimen name="detail_fab_marginend">16dp</dimen>
 </resources>

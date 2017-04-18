@@ -22,7 +22,7 @@ public class MovieDetailActivity extends AppCompatActivity {
             if(intent.hasExtra(MovieDetailViewImp.MOVIE_ID_KEY)) {
                 final int movie_id = intent.getIntExtra(MovieDetailViewImp.MOVIE_ID_KEY, -1);
                 if(movie_id != -1) {
-                    getSupportFragmentManager().beginTransaction()
+                    getFragmentManager().beginTransaction()
                             .add(R.id.moviedetail_container, MovieDetailViewImp.newInstance(movie_id), MovieDetailViewImp.TAG)
                             .commit();
                 }
@@ -40,8 +40,6 @@ public class MovieDetailActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         Timber.d("onBackPressed");
-
-        finish();
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 

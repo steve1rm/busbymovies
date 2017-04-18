@@ -1,9 +1,13 @@
 package me.androidbox.busbymovies.di;
 
+import android.app.Application;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import me.androidbox.busbymovies.data.MovieFavouriteModelContract;
+import me.androidbox.busbymovies.data.MovieFavouriteModelImp;
 import me.androidbox.busbymovies.moviedetails.MovieDetailModelContract;
 import me.androidbox.busbymovies.moviedetails.MovieDetailModelImp;
 import me.androidbox.busbymovies.movielist.MovieListModelContract;
@@ -14,6 +18,12 @@ import me.androidbox.busbymovies.movielist.MovieListModelImp;
  */
 @Module
 public class ModelModule {
+    private Application mApplication;
+
+    public ModelModule(Application application) {
+        mApplication = application;
+    }
+
     @Provides
     @Singleton
     public MovieListModelContract provideMovieListModel() {
@@ -24,5 +34,11 @@ public class ModelModule {
     @Singleton
     public MovieDetailModelContract provideMovieDetailModel() {
         return new MovieDetailModelImp();
+    }
+
+    @Provides
+    @Singleton
+    public MovieFavouriteModelContract provideMovieFavouriteModel() {
+        return new MovieFavouriteModelImp(mApplication);
     }
 }

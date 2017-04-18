@@ -5,19 +5,17 @@ package me.androidbox.busbymovies.di;
  */
 
 public class DaggerInjector {
-    private static BusbyMoviesApplication mApplication;
+    private static ApplicationComponent sApplicationComponent;
 
+    /* Build dependency injection */
     public DaggerInjector(BusbyMoviesApplication application) {
-        mApplication = application;
+        sApplicationComponent = DaggerApplicationComponent.builder()
+                .presenterModule(new PresenterModule())
+                .presenterDetailModule(new PresenterDetailModule())
+                .modelModule(new ModelModule(application))
+                .apiModule(new ApiModule(application))
+                .build();
     }
-
-    private static ApplicationComponent sApplicationComponent = DaggerApplicationComponent.builder()
-            .presenterModule(new PresenterModule())
-            .presenterDetailModule(new PresenterDetailModule())
-            .modelModule(new ModelModule())
-            .apiModule(new ApiModule(mApplication))
-            .applicationModule(new ApplicationModule(mApplication))
-            .build();
 
     public static ApplicationComponent getApplicationComponent() {
         return sApplicationComponent;

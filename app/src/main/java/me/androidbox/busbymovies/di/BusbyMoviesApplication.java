@@ -2,8 +2,6 @@ package me.androidbox.busbymovies.di;
 
 import android.app.Application;
 
-import com.wonderkiln.blurkit.BlurKit;
-
 import me.androidbox.busbymovies.utils.Constants;
 import timber.log.Timber;
 
@@ -19,7 +17,6 @@ public class BusbyMoviesApplication extends Application {
         super.onCreate();
 
         Timber.plant(new Timber.DebugTree());
-//        BlurKit.init(BusbyMoviesApplication.this);
 
         mBusbyMoviesApplication = BusbyMoviesApplication.this;
 

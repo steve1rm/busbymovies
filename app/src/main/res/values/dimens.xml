@@ -1,4 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <dimen name="fabSortMarginBottom">32dp</dimen>
+    <dimen name="toolbarHeight">24dp</dimen>
+    <dimen name="thumbnail_width">120dp</dimen>
+    <dimen name="thumbnail_height">180dp</dimen>
+    <dimen name="thumbnail_marginTop">12dp</dimen>
+    <dimen name="thumbnail_marginStart">12dp</dimen>
+    <dimen name="vote_average_padding">8dp</dimen>
+    <dimen name="vote_average_textsize">16sp</dimen>
+    <dimen name="blur_layout_height">70dp</dimen>
+    <dimen name="blur_layout_padding_buttom">4dp</dimen>
+    <dimen name="blur_layout_paddingtop">4dp</dimen>
+    <dimen name="toolbar_inset_start">8dp</dimen>
+    <dimen name="toolbar_inset_end">4dp</dimen>
+    <dimen name="include_image_thumbnail_margintop">10dp</dimen>
+    <dimen name="detail_movie_marginend">8dp</dimen>
+    <dimen name="detail_movie_marginstart">8dp</dimen>
+    <dimen name="fab_elevation">6dp</dimen>
+    <dimen name="fab_translationZ">16dp</dimen>
+    <dimen name="homepage_textsize">14sp</dimen>
+    <dimen name="detail_marginTop">8dp</dimen>
+    <dimen name="synopsis_textsize">18sp</dimen>
+    <dimen name="runtime_textsize">18sp</dimen>
+    <dimen name="synopsis_paddingBottom">16dp</dimen>
+    <dimen name="title_textsize">18sp</dimen>
+    <dimen name="header_marginEnd">8dp</dimen>
+    <dimen name="header_marginStart">8dp</dimen>
+    <dimen name="header_marginBottom">4dp</dimen>
+    <dimen name="view_line_margin">32dp</dimen>
+    <dimen name="release_textsize">18sp</dimen>
+    <dimen name="tagline_textsize">18sp</dimen>
+    <dimen name="fab_borderWidth">6dp</dimen>
+    <dimen name="fab_margins">16dp</dimen>
+    <dimen name="image_poster_height">300dp</dimen>
+    <dimen name="palette_height">60dp</dimen>
+    <dimen name="tagline_height">60dp</dimen>
+    <dimen name="tagline_paddingTop">8dp</dimen>
+    <dimen name="tagline_paddingStart">8dp</dimen>
+    <dimen name="tagline_paddingEnd">4dp</dimen>
 </resources>

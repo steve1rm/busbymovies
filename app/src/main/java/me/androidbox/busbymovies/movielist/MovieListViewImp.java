@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import java.util.Collections;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -28,23 +29,28 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import me.androidbox.busbymovies.R;
 import me.androidbox.busbymovies.adapters.MovieAdapter;
+import me.androidbox.busbymovies.data.MovieFavouritesPresenterContract;
 import me.androidbox.busbymovies.di.DaggerInjector;
+import me.androidbox.busbymovies.models.Favourite;
+import me.androidbox.busbymovies.models.Movies;
 import me.androidbox.busbymovies.models.Results;
 import timber.log.Timber;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MovieListViewImp extends Fragment implements MovieListViewContract {
+public class MovieListViewImp extends Fragment implements MovieListViewContract, MovieFavouritesPresenterContract.DbOperationsListener {
     public static final String TAG = MovieListViewImp.class.getSimpleName();
 
     @Inject MovieListPresenterContract<MovieListViewContract> mMovieListPresenterImp;
+    @Inject MovieFavouritesPresenterContract mMovieFavouritePresenterImp;
 
     @Nullable @BindView(R.id.tool_bar) Toolbar mToolbar;
     @BindView(R.id.rvMovieList) RecyclerView mRvMovieList;
     @BindView(R.id.pbMovieList) ContentLoadingProgressBar mPbMovieList;
     @BindView(R.id.fabPopular) FloatingActionButton mFabPopular;
     @BindView(R.id.fabTopRated) FloatingActionButton mFabTopRated;
+    @BindView(R.id.fabFavourite) FloatingActionButton mFabFavourite;
 
     private Unbinder mUnbinder;
     private MovieAdapter mMovieAdapter;
@@ -90,10 +96,16 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract 
         super.onActivityCreated(savedInstanceState);
 
         DaggerInjector.getApplicationComponent().inject(MovieListViewImp.this);
+
         if(mMovieListPresenterImp != null) {
             Timber.d("mMovieListPresenterImp != null");
             mMovieListPresenterImp.attachView(MovieListViewImp.this);
             getPopularMovies();
+
+            if(mMovieFavouritePresenterImp != null) {
+                Timber.d("mMovieFavouritePresenterImp != null");
+                mMovieFavouritePresenterImp.getFavouriteMovies(MovieListViewImp.this);
+            }
         }
         else {
             Timber.e("mMovieListPresenterImp == null");
@@ -130,6 +142,10 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract 
         closeTopRatedFab.setTarget(mFabTopRated);
         closeTopRatedFab.start();
 
+        final Animator openFavourite = AnimatorInflater.loadAnimator(getActivity(), R.animator.close_favourite_fab);
+        openFavourite.setTarget(mFabFavourite);
+        openFavourite.start();
+
         mIsSortFabOpen = false;
     }
 
@@ -144,6 +160,10 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract 
         final Animator openTopRatedTab = AnimatorInflater.loadAnimator(getActivity(), R.animator.open_toprated_fab);
         openTopRatedTab.setTarget(mFabTopRated);
         openTopRatedTab.start();
+
+        final Animator openFavourite = AnimatorInflater.loadAnimator(getActivity(), R.animator.open_favourite_fab);
+        openFavourite.setTarget(mFabFavourite);
+        openFavourite.start();
 
         mIsSortFabOpen = true;
     }
@@ -173,6 +193,13 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract 
     public void getTopRated() {
         Timber.d("getTopRated");
         getTopRatedMovies();
+        closeSortFab();
+    }
+
+    @SuppressWarnings("unused")
+    @OnClick(R.id.fabFavourite)
+    public void getFavourites() {
+        Timber.d("getFavourites");
         closeSortFab();
     }
 
@@ -222,8 +249,16 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract 
         mMovieListPresenterImp.getTopRatedMovies();
     }
 
+    public void getFavouriteMovies() {
+        if(!mPbMovieList.isShown()) {
+            mPbMovieList.show();
+        }
+
+        mMovieFavouritePresenterImp.getFavouriteMovies(MovieListViewImp.this);
+    }
+
     @Override
-    public void displayPopularMovies(Results popularMovies) {
+    public void displayPopularMovies(Results<Movies> popularMovies) {
         /* Load adapter with data to be populated in the recycler view */
         /* Hide progress indicator */
         Timber.d("displayPopularMovies Received %d", popularMovies.getResults().size());
@@ -236,7 +271,7 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract 
     }
 
     @Override
-    public void displayTopRatedMovies(Results topRatedMovies) {
+    public void displayTopRatedMovies(Results<Movies> topRatedMovies) {
         Timber.d("displayTopRatedMovies: %d", topRatedMovies.getResults().size());
 
         if(mPbMovieList.isShown()) {
@@ -258,5 +293,74 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract 
         Toast.makeText(getActivity(), "Failed to get top rated movies\n" + errorMessage, Toast.LENGTH_LONG).show();
         mPbMovieList.hide();
         Timber.d("Failed to get top rated movies %s", errorMessage);
+    }
+
+    @Override
+    public void displayFavouriteMovies(List<Favourite> favouriteList) {
+        Timber.d("displayTopRatedMovies: %d", favouriteList.size());
+
+        if(mPbMovieList.isShown()) {
+            mPbMovieList.hide();
+        }
+
+      //  mMovieAdapter.loadAdapter(favouriteList);
+    }
+
+    @Override
+    public void failedDisplayFavouriteMovies(String errorMessage) {
+        Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void failedFavouriteMovieDelete(String errorMessage) {
+        Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void successFavouriteMovieDelete() {
+        Timber.d("Movie deleted from favourites");
+        Toast.makeText(getActivity(), "Movie favourite movie deleted", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void failedFavouriteMovieInsert(String errorMessage) {
+        Timber.e("failedFavouriteMovieInsert %s", errorMessage);
+        Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void successFavouriteMovieInsert() {
+        Timber.d("successFavouriteMovieInsert");
+        Toast.makeText(getActivity(), "Insert favourite movie", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onGetFavouriteMoviesSuccess(Results<Favourite> favouriteList) {
+        Timber.d("onGetFavouriteMovieSuccess %d", favouriteList.getResults().size());
+    }
+
+    @Override
+    public void onGetFavouriteMoviesFailure(String errorMessage) {
+
+    }
+
+    @Override
+    public void onInsertFavouriteSuccess() {
+        Timber.d("onInsertFavouriteSuccess");
+    }
+
+    @Override
+    public void onInsertFavouriteFailure(String errorMessage) {
+
+    }
+
+    @Override
+    public void onDeleteFavouriteMovieSuccess(int rowDeletedId) {
+
+    }
+
+    @Override
+    public void onDeleteFavouriteMovieFailure(String errorMessage) {
+
     }
 }
