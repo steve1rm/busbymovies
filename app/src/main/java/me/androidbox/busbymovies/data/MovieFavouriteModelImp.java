@@ -51,6 +51,7 @@ public class MovieFavouriteModelImp implements MovieFavouriteModelContract {
         final ContentValues contentValues = new ContentValues();
         contentValues.put(MovieEntry.MOVIE_ID, favourite.getId());
         contentValues.put(MovieEntry.BACKDROP_PATH, favourite.getBackdrop_path());
+        contentValues.put(MovieEntry.OVERVIEW, favourite.getOverview());
         contentValues.put(MovieEntry.HOMEPATH, favourite.getHomepage());
         contentValues.put(MovieEntry.POSTER_PATH, favourite.getPoster_path());
         contentValues.put(MovieEntry.RELEASE_DATE, favourite.getRelease_date());

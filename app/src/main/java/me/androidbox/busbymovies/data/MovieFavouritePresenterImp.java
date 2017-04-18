@@ -34,6 +34,7 @@ public class MovieFavouritePresenterImp implements
 
     @Override
     public void insertFavouriteMovie(Favourite favourite, MovieFavouritesPresenterContract.DbOperationsListener dbOperationsListener) {
+        mDbOperationsListener = dbOperationsListener;
         if(mMovieFavouriteModelContract != null) {
             mMovieFavouriteModelContract.insert(favourite, MovieFavouritePresenterImp.this);
         }
@@ -41,6 +42,7 @@ public class MovieFavouritePresenterImp implements
 
     @Override
     public void deleteFavouriteMovie(int movieId, MovieFavouritesPresenterContract.DbOperationsListener dbOperationsListener) {
+        mDbOperationsListener = dbOperationsListener;
         if(mMovieFavouriteModelContract != null) {
             mMovieFavouriteModelContract.delete(movieId, MovieFavouritePresenterImp.this);
         }

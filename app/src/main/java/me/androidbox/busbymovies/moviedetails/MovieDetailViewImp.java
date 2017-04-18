@@ -277,7 +277,7 @@ public class MovieDetailViewImp extends Fragment implements
     @SuppressWarnings("unused")
     @OnClick(R.id.fabMovieFavourite)
     public void addFavouriteMovie() {
-        Timber.d("getFavourites");
+        Timber.d("addFavourites");
 
         Favourite favourite = new Favourite(
                 1234,
@@ -317,8 +317,28 @@ public class MovieDetailViewImp extends Fragment implements
     @SuppressWarnings("unused")
     @OnClick(R.id.fabReviews)
     public void openReviews() {
+        Timber.d("addFavourites");
+
+        Favourite favourite = new Favourite(
+                1234,
+                "poster path",
+                "overview",
+                "today",
+                "star wars 8",
+                "backdroppath",
+                8.8f,
+                "the force is back again",
+                "the homepage",
+                120);
+
+        mMovieFavouritePresenterContact.insertFavouriteMovie(favourite, MovieDetailViewImp.this);
+
+/*
+
         if(mReviewList.getResults().size() > 0) {
-            /* Open movie reviews dialog fragment */
+            */
+/* Open movie s dialog fragment *//*
+
             FragmentManager fragmentManager = getFragmentManager();
             MovieReviewsDialog movieReviewsDialog = MovieReviewsDialog.newInstance(mReviewList);
             movieReviewsDialog.show(fragmentManager, MovieReviewsDialog.class.getSimpleName());
@@ -326,6 +346,7 @@ public class MovieDetailViewImp extends Fragment implements
         else {
             Toast.makeText(getActivity(), "There are no reviews for this movie yet", Toast.LENGTH_SHORT).show();
         }
+*/
     }
 
     @Override

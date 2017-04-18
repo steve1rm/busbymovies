@@ -346,7 +346,7 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
 
     @Override
     public void onInsertFavouriteSuccess() {
-
+        Timber.d("onInsertFavouriteSuccess");
     }
 
     @Override
