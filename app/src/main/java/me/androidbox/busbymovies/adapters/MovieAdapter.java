@@ -17,7 +17,7 @@ import me.androidbox.busbymovies.movielist.MovieListViewHolder;
  */
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieListViewHolder> {
-
+    /* Make this more generic */
     private List<Movies> mMovieList = Collections.emptyList();
 
     public MovieAdapter(List<Movies> movieList) {
