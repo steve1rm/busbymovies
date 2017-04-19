@@ -292,7 +292,6 @@ public class MovieDetailViewImp extends Fragment implements
                 120);
 
         mMovieFavouritePresenterContact.insertFavouriteMovie(favourite, MovieDetailViewImp.this);
-
     }
 
     @SuppressWarnings("unused")

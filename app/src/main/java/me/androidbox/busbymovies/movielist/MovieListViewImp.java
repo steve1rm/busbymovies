@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -200,6 +201,7 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
     @OnClick(R.id.fabFavourite)
     public void getFavourites() {
         Timber.d("getFavourites");
+        getFavouriteMovies();
         closeSortFab();
     }
 
@@ -282,6 +284,17 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
     }
 
     @Override
+    public void onGetFavouriteMoviesSuccess(Results<Favourite> favouriteList) {
+        Timber.d("onGetFavouriteMovieSuccess %d", favouriteList.getResults().size());
+
+        if(mPbMovieList.isShown()) {
+            mPbMovieList.hide();
+        }
+
+        mMovieAdapter.loadAdapter(favouriteList);
+    }
+
+    @Override
     public void failedToDisplayPopularMovies(String errorMessage) {
         Toast.makeText(getActivity(), "Failed to get popular movies\n" + errorMessage, Toast.LENGTH_LONG).show();
         mPbMovieList.hide();
@@ -334,10 +347,6 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
         Toast.makeText(getActivity(), "Insert favourite movie", Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    public void onGetFavouriteMoviesSuccess(Results<Favourite> favouriteList) {
-        Timber.d("onGetFavouriteMovieSuccess %d", favouriteList.getResults().size());
-    }
 
     @Override
     public void onGetFavouriteMoviesFailure(String errorMessage) {

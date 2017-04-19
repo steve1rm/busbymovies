@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import me.androidbox.busbymovies.R;
+import me.androidbox.busbymovies.models.Movie;
 import me.androidbox.busbymovies.models.Movies;
 import me.androidbox.busbymovies.models.Results;
 import me.androidbox.busbymovies.movielist.MovieListViewHolder;
@@ -18,9 +19,9 @@ import me.androidbox.busbymovies.movielist.MovieListViewHolder;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieListViewHolder> {
     /* Make this more generic */
-    private List<Movies> mMovieList = Collections.emptyList();
+    private List<? extends Movies> mMovieList = Collections.emptyList();
 
-    public MovieAdapter(List<Movies> movieList) {
+    public MovieAdapter(List<? extends Movies> movieList) {
         mMovieList = new ArrayList<>(movieList);
     }
 
@@ -37,11 +38,13 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieListViewHolder> {
         holder.bindViewData(mMovieList.get(position).getTitle(), mMovieList.get(position).getPoster_path());
     }
 
-    public void loadAdapter(Results<Movies> results) {
+    public void loadAdapter(Results<? extends Movies> results) {
         clearAllMovies();
 
-        mMovieList.addAll(results.getResults());
-        notifyItemRangeInserted(0, results.getResults().size());
+        //mMovieList.addAll(results.getResults());
+        mMovieList = results.getResults();
+
+        notifyItemRangeInserted(0, mMovieList.size());
     }
 
     public void clearAllMovies() {
