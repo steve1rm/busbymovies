@@ -291,7 +291,13 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
             mPbMovieList.hide();
         }
 
-        mMovieAdapter.loadAdapter(favouriteList);
+        if(favouriteList.getResults().size() > 0) {
+            mMovieAdapter.loadAdapter(favouriteList);
+        }
+        else {
+            Toast.makeText(getActivity(), "There are no favourites to display", Toast.LENGTH_SHORT)
+                    .show();
+        }
     }
 
     @Override
