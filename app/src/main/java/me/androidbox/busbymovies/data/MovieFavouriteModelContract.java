@@ -1,9 +1,7 @@
 package me.androidbox.busbymovies.data;
 
-
-import java.util.List;
-
 import me.androidbox.busbymovies.models.Favourite;
+import me.androidbox.busbymovies.models.Results;
 
 /**
  * Created by steve on 3/26/17.
@@ -11,20 +9,20 @@ import me.androidbox.busbymovies.models.Favourite;
 
 public interface MovieFavouriteModelContract {
     interface InsertListener {
-        void onInsertFailed();
+        void onInsertFailed(String errorMessage);
         void onInsertSuccess();
     }
     void insert(Favourite favourite, InsertListener insertListener);
 
     interface RetrieveListener {
-        void onRetrieveFailed();
-        void onRetrievedSuccess(List<Favourite> favouriteList);
+        void onRetrieveFailed(String errorMessage);
+        void onRetrievedSuccess(Results<Favourite> favouriteList);
     }
     void retrieve(RetrieveListener retrieveListener);
 
     interface DeleteListener {
-        void onDeleteFailed();
-        void onDeleteSuccess();
+        void onDeleteFailed(String errorMessage);
+        void onDeleteSuccess(int rowId);
     }
     void delete(int movieId, DeleteListener deleteListener);
 

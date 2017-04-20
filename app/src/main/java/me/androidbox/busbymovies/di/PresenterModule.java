@@ -24,10 +24,11 @@ public class PresenterModule {
 
     @Provides
     @Singleton
-    public MovieFavouritesPresenterContract<MovieListViewContract> provideMovieFavouritePresenter() {
+    public MovieFavouritesPresenterContract provideMovieFavouritePresenter() {
         return new MovieFavouritePresenterImp();
     }
-/*
+
+    /*
     @Provides
     @Singleton
     public MovieDetailPresenterContract<MovieDetailViewContract> provideMovieDetailPresenter() {
