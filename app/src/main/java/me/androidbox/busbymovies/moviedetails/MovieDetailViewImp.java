@@ -6,7 +6,6 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
@@ -126,10 +125,7 @@ public class MovieDetailViewImp extends Fragment implements
 
         setupToolBar();
         setupFavourite();
-
-        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            setupBottomSheet();
-        }
+        setupBottomSheet();
 
         return view;
     }
