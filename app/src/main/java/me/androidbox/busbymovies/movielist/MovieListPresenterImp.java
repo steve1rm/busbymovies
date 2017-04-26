@@ -1,5 +1,7 @@
 package me.androidbox.busbymovies.movielist;
 
+import android.support.annotation.VisibleForTesting;
+
 import javax.inject.Inject;
 
 import me.androidbox.busbymovies.di.DaggerInjector;
@@ -24,7 +26,7 @@ public class MovieListPresenterImp implements
     }
 
     /** Running Junit Testing only */
-    public MovieListPresenterImp(MovieListModelContract mMovieModelContract) {
+    @VisibleForTesting MovieListPresenterImp(MovieListModelContract mMovieModelContract) {
         this.mMovieModelContract = mMovieModelContract;
     }
 

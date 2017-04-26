@@ -1,10 +1,10 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context="me.androidbox.busbymovies.moviedetails.MovieDetailViewImp">
+                                                 xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                 xmlns:tools="http://schemas.android.com/tools"
+                                                 android:layout_width="match_parent"
+                                                 android:layout_height="match_parent"
+                                                 android:fitsSystemWindows="true"
+                                                 tools:context="me.androidbox.busbymovies.moviedetails.MovieDetailViewImp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -22,7 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"
-                android:scaleType="centerCrop" />
+                android:scaleType="centerCrop"/>
 
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/fabMovieFavourite"
@@ -36,25 +36,25 @@
                 app:elevation="@dimen/fab_elevation"
                 app:fabSize="normal"
                 app:pressedTranslationZ="@dimen/fab_translationZ"
-                app:srcCompat="@drawable/ic_favorite_black_24dp" />
+                app:srcCompat="@drawable/ic_favorite_black_24dp"/>
 
             <FrameLayout
                 android:id="@+id/youtubeFragmentContainer"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="70dp"
-                android:visibility="visible" />
+                android:visibility="visible"/>
 
             <com.wonderkiln.blurkit.BlurLayout xmlns:blurkit="http://schemas.android.com/apk/res-auto"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="bottom"
-                android:layout_marginEnd="58dp"
-                android:layout_marginStart="58dp"
-                android:layout_marginTop="68dp"
-                android:paddingBottom="4dp"
-                android:paddingTop="4dp"
-                blurkit:blurRadius="3">
+                                               android:layout_width="match_parent"
+                                               android:layout_height="match_parent"
+                                               android:layout_gravity="bottom"
+                                               android:layout_marginEnd="58dp"
+                                               android:layout_marginStart="58dp"
+                                               android:layout_marginTop="68dp"
+                                               android:paddingBottom="4dp"
+                                               android:paddingTop="4dp"
+                                               blurkit:blurRadius="3">
 
                 <ScrollView
                     android:id="@+id/svMovieFooter"
@@ -69,7 +69,7 @@
                             android:id="@+id/include_details_header"
                             layout="@layout/movie_details_header"
                             android:layout_width="match_parent"
-                            android:layout_height="70dp" />
+                            android:layout_height="70dp"/>
 
                         <include
                             android:id="@+id/include_image_thumbnail"
@@ -79,7 +79,7 @@
                             android:layout_alignParentEnd="true"
                             android:layout_below="@id/include_details_header"
                             android:layout_marginEnd="8dp"
-                            android:layout_marginTop="10dp" />
+                            android:layout_marginTop="10dp"/>
 
                         <RatingBar
                             android:id="@+id/rbVoteAverage"
@@ -88,7 +88,7 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@id/include_details_header"
                             android:layout_marginStart="8dp"
-                            android:layout_marginTop="8dp" />
+                            android:layout_marginTop="8dp"/>
 
                         <include
                             android:id="@+id/include_trailer_reviews"
@@ -98,7 +98,7 @@
                             android:layout_alignParentStart="true"
                             android:layout_below="@id/rbVoteAverage"
                             android:layout_marginTop="4dp"
-                            android:layout_toStartOf="@id/include_image_thumbnail" />
+                            android:layout_toStartOf="@id/include_image_thumbnail"/>
 
                         <TextView
                             android:id="@+id/tvHomepage"
@@ -114,7 +114,7 @@
                             android:ellipsize="end"
                             android:fontFamily="sans-serif"
                             android:textColor="@color/primary"
-                            android:textSize="14sp" />
+                            android:textSize="14sp"/>
 
                         <TextView
                             android:id="@+id/tvRuntime"
@@ -128,7 +128,7 @@
                             android:layout_toStartOf="@id/ivThumbnail"
                             android:fontFamily="sans-serif-condensed"
                             android:textColor="@android:color/white"
-                            android:textSize="18sp" />
+                            android:textSize="18sp"/>
 
                         <TextView
                             android:id="@+id/tvSynopsis"
@@ -141,7 +141,7 @@
                             android:paddingStart="8dp"
                             android:paddingTop="8dp"
                             android:textColor="@android:color/white"
-                            android:textSize="18sp" />
+                            android:textSize="18sp"/>
                     </RelativeLayout>
                 </ScrollView>
             </com.wonderkiln.blurkit.BlurLayout>
@@ -165,12 +165,12 @@
     </RelativeLayout>
 
     <include xmlns:app="http://schemas.android.com/apk/res-auto"
-        layout="@layout/bottomsheet"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        app:behavior_peekHeight="0dp"
-        app:elevation="6dp"
-        app:layout_behavior="@string/bottom_sheet_behavior" />
+             layout="@layout/bottomsheet"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_gravity="center_horizontal"
+             app:behavior_peekHeight="0dp"
+             app:elevation="6dp"
+             app:layout_behavior="@string/bottom_sheet_behavior"/>
 
 </android.support.design.widget.CoordinatorLayout>

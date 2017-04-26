@@ -41,7 +41,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieListViewHolder> {
     public void loadAdapter(Results<? extends Movies> results) {
         clearAllMovies();
 
-        //mMovieList.addAll(results.getResults());
         mMovieList = results.getResults();
 
         notifyItemRangeInserted(0, mMovieList.size());
