@@ -31,10 +31,6 @@ import timber.log.Timber;
 public class ApiModule {
     private static final String CACHE_CONTROL = "Cache-Control";
 
-    public ApiModule(BusbyMoviesApplication busbyMoviesApplication) {
-        /*mBusbyMovieApplication = busbyMoviesApplication;*/
-    }
-
     @Provides
     public OkHttpClient provideLoggingCapableHttpClient() {
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
@@ -83,48 +79,42 @@ public class ApiModule {
 
     /* Provides a cache that will prevent network calls from within 2 minutes of each other */
     private static Interceptor provideCacheInterceptor() {
-        return new Interceptor() {
-            @Override
-            public Response intercept(Chain chain) throws IOException {
-                final Response response = chain.proceed(chain.request());
+        return chain -> {
+            final Response response = chain.proceed(chain.request());
 
-                /* Re-write response header to force use of cache */
-                final CacheControl cacheControl = new CacheControl.Builder()
-                        .maxAge(2, TimeUnit.MINUTES)
-                        .build();
+            /* Re-write response header to force use of cache */
+            final CacheControl cacheControl = new CacheControl.Builder()
+                    .maxAge(2, TimeUnit.MINUTES)
+                    .build();
 
-                return response.newBuilder()
-                        .header(CACHE_CONTROL, cacheControl.toString())
-                        .build();
-            }
+            return response.newBuilder()
+                    .header(CACHE_CONTROL, cacheControl.toString())
+                    .build();
         };
     }
 
     /* Will use the offline cache that is not older than 7 days to be used for when the device is offline */
     public static Interceptor provideOfflineCacheInterceptor() {
-        return new Interceptor() {
-            @Override
-            public Response intercept(Chain chain) throws IOException {
-                Request request = chain.request();
+        return chain -> {
+            Request request = chain.request();
 
-                /* if not connected to the network use the offline cache */
-                if(!Network.isConnectedToNetwork()) {
-                    final CacheControl cacheControl = new CacheControl.Builder()
-                            .maxStale(7, TimeUnit.DAYS)
-                            .build();
+            /* if not connected to the network use the offline cache */
+            if(!Network.isConnectedToNetwork()) {
+                final CacheControl cacheControl = new CacheControl.Builder()
+                        .maxStale(7, TimeUnit.DAYS)
+                        .build();
 
-                    request = request.newBuilder()
-                            .cacheControl(cacheControl)
-                            .build();
-                }
+                request = request.newBuilder()
+                        .cacheControl(cacheControl)
+                        .build();
+            }
 
-                try {
-                    return chain.proceed(request);
-                }
-                catch(Exception e) {
-                    Timber.e(e, e.getMessage());
-                    return null;
-                }
+            try {
+                return chain.proceed(request);
+            }
+            catch(Exception e) {
+                Timber.e(e, e.getMessage());
+                return null;
             }
         };
     }

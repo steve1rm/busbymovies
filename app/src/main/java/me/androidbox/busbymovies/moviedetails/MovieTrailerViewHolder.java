@@ -1,6 +1,7 @@
 package me.androidbox.busbymovies.moviedetails;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -30,12 +31,13 @@ public class MovieTrailerViewHolder extends RecyclerView.ViewHolder implements V
 //    private StartMovieTrailerListener mMovieTrailerListener;
     private MovieTrailerAdapter mMovieTrailerAdapter;
 
-    public MovieTrailerViewHolder(View itemView, MovieTrailerAdapter movieTrailerAdapter, StartMovieTrailerListener movieTrailerListener) {
+    public MovieTrailerViewHolder(View itemView, MovieTrailerAdapter movieTrailerAdapter, StartMovieTrailerListener movieTrailerListener, Context context) {
         super(itemView);
 
         ButterKnife.bind(MovieTrailerViewHolder.this, itemView);
 
         mIvPlayTrailerItem.setOnClickListener(MovieTrailerViewHolder.this);
+        mYoutubeThumbnail = new YouTubeThumbnailView(context);
 
      //   mMovieTrailerListener = movieTrailerListener;
         mMovieTrailerAdapter = movieTrailerAdapter;
@@ -58,7 +60,7 @@ public class MovieTrailerViewHolder extends RecyclerView.ViewHolder implements V
                 Timber.d("onInitializationSuccess");
 
                 youTubeThumbnailLoader.setVideo(trailer.getKey());
-            //    youTubeThumbnailLoader.release();
+                youTubeThumbnailLoader.release();
             }
 
             @Override

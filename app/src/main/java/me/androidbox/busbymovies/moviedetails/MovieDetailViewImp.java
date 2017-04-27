@@ -72,6 +72,7 @@ public class MovieDetailViewImp extends Fragment implements
 
     public static final String TAG = MovieDetailViewImp.class.getSimpleName();
     public static final String MOVIE_ID_KEY = "movie_id_key";
+
     private Unbinder mUnbinder;
     private MovieTrailerAdapter mMovieTrailerAdapter;
     private BottomSheetBehavior<FrameLayout> mBottomSheetBehavior;

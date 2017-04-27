@@ -31,7 +31,7 @@ public class MovieTrailerAdapter extends RecyclerView.Adapter<MovieTrailerViewHo
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         final View view = inflater.inflate(R.layout.trailer_item, parent, false);
 
-        mMovieTrailerViewHolder = new MovieTrailerViewHolder(view, MovieTrailerAdapter.this, mMovieTrailerListener);
+        mMovieTrailerViewHolder = new MovieTrailerViewHolder(view, MovieTrailerAdapter.this, mMovieTrailerListener, parent.getContext());
         return mMovieTrailerViewHolder;
     }
 
