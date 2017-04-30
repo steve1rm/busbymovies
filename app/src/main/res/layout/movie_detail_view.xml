@@ -59,6 +59,7 @@
                 android:layout_gravity="bottom|end"
                 android:layout_marginBottom="48dp"
                 android:layout_marginEnd="16dp"
+                android:tag="false"
                 android:tint="@color/detail_fab_tintColor"
                 android:clickable="true"
                 app:borderWidth="@dimen/fab_borderWidth"

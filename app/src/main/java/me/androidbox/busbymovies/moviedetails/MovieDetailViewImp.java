@@ -3,19 +3,14 @@ package me.androidbox.busbymovies.moviedetails;
 
 import android.animation.Animator;
 import android.animation.AnimatorInflater;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Path;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.design.widget.BottomSheetBehavior;
@@ -28,7 +23,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateInterpolator;
 import android.webkit.URLUtil;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -79,6 +73,7 @@ public class MovieDetailViewImp extends Fragment implements
     private BottomSheetBehavior<FrameLayout> mBottomSheetBehavior;
     private Results<Review> mReviewList;
     private Results<Trailer> mTrailerList;
+    private Movie mMovie;
 
     @Inject MovieDetailPresenterContract<MovieDetailViewContract> mMovieDetailPresenterImp;
     @Inject MovieFavouritesPresenterContract mMovieFavouritePresenterContact;
@@ -127,7 +122,6 @@ public class MovieDetailViewImp extends Fragment implements
         mUnbinder = ButterKnife.bind(MovieDetailViewImp.this, view);
 
         setupToolBar();
-      //  setupFavourite();
         setupBottomSheet();
 
         return view;
@@ -211,66 +205,19 @@ public class MovieDetailViewImp extends Fragment implements
         }
     }
 
-    private boolean isActive = false;
+    private boolean isFlaggedAsFavourite(FloatingActionButton floatingActionButton) {
+        Timber.d("isFlaggedAsFavourite");
+        return floatingActionButton.getTag().toString().equals("true");
+    }
 
-    private void setupFavourite() {
-        @ColorInt final int colorActive = ContextCompat.getColor(getActivity(), R.color.fb_color_active);
-        @ColorInt final int colorPassive = ContextCompat.getColor(getActivity(), R.color.fb_color_passive);
+    private void addMovieAsFavourite(FloatingActionButton floatingActionButton) {
+        Timber.d("AddMovieAsFavourite");
+        floatingActionButton.setTag("true");
+    }
 
-        final float from = 1.0f;
-        final float to = 1.3f;
-
-        ObjectAnimator scaleX = ObjectAnimator.ofFloat(mFabMovieFavourite, View.SCALE_X, from, to);
-        ObjectAnimator scaleY = ObjectAnimator.ofFloat(mFabMovieFavourite, View.SCALE_Y,  from, to);
-  //      ObjectAnimator translationZ = ObjectAnimator.ofFloat(mFabMovieFavourite, View.TRANSLATION_Z, from, to);
-
-        AnimatorSet set1 = new AnimatorSet();
-      //  set1.playTogether(scaleX, scaleY, translationZ);
-        set1.setDuration(100);
-        set1.setInterpolator(new AccelerateInterpolator());
-
-        set1.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                mFabMovieFavourite.setImageResource(isActive ? R.drawable.heart_active : R.drawable.heart_passive);
-                mFabMovieFavourite.setBackgroundTintList(ColorStateList.valueOf(isActive ? colorActive : colorPassive));
-                isActive = !isActive;
-            }
-        });
-
-        ObjectAnimator scaleXBack = ObjectAnimator.ofFloat(mFabMovieFavourite, View.SCALE_X, to, from);
-        ObjectAnimator scaleYBack = ObjectAnimator.ofFloat(mFabMovieFavourite, View.SCALE_Y, to, from);
-      //  ObjectAnimator translationZBack = ObjectAnimator.ofFloat(mFabMovieFavourite, View.TRANSLATION_Z, to, from);
-
-        Path path = new Path();
-        path.moveTo(0.0f, 0.0f);
-        path.lineTo(0.5f, 1.3f);
-        path.lineTo(0.75f, 0.8f);
-        path.lineTo(1.0f, 1.0f);
-     //   PathInterpolator pathInterpolator = new PathInterpolator(path);
-
-        AnimatorSet set2 = new AnimatorSet();
-     //   set2.playTogether(scaleXBack, scaleYBack, translationZBack);
-        set2.setDuration(300);
-  //      set2.setInterpolator(pathInterpolator);
-
-        final AnimatorSet set = new AnimatorSet();
-        set.playSequentially(set1, set2);
-
-        set.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                mFabMovieFavourite.setClickable(true);
-            }
-
-            @Override
-            public void onAnimationStart(Animator animation) {
-                mFabMovieFavourite.setClickable(false);
-            }
-        });
-
-
-        mFabMovieFavourite.setOnClickListener(v -> set.start());
+    private void removeMovieAsFavourite(FloatingActionButton floatingActionButton) {
+        Timber.d("removeMovieAsFavourite");
+        floatingActionButton.setTag("false");
     }
 
     @SuppressWarnings("unused")
@@ -279,22 +226,59 @@ public class MovieDetailViewImp extends Fragment implements
         Timber.d("addFavourites");
 
         Animator animator = AnimatorInflater.loadAnimator(getActivity(), R.animator.save_favourite_movie);
+        animator.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                Timber.d("onAnimationStart");
+                if(isFlaggedAsFavourite(floatingActionButton)) {
+                    floatingActionButton.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(getActivity(), R.color.accent)));
+                }
+                else {
+                    floatingActionButton.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(getActivity(), R.color.primary)));
+                }
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                Timber.d("onAnimationEnd");
+                /* Either save or remove the movie from the database */
+                if(isFlaggedAsFavourite(floatingActionButton)) {
+                    /* remove from database */
+                    removeMovieAsFavourite(floatingActionButton);
+                    mMovieFavouritePresenterContact.deleteFavouriteMovie(mMovie.getId(), MovieDetailViewImp.this);
+                }
+                else {
+                    /* Add to database */
+                    addMovieAsFavourite(floatingActionButton);
+                    final Favourite favouriteMovie = new Favourite(
+                            mMovie.getId(),
+                            mMovie.getPoster_path(),
+                            mMovie.getOverview(),
+                            mMovie.getRelease_date(),
+                            mMovie.getTitle(),
+                            mMovie.getBackdrop_path(),
+                            mMovie.getVote_average(),
+                            mMovie.getTagline(),
+                            mMovie.getHomepage(),
+                            mMovie.getRuntime());
+
+                    mMovieFavouritePresenterContact.insertFavouriteMovie(favouriteMovie, MovieDetailViewImp.this);
+                }
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+
         animator.setTarget(floatingActionButton);
         animator.start();
-
-        Favourite favourite = new Favourite(
-                1234,
-                "poster path",
-                "overview",
-                "today",
-                "star wars 8",
-                "backdroppath",
-                8.8f,
-                "the force is back again",
-                "the homepage",
-                120);
-
-        // mMovieFavouritePresenterContact.insertFavouriteMovie(favourite, MovieDetailViewImp.this);
     }
 
     @SuppressWarnings("unused")
@@ -429,7 +413,7 @@ public class MovieDetailViewImp extends Fragment implements
     @Override
     public void displayMovieDetails(Movie movie) {
         Timber.d("displayMovieDetails");
-
+        mMovie = movie;
 /*
         final Runnable runnable = new Runnable() {
             @Override
