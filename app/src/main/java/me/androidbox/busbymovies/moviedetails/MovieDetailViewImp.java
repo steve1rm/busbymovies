@@ -2,6 +2,7 @@ package me.androidbox.busbymovies.moviedetails;
 
 
 import android.animation.Animator;
+import android.animation.AnimatorInflater;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
@@ -126,7 +127,7 @@ public class MovieDetailViewImp extends Fragment implements
         mUnbinder = ButterKnife.bind(MovieDetailViewImp.this, view);
 
         setupToolBar();
-        setupFavourite();
+      //  setupFavourite();
         setupBottomSheet();
 
         return view;
@@ -274,8 +275,12 @@ public class MovieDetailViewImp extends Fragment implements
 
     @SuppressWarnings("unused")
     @OnClick(R.id.fabMovieFavourite)
-    public void addFavouriteMovie() {
+    public void addFavouriteMovie(FloatingActionButton floatingActionButton) {
         Timber.d("addFavourites");
+
+        Animator animator = AnimatorInflater.loadAnimator(getActivity(), R.animator.save_favourite_movie);
+        animator.setTarget(floatingActionButton);
+        animator.start();
 
         Favourite favourite = new Favourite(
                 1234,
@@ -289,7 +294,7 @@ public class MovieDetailViewImp extends Fragment implements
                 "the homepage",
                 120);
 
-        mMovieFavouritePresenterContact.insertFavouriteMovie(favourite, MovieDetailViewImp.this);
+        // mMovieFavouritePresenterContact.insertFavouriteMovie(favourite, MovieDetailViewImp.this);
     }
 
     @SuppressWarnings("unused")
