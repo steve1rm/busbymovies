@@ -189,4 +189,28 @@ public class MovieFavouriteModelImp implements MovieFavouriteModelContract {
             deleteListener.onDeleteFailed("Failed to delete movie from the database");
         }
     }
+
+    @Override
+    public void queryMovie(int movieId, QueryMovieListener queryMovieListener) {
+        final String strMovieId = String.valueOf(movieId);
+        final Uri uri = MovieEntry.CONTENT_URI.buildUpon().appendPath(strMovieId).build();
+
+        final String[] selectionArgs = new String[]{strMovieId};
+        final Cursor cursor = mContext.get().getContentResolver().query(uri, null, MovieEntry.MOVIE_ID + "=?", selectionArgs, null);
+
+        if(cursor == null) {
+            /* Movie movie cannot be found */
+            queryMovieListener.onQueryMovieFailed("Failed to query database");
+        }
+        else {
+            if(cursor.getCount() == 1) {
+                queryMovieListener.onQueryMovieSuccess(true);
+            }
+            else {
+                queryMovieListener.onQueryMovieSuccess(false);
+            }
+
+            cursor.close();
+        }
+    }
 }

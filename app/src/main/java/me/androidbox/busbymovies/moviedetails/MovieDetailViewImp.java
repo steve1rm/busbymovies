@@ -205,6 +205,11 @@ public class MovieDetailViewImp extends Fragment implements
         }
     }
 
+    private void isAlreadyBeenFavourited() {
+        /* Check that the movie is not already in the database */
+        mMovieFavouritePresenterContact.hasMovieAsFavourite(mMovie.getId(), MovieDetailViewImp.this);
+    }
+
     private boolean isFlaggedAsFavourite(FloatingActionButton floatingActionButton) {
         Timber.d("isFlaggedAsFavourite");
         return floatingActionButton.getTag().toString().equals("true");
@@ -489,6 +494,8 @@ public class MovieDetailViewImp extends Fragment implements
         Glide.with(MovieDetailViewImp.this)
                 .load(MovieImage.build(movie.getBackdrop_path(), MovieImage.ImageSize.w500))
                 .into(mIvBackdropPoster);
+
+        isAlreadyBeenFavourited();
     }
 
     @Override
@@ -554,11 +561,24 @@ public class MovieDetailViewImp extends Fragment implements
 
     @Override
     public void onDeleteFavouriteMovieSuccess(int rowDeletedId) {
-
+        Timber.d("onDeleteFavouriteMovieSuccess %d", rowDeletedId);
     }
 
     @Override
     public void onDeleteFavouriteMovieFailure(String errorMessage) {
+        Timber.e("onDeleteFavouriteMovieFailure: %s", errorMessage);
+    }
 
+    @Override
+    public void onHasMovieFavouriteSuccess(boolean hasMovieFavourite) {
+        Timber.d("onHasMovieFavouriteSuccess %s", hasMovieFavourite);
+        if(hasMovieFavourite) {
+            addFavouriteMovie(mFabMovieFavourite);
+        }
+    }
+
+    @Override
+    public void onHasMovieFavouriteFailure(String errorMessage) {
+        Timber.d("onHasMovieFavouriteFailure %s", errorMessage);
     }
 }

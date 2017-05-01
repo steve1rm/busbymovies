@@ -15,8 +15,11 @@ public interface MovieFavouritesPresenterContract {
         void onInsertFavouriteFailure(String errorMessage);
         void onDeleteFavouriteMovieSuccess(int rowDeletedId);
         void onDeleteFavouriteMovieFailure(String errorMessage);
+        void onHasMovieFavouriteSuccess(boolean hasMovieFavourite);
+        void onHasMovieFavouriteFailure(String errorMessage);
     }
 
+    void hasMovieAsFavourite(int movieId, DbOperationsListener dbOperationsListener);
     void getFavouriteMovies(DbOperationsListener dbOperationsListener);
     void insertFavouriteMovie(Favourite favourite, DbOperationsListener dbOperationsListener);
     void deleteFavouriteMovie(int movieId, DbOperationsListener dbOperationsListener);

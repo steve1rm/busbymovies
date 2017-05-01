@@ -43,13 +43,24 @@ public class MovieContentProvider extends ContentProvider {
     @Nullable
     @Override
     public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
-        final SQLiteDatabase db = mMoveDbHelper.getWritableDatabase();
+        final SQLiteDatabase db = mMoveDbHelper.getReadableDatabase();
 
         Cursor retCursor;
         final int match = sUriMatcher.match(uri);
 
         switch(match) {
             case MOVIES: {
+                retCursor = db.query(TABLE_NAME,
+                        projection,
+                        selection,
+                        selectionArgs,
+                        null,
+                        null,
+                        sortOrder);
+            }
+            break;
+
+            case MOVIES_WITH_ID: {
                 retCursor = db.query(TABLE_NAME,
                         projection,
                         selection,

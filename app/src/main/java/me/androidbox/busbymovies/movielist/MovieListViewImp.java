@@ -40,7 +40,9 @@ import timber.log.Timber;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MovieListViewImp extends Fragment implements MovieListViewContract, MovieFavouritesPresenterContract.DbOperationsListener {
+public class MovieListViewImp extends Fragment implements
+        MovieListViewContract,
+        MovieFavouritesPresenterContract.DbOperationsListener {
     public static final String TAG = MovieListViewImp.class.getSimpleName();
 
     @Inject MovieListPresenterContract<MovieListViewContract> mMovieListPresenterImp;
@@ -377,5 +379,15 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
     @Override
     public void onDeleteFavouriteMovieFailure(String errorMessage) {
 
+    }
+
+    @Override
+    public void onHasMovieFavouriteSuccess(boolean hasMovieFavourite) {
+        /* no-op */
+    }
+
+    @Override
+    public void onHasMovieFavouriteFailure(String errorMessage) {
+        /* no-op */
     }
 }

@@ -26,6 +26,12 @@ public interface MovieFavouriteModelContract {
     }
     void delete(int movieId, DeleteListener deleteListener);
 
+    interface QueryMovieListener {
+        void onQueryMovieFailed(String errorMessage);
+        void onQueryMovieSuccess(boolean hasMovie);
+    }
+    void queryMovie(int movieId, QueryMovieListener queryMovieListener);
+
     void startup();
     void closeDown();
 }

@@ -14,6 +14,7 @@ public class MovieFavouritePresenterImp implements
         MovieFavouriteModelContract.DeleteListener,
         MovieFavouriteModelContract.InsertListener,
         MovieFavouriteModelContract.RetrieveListener,
+        MovieFavouriteModelContract.QueryMovieListener,
         MovieFavouritesPresenterContract {
 
     @Inject MovieFavouriteModelContract mMovieFavouriteModelContract;
@@ -45,6 +46,14 @@ public class MovieFavouritePresenterImp implements
         mDbOperationsListener = dbOperationsListener;
         if(mMovieFavouriteModelContract != null) {
             mMovieFavouriteModelContract.delete(movieId, MovieFavouritePresenterImp.this);
+        }
+    }
+
+    @Override
+    public void hasMovieAsFavourite(int movieId, DbOperationsListener dbOperationsListener) {
+        mDbOperationsListener = dbOperationsListener;
+        if(mMovieFavouriteModelContract != null) {
+            mMovieFavouriteModelContract.queryMovie(movieId, MovieFavouritePresenterImp.this);
         }
     }
 
@@ -87,6 +96,20 @@ public class MovieFavouritePresenterImp implements
     public void onDeleteSuccess(int rowId) {
         if(mDbOperationsListener != null) {
             mDbOperationsListener.onDeleteFavouriteMovieSuccess(rowId);
+        }
+    }
+
+    @Override
+    public void onQueryMovieFailed(String errorMessage) {
+        if(mDbOperationsListener != null) {
+            mDbOperationsListener.onHasMovieFavouriteFailure(errorMessage);
+        }
+    }
+
+    @Override
+    public void onQueryMovieSuccess(boolean hasMovie) {
+        if(mDbOperationsListener != null) {
+            mDbOperationsListener.onHasMovieFavouriteSuccess(hasMovie);
         }
     }
 }
