@@ -211,17 +211,17 @@ public class MovieDetailViewImp extends Fragment implements
     }
 
     private boolean isFlaggedAsFavourite(FloatingActionButton floatingActionButton) {
-        Timber.d("isFlaggedAsFavourite");
+        Timber.d("isFlaggedAsFavourite %s", floatingActionButton.getTag().toString());
         return floatingActionButton.getTag().toString().equals("true");
     }
 
     private void addMovieAsFavourite(FloatingActionButton floatingActionButton) {
-        Timber.d("AddMovieAsFavourite");
         floatingActionButton.setTag("true");
+        Timber.d("AddMovieAsFavourite %s", floatingActionButton.getTag().toString());
     }
 
     private void removeMovieAsFavourite(FloatingActionButton floatingActionButton) {
-        Timber.d("removeMovieAsFavourite");
+        Timber.d("removeMovieAsFavourite %s", floatingActionButton.getTag().toString());
         floatingActionButton.setTag("false");
     }
 
