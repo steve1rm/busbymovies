@@ -225,10 +225,18 @@ public class MovieDetailViewImp extends Fragment implements
         floatingActionButton.setTag("false");
     }
 
+    private void animateAddingFavourite() {
+        final Animator animator = AnimatorInflater.loadAnimator(getActivity(), R.animator.save_favourite_movie);
+        animator.setTarget(mFabMovieFavourite);
+        mFabMovieFavourite.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(getActivity(), R.color.primary)));
+        animator.start();
+
+    }
+
     @SuppressWarnings("unused")
     @OnClick(R.id.fabMovieFavourite)
     public void addFavouriteMovie(FloatingActionButton floatingActionButton) {
-        Timber.d("addFavourites");
+        Timber.d("addFavouriteMovie");
 
         Animator animator = AnimatorInflater.loadAnimator(getActivity(), R.animator.save_favourite_movie);
         animator.addListener(new Animator.AnimatorListener() {
@@ -571,9 +579,9 @@ public class MovieDetailViewImp extends Fragment implements
 
     @Override
     public void onHasMovieFavouriteSuccess(boolean hasMovieFavourite) {
-        Timber.d("onHasMovieFavouriteSuccess %s", hasMovieFavourite);
+        Timber.d("onMovieFavouriteSuccess %s", hasMovieFavourite);
         if(hasMovieFavourite) {
-            addFavouriteMovie(mFabMovieFavourite);
+            animateAddingFavourite();
         }
     }
 
