@@ -88,7 +88,6 @@ public class MovieFavouriteModelImp implements MovieFavouriteModelContract {
                 /* Return the favourite movies */
                 final List<Favourite> favouriteList = new ArrayList<>();
 
-                cursor.moveToFirst();
                 while (cursor.moveToNext()) {
                     final Favourite favourite = new Favourite(
                             cursor.getInt(cursor.getColumnIndex(MovieEntry.MOVIE_ID)),
@@ -139,7 +138,6 @@ public class MovieFavouriteModelImp implements MovieFavouriteModelContract {
                     /* Return the favourite movies */
                     final List<Favourite> favouriteList = new ArrayList<>();
 
-                    cursor.moveToFirst();
                     while (cursor.moveToNext()) {
                         final Favourite favourite = new Favourite(
                                 cursor.getInt(cursor.getColumnIndex(MovieEntry.MOVIE_ID)),
