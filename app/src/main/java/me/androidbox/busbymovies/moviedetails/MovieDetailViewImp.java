@@ -581,6 +581,7 @@ public class MovieDetailViewImp extends Fragment implements
     public void onHasMovieFavouriteSuccess(boolean hasMovieFavourite) {
         Timber.d("onMovieFavouriteSuccess %s", hasMovieFavourite);
         if(hasMovieFavourite) {
+            addMovieAsFavourite(mFabMovieFavourite);
             animateAddingFavourite();
         }
     }
