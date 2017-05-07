@@ -32,6 +32,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.f2prateek.dart.InjectExtra;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerFragment;
@@ -74,6 +75,7 @@ public class MovieDetailViewImp extends Fragment implements
     private Results<Review> mReviewList;
     private Results<Trailer> mTrailerList;
     private Movie mMovie;
+    private int mMovieId;
 
     @Inject MovieDetailPresenterContract<MovieDetailViewContract> mMovieDetailPresenterImp;
     @Inject MovieFavouritesPresenterContract mMovieFavouritePresenterContact;
@@ -133,16 +135,16 @@ public class MovieDetailViewImp extends Fragment implements
 
         final Bundle args = getArguments();
         if(args != null) {
-            final int movieId = args.getInt(MOVIE_ID_KEY, -1);
-            Timber.d("onActivityCreated %d", movieId);
+            final int mMovieId = args.getInt(MOVIE_ID_KEY, -1);
+            Timber.d("onActivityCreated %d", mMovieId);
 
             DaggerInjector.getApplicationComponent().inject(MovieDetailViewImp.this);
             if(mMovieDetailPresenterImp != null) {
-                if(movieId != -1) {
+                if(mMovieId != -1) {
                     mMovieDetailPresenterImp.attachView(MovieDetailViewImp.this);
-                    mMovieDetailPresenterImp.getMovieDetail(movieId);
-                    mMovieDetailPresenterImp.requestMovieTrailer(movieId);
-                    mMovieDetailPresenterImp.requestMovieReviews(movieId);
+
+                    /* Check if we are getting a movie favourite */
+                    mMovieFavouritePresenterContact.hasMovieAsFavourite(mMovieId, MovieDetailViewImp.this);
                 }
                 else {
                     Timber.e("Invalid movie id '-1'");
@@ -543,6 +545,16 @@ public class MovieDetailViewImp extends Fragment implements
     }
 
     @Override
+    public void onGetMovieFavouriteSuccess(Favourite favourite) {
+        Timber.d("onGetMovieFavouriteSuccess %d", favourite.getId());
+    }
+
+    @Override
+    public void onGetMovieFavouriteFailure(String errorMessage) {
+        Timber.d("onGetMovieFavouriteFailure %s", errorMessage);
+    }
+
+    @Override
     public void failedToReceiveMovieReviews(String errorMessage) {
         Timber.e("failedToReceiveMovieReviews %s", errorMessage);
     }
@@ -578,11 +590,19 @@ public class MovieDetailViewImp extends Fragment implements
     }
 
     @Override
-    public void onHasMovieFavouriteSuccess(boolean hasMovieFavourite) {
-        Timber.d("onMovieFavouriteSuccess %s", hasMovieFavourite);
-        if(hasMovieFavourite) {
+    public void onHasMovieFavouriteSuccess(int movieId) {
+        if(movieId != -1) {
+            Timber.d("onMovieFavouriteSuccess %d", movieId);
             addMovieAsFavourite(mFabMovieFavourite);
             animateAddingFavourite();
+            /* Populate the views from the database */
+            mMovieFavouritePresenterContact.getMovieFavourite(movieId, MovieDetailViewImp.this);
+        }
+        else {
+            Timber.d("onMovieFavouriteSuccess %d", movieId);
+            mMovieDetailPresenterImp.getMovieDetail(mMovieId);
+            mMovieDetailPresenterImp.requestMovieTrailer(mMovieId);
+            mMovieDetailPresenterImp.requestMovieReviews(mMovieId);
         }
     }
 

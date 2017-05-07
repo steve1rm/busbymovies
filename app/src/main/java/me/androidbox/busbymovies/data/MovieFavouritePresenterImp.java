@@ -15,6 +15,7 @@ public class MovieFavouritePresenterImp implements
         MovieFavouriteModelContract.InsertListener,
         MovieFavouriteModelContract.RetrieveListener,
         MovieFavouriteModelContract.QueryMovieListener,
+        MovieFavouriteModelContract.GetMovieFavourite,
         MovieFavouritesPresenterContract {
 
     @Inject MovieFavouriteModelContract mMovieFavouriteModelContract;
@@ -23,6 +24,14 @@ public class MovieFavouritePresenterImp implements
 
     public MovieFavouritePresenterImp() {
         DaggerInjector.getApplicationComponent().inject(MovieFavouritePresenterImp.this);
+    }
+
+    @Override
+    public void getMovieFavourite(int movieId, DbOperationsListener dbOperationsListener) {
+        mDbOperationsListener = dbOperationsListener;
+        if(mMovieFavouriteModelContract != null) {
+            mMovieFavouriteModelContract.getMovieFavourite(movieId, MovieFavouritePresenterImp.this);
+        }
     }
 
     @Override
@@ -107,9 +116,23 @@ public class MovieFavouritePresenterImp implements
     }
 
     @Override
-    public void onQueryMovieSuccess(boolean hasMovie) {
+    public void onQueryMovieSuccess(int movieId) {
         if(mDbOperationsListener != null) {
-            mDbOperationsListener.onHasMovieFavouriteSuccess(hasMovie);
+            mDbOperationsListener.onHasMovieFavouriteSuccess(movieId);
+        }
+    }
+
+    @Override
+    public void onGetMovieFavouriteFailure(String errorMessage) {
+        if(mDbOperationsListener != null) {
+            mDbOperationsListener.onGetFavouriteMoviesFailure(errorMessage);
+        }
+    }
+
+    @Override
+    public void onGetMovieFavouriteSuccess(Favourite favourite) {
+        if(mDbOperationsListener != null) {
+            mDbOperationsListener.onGetMovieFavouriteSuccess(favourite);
         }
     }
 }

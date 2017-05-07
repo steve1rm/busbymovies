@@ -9,6 +9,7 @@ import android.os.Build;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -89,18 +90,7 @@ public class MovieFavouriteModelImp implements MovieFavouriteModelContract {
                 final List<Favourite> favouriteList = new ArrayList<>();
 
                 while (cursor.moveToNext()) {
-                    final Favourite favourite = new Favourite(
-                            cursor.getInt(cursor.getColumnIndex(MovieEntry.MOVIE_ID)),
-                            cursor.getString(cursor.getColumnIndex(MovieEntry.POSTER_PATH)),
-                            cursor.getString(cursor.getColumnIndex(MovieEntry.OVERVIEW)),
-                            cursor.getString(cursor.getColumnIndex(MovieEntry.RELEASE_DATE)),
-                            cursor.getString(cursor.getColumnIndex(MovieEntry.TITLE)),
-                            cursor.getString(cursor.getColumnIndex(MovieEntry.BACKDROP_PATH)),
-                            cursor.getFloat(cursor.getColumnIndex(MovieEntry.VOTE_AVERAGE)),
-                            cursor.getString(cursor.getColumnIndex(MovieEntry.TAGLINE)),
-                            cursor.getString(cursor.getColumnIndex(MovieEntry.HOMEPATH)),
-                            cursor.getInt(cursor.getColumnIndex(MovieEntry.RUNTIME)));
-
+                    final Favourite favourite = populateFavourite(cursor);
                     favouriteList.add(favourite);
                 }
 
@@ -139,18 +129,7 @@ public class MovieFavouriteModelImp implements MovieFavouriteModelContract {
                     final List<Favourite> favouriteList = new ArrayList<>();
 
                     while (cursor.moveToNext()) {
-                        final Favourite favourite = new Favourite(
-                                cursor.getInt(cursor.getColumnIndex(MovieEntry.MOVIE_ID)),
-                                cursor.getString(cursor.getColumnIndex(MovieEntry.POSTER_PATH)),
-                                cursor.getString(cursor.getColumnIndex(MovieEntry.OVERVIEW)),
-                                cursor.getString(cursor.getColumnIndex(MovieEntry.RELEASE_DATE)),
-                                cursor.getString(cursor.getColumnIndex(MovieEntry.TITLE)),
-                                cursor.getString(cursor.getColumnIndex(MovieEntry.BACKDROP_PATH)),
-                                cursor.getFloat(cursor.getColumnIndex(MovieEntry.VOTE_AVERAGE)),
-                                cursor.getString(cursor.getColumnIndex(MovieEntry.TAGLINE)),
-                                cursor.getString(cursor.getColumnIndex(MovieEntry.HOMEPATH)),
-                                cursor.getInt(cursor.getColumnIndex(MovieEntry.RUNTIME)));
-
+                        final Favourite favourite = populateFavourite(cursor);
                         favouriteList.add(favourite);
                     }
 
@@ -204,13 +183,54 @@ public class MovieFavouriteModelImp implements MovieFavouriteModelContract {
         }
         else {
             if(cursor.getCount() == 1) {
-                queryMovieListener.onQueryMovieSuccess(true);
+                queryMovieListener.onQueryMovieSuccess(movieId);
             }
             else {
-                queryMovieListener.onQueryMovieSuccess(false);
+                queryMovieListener.onQueryMovieSuccess(-1);
             }
 
             cursor.close();
         }
+    }
+
+    @Override
+    public void getMovieFavourite(int movieId, GetMovieFavourite getMovieFavourite) {
+        final String strMovieId = String.valueOf(movieId);
+        final Uri uri = MovieEntry.CONTENT_URI.buildUpon().appendPath(strMovieId).build();
+
+        final String[] selectionArgs = new String[]{strMovieId};
+        final Cursor cursor =
+                mContext.get().getContentResolver().query(uri, null, MovieEntry.MOVIE_ID + "=?", selectionArgs, null);
+
+        if(cursor == null) {
+            /* Movie cannot be found */
+            getMovieFavourite.onGetMovieFavouriteFailure("Failed to query database");
+        }
+        else {
+            if(cursor.getCount() == 1) {
+                final Favourite favourite = populateFavourite(cursor);
+                getMovieFavourite.onGetMovieFavouriteSuccess(favourite);
+            }
+            else {
+                getMovieFavourite.onGetMovieFavouriteFailure("Movie was not found");
+            }
+            cursor.close();
+        }
+    }
+
+    private Favourite populateFavourite(Cursor cursor) {
+        final Favourite favourite = new Favourite(
+                cursor.getInt(cursor.getColumnIndex(MovieEntry.MOVIE_ID)),
+                cursor.getString(cursor.getColumnIndex(MovieEntry.POSTER_PATH)),
+                cursor.getString(cursor.getColumnIndex(MovieEntry.OVERVIEW)),
+                cursor.getString(cursor.getColumnIndex(MovieEntry.RELEASE_DATE)),
+                cursor.getString(cursor.getColumnIndex(MovieEntry.TITLE)),
+                cursor.getString(cursor.getColumnIndex(MovieEntry.BACKDROP_PATH)),
+                cursor.getFloat(cursor.getColumnIndex(MovieEntry.VOTE_AVERAGE)),
+                cursor.getString(cursor.getColumnIndex(MovieEntry.TAGLINE)),
+                cursor.getString(cursor.getColumnIndex(MovieEntry.HOMEPATH)),
+                cursor.getInt(cursor.getColumnIndex(MovieEntry.RUNTIME)));
+
+        return favourite;
     }
 }

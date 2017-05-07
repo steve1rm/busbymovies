@@ -355,6 +355,15 @@ public class MovieListViewImp extends Fragment implements
         Toast.makeText(getActivity(), "Insert favourite movie", Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void onGetMovieFavouriteSuccess(Favourite favourite) {
+
+    }
+
+    @Override
+    public void onGetMovieFavouriteFailure(String errorMessage) {
+
+    }
 
     @Override
     public void onGetFavouriteMoviesFailure(String errorMessage) {
@@ -382,7 +391,7 @@ public class MovieListViewImp extends Fragment implements
     }
 
     @Override
-    public void onHasMovieFavouriteSuccess(boolean hasMovieFavourite) {
+    public void onHasMovieFavouriteSuccess(int movieId) {
         /* no-op */
     }
 
