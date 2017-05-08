@@ -429,54 +429,6 @@ public class MovieDetailViewImp extends Fragment implements
     public void displayMovieDetails(Movie movie) {
         Timber.d("displayMovieDetails");
         mMovie = movie;
-/*
-        final Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                Picasso.with(getActivity())
-                        .load(MovieImage.build(movie.getPoster_path(), MovieImage.ImageSize.w185))
-                        .resize(120, 180)
-                        .centerCrop()
-                        .into(new Target() {
-                            @Override
-                            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                                mIvThumbnail.setImageBitmap(bitmap);
-                                Palette.from(bitmap)
-                                        .maximumColorCount(16)
-                                        .generate(new Palette.PaletteAsyncListener() {
-                                            @Override
-                                            public void onGenerated(Palette palette) {
-                                                Palette.Swatch swatch = palette.getLightVibrantSwatch();
-
-                                                if(swatch != null) {
-                                                    getActivity().runOnUiThread(new Runnable() {
-                                                        @Override
-                                                        public void run() {
-                                                            mSvMovieFooter.setBackgroundColor(swatch.getRgb());
-                                                            mTvSynopsis.setTextColor(swatch.getBodyTextColor());
-                                                            mRbVoteAverage.setBackgroundColor(swatch.getTitleTextColor());
-                                                            mTvHomepage.setTextColor(swatch.getTitleTextColor());
-                                                            mTvRuntime.setTextColor(swatch.getTitleTextColor());
-                                                        }
-                                                    });
-                                                }
-                                            }
-                                        });
-                            }
-
-                            @Override
-                            public void onBitmapFailed(Drawable errorDrawable) {
-                                Timber.e("onBitmapFailed");
-                            }
-
-                            @Override
-                            public void onPrepareLoad(Drawable placeHolderDrawable) {
-                                Timber.d("onPrepareLoad");
-                            }
-                        });
-            }
-        };
-*/
 
         mTvTagLine.setText(movie.getTagline());
         mTvTitle.setText(movie.getTitle());
@@ -547,6 +499,34 @@ public class MovieDetailViewImp extends Fragment implements
     @Override
     public void onGetMovieFavouriteSuccess(Favourite favourite) {
         Timber.d("onGetMovieFavouriteSuccess %d", favourite.getId());
+
+        mTvTagLine.setText(favourite.getTagline());
+        mTvTitle.setText(favourite.getTitle());
+
+        final String movieDate = mMovieDetailPresenterImp.getMovieFormattedDate(favourite.getRelease_date(), Constants.FORMAT_MOVIE_DATE);
+        mTvRelease.setText(movieDate);
+
+        mTvSynopsis.setText(favourite.getOverview());
+        mRbVoteAverage.setRating(mMovieDetailPresenterImp.getVoteAverage(favourite.getVote_average()));
+        mTvHomepage.setText(favourite.getHomepage());
+
+        final String runningTime = "Running time " + favourite.getRuntime() + " minutes";
+        mTvRuntime.setText(runningTime);
+
+        mTvVoteAverage.setText(String.valueOf(favourite.getVote_average()));
+        Timber.d("movie.getVote_average %f", favourite.getVote_average());
+
+
+        Glide.with(MovieDetailViewImp.this)
+                .load(MovieImage.build(favourite.getPoster_path(), MovieImage.ImageSize.w185))
+                .bitmapTransform(new RoundedCornersTransformation(getActivity(), 16, 4, RoundedCornersTransformation.CornerType.ALL))
+                .into(mIvThumbnail);
+
+        /* Bind the data */
+        Glide.with(MovieDetailViewImp.this)
+                .load(MovieImage.build(favourite.getBackdrop_path(), MovieImage.ImageSize.w500))
+                .into(mIvBackdropPoster);
+
     }
 
     @Override

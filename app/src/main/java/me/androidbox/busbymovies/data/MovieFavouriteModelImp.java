@@ -208,6 +208,7 @@ public class MovieFavouriteModelImp implements MovieFavouriteModelContract {
         }
         else {
             if(cursor.getCount() == 1) {
+                cursor.moveToFirst();
                 final Favourite favourite = populateFavourite(cursor);
                 getMovieFavourite.onGetMovieFavouriteSuccess(favourite);
             }
