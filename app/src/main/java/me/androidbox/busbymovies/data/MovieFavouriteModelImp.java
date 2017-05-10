@@ -183,10 +183,10 @@ public class MovieFavouriteModelImp implements MovieFavouriteModelContract {
         }
         else {
             if(cursor.getCount() == 1) {
-                queryMovieListener.onQueryMovieSuccess(movieId);
+                queryMovieListener.onQueryMovieSuccess(movieId, true);
             }
             else {
-                queryMovieListener.onQueryMovieSuccess(-1);
+                queryMovieListener.onQueryMovieSuccess(movieId, false);
             }
 
             cursor.close();

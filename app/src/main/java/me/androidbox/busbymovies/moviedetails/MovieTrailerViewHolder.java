@@ -60,7 +60,6 @@ public class MovieTrailerViewHolder extends RecyclerView.ViewHolder implements V
                 Timber.d("onInitializationSuccess");
 
                 youTubeThumbnailLoader.setVideo(trailer.getKey());
-                youTubeThumbnailLoader.release();
             }
 
             @Override

@@ -15,7 +15,7 @@ public interface MovieFavouritesPresenterContract {
         void onInsertFavouriteFailure(String errorMessage);
         void onDeleteFavouriteMovieSuccess(int rowDeletedId);
         void onDeleteFavouriteMovieFailure(String errorMessage);
-        void onHasMovieFavouriteSuccess(int movieId);
+        void onHasMovieFavouriteSuccess(int movieId, boolean isFavourite);
         void onHasMovieFavouriteFailure(String errorMessage);
         void onGetMovieFavouriteSuccess(Favourite favourite);
         void onGetMovieFavouriteFailure(String errorMessage);

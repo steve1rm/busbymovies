@@ -28,7 +28,7 @@ public interface MovieFavouriteModelContract {
 
     interface QueryMovieListener {
         void onQueryMovieFailed(String errorMessage);
-        void onQueryMovieSuccess(int movieId);
+        void onQueryMovieSuccess(int movieId, boolean isFavourite);
     }
     void queryMovie(int movieId, QueryMovieListener queryMovieListener);
 

@@ -116,9 +116,9 @@ public class MovieFavouritePresenterImp implements
     }
 
     @Override
-    public void onQueryMovieSuccess(int movieId) {
+    public void onQueryMovieSuccess(int movieId, boolean isFavourite) {
         if(mDbOperationsListener != null) {
-            mDbOperationsListener.onHasMovieFavouriteSuccess(movieId);
+            mDbOperationsListener.onHasMovieFavouriteSuccess(movieId, isFavourite);
         }
     }
 

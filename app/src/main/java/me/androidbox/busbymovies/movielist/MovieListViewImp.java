@@ -391,7 +391,7 @@ public class MovieListViewImp extends Fragment implements
     }
 
     @Override
-    public void onHasMovieFavouriteSuccess(int movieId) {
+    public void onHasMovieFavouriteSuccess(int movieId, boolean isFavourite) {
         /* no-op */
     }
 

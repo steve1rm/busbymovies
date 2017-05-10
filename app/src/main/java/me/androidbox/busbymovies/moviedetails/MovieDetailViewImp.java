@@ -1,6 +1,5 @@
 package me.androidbox.busbymovies.moviedetails;
 
-
 import android.animation.Animator;
 import android.animation.AnimatorInflater;
 import android.app.Fragment;
@@ -32,7 +31,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.f2prateek.dart.InjectExtra;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerFragment;
@@ -51,6 +49,7 @@ import me.androidbox.busbymovies.data.MovieFavouritesPresenterContract;
 import me.androidbox.busbymovies.di.DaggerInjector;
 import me.androidbox.busbymovies.models.Favourite;
 import me.androidbox.busbymovies.models.Movie;
+import me.androidbox.busbymovies.models.Movies;
 import me.androidbox.busbymovies.models.Results;
 import me.androidbox.busbymovies.models.Review;
 import me.androidbox.busbymovies.models.Trailer;
@@ -135,7 +134,7 @@ public class MovieDetailViewImp extends Fragment implements
 
         final Bundle args = getArguments();
         if(args != null) {
-            final int mMovieId = args.getInt(MOVIE_ID_KEY, -1);
+            mMovieId = args.getInt(MOVIE_ID_KEY, -1);
             Timber.d("onActivityCreated %d", mMovieId);
 
             DaggerInjector.getApplicationComponent().inject(MovieDetailViewImp.this);
@@ -456,8 +455,6 @@ public class MovieDetailViewImp extends Fragment implements
         Glide.with(MovieDetailViewImp.this)
                 .load(MovieImage.build(movie.getBackdrop_path(), MovieImage.ImageSize.w500))
                 .into(mIvBackdropPoster);
-
-        isAlreadyBeenFavourited();
     }
 
     @Override
@@ -499,6 +496,7 @@ public class MovieDetailViewImp extends Fragment implements
     @Override
     public void onGetMovieFavouriteSuccess(Favourite favourite) {
         Timber.d("onGetMovieFavouriteSuccess %d", favourite.getId());
+        Movies movies = favourite;
 
         mTvTagLine.setText(favourite.getTagline());
         mTvTitle.setText(favourite.getTitle());
@@ -570,8 +568,8 @@ public class MovieDetailViewImp extends Fragment implements
     }
 
     @Override
-    public void onHasMovieFavouriteSuccess(int movieId) {
-        if(movieId != -1) {
+    public void onHasMovieFavouriteSuccess(int movieId, boolean isFavourite) {
+        if(isFavourite) {
             Timber.d("onMovieFavouriteSuccess %d", movieId);
             addMovieAsFavourite(mFabMovieFavourite);
             animateAddingFavourite();
@@ -580,9 +578,9 @@ public class MovieDetailViewImp extends Fragment implements
         }
         else {
             Timber.d("onMovieFavouriteSuccess %d", movieId);
-            mMovieDetailPresenterImp.getMovieDetail(mMovieId);
-            mMovieDetailPresenterImp.requestMovieTrailer(mMovieId);
-            mMovieDetailPresenterImp.requestMovieReviews(mMovieId);
+            mMovieDetailPresenterImp.getMovieDetail(movieId);
+            mMovieDetailPresenterImp.requestMovieTrailer(movieId);
+            mMovieDetailPresenterImp.requestMovieReviews(movieId);
         }
     }
 

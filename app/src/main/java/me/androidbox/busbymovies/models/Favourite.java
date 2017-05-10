@@ -47,4 +47,6 @@ public class Favourite extends Movies {
     public int getRuntime() {
         return mRuntime;
     }
+
+
 }
