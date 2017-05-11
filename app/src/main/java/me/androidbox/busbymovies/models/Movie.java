@@ -4,44 +4,40 @@ package me.androidbox.busbymovies.models;
  * Created by steve on 2/20/17.
  */
 
-public class Movie {
-    private int id;
-    private String poster_path;
-    private String overview;
-    private String release_date;
-    private String title;
-    private String backdrop_path;
-    private float vote_average;
+public class Movie extends Movies {
     private String tagline;
     private String homepage;
     private int runtime;
 
-    public int getId() {
-        return id;
+    public Movie() {
+        super();
     }
 
-    public String getPoster_path() {
-        return poster_path;
+    public Movie(int id,
+                 String poster_path,
+                 String overview,
+                 String release_date,
+                 String title,
+                 String backdrop_path,
+                 float vote_average) {
+        this(id, poster_path, overview, release_date, title, backdrop_path, vote_average, "", "", 0);
     }
 
-    public String getOverview() {
-        return overview;
-    }
+    public Movie(int id,
+                 String poster_path,
+                 String overview,
+                 String release_date,
+                 String title,
+                 String backdrop_path,
+                 float vote_average,
+                 String tagline,
+                 String homepage,
+                 int runtime) {
+        super(id, poster_path, overview, release_date, title, backdrop_path, vote_average);
 
-    public String getRelease_date() {
-        return release_date;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getBackdrop_path() {
-        return backdrop_path;
-    }
-
-    public float getVote_average() {
-        return vote_average;
+        this.tagline = tagline;
+        this.homepage = homepage;
+        this.runtime = runtime;
     }
 
     public String getTagline() {
