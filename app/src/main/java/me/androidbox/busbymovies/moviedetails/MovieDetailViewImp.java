@@ -575,6 +575,8 @@ public class MovieDetailViewImp extends Fragment implements
             animateAddingFavourite();
             /* Populate the views from the database */
             mMovieFavouritePresenterContact.getMovieFavourite(movieId, MovieDetailViewImp.this);
+            mMovieDetailPresenterImp.requestMovieTrailer(movieId);
+            mMovieDetailPresenterImp.requestMovieReviews(movieId);
         }
         else {
             Timber.d("onMovieFavouriteSuccess %d", movieId);
