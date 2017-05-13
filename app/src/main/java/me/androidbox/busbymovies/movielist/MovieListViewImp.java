@@ -33,6 +33,7 @@ import me.androidbox.busbymovies.adapters.MovieAdapter;
 import me.androidbox.busbymovies.data.MovieFavouritesPresenterContract;
 import me.androidbox.busbymovies.di.DaggerInjector;
 import me.androidbox.busbymovies.models.Favourite;
+import me.androidbox.busbymovies.models.Movie;
 import me.androidbox.busbymovies.models.Movies;
 import me.androidbox.busbymovies.models.Results;
 import timber.log.Timber;
@@ -286,7 +287,7 @@ public class MovieListViewImp extends Fragment implements
     }
 
     @Override
-    public void onGetFavouriteMoviesSuccess(Results<Favourite> favouriteList) {
+    public void onGetFavouriteMoviesSuccess(Results<Movie> favouriteList) {
         Timber.d("onGetFavouriteMovieSuccess %d", favouriteList.getResults().size());
 
         if(mPbMovieList.isShown()) {
@@ -356,7 +357,7 @@ public class MovieListViewImp extends Fragment implements
     }
 
     @Override
-    public void onGetMovieFavouriteSuccess(Favourite favourite) {
+    public void onGetMovieFavouriteSuccess(Movie favourite) {
 
     }
 

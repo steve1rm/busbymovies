@@ -1,6 +1,6 @@
 package me.androidbox.busbymovies.data;
 
-import me.androidbox.busbymovies.models.Favourite;
+import me.androidbox.busbymovies.models.Movie;
 import me.androidbox.busbymovies.models.Results;
 
 /**
@@ -9,7 +9,7 @@ import me.androidbox.busbymovies.models.Results;
 
 public interface MovieFavouritesPresenterContract {
     interface DbOperationsListener {
-        void onGetFavouriteMoviesSuccess(Results<Favourite> favouriteList);
+        void onGetFavouriteMoviesSuccess(Results<Movie> favouriteList);
         void onGetFavouriteMoviesFailure(String errorMessage);
         void onInsertFavouriteSuccess();
         void onInsertFavouriteFailure(String errorMessage);
@@ -17,13 +17,13 @@ public interface MovieFavouritesPresenterContract {
         void onDeleteFavouriteMovieFailure(String errorMessage);
         void onHasMovieFavouriteSuccess(int movieId, boolean isFavourite);
         void onHasMovieFavouriteFailure(String errorMessage);
-        void onGetMovieFavouriteSuccess(Favourite favourite);
+        void onGetMovieFavouriteSuccess(Movie favourite);
         void onGetMovieFavouriteFailure(String errorMessage);
     }
 
     void getMovieFavourite(int movieId, DbOperationsListener dbOperationsListener);
     void hasMovieAsFavourite(int movieId, DbOperationsListener dbOperationsListener);
     void getFavouriteMovies(DbOperationsListener dbOperationsListener);
-    void insertFavouriteMovie(Favourite favourite, DbOperationsListener dbOperationsListener);
+    void insertFavouriteMovie(Movie favourite, DbOperationsListener dbOperationsListener);
     void deleteFavouriteMovie(int movieId, DbOperationsListener dbOperationsListener);
 }

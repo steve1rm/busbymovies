@@ -16,6 +16,7 @@ import javax.inject.Inject;
 
 import me.androidbox.busbymovies.data.MovieContract.MovieEntry;
 import me.androidbox.busbymovies.models.Favourite;
+import me.androidbox.busbymovies.models.Movie;
 import me.androidbox.busbymovies.models.Results;
 import timber.log.Timber;
 
@@ -47,7 +48,7 @@ public class MovieFavouriteModelImp implements MovieFavouriteModelContract {
     }
 
     @Override
-    public void insert(Favourite favourite, InsertListener insertListener) {
+    public void insert(Movie favourite, InsertListener insertListener) {
 
         final ContentValues contentValues = new ContentValues();
         contentValues.put(MovieEntry.MOVIE_ID, favourite.getId());
@@ -87,14 +88,14 @@ public class MovieFavouriteModelImp implements MovieFavouriteModelContract {
 
             if (cursor != null) {
                 /* Return the favourite movies */
-                final List<Favourite> favouriteList = new ArrayList<>();
+                final List<Movie> favouriteList = new ArrayList<>();
 
                 while (cursor.moveToNext()) {
-                    final Favourite favourite = populateFavourite(cursor);
+                    final Movie favourite = populateFavourite(cursor);
                     favouriteList.add(favourite);
                 }
 
-                Results<Favourite> data = new Results<>(favouriteList);
+                Results<Movie> data = new Results<>(favouriteList);
                 retrieveListener.onRetrievedSuccess(data);
             }
             else {
@@ -115,7 +116,6 @@ public class MovieFavouriteModelImp implements MovieFavouriteModelContract {
     @TargetApi(Build.VERSION_CODES.KITKAT)
     @Override
     public void retrieve(RetrieveListener retrieveListener) {
-
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             try (Cursor cursor = mContext.get().getContentResolver().query(
                     MovieEntry.CONTENT_URI,
@@ -126,14 +126,14 @@ public class MovieFavouriteModelImp implements MovieFavouriteModelContract {
 
                 if (cursor != null) {
                     /* Return the favourite movies */
-                    final List<Favourite> favouriteList = new ArrayList<>();
+                    final List<Movie> favouriteList = new ArrayList<>();
 
                     while (cursor.moveToNext()) {
-                        final Favourite favourite = populateFavourite(cursor);
+                        final Movie favourite = populateFavourite(cursor);
                         favouriteList.add(favourite);
                     }
 
-                    Results<Favourite> data = new Results<>(favouriteList);
+                    Results<Movie> data = new Results<>(favouriteList);
                     retrieveListener.onRetrievedSuccess(data);
                 }
                 else {
@@ -209,7 +209,7 @@ public class MovieFavouriteModelImp implements MovieFavouriteModelContract {
         else {
             if(cursor.getCount() == 1) {
                 cursor.moveToFirst();
-                final Favourite favourite = populateFavourite(cursor);
+                final Movie favourite = populateFavourite(cursor);
                 getMovieFavourite.onGetMovieFavouriteSuccess(favourite);
             }
             else {
@@ -219,8 +219,8 @@ public class MovieFavouriteModelImp implements MovieFavouriteModelContract {
         }
     }
 
-    private Favourite populateFavourite(Cursor cursor) {
-        final Favourite favourite = new Favourite(
+    private Movie populateFavourite(Cursor cursor) {
+        final Movie favourite = new Movie(
                 cursor.getInt(cursor.getColumnIndex(MovieEntry.MOVIE_ID)),
                 cursor.getString(cursor.getColumnIndex(MovieEntry.POSTER_PATH)),
                 cursor.getString(cursor.getColumnIndex(MovieEntry.OVERVIEW)),

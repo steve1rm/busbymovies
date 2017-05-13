@@ -264,7 +264,7 @@ public class MovieDetailViewImp extends Fragment implements
                 else {
                     /* Add to database */
                     addMovieAsFavourite(floatingActionButton);
-                    final Favourite favouriteMovie = new Favourite(
+                    final Movie favouriteMovie = new Movie(
                             mMovie.getId(),
                             mMovie.getPoster_path(),
                             mMovie.getOverview(),
@@ -494,9 +494,9 @@ public class MovieDetailViewImp extends Fragment implements
     }
 
     @Override
-    public void onGetMovieFavouriteSuccess(Favourite favourite) {
+    public void onGetMovieFavouriteSuccess(Movie favourite) {
         Timber.d("onGetMovieFavouriteSuccess %d", favourite.getId());
-        Movies movies = favourite;
+        mMovie = favourite;
 
         mTvTagLine.setText(favourite.getTagline());
         mTvTitle.setText(favourite.getTitle());
@@ -538,7 +538,7 @@ public class MovieDetailViewImp extends Fragment implements
     }
 
     @Override
-    public void onGetFavouriteMoviesSuccess(Results<Favourite> favouriteList) {
+    public void onGetFavouriteMoviesSuccess(Results<Movie> favouriteList) {
         /* no-op */
     }
 

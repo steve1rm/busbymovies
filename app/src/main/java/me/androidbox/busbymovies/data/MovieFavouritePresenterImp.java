@@ -4,6 +4,7 @@ import javax.inject.Inject;
 
 import me.androidbox.busbymovies.di.DaggerInjector;
 import me.androidbox.busbymovies.models.Favourite;
+import me.androidbox.busbymovies.models.Movie;
 import me.androidbox.busbymovies.models.Results;
 
 /**
@@ -43,7 +44,7 @@ public class MovieFavouritePresenterImp implements
     }
 
     @Override
-    public void insertFavouriteMovie(Favourite favourite, MovieFavouritesPresenterContract.DbOperationsListener dbOperationsListener) {
+    public void insertFavouriteMovie(Movie favourite, MovieFavouritesPresenterContract.DbOperationsListener dbOperationsListener) {
         mDbOperationsListener = dbOperationsListener;
         if(mMovieFavouriteModelContract != null) {
             mMovieFavouriteModelContract.insert(favourite, MovieFavouritePresenterImp.this);
@@ -88,7 +89,7 @@ public class MovieFavouritePresenterImp implements
     }
 
     @Override
-    public void onRetrievedSuccess(Results<Favourite> favouriteList) {
+    public void onRetrievedSuccess(Results<Movie> favouriteList) {
         if(mDbOperationsListener != null) {
             mDbOperationsListener.onGetFavouriteMoviesSuccess(favouriteList);
         }
@@ -130,7 +131,7 @@ public class MovieFavouritePresenterImp implements
     }
 
     @Override
-    public void onGetMovieFavouriteSuccess(Favourite favourite) {
+    public void onGetMovieFavouriteSuccess(Movie favourite) {
         if(mDbOperationsListener != null) {
             mDbOperationsListener.onGetMovieFavouriteSuccess(favourite);
         }
