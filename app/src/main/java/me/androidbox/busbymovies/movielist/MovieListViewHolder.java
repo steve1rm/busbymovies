@@ -10,14 +10,24 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.f2prateek.dart.Dart;
+import com.f2prateek.dart.henson.processor.HensonNavigatorGenerator;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 import java.lang.ref.WeakReference;
+
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import me.androidbox.busbymovies.R;
 import me.androidbox.busbymovies.adapters.MovieAdapter;
+import me.androidbox.busbymovies.data.MovieFavouritesPresenterContract;
+import me.androidbox.busbymovies.di.DaggerInjector;
+import me.androidbox.busbymovies.models.Favourite;
+import me.androidbox.busbymovies.models.Results;
 import me.androidbox.busbymovies.moviedetails.MovieDetailActivity;
 import me.androidbox.busbymovies.moviedetails.MovieDetailViewImp;
 import me.androidbox.busbymovies.utils.MovieImage;
@@ -27,7 +37,9 @@ import timber.log.Timber;
  * Created by steve on 2/26/17.
  */
 
-public class MovieListViewHolder extends RecyclerView.ViewHolder {
+public class MovieListViewHolder
+        extends RecyclerView.ViewHolder {
+
     @BindView(R.id.ivPosterImage) ImageView mIvPosterImage;
     @BindView(R.id.tvTagLine) TextView mTvTagLine;
     @BindView(R.id.palette) View mPalette;
@@ -42,6 +54,7 @@ public class MovieListViewHolder extends RecyclerView.ViewHolder {
         ButterKnife.bind(MovieListViewHolder.this, itemView);
         mContext = new WeakReference<>(context);
         mMovieAdapter = movieAdapter;
+    //    DaggerInjector.getApplicationComponent().inject(MovieListViewHolder.this);
     }
 
     public void bindViewData(String tagline, String posterPath) {
@@ -62,18 +75,14 @@ public class MovieListViewHolder extends RecyclerView.ViewHolder {
                         mIvPosterImage.setImageBitmap(bitmap);
                         Palette.from(bitmap)
                                 .maximumColorCount(16)
-                                .generate(new Palette.PaletteAsyncListener() {
-                                    @Override
-                                    public void onGenerated(Palette palette) {
-
-                                        Palette.Swatch titleBackground = palette.getDarkVibrantSwatch();
-                                        if(titleBackground != null) {
-                                            mPalette.setBackgroundColor(titleBackground.getRgb());
-                                            mTvTagLine.setTextColor(titleBackground.getBodyTextColor());
-                                        }
-                                        else {
-                                            Timber.e("titleBackground == null");
-                                        }
+                                .generate(palette -> {
+                                    Palette.Swatch titleBackground = palette.getDarkVibrantSwatch();
+                                    if(titleBackground != null) {
+                                        mPalette.setBackgroundColor(titleBackground.getRgb());
+                                        mTvTagLine.setTextColor(titleBackground.getBodyTextColor());
+                                    }
+                                    else {
+                                        Timber.e("titleBackground == null");
                                     }
                                 });
                     }
@@ -96,7 +105,7 @@ public class MovieListViewHolder extends RecyclerView.ViewHolder {
     @OnClick(R.id.movieListItem)
     public void onMovieClicked(View view) {
         /* movie has been selected */
-        final int movieId = mMovieAdapter.getMovieId(getAdapterPosition());
+        int movieId = mMovieAdapter.getMovieId(getAdapterPosition());
         Timber.d("Movie ID: %d", movieId);
 
         final Intent intent = new Intent(mContext.get(), MovieDetailActivity.class);

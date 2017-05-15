@@ -86,7 +86,7 @@ public class MovieDetailModelImpTest {
         mMovieDetailModelContract.getMovieReviews(anyInt(), mockMovieReviewsListener);
 
         /* Verify that the result was correct */
-        verify(mockMovieReviewsListener, times(1)).onGetMovieReviewsSuccess(mockReviews);
+        verify(mockMovieReviewsListener, times(1)).onGetMovieReviewsSuccess(null);
         verify(mockMovieReviewsListener, never()).onGetMovieReviewsFailure(anyString());
     }
 
@@ -127,7 +127,7 @@ public class MovieDetailModelImpTest {
         mMovieDetailModelContract.getMovieTrailer(anyInt(), mockMovieTrailerListener);
 
         /* Verify the results are correct */
-        verify(mockMovieTrailerListener, times(1)).onGetMovieTrailerSuccess(mockTrailers);
+        verify(mockMovieTrailerListener, times(1)).onGetMovieTrailerSuccess(null);
         verify(mockMovieTrailerListener, never()).onGetMovieTrailerFailure(anyString());
     }
 

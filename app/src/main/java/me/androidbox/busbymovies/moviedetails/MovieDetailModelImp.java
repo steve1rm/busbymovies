@@ -40,6 +40,8 @@ public class MovieDetailModelImp implements MovieDetailModelContract {
 
     @Override
     public void getMovieDetail(int movieId, GetMovieDetailListener getMovieDetailListener) {
+        Timber.d("getMovieDetail %d", movieId);
+
         if(Constants.MOVIES_API_KEY.isEmpty()) {
             getMovieDetailListener.onGetMovieDetailFailure("Empty API Key");
         }

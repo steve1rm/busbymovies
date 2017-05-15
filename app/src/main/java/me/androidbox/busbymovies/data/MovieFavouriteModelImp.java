@@ -9,12 +9,14 @@ import android.os.Build;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import me.androidbox.busbymovies.data.MovieContract.MovieEntry;
 import me.androidbox.busbymovies.models.Favourite;
+import me.androidbox.busbymovies.models.Movie;
 import me.androidbox.busbymovies.models.Results;
 import timber.log.Timber;
 
@@ -46,7 +48,7 @@ public class MovieFavouriteModelImp implements MovieFavouriteModelContract {
     }
 
     @Override
-    public void insert(Favourite favourite, InsertListener insertListener) {
+    public void insert(Movie favourite, InsertListener insertListener) {
 
         final ContentValues contentValues = new ContentValues();
         contentValues.put(MovieEntry.MOVIE_ID, favourite.getId());
@@ -86,26 +88,14 @@ public class MovieFavouriteModelImp implements MovieFavouriteModelContract {
 
             if (cursor != null) {
                 /* Return the favourite movies */
-                final List<Favourite> favouriteList = new ArrayList<>();
+                final List<Movie> favouriteList = new ArrayList<>();
 
-                cursor.moveToFirst();
                 while (cursor.moveToNext()) {
-                    final Favourite favourite = new Favourite(
-                            cursor.getInt(cursor.getColumnIndex(MovieEntry.MOVIE_ID)),
-                            cursor.getString(cursor.getColumnIndex(MovieEntry.POSTER_PATH)),
-                            cursor.getString(cursor.getColumnIndex(MovieEntry.OVERVIEW)),
-                            cursor.getString(cursor.getColumnIndex(MovieEntry.RELEASE_DATE)),
-                            cursor.getString(cursor.getColumnIndex(MovieEntry.TITLE)),
-                            cursor.getString(cursor.getColumnIndex(MovieEntry.BACKDROP_PATH)),
-                            cursor.getFloat(cursor.getColumnIndex(MovieEntry.VOTE_AVERAGE)),
-                            cursor.getString(cursor.getColumnIndex(MovieEntry.TAGLINE)),
-                            cursor.getString(cursor.getColumnIndex(MovieEntry.HOMEPATH)),
-                            cursor.getInt(cursor.getColumnIndex(MovieEntry.RUNTIME)));
-
+                    final Movie favourite = populateFavourite(cursor);
                     favouriteList.add(favourite);
                 }
 
-                Results<Favourite> data = new Results<>(favouriteList);
+                Results<Movie> data = new Results<>(favouriteList);
                 retrieveListener.onRetrievedSuccess(data);
             }
             else {
@@ -126,7 +116,6 @@ public class MovieFavouriteModelImp implements MovieFavouriteModelContract {
     @TargetApi(Build.VERSION_CODES.KITKAT)
     @Override
     public void retrieve(RetrieveListener retrieveListener) {
-
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             try (Cursor cursor = mContext.get().getContentResolver().query(
                     MovieEntry.CONTENT_URI,
@@ -137,26 +126,14 @@ public class MovieFavouriteModelImp implements MovieFavouriteModelContract {
 
                 if (cursor != null) {
                     /* Return the favourite movies */
-                    final List<Favourite> favouriteList = new ArrayList<>();
+                    final List<Movie> favouriteList = new ArrayList<>();
 
-                    cursor.moveToFirst();
                     while (cursor.moveToNext()) {
-                        final Favourite favourite = new Favourite(
-                                cursor.getInt(cursor.getColumnIndex(MovieEntry.MOVIE_ID)),
-                                cursor.getString(cursor.getColumnIndex(MovieEntry.POSTER_PATH)),
-                                cursor.getString(cursor.getColumnIndex(MovieEntry.OVERVIEW)),
-                                cursor.getString(cursor.getColumnIndex(MovieEntry.RELEASE_DATE)),
-                                cursor.getString(cursor.getColumnIndex(MovieEntry.TITLE)),
-                                cursor.getString(cursor.getColumnIndex(MovieEntry.BACKDROP_PATH)),
-                                cursor.getFloat(cursor.getColumnIndex(MovieEntry.VOTE_AVERAGE)),
-                                cursor.getString(cursor.getColumnIndex(MovieEntry.TAGLINE)),
-                                cursor.getString(cursor.getColumnIndex(MovieEntry.HOMEPATH)),
-                                cursor.getInt(cursor.getColumnIndex(MovieEntry.RUNTIME)));
-
+                        final Movie favourite = populateFavourite(cursor);
                         favouriteList.add(favourite);
                     }
 
-                    Results<Favourite> data = new Results<>(favouriteList);
+                    Results<Movie> data = new Results<>(favouriteList);
                     retrieveListener.onRetrievedSuccess(data);
                 }
                 else {
@@ -176,10 +153,11 @@ public class MovieFavouriteModelImp implements MovieFavouriteModelContract {
     @Override
     public void delete(int movieId, DeleteListener deleteListener) {
         final String strMovieId = String.valueOf(movieId);
-
         final Uri uri = MovieEntry.CONTENT_URI.buildUpon().appendPath(strMovieId).build();
 
-        int rowId = mContext.get().getContentResolver().delete(uri, null, null);
+        final String[] selectionArgs = new String[]{strMovieId};
+        final int rowId =
+                mContext.get().getContentResolver().delete(uri, MovieEntry.MOVIE_ID +"=?", selectionArgs);
         if(rowId != 0) {
             Timber.d("Deleted movie %d from the database", movieId);
             deleteListener.onDeleteSuccess(rowId);
@@ -188,5 +166,72 @@ public class MovieFavouriteModelImp implements MovieFavouriteModelContract {
             Timber.e("Failed to delete movie %d from the database", movieId);
             deleteListener.onDeleteFailed("Failed to delete movie from the database");
         }
+    }
+
+    @Override
+    public void queryMovie(int movieId, QueryMovieListener queryMovieListener) {
+        final String strMovieId = String.valueOf(movieId);
+        final Uri uri = MovieEntry.CONTENT_URI.buildUpon().appendPath(strMovieId).build();
+
+        final String[] selectionArgs = new String[]{strMovieId};
+        final Cursor cursor =
+                mContext.get().getContentResolver().query(uri, null, MovieEntry.MOVIE_ID + "=?", selectionArgs, null);
+
+        if(cursor == null) {
+            /* Movie movie cannot be found */
+            queryMovieListener.onQueryMovieFailed("Failed to query database");
+        }
+        else {
+            if(cursor.getCount() == 1) {
+                queryMovieListener.onQueryMovieSuccess(movieId, true);
+            }
+            else {
+                queryMovieListener.onQueryMovieSuccess(movieId, false);
+            }
+
+            cursor.close();
+        }
+    }
+
+    @Override
+    public void getMovieFavourite(int movieId, GetMovieFavourite getMovieFavourite) {
+        final String strMovieId = String.valueOf(movieId);
+        final Uri uri = MovieEntry.CONTENT_URI.buildUpon().appendPath(strMovieId).build();
+
+        final String[] selectionArgs = new String[]{strMovieId};
+        final Cursor cursor =
+                mContext.get().getContentResolver().query(uri, null, MovieEntry.MOVIE_ID + "=?", selectionArgs, null);
+
+        if(cursor == null) {
+            /* Movie cannot be found */
+            getMovieFavourite.onGetMovieFavouriteFailure("Failed to query database");
+        }
+        else {
+            if(cursor.getCount() == 1) {
+                cursor.moveToFirst();
+                final Movie favourite = populateFavourite(cursor);
+                getMovieFavourite.onGetMovieFavouriteSuccess(favourite);
+            }
+            else {
+                getMovieFavourite.onGetMovieFavouriteFailure("Movie was not found");
+            }
+            cursor.close();
+        }
+    }
+
+    private Movie populateFavourite(Cursor cursor) {
+        final Movie favourite = new Movie(
+                cursor.getInt(cursor.getColumnIndex(MovieEntry.MOVIE_ID)),
+                cursor.getString(cursor.getColumnIndex(MovieEntry.POSTER_PATH)),
+                cursor.getString(cursor.getColumnIndex(MovieEntry.OVERVIEW)),
+                cursor.getString(cursor.getColumnIndex(MovieEntry.RELEASE_DATE)),
+                cursor.getString(cursor.getColumnIndex(MovieEntry.TITLE)),
+                cursor.getString(cursor.getColumnIndex(MovieEntry.BACKDROP_PATH)),
+                cursor.getFloat(cursor.getColumnIndex(MovieEntry.VOTE_AVERAGE)),
+                cursor.getString(cursor.getColumnIndex(MovieEntry.TAGLINE)),
+                cursor.getString(cursor.getColumnIndex(MovieEntry.HOMEPATH)),
+                cursor.getInt(cursor.getColumnIndex(MovieEntry.RUNTIME)));
+
+        return favourite;
     }
 }

@@ -7,10 +7,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubeStandalonePlayer;
 import com.google.android.youtube.player.YouTubeThumbnailLoader;
 import com.google.android.youtube.player.YouTubeThumbnailView;
+
+import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -18,6 +21,7 @@ import me.androidbox.busbymovies.R;
 import me.androidbox.busbymovies.adapters.MovieTrailerAdapter;
 import me.androidbox.busbymovies.models.Trailer;
 import me.androidbox.busbymovies.utils.Constants;
+import me.androidbox.busbymovies.utils.MovieImage;
 import timber.log.Timber;
 
 /**
@@ -25,21 +29,18 @@ import timber.log.Timber;
  */
 
 public class MovieTrailerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-    @BindView(R.id.youtubeThumbnail) YouTubeThumbnailView mYoutubeThumbnail;
+    @BindView(R.id.youtubeThumbnail) ImageView mYoutubeThumbnail;
     @BindView(R.id.ivPlayTrailerItem) ImageView mIvPlayTrailerItem;
 
 //    private StartMovieTrailerListener mMovieTrailerListener;
     private MovieTrailerAdapter mMovieTrailerAdapter;
-
+    private WeakReference<Context> mContext;
     public MovieTrailerViewHolder(View itemView, MovieTrailerAdapter movieTrailerAdapter, StartMovieTrailerListener movieTrailerListener, Context context) {
         super(itemView);
 
         ButterKnife.bind(MovieTrailerViewHolder.this, itemView);
-
+        mContext = new WeakReference<>(context);
         mIvPlayTrailerItem.setOnClickListener(MovieTrailerViewHolder.this);
-        mYoutubeThumbnail = new YouTubeThumbnailView(context);
-
-     //   mMovieTrailerListener = movieTrailerListener;
         mMovieTrailerAdapter = movieTrailerAdapter;
     }
 
@@ -47,32 +48,17 @@ public class MovieTrailerViewHolder extends RecyclerView.ViewHolder implements V
     public void onClick(View v) {
 
         final Trailer trailer = mMovieTrailerAdapter.getTrailerFromPosition(getAdapterPosition());
-//        mMovieTrailerListener.onStartMovieTrailer(trailer.getKey(), mYoutubeFragmentContainerItem, mIvPlayTrailerItem);
-
         final Intent intent = YouTubeStandalonePlayer.createVideoIntent((Activity)itemView.getContext(), Constants.YOUTUBE_API_KEY, trailer.getKey());
         itemView.getContext().startActivity(intent);
     }
 
     public void setViewData(Trailer trailer) {
-        mYoutubeThumbnail.initialize(Constants.YOUTUBE_API_KEY, new YouTubeThumbnailView.OnInitializedListener() {
-            @Override
-            public void onInitializationSuccess(YouTubeThumbnailView youTubeThumbnailView, YouTubeThumbnailLoader youTubeThumbnailLoader) {
-                Timber.d("onInitializationSuccess");
+        final String youtubeUrl = Constants.YOUTUBE_URL + trailer.getKey() + "/0.jpg";
+        Timber.d("setViewData %s: ", youtubeUrl);
 
-                youTubeThumbnailLoader.setVideo(trailer.getKey());
-                youTubeThumbnailLoader.release();
-            }
-
-            @Override
-            public void onInitializationFailure(YouTubeThumbnailView youTubeThumbnailView, YouTubeInitializationResult youTubeInitializationResult) {
-                if(youTubeInitializationResult.isUserRecoverableError()) {
-                    Timber.e("isUserRecoverableError");
-                }
-                else {
-                    Timber.e("NOT isUserRecoverableError");
-                }
-                Timber.e("onInitializationFailure %s", youTubeInitializationResult.toString());
-            }
-        });
+        Glide.with(mYoutubeThumbnail.getContext())
+                .load(youtubeUrl)
+                .placeholder(R.drawable.placeholder_poster)
+                .into(mYoutubeThumbnail);
     }
 }

@@ -33,6 +33,7 @@ import me.androidbox.busbymovies.adapters.MovieAdapter;
 import me.androidbox.busbymovies.data.MovieFavouritesPresenterContract;
 import me.androidbox.busbymovies.di.DaggerInjector;
 import me.androidbox.busbymovies.models.Favourite;
+import me.androidbox.busbymovies.models.Movie;
 import me.androidbox.busbymovies.models.Movies;
 import me.androidbox.busbymovies.models.Results;
 import timber.log.Timber;
@@ -40,7 +41,9 @@ import timber.log.Timber;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MovieListViewImp extends Fragment implements MovieListViewContract, MovieFavouritesPresenterContract.DbOperationsListener {
+public class MovieListViewImp extends Fragment implements
+        MovieListViewContract,
+        MovieFavouritesPresenterContract.DbOperationsListener {
     public static final String TAG = MovieListViewImp.class.getSimpleName();
 
     @Inject MovieListPresenterContract<MovieListViewContract> mMovieListPresenterImp;
@@ -284,7 +287,7 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
     }
 
     @Override
-    public void onGetFavouriteMoviesSuccess(Results<Favourite> favouriteList) {
+    public void onGetFavouriteMoviesSuccess(Results<Movie> favouriteList) {
         Timber.d("onGetFavouriteMovieSuccess %d", favouriteList.getResults().size());
 
         if(mPbMovieList.isShown()) {
@@ -353,6 +356,15 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
         Toast.makeText(getActivity(), "Insert favourite movie", Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void onGetMovieFavouriteSuccess(Movie favourite) {
+
+    }
+
+    @Override
+    public void onGetMovieFavouriteFailure(String errorMessage) {
+
+    }
 
     @Override
     public void onGetFavouriteMoviesFailure(String errorMessage) {
@@ -377,5 +389,15 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
     @Override
     public void onDeleteFavouriteMovieFailure(String errorMessage) {
 
+    }
+
+    @Override
+    public void onHasMovieFavouriteSuccess(int movieId, boolean isFavourite) {
+        /* no-op */
+    }
+
+    @Override
+    public void onHasMovieFavouriteFailure(String errorMessage) {
+        /* no-op */
     }
 }

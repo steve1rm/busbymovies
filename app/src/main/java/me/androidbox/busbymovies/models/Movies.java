@@ -13,6 +13,8 @@ public class Movies {
     private String backdrop_path;
     private float vote_average;
 
+    public Movies() {}
+
     public Movies(int id,
                   String poster_path,
                   String overview,

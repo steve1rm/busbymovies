@@ -112,4 +112,8 @@ dependencies {
     /******************************************************************
      * Misc
      *****************************************************************/
+    compile 'com.f2prateek.dart:dart:2.0.2'
+    provided 'com.f2prateek.dart:dart-processor:2.0.2'
+    compile 'com.f2prateek.dart:henson:2.0.2'
+    provided 'com.f2prateek.dart:henson-processor:2.0.2'
 }
