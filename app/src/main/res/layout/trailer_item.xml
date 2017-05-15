@@ -15,13 +15,23 @@
         app:elevation="8dp"
         app:cardCornerRadius="4dp">
 
-        <com.google.android.youtube.player.YouTubeThumbnailView
+        <ImageView
             android:id="@+id/youtubeThumbnail"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            android:adjustViewBounds="true"
-            android:visibility="visible"/>
+            android:visibility="visible"
+            android:contentDescription="@null"/>
+
+        <!--
+                <com.google.android.youtube.player.YouTubeThumbnailView
+                    android:id="@+id/youtubeThumbnail"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:adjustViewBounds="true"
+                    android:visibility="visible"/>
+        -->
 
         <ImageView
             android:id="@+id/ivPlayTrailerItem"
