@@ -125,8 +125,9 @@ public class MovieDetailViewImp extends Fragment implements
         setupToolBar();
         setupBottomSheet();
 
-        return view;
-    }
+        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            setupBottomSheet();
+        }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -204,6 +205,112 @@ public class MovieDetailViewImp extends Fragment implements
         else {
             Toast.makeText(getActivity(), "There are not trailers for this movie yet", Toast.LENGTH_LONG).show();
         }
+        else {
+            mTrailerList = trailerList;
+            String trailerCount = trailerList.getResults().size() + " Trailer(s)";
+            mTvTrailers.setText(trailerCount);
+
+            Timber.d("There are no trailers to load");
+        }
+    }
+
+    @SuppressWarnings("unused")
+    @Optional
+    @OnClick(R.id.ivPlayTrailer)
+    public void playIntoMovieTrailer() {
+        Timber.d("requestStartMovieTrailer");
+        if(mTrailerList.getResults().size() > 0) {
+        /* Only play the header movie trailer in portrait mode as the landscape version has not room */
+            if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+                setupYoutubePlayer(mMovieTrailerAdapter.getTrailerFromPosition(0).getKey());
+            }
+        }
+        else {
+            Toast.makeText(getActivity(), "There are not trailers for this movie yet", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private boolean isActive = false;
+
+    private void setupFavourite() {
+        @ColorInt final int colorActive = ContextCompat.getColor(getActivity(), R.color.fb_color_active);
+        @ColorInt final int colorPassive = ContextCompat.getColor(getActivity(), R.color.fb_color_passive);
+
+        final float from = 1.0f;
+        final float to = 1.3f;
+
+        ObjectAnimator scaleX = ObjectAnimator.ofFloat(mFabMovieFavourite, View.SCALE_X, from, to);
+        ObjectAnimator scaleY = ObjectAnimator.ofFloat(mFabMovieFavourite, View.SCALE_Y,  from, to);
+  //      ObjectAnimator translationZ = ObjectAnimator.ofFloat(mFabMovieFavourite, View.TRANSLATION_Z, from, to);
+
+        AnimatorSet set1 = new AnimatorSet();
+      //  set1.playTogether(scaleX, scaleY, translationZ);
+        set1.setDuration(100);
+        set1.setInterpolator(new AccelerateInterpolator());
+
+        set1.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mFabMovieFavourite.setImageResource(isActive ? R.drawable.heart_active : R.drawable.heart_passive);
+                mFabMovieFavourite.setBackgroundTintList(ColorStateList.valueOf(isActive ? colorActive : colorPassive));
+                isActive = !isActive;
+            }
+        });
+
+        ObjectAnimator scaleXBack = ObjectAnimator.ofFloat(mFabMovieFavourite, View.SCALE_X, to, from);
+        ObjectAnimator scaleYBack = ObjectAnimator.ofFloat(mFabMovieFavourite, View.SCALE_Y, to, from);
+      //  ObjectAnimator translationZBack = ObjectAnimator.ofFloat(mFabMovieFavourite, View.TRANSLATION_Z, to, from);
+
+        Path path = new Path();
+        path.moveTo(0.0f, 0.0f);
+        path.lineTo(0.5f, 1.3f);
+        path.lineTo(0.75f, 0.8f);
+        path.lineTo(1.0f, 1.0f);
+     //   PathInterpolator pathInterpolator = new PathInterpolator(path);
+
+        AnimatorSet set2 = new AnimatorSet();
+     //   set2.playTogether(scaleXBack, scaleYBack, translationZBack);
+        set2.setDuration(300);
+  //      set2.setInterpolator(pathInterpolator);
+
+        final AnimatorSet set = new AnimatorSet();
+        set.playSequentially(set1, set2);
+
+        set.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mFabMovieFavourite.setClickable(true);
+            }
+
+            @Override
+            public void onAnimationStart(Animator animation) {
+                mFabMovieFavourite.setClickable(false);
+            }
+        });
+
+
+        mFabMovieFavourite.setOnClickListener(v -> set.start());
+    }
+
+    @SuppressWarnings("unused")
+    @OnClick(R.id.fabMovieFavourite)
+    public void addFavouriteMovie() {
+        Timber.d("addFavourites");
+
+        Favourite favourite = new Favourite(
+                1234,
+                "poster path",
+                "overview",
+                "today",
+                "star wars 8",
+                "backdroppath",
+                8.8f,
+                "the force is back again",
+                "the homepage",
+                120);
+
+        mMovieFavouritePresenterContact.insertFavouriteMovie(favourite, MovieDetailViewImp.this);
+
     }
 
     private void isAlreadyBeenFavourited() {
