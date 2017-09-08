@@ -11,23 +11,16 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.f2prateek.dart.Dart;
-import com.f2prateek.dart.henson.processor.HensonNavigatorGenerator;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
-import java.lang.ref.WeakReference;
 
-import javax.inject.Inject;
+import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import me.androidbox.busbymovies.R;
 import me.androidbox.busbymovies.adapters.MovieAdapter;
-import me.androidbox.busbymovies.data.MovieFavouritesPresenterContract;
-import me.androidbox.busbymovies.di.DaggerInjector;
-import me.androidbox.busbymovies.models.Favourite;
-import me.androidbox.busbymovies.models.Results;
 import me.androidbox.busbymovies.moviedetails.MovieDetailActivity;
 import me.androidbox.busbymovies.moviedetails.MovieDetailViewImp;
 import me.androidbox.busbymovies.utils.MovieImage;
