@@ -14,9 +14,7 @@ import me.androidbox.busbymovies.models.Review;
  */
 
 public class MovieReviewViewHolder extends RecyclerView.ViewHolder {
-    @BindView(R.id.tvAuthor) TextView mTvAuthor;
     @BindView(R.id.tvContent) TextView mTvContent;
-    @BindView(R.id.tvUrl) TextView mTvUrl;
 
     public MovieReviewViewHolder(View itemView) {
         super(itemView);
@@ -25,8 +23,6 @@ public class MovieReviewViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void populateReviewData(Review review) {
-        mTvAuthor.setText(review.getAuthor());
         mTvContent.setText(review.getContent());
-        mTvUrl.setText(review.getUrl());
     }
 }

@@ -47,9 +47,7 @@ import me.androidbox.busbymovies.R;
 import me.androidbox.busbymovies.adapters.MovieTrailerAdapter;
 import me.androidbox.busbymovies.data.MovieFavouritesPresenterContract;
 import me.androidbox.busbymovies.di.DaggerInjector;
-import me.androidbox.busbymovies.models.Favourite;
 import me.androidbox.busbymovies.models.Movie;
-import me.androidbox.busbymovies.models.Movies;
 import me.androidbox.busbymovies.models.Results;
 import me.androidbox.busbymovies.models.Review;
 import me.androidbox.busbymovies.models.Trailer;
@@ -317,6 +315,12 @@ public class MovieDetailViewImp extends Fragment implements
     @SuppressWarnings("unused")
     @OnClick(R.id.fabReviews)
     public void openReviews() {
+        if(mReviewList == null) {
+            Timber.e(TAG, "mReviewList == null");
+            Toast.makeText(getActivity(), "Service unavailable. Try again", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         if(mReviewList.getResults().size() > 0) {
             FragmentManager fragmentManager = getFragmentManager();
             MovieReviewsDialog movieReviewsDialog = MovieReviewsDialog.newInstance(mReviewList);
