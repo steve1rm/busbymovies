@@ -51,6 +51,7 @@ import me.androidbox.busbymovies.models.Movie;
 import me.androidbox.busbymovies.models.Results;
 import me.androidbox.busbymovies.models.Review;
 import me.androidbox.busbymovies.models.Trailer;
+import me.androidbox.busbymovies.moviereviews.MovieReviewsDialog;
 import me.androidbox.busbymovies.utils.Constants;
 import me.androidbox.busbymovies.utils.MovieImage;
 import timber.log.Timber;

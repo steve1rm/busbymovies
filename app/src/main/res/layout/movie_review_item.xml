@@ -17,14 +17,13 @@
         android:id="@+id/tvContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginEnd="10dp"
         android:layout_toEndOf="@id/tvInitialReviewer"
         android:background="@drawable/bubble_receiver"
         android:backgroundTint="@color/speech_bubble"
         android:gravity="top|start"
         android:fontFamily="sans-serif"
-        android:textSize="16sp"
+        android:textSize="14sp"
         tools:text="This is the content of this movie review, hope you injoy the show I know i will."/>
 
 </RelativeLayout>

@@ -1,4 +1,4 @@
-package me.androidbox.busbymovies.moviedetails;
+package me.androidbox.busbymovies.moviereviews;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
