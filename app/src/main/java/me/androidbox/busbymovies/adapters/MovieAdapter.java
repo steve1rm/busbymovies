@@ -4,9 +4,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
 import me.androidbox.busbymovies.R;
 import me.androidbox.busbymovies.models.Movie;
 import me.androidbox.busbymovies.models.Movies;
@@ -41,7 +43,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieListViewHolder> {
     public void loadAdapter(Results<? extends Movies> results) {
         clearAllMovies();
 
-        //mMovieList.addAll(results.getResults());
         mMovieList = results.getResults();
 
         notifyItemRangeInserted(0, mMovieList.size());

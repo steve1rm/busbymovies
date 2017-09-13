@@ -46,6 +46,7 @@ public class MovieDetailPresenterImp implements
 
     @Override
     public void getMovieDetail(int movieId) {
+        Timber.d("getMovieDetail %d", movieId);
         mMovieDetailModelContract.getMovieDetail(movieId, MovieDetailPresenterImp.this);
     }
 

@@ -4,6 +4,7 @@ import javax.inject.Inject;
 
 import me.androidbox.busbymovies.di.DaggerInjector;
 import me.androidbox.busbymovies.models.Favourite;
+import me.androidbox.busbymovies.models.Movie;
 import me.androidbox.busbymovies.models.Results;
 
 /**
@@ -14,6 +15,8 @@ public class MovieFavouritePresenterImp implements
         MovieFavouriteModelContract.DeleteListener,
         MovieFavouriteModelContract.InsertListener,
         MovieFavouriteModelContract.RetrieveListener,
+        MovieFavouriteModelContract.QueryMovieListener,
+        MovieFavouriteModelContract.GetMovieFavourite,
         MovieFavouritesPresenterContract {
 
     @Inject MovieFavouriteModelContract mMovieFavouriteModelContract;
@@ -25,6 +28,14 @@ public class MovieFavouritePresenterImp implements
     }
 
     @Override
+    public void getMovieFavourite(int movieId, DbOperationsListener dbOperationsListener) {
+        mDbOperationsListener = dbOperationsListener;
+        if(mMovieFavouriteModelContract != null) {
+            mMovieFavouriteModelContract.getMovieFavourite(movieId, MovieFavouritePresenterImp.this);
+        }
+    }
+
+    @Override
     public void getFavouriteMovies(MovieFavouritesPresenterContract.DbOperationsListener dbOperationsListener) {
         mDbOperationsListener = dbOperationsListener;
         if(mMovieFavouriteModelContract != null) {
@@ -33,7 +44,7 @@ public class MovieFavouritePresenterImp implements
     }
 
     @Override
-    public void insertFavouriteMovie(Favourite favourite, MovieFavouritesPresenterContract.DbOperationsListener dbOperationsListener) {
+    public void insertFavouriteMovie(Movie favourite, MovieFavouritesPresenterContract.DbOperationsListener dbOperationsListener) {
         mDbOperationsListener = dbOperationsListener;
         if(mMovieFavouriteModelContract != null) {
             mMovieFavouriteModelContract.insert(favourite, MovieFavouritePresenterImp.this);
@@ -45,6 +56,14 @@ public class MovieFavouritePresenterImp implements
         mDbOperationsListener = dbOperationsListener;
         if(mMovieFavouriteModelContract != null) {
             mMovieFavouriteModelContract.delete(movieId, MovieFavouritePresenterImp.this);
+        }
+    }
+
+    @Override
+    public void hasMovieAsFavourite(int movieId, DbOperationsListener dbOperationsListener) {
+        mDbOperationsListener = dbOperationsListener;
+        if(mMovieFavouriteModelContract != null) {
+            mMovieFavouriteModelContract.queryMovie(movieId, MovieFavouritePresenterImp.this);
         }
     }
 
@@ -70,7 +89,7 @@ public class MovieFavouritePresenterImp implements
     }
 
     @Override
-    public void onRetrievedSuccess(Results<Favourite> favouriteList) {
+    public void onRetrievedSuccess(Results<Movie> favouriteList) {
         if(mDbOperationsListener != null) {
             mDbOperationsListener.onGetFavouriteMoviesSuccess(favouriteList);
         }
@@ -87,6 +106,34 @@ public class MovieFavouritePresenterImp implements
     public void onDeleteSuccess(int rowId) {
         if(mDbOperationsListener != null) {
             mDbOperationsListener.onDeleteFavouriteMovieSuccess(rowId);
+        }
+    }
+
+    @Override
+    public void onQueryMovieFailed(String errorMessage) {
+        if(mDbOperationsListener != null) {
+            mDbOperationsListener.onHasMovieFavouriteFailure(errorMessage);
+        }
+    }
+
+    @Override
+    public void onQueryMovieSuccess(int movieId, boolean isFavourite) {
+        if(mDbOperationsListener != null) {
+            mDbOperationsListener.onHasMovieFavouriteSuccess(movieId, isFavourite);
+        }
+    }
+
+    @Override
+    public void onGetMovieFavouriteFailure(String errorMessage) {
+        if(mDbOperationsListener != null) {
+            mDbOperationsListener.onGetFavouriteMoviesFailure(errorMessage);
+        }
+    }
+
+    @Override
+    public void onGetMovieFavouriteSuccess(Movie favourite) {
+        if(mDbOperationsListener != null) {
+            mDbOperationsListener.onGetMovieFavouriteSuccess(favourite);
         }
     }
 }

@@ -1,137 +1,176 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:fitsSystemWindows="true"
-    tools:context="me.androidbox.busbymovies.moviedetails.MovieDetailViewImp">
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                 xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                 xmlns:tools="http://schemas.android.com/tools"
+                                                 android:layout_width="match_parent"
+                                                 android:layout_height="match_parent"
+                                                 android:fitsSystemWindows="true"
+                                                 tools:context="me.androidbox.busbymovies.moviedetails.MovieDetailViewImp">
 
-    <FrameLayout
-        android:id="@+id/content"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/transparent">
+        android:fitsSystemWindows="true">
 
-        <ImageView
-            android:id="@+id/ivBackdropPoster"
+        <FrameLayout
+            android:id="@+id/content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:adjustViewBounds="true"
-            android:scaleType="centerCrop" />
+            android:background="@android:color/transparent">
 
-    <FrameLayout
-        android:id="@+id/youtubeFragmentContainer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="70dp"
-        android:visibility="visible"/>
-
-        <com.wonderkiln.blurkit.BlurLayout xmlns:blurkit="http://schemas.android.com/apk/res-auto"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="68dp"
-            android:layout_marginStart="58dp"
-            android:layout_marginEnd="58dp"
-            android:layout_gravity="bottom"
-            android:paddingBottom="4dp"
-            android:paddingTop="4dp"
-            blurkit:blurRadius="3">
-
-            <ScrollView
-                android:id="@+id/svMovieFooter"
+            <ImageView
+                android:id="@+id/ivBackdropPoster"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"/>
 
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fabMovieFavourite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_marginBottom="48dp"
+                android:layout_marginEnd="16dp"
+                android:tint="@color/detail_fab_tintColor"
+                app:borderWidth="@dimen/fab_borderWidth"
+                app:elevation="@dimen/fab_elevation"
+                app:fabSize="normal"
+                app:pressedTranslationZ="@dimen/fab_translationZ"
+                app:srcCompat="@drawable/ic_favorite_black_24dp"/>
 
-                    <include
-                        android:id="@+id/include_details_header"
-                        android:layout_width="match_parent"
-                        android:layout_height="70dp"
-                        layout="@layout/movie_details_header" />
+            <FrameLayout
+                android:id="@+id/youtubeFragmentContainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="70dp"
+                android:visibility="visible"/>
 
-                    <include
-                        android:id="@+id/include_image_thumbnail"
-                        android:layout_height="wrap_content"
+            <com.wonderkiln.blurkit.BlurLayout xmlns:blurkit="http://schemas.android.com/apk/res-auto"
+                                               android:layout_width="match_parent"
+                                               android:layout_height="match_parent"
+                                               android:layout_gravity="bottom"
+                                               android:layout_marginEnd="58dp"
+                                               android:layout_marginStart="58dp"
+                                               android:layout_marginTop="68dp"
+                                               android:paddingBottom="4dp"
+                                               android:paddingTop="4dp"
+                                               blurkit:blurRadius="3">
+
+                <ScrollView
+                    android:id="@+id/svMovieFooter"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <RelativeLayout
                         android:layout_width="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_below="@id/include_details_header"
-                        android:layout_alignParentEnd="true"
-                        layout="@layout/image_thumbnail"/>
+                        android:layout_height="wrap_content">
 
-                    <RatingBar
-                        android:id="@+id/rbVoteAverage"
-                        style="@style/Base.Widget.AppCompat.RatingBar.Indicator"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_below="@id/include_details_header"/>
+                        <include
+                            android:id="@+id/include_details_header"
+                            layout="@layout/movie_details_header"
+                            android:layout_width="match_parent"
+                            android:layout_height="70dp"/>
 
-                    <TextView
-                        android:id="@+id/tvHomepage"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/rbVoteAverage"
-                        android:layout_toStartOf="@id/include_image_thumbnail"
-                        android:layout_alignParentStart="true"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginTop="8dp"
-                        android:textSize="14sp"
-                        android:textColor="@color/primary"
-                        android:fontFamily="sans-serif"
-                        android:ellipsize="end"
-                        android:clickable="true"/>
+                        <include
+                            android:id="@+id/include_image_thumbnail"
+                            layout="@layout/image_thumbnail"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_below="@id/include_details_header"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginTop="10dp"/>
 
-                    <TextView
-                        android:id="@+id/tvRuntime"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/tvHomepage"
-                        android:layout_toStartOf="@id/ivThumbnail"
-                        android:layout_alignParentStart="true"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginTop="8dp"
-                        android:textSize="18sp"
-                        android:textColor="@android:color/white"
-                        android:fontFamily="sans-serif-condensed"/>
+                        <RatingBar
+                            android:id="@+id/rbVoteAverage"
+                            style="@style/Base.Widget.AppCompat.RatingBar.Indicator"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/include_details_header"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"/>
 
-                    <TextView
-                        android:id="@+id/tvSynopsis"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/include_image_thumbnail"
-                        android:paddingTop="8dp"
-                        android:paddingEnd="8dp"
-                        android:paddingStart="8dp"
-                        android:paddingBottom="16dp"
-                        android:fontFamily="sans-serif"
-                        android:textSize="18sp"
-                        android:textColor="@android:color/white"/>
-                </RelativeLayout>
-            </ScrollView>
-        </com.wonderkiln.blurkit.BlurLayout>
-    </FrameLayout>
+                        <include
+                            android:id="@+id/include_trailer_reviews"
+                            layout="@layout/trailer_reviews"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_below="@id/rbVoteAverage"
+                            android:layout_marginTop="4dp"
+                            android:layout_toStartOf="@id/include_image_thumbnail"/>
 
-    <android.support.v7.widget.Toolbar
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_marginTop="@dimen/toolbarHeight"
-        android:id="@+id/tool_bar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:minHeight="?attr/actionBarSize"
-        android:background="@drawable/background_translucent"
-        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:contentInsetStart="8dp"
-        app:contentInsetEnd="4dp"
-        app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
-    </android.support.v7.widget.Toolbar>
+                        <TextView
+                            android:id="@+id/tvHomepage"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_below="@id/include_trailer_reviews"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_toStartOf="@id/include_image_thumbnail"
+                            android:clickable="true"
+                            android:ellipsize="end"
+                            android:fontFamily="sans-serif"
+                            android:textColor="@color/primary"
+                            android:textSize="14sp"/>
 
-</RelativeLayout>
+                        <TextView
+                            android:id="@+id/tvRuntime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_below="@id/tvHomepage"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_toStartOf="@id/ivThumbnail"
+                            android:fontFamily="sans-serif-condensed"
+                            android:textColor="@android:color/white"
+                            android:textSize="18sp"/>
+
+                        <TextView
+                            android:id="@+id/tvSynopsis"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/include_image_thumbnail"
+                            android:fontFamily="sans-serif"
+                            android:paddingBottom="16dp"
+                            android:paddingEnd="8dp"
+                            android:paddingStart="8dp"
+                            android:paddingTop="8dp"
+                            android:textColor="@android:color/white"
+                            android:textSize="18sp"/>
+                    </RelativeLayout>
+                </ScrollView>
+            </com.wonderkiln.blurkit.BlurLayout>
+        </FrameLayout>
+
+        <android.support.v7.widget.Toolbar
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/tool_bar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginTop="@dimen/toolbarHeight"
+            android:background="@drawable/background_translucent"
+            android:minHeight="?attr/actionBarSize"
+            app:contentInsetEnd="4dp"
+            app:contentInsetStart="8dp"
+            app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        </android.support.v7.widget.Toolbar>
+    </RelativeLayout>
+
+    <include xmlns:app="http://schemas.android.com/apk/res-auto"
+             layout="@layout/bottomsheet"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_gravity="center_horizontal"
+             app:behavior_peekHeight="0dp"
+             app:elevation="6dp"
+             app:layout_behavior="@string/bottom_sheet_behavior"/>
+
+</android.support.design.widget.CoordinatorLayout>

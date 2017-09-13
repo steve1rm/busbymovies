@@ -1,20 +1,15 @@
 package me.androidbox.busbymovies.moviedetails;
 
-
 import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
+import android.animation.AnimatorInflater;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Path;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.design.widget.BottomSheetBehavior;
@@ -27,7 +22,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateInterpolator;
 import android.webkit.URLUtil;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -53,11 +47,11 @@ import me.androidbox.busbymovies.R;
 import me.androidbox.busbymovies.adapters.MovieTrailerAdapter;
 import me.androidbox.busbymovies.data.MovieFavouritesPresenterContract;
 import me.androidbox.busbymovies.di.DaggerInjector;
-import me.androidbox.busbymovies.models.Favourite;
 import me.androidbox.busbymovies.models.Movie;
 import me.androidbox.busbymovies.models.Results;
 import me.androidbox.busbymovies.models.Review;
 import me.androidbox.busbymovies.models.Trailer;
+import me.androidbox.busbymovies.moviereviews.MovieReviewsDialog;
 import me.androidbox.busbymovies.utils.Constants;
 import me.androidbox.busbymovies.utils.MovieImage;
 import timber.log.Timber;
@@ -72,11 +66,14 @@ public class MovieDetailViewImp extends Fragment implements
 
     public static final String TAG = MovieDetailViewImp.class.getSimpleName();
     public static final String MOVIE_ID_KEY = "movie_id_key";
+
     private Unbinder mUnbinder;
     private MovieTrailerAdapter mMovieTrailerAdapter;
-    private BottomSheetBehavior<FrameLayout> mBottomSheetBehavior;
     private Results<Review> mReviewList;
     private Results<Trailer> mTrailerList;
+    private Movie mMovie;
+    private BottomSheetBehavior<FrameLayout> mBottomSheetBehavior;
+    private int mMovieId;
 
     @Inject MovieDetailPresenterContract<MovieDetailViewContract> mMovieDetailPresenterImp;
     @Inject MovieFavouritesPresenterContract mMovieFavouritePresenterContact;
@@ -125,11 +122,7 @@ public class MovieDetailViewImp extends Fragment implements
         mUnbinder = ButterKnife.bind(MovieDetailViewImp.this, view);
 
         setupToolBar();
-        setupFavourite();
-
-        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            setupBottomSheet();
-        }
+        setupBottomSheet();
 
         return view;
     }
@@ -140,16 +133,16 @@ public class MovieDetailViewImp extends Fragment implements
 
         final Bundle args = getArguments();
         if(args != null) {
-            final int movieId = args.getInt(MOVIE_ID_KEY, -1);
-            Timber.d("onActivityCreated %d", movieId);
+            mMovieId = args.getInt(MOVIE_ID_KEY, -1);
+            Timber.d("onActivityCreated %d", mMovieId);
 
             DaggerInjector.getApplicationComponent().inject(MovieDetailViewImp.this);
             if(mMovieDetailPresenterImp != null) {
-                if(movieId != -1) {
+                if(mMovieId != -1) {
                     mMovieDetailPresenterImp.attachView(MovieDetailViewImp.this);
-                    mMovieDetailPresenterImp.getMovieDetail(movieId);
-                    mMovieDetailPresenterImp.requestMovieTrailer(movieId);
-                    mMovieDetailPresenterImp.requestMovieReviews(movieId);
+
+                    /* Check if we are getting a movie favourite */
+                    mMovieFavouritePresenterContact.hasMovieAsFavourite(mMovieId, MovieDetailViewImp.this);
                 }
                 else {
                     Timber.e("Invalid movie id '-1'");
@@ -212,86 +205,93 @@ public class MovieDetailViewImp extends Fragment implements
         }
     }
 
-    private boolean isActive = false;
+    private void isAlreadyBeenFavourited() {
+        /* Check that the movie is not already in the database */
+        mMovieFavouritePresenterContact.hasMovieAsFavourite(mMovie.getId(), MovieDetailViewImp.this);
+    }
 
-    private void setupFavourite() {
-        @ColorInt final int colorActive = ContextCompat.getColor(getActivity(), R.color.fb_color_active);
-        @ColorInt final int colorPassive = ContextCompat.getColor(getActivity(), R.color.fb_color_passive);
+    private boolean isFlaggedAsFavourite(FloatingActionButton floatingActionButton) {
+        Timber.d("isFlaggedAsFavourite %s", floatingActionButton.getTag().toString());
+        return floatingActionButton.getTag().toString().equals("true");
+    }
 
-        final float from = 1.0f;
-        final float to = 1.3f;
+    private void addMovieAsFavourite(FloatingActionButton floatingActionButton) {
+        floatingActionButton.setTag("true");
+        Timber.d("AddMovieAsFavourite %s", floatingActionButton.getTag().toString());
+    }
 
-        ObjectAnimator scaleX = ObjectAnimator.ofFloat(mFabMovieFavourite, View.SCALE_X, from, to);
-        ObjectAnimator scaleY = ObjectAnimator.ofFloat(mFabMovieFavourite, View.SCALE_Y,  from, to);
-  //      ObjectAnimator translationZ = ObjectAnimator.ofFloat(mFabMovieFavourite, View.TRANSLATION_Z, from, to);
+    private void removeMovieAsFavourite(FloatingActionButton floatingActionButton) {
+        Timber.d("removeMovieAsFavourite %s", floatingActionButton.getTag().toString());
+        floatingActionButton.setTag("false");
+    }
 
-        AnimatorSet set1 = new AnimatorSet();
-      //  set1.playTogether(scaleX, scaleY, translationZ);
-        set1.setDuration(100);
-        set1.setInterpolator(new AccelerateInterpolator());
+    private void animateAddingFavourite() {
+        final Animator animator = AnimatorInflater.loadAnimator(getActivity(), R.animator.save_favourite_movie);
+        animator.setTarget(mFabMovieFavourite);
+        mFabMovieFavourite.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(getActivity(), R.color.primary)));
+        animator.start();
 
-        set1.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                mFabMovieFavourite.setImageResource(isActive ? R.drawable.heart_active : R.drawable.heart_passive);
-                mFabMovieFavourite.setBackgroundTintList(ColorStateList.valueOf(isActive ? colorActive : colorPassive));
-                isActive = !isActive;
-            }
-        });
-
-        ObjectAnimator scaleXBack = ObjectAnimator.ofFloat(mFabMovieFavourite, View.SCALE_X, to, from);
-        ObjectAnimator scaleYBack = ObjectAnimator.ofFloat(mFabMovieFavourite, View.SCALE_Y, to, from);
-      //  ObjectAnimator translationZBack = ObjectAnimator.ofFloat(mFabMovieFavourite, View.TRANSLATION_Z, to, from);
-
-        Path path = new Path();
-        path.moveTo(0.0f, 0.0f);
-        path.lineTo(0.5f, 1.3f);
-        path.lineTo(0.75f, 0.8f);
-        path.lineTo(1.0f, 1.0f);
-     //   PathInterpolator pathInterpolator = new PathInterpolator(path);
-
-        AnimatorSet set2 = new AnimatorSet();
-     //   set2.playTogether(scaleXBack, scaleYBack, translationZBack);
-        set2.setDuration(300);
-  //      set2.setInterpolator(pathInterpolator);
-
-        final AnimatorSet set = new AnimatorSet();
-        set.playSequentially(set1, set2);
-
-        set.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                mFabMovieFavourite.setClickable(true);
-            }
-
-            @Override
-            public void onAnimationStart(Animator animation) {
-                mFabMovieFavourite.setClickable(false);
-            }
-        });
-
-
-        mFabMovieFavourite.setOnClickListener(v -> set.start());
     }
 
     @SuppressWarnings("unused")
     @OnClick(R.id.fabMovieFavourite)
-    public void addFavouriteMovie() {
-        Timber.d("addFavourites");
+    public void addFavouriteMovie(FloatingActionButton floatingActionButton) {
+        Timber.d("addFavouriteMovie");
 
-        Favourite favourite = new Favourite(
-                1234,
-                "poster path",
-                "overview",
-                "today",
-                "star wars 8",
-                "backdroppath",
-                8.8f,
-                "the force is back again",
-                "the homepage",
-                120);
+        Animator animator = AnimatorInflater.loadAnimator(getActivity(), R.animator.save_favourite_movie);
+        animator.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                Timber.d("onAnimationStart");
+                if(isFlaggedAsFavourite(floatingActionButton)) {
+                    floatingActionButton.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(getActivity(), R.color.accent)));
+                }
+                else {
+                    floatingActionButton.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(getActivity(), R.color.primary)));
+                }
+            }
 
-        mMovieFavouritePresenterContact.insertFavouriteMovie(favourite, MovieDetailViewImp.this);
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                Timber.d("onAnimationEnd");
+                /* Either save or remove the movie from the database */
+                if(isFlaggedAsFavourite(floatingActionButton)) {
+                    /* remove from database */
+                    removeMovieAsFavourite(floatingActionButton);
+                    mMovieFavouritePresenterContact.deleteFavouriteMovie(mMovie.getId(), MovieDetailViewImp.this);
+                }
+                else {
+                    /* Add to database */
+                    addMovieAsFavourite(floatingActionButton);
+                    final Movie favouriteMovie = new Movie(
+                            mMovie.getId(),
+                            mMovie.getPoster_path(),
+                            mMovie.getOverview(),
+                            mMovie.getRelease_date(),
+                            mMovie.getTitle(),
+                            mMovie.getBackdrop_path(),
+                            mMovie.getVote_average(),
+                            mMovie.getTagline(),
+                            mMovie.getHomepage(),
+                            mMovie.getRuntime());
+
+                    mMovieFavouritePresenterContact.insertFavouriteMovie(favouriteMovie, MovieDetailViewImp.this);
+                }
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+
+        animator.setTarget(floatingActionButton);
+        animator.start();
     }
 
     @SuppressWarnings("unused")
@@ -316,28 +316,13 @@ public class MovieDetailViewImp extends Fragment implements
     @SuppressWarnings("unused")
     @OnClick(R.id.fabReviews)
     public void openReviews() {
-        Timber.d("addFavourites");
-
-        Favourite favourite = new Favourite(
-                1234,
-                "poster path",
-                "overview",
-                "today",
-                "star wars 8",
-                "backdroppath",
-                8.8f,
-                "the force is back again",
-                "the homepage",
-                120);
-
-        mMovieFavouritePresenterContact.insertFavouriteMovie(favourite, MovieDetailViewImp.this);
-
-/*
+        if(mReviewList == null) {
+            Timber.e(TAG, "mReviewList == null");
+            Toast.makeText(getActivity(), "Service unavailable. Try again", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         if(mReviewList.getResults().size() > 0) {
-            */
-/* Open movie s dialog fragment *//*
-
             FragmentManager fragmentManager = getFragmentManager();
             MovieReviewsDialog movieReviewsDialog = MovieReviewsDialog.newInstance(mReviewList);
             movieReviewsDialog.show(fragmentManager, MovieReviewsDialog.class.getSimpleName());
@@ -345,7 +330,6 @@ public class MovieDetailViewImp extends Fragment implements
         else {
             Toast.makeText(getActivity(), "There are no reviews for this movie yet", Toast.LENGTH_SHORT).show();
         }
-*/
     }
 
     @Override
@@ -359,7 +343,7 @@ public class MovieDetailViewImp extends Fragment implements
     }
 
     private void setupYoutubePlayer(String key) {
-       final YouTubePlayerFragment youTubePlayerFragment = YouTubePlayerFragment.newInstance();
+        final YouTubePlayerFragment youTubePlayerFragment = YouTubePlayerFragment.newInstance();
         getFragmentManager().beginTransaction()
                 .add(R.id.youtubeFragmentContainer, youTubePlayerFragment)
                 .commit();
@@ -448,55 +432,7 @@ public class MovieDetailViewImp extends Fragment implements
     @Override
     public void displayMovieDetails(Movie movie) {
         Timber.d("displayMovieDetails");
-
-/*
-        final Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                Picasso.with(getActivity())
-                        .load(MovieImage.build(movie.getPoster_path(), MovieImage.ImageSize.w185))
-                        .resize(120, 180)
-                        .centerCrop()
-                        .into(new Target() {
-                            @Override
-                            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                                mIvThumbnail.setImageBitmap(bitmap);
-                                Palette.from(bitmap)
-                                        .maximumColorCount(16)
-                                        .generate(new Palette.PaletteAsyncListener() {
-                                            @Override
-                                            public void onGenerated(Palette palette) {
-                                                Palette.Swatch swatch = palette.getLightVibrantSwatch();
-
-                                                if(swatch != null) {
-                                                    getActivity().runOnUiThread(new Runnable() {
-                                                        @Override
-                                                        public void run() {
-                                                            mSvMovieFooter.setBackgroundColor(swatch.getRgb());
-                                                            mTvSynopsis.setTextColor(swatch.getBodyTextColor());
-                                                            mRbVoteAverage.setBackgroundColor(swatch.getTitleTextColor());
-                                                            mTvHomepage.setTextColor(swatch.getTitleTextColor());
-                                                            mTvRuntime.setTextColor(swatch.getTitleTextColor());
-                                                        }
-                                                    });
-                                                }
-                                            }
-                                        });
-                            }
-
-                            @Override
-                            public void onBitmapFailed(Drawable errorDrawable) {
-                                Timber.e("onBitmapFailed");
-                            }
-
-                            @Override
-                            public void onPrepareLoad(Drawable placeHolderDrawable) {
-                                Timber.d("onPrepareLoad");
-                            }
-                        });
-            }
-        };
-*/
+        mMovie = movie;
 
         mTvTagLine.setText(movie.getTagline());
         mTvTitle.setText(movie.getTitle());
@@ -513,7 +449,6 @@ public class MovieDetailViewImp extends Fragment implements
 
         mTvVoteAverage.setText(String.valueOf(movie.getVote_average()));
         Timber.d("movie.getVote_average %f", movie.getVote_average());
-
 
         Glide.with(MovieDetailViewImp.this)
                 .load(MovieImage.build(movie.getPoster_path(), MovieImage.ImageSize.w185))
@@ -563,12 +498,51 @@ public class MovieDetailViewImp extends Fragment implements
     }
 
     @Override
+    public void onGetMovieFavouriteSuccess(Movie favourite) {
+        Timber.d("onGetMovieFavouriteSuccess %d", favourite.getId());
+        mMovie = favourite;
+
+        mTvTagLine.setText(favourite.getTagline());
+        mTvTitle.setText(favourite.getTitle());
+
+        final String movieDate = mMovieDetailPresenterImp.getMovieFormattedDate(favourite.getRelease_date(), Constants.FORMAT_MOVIE_DATE);
+        mTvRelease.setText(movieDate);
+
+        mTvSynopsis.setText(favourite.getOverview());
+        mRbVoteAverage.setRating(mMovieDetailPresenterImp.getVoteAverage(favourite.getVote_average()));
+        mTvHomepage.setText(favourite.getHomepage());
+
+        final String runningTime = "Running time " + favourite.getRuntime() + " minutes";
+        mTvRuntime.setText(runningTime);
+
+        mTvVoteAverage.setText(String.valueOf(favourite.getVote_average()));
+        Timber.d("movie.getVote_average %f", favourite.getVote_average());
+
+
+        Glide.with(MovieDetailViewImp.this)
+                .load(MovieImage.build(favourite.getPoster_path(), MovieImage.ImageSize.w185))
+                .bitmapTransform(new RoundedCornersTransformation(getActivity(), 16, 4, RoundedCornersTransformation.CornerType.ALL))
+                .into(mIvThumbnail);
+
+        /* Bind the data */
+        Glide.with(MovieDetailViewImp.this)
+                .load(MovieImage.build(favourite.getBackdrop_path(), MovieImage.ImageSize.w500))
+                .into(mIvBackdropPoster);
+
+    }
+
+    @Override
+    public void onGetMovieFavouriteFailure(String errorMessage) {
+        Timber.d("onGetMovieFavouriteFailure %s", errorMessage);
+    }
+
+    @Override
     public void failedToReceiveMovieReviews(String errorMessage) {
         Timber.e("failedToReceiveMovieReviews %s", errorMessage);
     }
 
     @Override
-    public void onGetFavouriteMoviesSuccess(Results<Favourite> favouriteList) {
+    public void onGetFavouriteMoviesSuccess(Results<Movie> favouriteList) {
         /* no-op */
     }
 
@@ -589,11 +563,35 @@ public class MovieDetailViewImp extends Fragment implements
 
     @Override
     public void onDeleteFavouriteMovieSuccess(int rowDeletedId) {
-
+        Timber.d("onDeleteFavouriteMovieSuccess %d", rowDeletedId);
     }
 
     @Override
     public void onDeleteFavouriteMovieFailure(String errorMessage) {
+        Timber.e("onDeleteFavouriteMovieFailure: %s", errorMessage);
+    }
 
+    @Override
+    public void onHasMovieFavouriteSuccess(int movieId, boolean isFavourite) {
+        if(isFavourite) {
+            Timber.d("onMovieFavouriteSuccess %d", movieId);
+            addMovieAsFavourite(mFabMovieFavourite);
+            animateAddingFavourite();
+            /* Populate the views from the database */
+            mMovieFavouritePresenterContact.getMovieFavourite(movieId, MovieDetailViewImp.this);
+            mMovieDetailPresenterImp.requestMovieTrailer(movieId);
+            mMovieDetailPresenterImp.requestMovieReviews(movieId);
+        }
+        else {
+            Timber.d("onMovieFavouriteSuccess %d", movieId);
+            mMovieDetailPresenterImp.getMovieDetail(movieId);
+            mMovieDetailPresenterImp.requestMovieTrailer(movieId);
+            mMovieDetailPresenterImp.requestMovieReviews(movieId);
+        }
+    }
+
+    @Override
+    public void onHasMovieFavouriteFailure(String errorMessage) {
+        Timber.d("onHasMovieFavouriteFailure %s", errorMessage);
     }
 }

@@ -33,6 +33,7 @@ import me.androidbox.busbymovies.adapters.MovieAdapter;
 import me.androidbox.busbymovies.data.MovieFavouritesPresenterContract;
 import me.androidbox.busbymovies.di.DaggerInjector;
 import me.androidbox.busbymovies.models.Favourite;
+import me.androidbox.busbymovies.models.Movie;
 import me.androidbox.busbymovies.models.Movies;
 import me.androidbox.busbymovies.models.Results;
 import timber.log.Timber;
@@ -40,7 +41,8 @@ import timber.log.Timber;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MovieListViewImp extends Fragment implements MovieListViewContract, MovieFavouritesPresenterContract.DbOperationsListener {
+public class MovieListViewImp extends Fragment implements MovieListViewContract,
+        MovieFavouritesPresenterContract.DbOperationsListener {
     public static final String TAG = MovieListViewImp.class.getSimpleName();
 
     @Inject MovieListPresenterContract<MovieListViewContract> mMovieListPresenterImp;
@@ -284,14 +286,20 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
     }
 
     @Override
-    public void onGetFavouriteMoviesSuccess(Results<Favourite> favouriteList) {
+    public void onGetFavouriteMoviesSuccess(Results<Movie> favouriteList) {
         Timber.d("onGetFavouriteMovieSuccess %d", favouriteList.getResults().size());
 
         if(mPbMovieList.isShown()) {
             mPbMovieList.hide();
         }
 
-        mMovieAdapter.loadAdapter(favouriteList);
+        if(favouriteList.getResults().size() > 0) {
+            mMovieAdapter.loadAdapter(favouriteList);
+        }
+        else {
+            Toast.makeText(getActivity(), "There are no favourites to display", Toast.LENGTH_SHORT)
+                    .show();
+        }
     }
 
     @Override
@@ -347,7 +355,6 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
         Toast.makeText(getActivity(), "Insert favourite movie", Toast.LENGTH_SHORT).show();
     }
 
-
     @Override
     public void onGetFavouriteMoviesFailure(String errorMessage) {
 
@@ -360,16 +367,33 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
 
     @Override
     public void onInsertFavouriteFailure(String errorMessage) {
-
     }
 
     @Override
     public void onDeleteFavouriteMovieSuccess(int rowDeletedId) {
-
     }
 
     @Override
     public void onDeleteFavouriteMovieFailure(String errorMessage) {
+    }
+
+    @Override
+    public void onHasMovieFavouriteSuccess(int movieId, boolean isFavourite) {
+
+    }
+
+    @Override
+    public void onHasMovieFavouriteFailure(String errorMessage) {
+
+    }
+
+    @Override
+    public void onGetMovieFavouriteSuccess(Movie favourite) {
+
+    }
+
+    @Override
+    public void onGetMovieFavouriteFailure(String errorMessage) {
 
     }
 }

@@ -1,5 +1,6 @@
 package me.androidbox.busbymovies.movielist;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -13,6 +14,11 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import rx.Scheduler;
+import rx.android.plugins.RxAndroidPlugins;
+import rx.android.plugins.RxAndroidSchedulersHook;
+import rx.plugins.RxJavaHooks;
+import rx.schedulers.Schedulers;
 
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -41,6 +47,23 @@ public class MovieListModelImpGetMovieTest {
 
         movieListModelContract = new MovieListModelImp(mockMovieAPIService);
         movie = new Movie();
+
+        RxJavaHooks.setOnIOScheduler(scheduler -> Schedulers.immediate());
+
+        /* Override RxAndroid schedulers */
+        final RxAndroidPlugins rxAndroidPlugins = RxAndroidPlugins.getInstance();
+        rxAndroidPlugins.registerSchedulersHook(new RxAndroidSchedulersHook() {
+            @Override
+            public Scheduler getMainThreadScheduler() {
+                return Schedulers.immediate();
+            }
+        });
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        RxJavaHooks.reset();
+        RxAndroidPlugins.getInstance().reset();
     }
 
     @Test

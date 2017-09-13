@@ -18,4 +18,5 @@
 
     <color name="fb_color_active">#007de4</color>
     <color name="fb_color_passive">#ffffff</color>
+    <color name="speech_bubble">#80cbc4</color>
 </resources>

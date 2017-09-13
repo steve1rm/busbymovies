@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import me.androidbox.busbymovies.R;
 import me.androidbox.busbymovies.models.Results;
 import me.androidbox.busbymovies.models.Review;
-import me.androidbox.busbymovies.moviedetails.MovieReviewViewHolder;
+import me.androidbox.busbymovies.moviereviews.MovieReviewViewHolder;
 
 /**
  * Created by steve on 4/12/17.

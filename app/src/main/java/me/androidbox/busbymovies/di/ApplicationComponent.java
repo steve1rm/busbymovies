@@ -9,6 +9,7 @@ import me.androidbox.busbymovies.moviedetails.MovieDetailPresenterImp;
 import me.androidbox.busbymovies.moviedetails.MovieDetailViewImp;
 import me.androidbox.busbymovies.movielist.MovieListModelImp;
 import me.androidbox.busbymovies.movielist.MovieListPresenterImp;
+import me.androidbox.busbymovies.movielist.MovieListViewHolder;
 import me.androidbox.busbymovies.movielist.MovieListViewImp;
 
 /**
@@ -31,4 +32,5 @@ public interface ApplicationComponent {
     void inject(MovieDetailViewImp target);
     void inject(MovieDetailPresenterImp target);
     void inject(MovieFavouritePresenterImp target);
+    void inject(MovieListViewHolder target);
 }

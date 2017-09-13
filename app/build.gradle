@@ -10,15 +10,13 @@ android {
     }
     defaultConfig {
         applicationId "me.androidbox.busbymovies"
-        minSdkVersion 16
+        minSdkVersion 17
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         jackOptions {
-            enabled true
-
             /* Use of rendering for palette library */
             renderscriptTargetApi 25
             renderscriptSupportModeEnabled true
@@ -48,6 +46,7 @@ dependencies {
     /** ***************************************************************
      *  Device and unit testing
      *************************************************************** */
+    testCompile 'junit:junit:4.12'
     androidTestCompile 'com.squareup.okhttp3:mockwebserver:3.6.0'
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
@@ -57,7 +56,6 @@ dependencies {
         exclude group: 'com.squareup.okio', module: 'okio'
         exclude group: 'com.squareup.okhttp3', module: 'okhttp'
     })
-    testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-core:2.7.10'
     testCompile 'org.robolectric:robolectric:3.3.1'
     /** ***************************************************************
@@ -96,7 +94,7 @@ dependencies {
      *  RxJava just for a call adapter for retrofit2
      ****************************************************************/
     /* Because RxAndroid releases are few and far between, it is recommended you also
-         * explicitly depend on RxJava's latest version for bug fixes and new features */
+             * explicitly depend on RxJava's latest version for bug fixes and new features */
     compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'io.reactivex:rxjava:1.2.6'
@@ -108,8 +106,11 @@ dependencies {
     compile 'jp.wasabeef:glide-transformations:2.0.1'
     compile 'com.wonderkiln:blurkit:1.0.0'
     compile files('libs/YouTubeAndroidPlayerApi.jar')
-
     /******************************************************************
      * Misc
      *****************************************************************/
+    compile 'com.f2prateek.dart:dart:2.0.2'
+    annotationProcessor 'com.f2prateek.dart:dart-processor:2.0.2'
+    compile 'com.f2prateek.dart:henson:2.0.2'
+    annotationProcessor 'com.f2prateek.dart:henson-processor:2.0.2'
 }

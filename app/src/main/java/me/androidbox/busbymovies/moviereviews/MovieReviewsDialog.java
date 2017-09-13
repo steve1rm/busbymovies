@@ -1,4 +1,4 @@
-package me.androidbox.busbymovies.moviedetails;
+package me.androidbox.busbymovies.moviereviews;
 
 import android.app.DialogFragment;
 import android.os.Bundle;
