@@ -69,10 +69,10 @@ public class MovieDetailViewImp extends Fragment implements
 
     private Unbinder mUnbinder;
     private MovieTrailerAdapter mMovieTrailerAdapter;
-    private BottomSheetBehavior<FrameLayout> mBottomSheetBehavior;
     private Results<Review> mReviewList;
     private Results<Trailer> mTrailerList;
     private Movie mMovie;
+    private BottomSheetBehavior<FrameLayout> mBottomSheetBehavior;
     private int mMovieId;
 
     @Inject MovieDetailPresenterContract<MovieDetailViewContract> mMovieDetailPresenterImp;

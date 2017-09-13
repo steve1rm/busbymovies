@@ -207,9 +207,8 @@ public class MovieFavouriteModelImp implements MovieFavouriteModelContract {
             getMovieFavourite.onGetMovieFavouriteFailure("Failed to query database");
         }
         else {
-            if(cursor.getCount() == 1) {
-                cursor.moveToFirst();
-                final Movie favourite = populateFavourite(cursor);
+            if(cursor.getCount() == 1) {cursor.moveToFirst();
+            final Movie favourite = populateFavourite(cursor);
                 getMovieFavourite.onGetMovieFavouriteSuccess(favourite);
             }
             else {
@@ -220,17 +219,17 @@ public class MovieFavouriteModelImp implements MovieFavouriteModelContract {
     }
 
     private Movie populateFavourite(Cursor cursor) {
-        final Movie favourite = new Movie(
-                cursor.getInt(cursor.getColumnIndex(MovieEntry.MOVIE_ID)),
-                cursor.getString(cursor.getColumnIndex(MovieEntry.POSTER_PATH)),
-                cursor.getString(cursor.getColumnIndex(MovieEntry.OVERVIEW)),
-                cursor.getString(cursor.getColumnIndex(MovieEntry.RELEASE_DATE)),
-                cursor.getString(cursor.getColumnIndex(MovieEntry.TITLE)),
-                cursor.getString(cursor.getColumnIndex(MovieEntry.BACKDROP_PATH)),
-                cursor.getFloat(cursor.getColumnIndex(MovieEntry.VOTE_AVERAGE)),
-                cursor.getString(cursor.getColumnIndex(MovieEntry.TAGLINE)),
-                cursor.getString(cursor.getColumnIndex(MovieEntry.HOMEPATH)),
-                cursor.getInt(cursor.getColumnIndex(MovieEntry.RUNTIME)));
+                final Movie favourite = new Movie(
+                        cursor.getInt(cursor.getColumnIndex(MovieEntry.MOVIE_ID)),
+                        cursor.getString(cursor.getColumnIndex(MovieEntry.POSTER_PATH)),
+                        cursor.getString(cursor.getColumnIndex(MovieEntry.OVERVIEW)),
+                        cursor.getString(cursor.getColumnIndex(MovieEntry.RELEASE_DATE)),
+                        cursor.getString(cursor.getColumnIndex(MovieEntry.TITLE)),
+                        cursor.getString(cursor.getColumnIndex(MovieEntry.BACKDROP_PATH)),
+                        cursor.getFloat(cursor.getColumnIndex(MovieEntry.VOTE_AVERAGE)),
+                        cursor.getString(cursor.getColumnIndex(MovieEntry.TAGLINE)),
+                        cursor.getString(cursor.getColumnIndex(MovieEntry.HOMEPATH)),
+                        cursor.getInt(cursor.getColumnIndex(MovieEntry.RUNTIME)));
 
         return favourite;
     }
