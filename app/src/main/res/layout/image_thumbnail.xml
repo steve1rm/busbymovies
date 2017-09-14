@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
         android:id="@+id/ivThumbnail"
@@ -9,6 +10,7 @@
         android:layout_height="@dimen/thumbnail_height"
         android:layout_marginTop="@dimen/thumbnail_marginTop"
         android:layout_marginStart="@dimen/thumbnail_marginStart"
+        android:layout_marginBottom="@dimen/thumbnail_marginTop"
         android:scaleType="centerCrop"/>
 
     <TextView
@@ -23,4 +25,19 @@
         android:fontFamily="sans-serif-condensed"
         android:background="@drawable/circle"/>
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabMovieFavourite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|start"
+        android:layout_marginBottom="6dp"
+        android:tag="false"
+        android:tint="@color/detail_fab_tintColor"
+        android:clickable="true"
+        android:focusable="true"
+        app:borderWidth="@dimen/fab_borderWidth"
+        app:elevation="@dimen/fab_elevation"
+        app:fabSize="mini"
+        app:pressedTranslationZ="@dimen/fab_translationZ"
+        app:srcCompat="@drawable/ic_favorite_black_24dp" />
 </FrameLayout>

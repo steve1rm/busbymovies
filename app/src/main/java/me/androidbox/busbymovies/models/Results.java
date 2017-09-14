@@ -16,7 +16,7 @@ public class Results<T> implements Parcelable {
         this.results = data;
     }
 
-    public Results(){}
+    public Results() {}
 
     public static Results newInstance() {
         return new Results();
