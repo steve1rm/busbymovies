@@ -24,20 +24,6 @@
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"/>
 
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/fabMovieFavourite"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|end"
-                android:layout_marginBottom="48dp"
-                android:layout_marginEnd="16dp"
-                android:tint="@color/detail_fab_tintColor"
-                app:borderWidth="@dimen/fab_borderWidth"
-                app:elevation="@dimen/fab_elevation"
-                app:fabSize="normal"
-                app:pressedTranslationZ="@dimen/fab_translationZ"
-                app:srcCompat="@drawable/ic_favorite_black_24dp"/>
-
             <FrameLayout
                 android:id="@+id/youtubeFragmentContainer"
                 android:layout_width="match_parent"
