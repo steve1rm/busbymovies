@@ -13,4 +13,5 @@ public interface MovieDetailPresenterContract<MovieDetailView> {
     String getMovieFormattedDate(String date, String format);
     void requestMovieTrailer(int movieId);
     void requestMovieReviews(int movieId);
+    void requestMovieActors(final int movieId);
 }

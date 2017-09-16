@@ -1,8 +1,6 @@
 package me.androidbox.busbymovies.moviereviews;
 
 import android.content.Context;
-import android.support.annotation.IdRes;
-import android.support.annotation.IntegerRes;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -40,9 +38,8 @@ public class MovieReviewViewHolder extends RecyclerView.ViewHolder {
 
     private String appendAvatarWithAuthorsInitial(final String author) {
         final String initial = String.valueOf(author.charAt(0));
+
         String avatar = "avatar_";
         return avatar + initial.toLowerCase();
     }
 }
-
-    // Android Studio 3.0 Beta 5

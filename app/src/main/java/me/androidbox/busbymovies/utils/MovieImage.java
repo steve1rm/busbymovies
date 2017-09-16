@@ -63,7 +63,7 @@ public class MovieImage {
     }
 
     public enum ImageSize {
-        w92, w154, w185, w342, w500, w700;
+        w92, w154, w185, w342, w500, w700
     }
 
     public static void createPalette(ImageView imageView) {
