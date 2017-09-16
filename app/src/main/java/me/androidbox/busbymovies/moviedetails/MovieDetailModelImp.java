@@ -157,6 +157,7 @@ public class MovieDetailModelImp implements MovieDetailModelContract {
 
                         @Override
                         public void onNext(Cast<Actor> actors) {
+
                             Timber.d("onNext");
                                 movieActorsListener.onGetMovieActorsSuccess(actors);
                         }

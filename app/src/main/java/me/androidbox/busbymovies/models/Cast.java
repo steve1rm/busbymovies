@@ -16,8 +16,4 @@ public class Cast<T> {
     public List<T> getCast() {
         return cast;
     }
-
-    public void setCast(List<T> cast) {
-        this.cast = cast;
-    }
 }

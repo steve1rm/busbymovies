@@ -27,7 +27,8 @@ public class MovieActorsAdapter extends RecyclerView.Adapter<MovieActorsViewHold
 
     @Override
     public MovieActorsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.movie_actors_item, parent, false);
+        final View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.movie_actors_item, parent, false);
 
         return new MovieActorsViewHolder(view);
     }
@@ -45,6 +46,6 @@ public class MovieActorsAdapter extends RecyclerView.Adapter<MovieActorsViewHold
     public void populateActors(Cast<Actor> actorList) {
         this.actorList.clear();
         this.actorList.addAll(actorList.getCast());
-        notifyItemRangeInserted(0, actorList.getCast().size());
+        notifyItemRangeInserted(0, this.actorList.size());
     }
 }
