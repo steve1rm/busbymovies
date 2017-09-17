@@ -37,8 +37,6 @@ public class MovieActorsViewHolder extends RecyclerView.ViewHolder {
     public void populateActor(Actor actor) {
         Glide.with(context)
                 .load(MovieImage.build(actor.getProfile_path(), MovieImage.ImageSize.w92))
-                .placeholder(R.drawable.people_placeholder)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(actorPicture);
 
         name.setText(actor.getName());

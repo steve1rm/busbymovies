@@ -58,7 +58,7 @@ public class MovieTrailerViewHolder extends RecyclerView.ViewHolder implements V
 
         Glide.with(mYoutubeThumbnail.getContext())
                 .load(youtubeUrl)
-                .placeholder(R.drawable.placeholder_poster)
+//                .placeholder(R.drawable.placeholder_poster)
                 .into(mYoutubeThumbnail);
     }
 }

@@ -476,7 +476,7 @@ public class MovieDetailViewImp extends Fragment implements
 
         Glide.with(MovieDetailViewImp.this)
                 .load(MovieImage.build(movie.getPoster_path(), MovieImage.ImageSize.w185))
-                .bitmapTransform(new RoundedCornersTransformation(getActivity(), 16, 4, RoundedCornersTransformation.CornerType.ALL))
+    //            .bitmapTransform(new RoundedCornersTransformation(getActivity(), 16, 4, RoundedCornersTransformation.CornerType.ALL))
                 .into(mIvThumbnail);
 
         /* Bind the data */
@@ -545,7 +545,7 @@ public class MovieDetailViewImp extends Fragment implements
 
         Glide.with(MovieDetailViewImp.this)
                 .load(MovieImage.build(favourite.getPoster_path(), MovieImage.ImageSize.w185))
-                .bitmapTransform(new RoundedCornersTransformation(getActivity(), 16, 4, RoundedCornersTransformation.CornerType.ALL))
+                //.bitmapTransform(new RoundedCornersTransformation(getActivity(), 16, 4, RoundedCornersTransformation.CornerType.ALL))
                 .into(mIvThumbnail);
 
         /* Bind the data */

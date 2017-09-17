@@ -8,10 +8,9 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/civActorPicture"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_gravity="center"
-        android:scaleType="centerCrop"
         tools:src="@drawable/people_placeholder"/>
 
     <TextView
