@@ -114,4 +114,6 @@ dependencies {
     compile 'com.f2prateek.dart:henson:2.0.2'
     annotationProcessor 'com.f2prateek.dart:henson-processor:2.0.2'
     implementation 'de.hdodenhof:circleimageview:2.1.0'
+    compileOnly 'com.google.auto.factory:auto-factory:1.0-beta5'
+    annotationProcessor 'com.google.auto.factory:auto-factory:1.0-beta5'
 }

@@ -168,6 +168,7 @@ public class MovieDetailViewImp extends Fragment implements
         movieActorsAdapter = new MovieActorsAdapter();
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         rvMovieActors.setLayoutManager(linearLayoutManager);
+        rvMovieActors.setHasFixedSize(true);
         rvMovieActors.setAdapter(movieActorsAdapter);
     }
 
