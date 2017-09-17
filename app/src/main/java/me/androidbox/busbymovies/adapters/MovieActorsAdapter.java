@@ -14,7 +14,6 @@ import me.androidbox.busbymovies.models.Actor;
 import me.androidbox.busbymovies.models.Cast;
 import me.androidbox.busbymovies.moviedetails.MovieActorsViewHolder;
 import me.androidbox.busbymovies.moviedetails.MovieActorsViewHolderFactory;
-import me.androidbox.busbymovies.moviedetails.MovieActorsViewHolderFactory_Factory;
 
 /**
  * Created by steve on 9/16/17.

@@ -3,17 +3,19 @@ package me.androidbox.busbymovies.moviedetails;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.google.auto.factory.AutoFactory;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import de.hdodenhof.circleimageview.CircleImageView;
 import me.androidbox.busbymovies.R;
 import me.androidbox.busbymovies.models.Actor;
+import me.androidbox.busbymovies.utils.GlideApp;
 import me.androidbox.busbymovies.utils.MovieImage;
 
 /**
@@ -21,7 +23,7 @@ import me.androidbox.busbymovies.utils.MovieImage;
  */
 @AutoFactory
 public class MovieActorsViewHolder extends RecyclerView.ViewHolder {
-    @BindView(R.id.civActorPicture) CircleImageView actorPicture;
+    @BindView(R.id.civActorPicture) ImageView actorPicture;
     @BindView(R.id.tvName) TextView name;
     @BindView(R.id.tvCharacter) TextView character;
 
@@ -35,8 +37,11 @@ public class MovieActorsViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void populateActor(Actor actor) {
-        Glide.with(context)
+        GlideApp.with(context)
                 .load(MovieImage.build(actor.getProfile_path(), MovieImage.ImageSize.w92))
+                .placeholder(R.drawable.peopleplaceholder)
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .priority(Priority.HIGH)
                 .into(actorPicture);
 
         name.setText(actor.getName());
