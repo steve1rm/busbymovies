@@ -116,11 +116,18 @@
                             android:textColor="@android:color/white"
                             android:textSize="18sp"/>
 
+                        <android.support.v7.widget.RecyclerView
+                            xmlns:android="http://schemas.android.com/apk/res/android"
+                            android:id="@+id/rvMovieActors"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/include_image_thumbnail"/>
+
                         <TextView
                             android:id="@+id/tvSynopsis"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/include_image_thumbnail"
+                            android:layout_below="@id/rvMovieActors"
                             android:fontFamily="sans-serif"
                             android:paddingBottom="16dp"
                             android:paddingEnd="8dp"
