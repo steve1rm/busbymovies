@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubeStandalonePlayer;
 import com.google.android.youtube.player.YouTubeThumbnailLoader;
@@ -21,6 +22,7 @@ import me.androidbox.busbymovies.R;
 import me.androidbox.busbymovies.adapters.MovieTrailerAdapter;
 import me.androidbox.busbymovies.models.Trailer;
 import me.androidbox.busbymovies.utils.Constants;
+import me.androidbox.busbymovies.utils.GlideApp;
 import me.androidbox.busbymovies.utils.MovieImage;
 import timber.log.Timber;
 
@@ -46,7 +48,6 @@ public class MovieTrailerViewHolder extends RecyclerView.ViewHolder implements V
 
     @Override
     public void onClick(View v) {
-
         final Trailer trailer = mMovieTrailerAdapter.getTrailerFromPosition(getAdapterPosition());
         final Intent intent = YouTubeStandalonePlayer.createVideoIntent((Activity)itemView.getContext(), Constants.YOUTUBE_API_KEY, trailer.getKey());
         itemView.getContext().startActivity(intent);
@@ -56,9 +57,10 @@ public class MovieTrailerViewHolder extends RecyclerView.ViewHolder implements V
         final String youtubeUrl = Constants.YOUTUBE_URL + trailer.getKey() + "/0.jpg";
         Timber.d("setViewData %s: ", youtubeUrl);
 
-        Glide.with(mYoutubeThumbnail.getContext())
+        GlideApp.with(mYoutubeThumbnail.getContext())
                 .load(youtubeUrl)
                 .placeholder(R.drawable.placeholder_poster)
+                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                 .into(mYoutubeThumbnail);
     }
 }

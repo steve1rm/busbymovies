@@ -1,6 +1,5 @@
 package me.androidbox.busbymovies.moviedetails;
 
-import org.assertj.core.api.exception.RuntimeIOException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,11 +18,9 @@ import rx.android.plugins.RxAndroidSchedulersHook;
 import rx.plugins.RxJavaHooks;
 import rx.schedulers.Schedulers;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -94,7 +91,7 @@ public class MovieDetailModelImpTest {
     public void shouldDisplayErrorWhenFailureToGetTrailers() throws Exception {
         /* Stub the function that gets the movie trailers */
         when(mockMovieAPIService.getMovieTrailers(anyInt(), anyString()))
-                .thenReturn(Observable.error(new Throwable(new RuntimeIOException(eq("Failed to get movie trailers")))));
+                .thenReturn(Observable.error(new Throwable(new RuntimeException(eq("Failed to get movie trailers")))));
 
         /* Actual call */
         mMovieDetailModelContract.getMovieTrailer(anyInt(), mockMovieTrailerListener);

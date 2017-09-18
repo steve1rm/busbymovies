@@ -31,9 +31,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.MultiTransformation;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerFragment;
+
+import java.util.Collections;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -44,15 +49,20 @@ import butterknife.Optional;
 import butterknife.Unbinder;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 import me.androidbox.busbymovies.R;
+import me.androidbox.busbymovies.adapters.MovieActorsAdapter;
 import me.androidbox.busbymovies.adapters.MovieTrailerAdapter;
 import me.androidbox.busbymovies.data.MovieFavouritesPresenterContract;
 import me.androidbox.busbymovies.di.DaggerInjector;
+import me.androidbox.busbymovies.models.Actor;
+import me.androidbox.busbymovies.models.Cast;
 import me.androidbox.busbymovies.models.Movie;
 import me.androidbox.busbymovies.models.Results;
 import me.androidbox.busbymovies.models.Review;
 import me.androidbox.busbymovies.models.Trailer;
 import me.androidbox.busbymovies.moviereviews.MovieReviewsDialog;
+import me.androidbox.busbymovies.utils.BlurTransformation;
 import me.androidbox.busbymovies.utils.Constants;
+import me.androidbox.busbymovies.utils.GlideApp;
 import me.androidbox.busbymovies.utils.MovieImage;
 import timber.log.Timber;
 
@@ -74,6 +84,7 @@ public class MovieDetailViewImp extends Fragment implements
     private Movie mMovie;
     private BottomSheetBehavior<FrameLayout> mBottomSheetBehavior;
     private int mMovieId;
+    private MovieActorsAdapter movieActorsAdapter;
 
     @Inject MovieDetailPresenterContract<MovieDetailViewContract> mMovieDetailPresenterImp;
     @Inject MovieFavouritesPresenterContract mMovieFavouritePresenterContact;
@@ -93,6 +104,7 @@ public class MovieDetailViewImp extends Fragment implements
     @BindView(R.id.tool_bar) Toolbar mToolBar;
     @BindView(R.id.tvTrailers) TextView mTvTrailers;
     @BindView(R.id.tvReviews) TextView mTvReviews;
+    @BindView(R.id.rvMovieActors) RecyclerView rvMovieActors;
     @BindView(R.id.youtubeFragmentContainer) FrameLayout mYoutubeFragmentContainer;
     @Nullable @BindView(R.id.ivPlayTrailer) ImageView mIvPlayTrailer;
     @Nullable @BindView(R.id.fabMovieFavourite) FloatingActionButton mFabMovieFavourite;
@@ -123,6 +135,7 @@ public class MovieDetailViewImp extends Fragment implements
 
         setupToolBar();
         setupBottomSheet();
+        setupActorAdapter();
 
         return view;
     }
@@ -140,6 +153,7 @@ public class MovieDetailViewImp extends Fragment implements
             if(mMovieDetailPresenterImp != null) {
                 if(mMovieId != -1) {
                     mMovieDetailPresenterImp.attachView(MovieDetailViewImp.this);
+                    mMovieDetailPresenterImp.requestMovieActors(mMovieId);
 
                     /* Check if we are getting a movie favourite */
                     mMovieFavouritePresenterContact.hasMovieAsFavourite(mMovieId, MovieDetailViewImp.this);
@@ -152,6 +166,14 @@ public class MovieDetailViewImp extends Fragment implements
                 Timber.e("mMovieDetailPresenterIm == null");
             }
         }
+    }
+
+    private void setupActorAdapter() {
+        movieActorsAdapter = new MovieActorsAdapter();
+        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        rvMovieActors.setLayoutManager(linearLayoutManager);
+        rvMovieActors.setHasFixedSize(true);
+        rvMovieActors.setAdapter(movieActorsAdapter);
     }
 
     private void setupBottomSheet() {
@@ -297,19 +319,25 @@ public class MovieDetailViewImp extends Fragment implements
     @SuppressWarnings("unused")
     @OnClick(R.id.fabTrailers)
     public void openTrailers() {
-        if(mTrailerList.getResults().size() > 0) {
-            if (mBottomSheet != null) {
-                if (mBottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
-                    mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-                    Timber.d("STATE_EXPANDED");
-                } else {
-                    mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                    Timber.d("STATE_COLLAPSED");
+        if(mTrailerList != null) {
+            if (mTrailerList.getResults().size() > 0) {
+                if (mBottomSheet != null) {
+                    if (mBottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
+                        mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                        Timber.d("STATE_EXPANDED");
+                    }
+                    else {
+                        mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                        Timber.d("STATE_COLLAPSED");
+                    }
                 }
+            }
+            else {
+                Toast.makeText(getActivity(), "There are not trailers for this movie yet", Toast.LENGTH_LONG).show();
             }
         }
         else {
-            Toast.makeText(getActivity(), "There are not trailers for this movie yet", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), "Service not available please try again later", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -452,7 +480,7 @@ public class MovieDetailViewImp extends Fragment implements
 
         Glide.with(MovieDetailViewImp.this)
                 .load(MovieImage.build(movie.getPoster_path(), MovieImage.ImageSize.w185))
-                .bitmapTransform(new RoundedCornersTransformation(getActivity(), 16, 4, RoundedCornersTransformation.CornerType.ALL))
+    //            .bitmapTransform(new RoundedCornersTransformation(getActivity(), 16, 4, RoundedCornersTransformation.CornerType.ALL))
                 .into(mIvThumbnail);
 
         /* Bind the data */
@@ -518,15 +546,18 @@ public class MovieDetailViewImp extends Fragment implements
         mTvVoteAverage.setText(String.valueOf(favourite.getVote_average()));
         Timber.d("movie.getVote_average %f", favourite.getVote_average());
 
-
-        Glide.with(MovieDetailViewImp.this)
+        GlideApp.with(MovieDetailViewImp.this)
                 .load(MovieImage.build(favourite.getPoster_path(), MovieImage.ImageSize.w185))
-                .bitmapTransform(new RoundedCornersTransformation(getActivity(), 16, 4, RoundedCornersTransformation.CornerType.ALL))
+                .transform(new MultiTransformation<>(
+                        new RoundedCornersTransformation(16, 4, RoundedCornersTransformation.CornerType.ALL),
+                        new jp.wasabeef.glide.transformations.BlurTransformation(5, 2)))
+                .priority(Priority.NORMAL)
                 .into(mIvThumbnail);
 
         /* Bind the data */
-        Glide.with(MovieDetailViewImp.this)
+        GlideApp.with(MovieDetailViewImp.this)
                 .load(MovieImage.build(favourite.getBackdrop_path(), MovieImage.ImageSize.w500))
+                .priority(Priority.HIGH)
                 .into(mIvBackdropPoster);
 
     }
@@ -593,5 +624,16 @@ public class MovieDetailViewImp extends Fragment implements
     @Override
     public void onHasMovieFavouriteFailure(String errorMessage) {
         Timber.d("onHasMovieFavouriteFailure %s", errorMessage);
+    }
+
+    @Override
+    public void failedToReceiveMovieActors(String errorMessage) {
+        Timber.d(errorMessage);
+        Toast.makeText(getActivity(), "Failed to get movie actors", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void successToReceiveMovieActors(Cast<Actor> actorList) {
+        movieActorsAdapter.populateActors(actorList);
     }
 }

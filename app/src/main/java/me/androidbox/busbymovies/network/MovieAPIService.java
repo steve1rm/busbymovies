@@ -1,5 +1,9 @@
 package me.androidbox.busbymovies.network;
 
+import java.util.List;
+
+import me.androidbox.busbymovies.models.Actor;
+import me.androidbox.busbymovies.models.Cast;
 import me.androidbox.busbymovies.models.Movie;
 import me.androidbox.busbymovies.models.Movies;
 import me.androidbox.busbymovies.models.Results;
@@ -41,46 +45,6 @@ public interface MovieAPIService {
     @GET("movie/{movie_id}/reviews")
     Observable<Results<Review>> getMovieReview(@Path("movie_id") int movieId, @Query("api_key") String apiKey);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    @GET("movie/{movie_id}/credits")
+    Observable<Cast<Actor>> getMovieActors(@Path("movie_id") int movieId, @Query("api_key") String apiKey);
 }

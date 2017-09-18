@@ -1,17 +1,24 @@
 package me.androidbox.busbymovies.moviedetails;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.inject.Inject;
 
 import me.androidbox.busbymovies.di.DaggerInjector;
+import me.androidbox.busbymovies.models.Actor;
+import me.androidbox.busbymovies.models.Cast;
 import me.androidbox.busbymovies.models.Movie;
 import me.androidbox.busbymovies.models.Results;
 import me.androidbox.busbymovies.models.Review;
 import me.androidbox.busbymovies.models.Trailer;
 import me.androidbox.busbymovies.network.MovieAPIService;
 import me.androidbox.busbymovies.utils.Constants;
+import rx.Scheduler;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 import timber.log.Timber;
 
@@ -124,6 +131,47 @@ public class MovieDetailModelImp implements MovieDetailModelContract {
                         public void onNext(Results<Review> reviewsResults) {
                             Timber.d("onNext");
                             movieReviewsListener.onGetMovieReviewsSuccess(reviewsResults);
+                        }
+                    });
+        }
+    }
+
+    @Override
+    public void getMoveActors(int movieId, MovieActorsListener movieActorsListener) {
+        if(Constants.MOVIES_API_KEY.isEmpty()) {
+            movieActorsListener.onGetMovieActorsFailure("NO API KEY");
+        }
+        else {
+            mSubscription = mMovieAPIService.getMovieActors(movieId, Constants.MOVIES_API_KEY)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .map(actorCast -> {
+                        List<Actor> newActors = new ArrayList<>();
+
+                        for(int i = 0; i < 10; i++) {
+                            newActors.add(actorCast.getCast().get(i));
+                        }
+                        actorCast.getCast().clear();
+                        actorCast.getCast().addAll(newActors);
+
+                        return actorCast;
+                    })
+                    .subscribe(new Subscriber<Cast<Actor>>() {
+                        @Override
+                        public void onCompleted() {
+                            Timber.d("onCompleted");
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            Timber.e(e, "onError");
+                            movieActorsListener.onGetMovieActorsFailure(e.getMessage());
+                        }
+
+                        @Override
+                        public void onNext(Cast<Actor> actors) {
+                            Timber.d("onNext");
+                                movieActorsListener.onGetMovieActorsSuccess(actors);
                         }
                     });
         }
