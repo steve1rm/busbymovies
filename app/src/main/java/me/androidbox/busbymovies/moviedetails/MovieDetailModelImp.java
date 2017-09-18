@@ -1,5 +1,6 @@
 package me.androidbox.busbymovies.moviedetails;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -17,6 +18,7 @@ import rx.Scheduler;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 import timber.log.Timber;
 
@@ -143,6 +145,17 @@ public class MovieDetailModelImp implements MovieDetailModelContract {
             mSubscription = mMovieAPIService.getMovieActors(movieId, Constants.MOVIES_API_KEY)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
+                    .map(actorCast -> {
+                        List<Actor> newActors = new ArrayList<>();
+
+                        for(int i = 0; i < 10; i++) {
+                            newActors.add(actorCast.getCast().get(i));
+                        }
+                        actorCast.getCast().clear();
+                        actorCast.getCast().addAll(newActors);
+
+                        return actorCast;
+                    })
                     .subscribe(new Subscriber<Cast<Actor>>() {
                         @Override
                         public void onCompleted() {
@@ -157,7 +170,6 @@ public class MovieDetailModelImp implements MovieDetailModelContract {
 
                         @Override
                         public void onNext(Cast<Actor> actors) {
-
                             Timber.d("onNext");
                                 movieActorsListener.onGetMovieActorsSuccess(actors);
                         }

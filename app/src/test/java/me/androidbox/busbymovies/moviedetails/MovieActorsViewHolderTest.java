@@ -50,7 +50,7 @@ public class MovieActorsViewHolderTest {
 
         final ShadowDrawable shadowDrawable = Shadows.shadowOf(movieActorsViewHolder.actorPicture.getDrawable());
         final Drawable drawable = Drawable.createFromPath(actor.getProfile_path());
-      //  assertThat(drawable, is(shadowDrawable.getCreatedFromResId()));
+        /* assertThat(drawable, is(shadowDrawable.getCreatedFromResId())); */
 
         assertThat(movieActorsViewHolder.name.getText(), is(actor.getName()));
         assertThat(movieActorsViewHolder.character.getText(), is(actor.getCharacter()));
