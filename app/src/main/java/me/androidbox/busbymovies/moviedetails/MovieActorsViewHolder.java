@@ -7,8 +7,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Priority;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.google.auto.factory.AutoFactory;
 
 import butterknife.BindView;
@@ -40,7 +38,6 @@ public class MovieActorsViewHolder extends RecyclerView.ViewHolder {
         GlideApp.with(context)
                 .load(MovieImage.build(actor.getProfile_path(), MovieImage.ImageSize.w92))
                 .placeholder(R.drawable.peopleplaceholder)
-                .transition(DrawableTransitionOptions.withCrossFade())
                 .priority(Priority.HIGH)
                 .into(actorPicture);
 
