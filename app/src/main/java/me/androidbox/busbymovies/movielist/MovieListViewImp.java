@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.ContentLoadingProgressBar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -54,6 +55,7 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
     @BindView(R.id.fabPopular) FloatingActionButton mFabPopular;
     @BindView(R.id.fabTopRated) FloatingActionButton mFabTopRated;
     @BindView(R.id.fabFavourite) FloatingActionButton mFabFavourite;
+    @BindView(R.id.swipeContainer) SwipeRefreshLayout swipeRefreshLayout;
 
     private Unbinder mUnbinder;
     private MovieAdapter mMovieAdapter;
@@ -81,6 +83,7 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
         }
 
         setupRecyclerView();
+        setupSwipeToRefresh();
 
         /* Hide the progress bar */
         if(mPbMovieList.isShown()) {
@@ -219,6 +222,16 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
         appCompatActivity.getSupportActionBar().setDisplayShowTitleEnabled(true);
     }
 
+    private void setupSwipeToRefresh() {
+        swipeRefreshLayout.setColorSchemeResources(
+                android.R.color.holo_blue_bright,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_green_light,
+                android.R.color.holo_red_light);
+
+        swipeRefreshLayout.setOnRefreshListener(() -> mMovieListPresenterImp.getPopularMovies());
+    }
+
     private void setupRecyclerView() {
 
         /* Portrait mode 2 columns as there is less width to display movies
@@ -272,6 +285,7 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
         }
 
         mMovieAdapter.loadAdapter(popularMovies);
+        swipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
@@ -306,6 +320,8 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
     public void failedToDisplayPopularMovies(String errorMessage) {
         Toast.makeText(getActivity(), "Failed to get popular movies\n" + errorMessage, Toast.LENGTH_LONG).show();
         mPbMovieList.hide();
+        swipeRefreshLayout.setRefreshing(false);
+
         Timber.w("Failed to get popular movies %s", errorMessage);
     }
 
