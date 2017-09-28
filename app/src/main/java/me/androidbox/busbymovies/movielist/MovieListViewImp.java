@@ -203,7 +203,7 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
         getFavouriteMovies();
         closeSortFab();
     }
-    
+
     private void setupSwipeToRefresh() {
         swipeRefreshLayout.setColorSchemeResources(
                 android.R.color.holo_blue_bright,
