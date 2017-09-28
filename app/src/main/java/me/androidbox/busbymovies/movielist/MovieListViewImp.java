@@ -49,7 +49,6 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
     @Inject MovieListPresenterContract<MovieListViewContract> mMovieListPresenterImp;
     @Inject MovieFavouritesPresenterContract mMovieFavouritePresenterImp;
 
-    @Nullable @BindView(R.id.tool_bar) Toolbar mToolbar;
     @BindView(R.id.rvMovieList) RecyclerView mRvMovieList;
     @BindView(R.id.pbMovieList) ContentLoadingProgressBar mPbMovieList;
     @BindView(R.id.fabPopular) FloatingActionButton mFabPopular;
@@ -76,11 +75,6 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
         final View view = inflater.inflate(R.layout.movie_list_view, container, false);
 
         mUnbinder = ButterKnife.bind(MovieListViewImp.this, view);
-
-        /* Don't display the toolbar if when in landscape mode to create more real-estate */
-        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            setupToolbar();
-        }
 
         setupRecyclerView();
         setupSwipeToRefresh();
@@ -209,19 +203,7 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
         getFavouriteMovies();
         closeSortFab();
     }
-
-    /**
-     * Setup toolbar
-     */
-    @SuppressWarnings("all")
-    private void setupToolbar() {
-        AppCompatActivity appCompatActivity = (AppCompatActivity)getActivity();
-        appCompatActivity.setSupportActionBar(mToolbar);
-        appCompatActivity.getSupportActionBar().setLogo(R.mipmap.ic_launcher);
-        appCompatActivity.getSupportActionBar().setDisplayUseLogoEnabled(true);
-        appCompatActivity.getSupportActionBar().setDisplayShowTitleEnabled(true);
-    }
-
+    
     private void setupSwipeToRefresh() {
         swipeRefreshLayout.setColorSchemeResources(
                 android.R.color.holo_blue_bright,
