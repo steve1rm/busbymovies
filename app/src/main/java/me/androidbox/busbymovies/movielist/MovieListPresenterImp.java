@@ -16,7 +16,8 @@ import timber.log.Timber;
 public class MovieListPresenterImp implements
         MovieListPresenterContract<MovieListViewContract>,
         MovieListModelContract.PopularMovieResultsListener,
-        MovieListModelContract.TopRatedMovieResultsListener {
+        MovieListModelContract.TopRatedMovieResultsListener,
+        MovieListModelContract.MovieSearchResultsListener{
 
     private MovieListViewContract mMovieListViewContract;
     @Inject MovieListModelContract mMovieModelContract;
@@ -92,5 +93,20 @@ public class MovieListPresenterImp implements
     @Override
     public void onTopRatedMovieSuccess(Results<Movies> topRatedMovies) {
         mMovieListViewContract.displayTopRatedMovies(topRatedMovies);
+    }
+
+    @Override
+    public void onSearchFailure(String errorMessage) {
+        mMovieListViewContract.failedToGetSearchMovies(errorMessage);
+    }
+
+    @Override
+    public void onSearchSuccess(Results<Movies> searchMovies) {
+        mMovieListViewContract.successToGetSearchMovies(searchMovies);
+    }
+
+    @Override
+    public void searchMovies(final String movieName, final int movieYear) {
+        mMovieModelContract.searchForMovies(movieName, movieYear, MovieListPresenterImp.this);
     }
 }

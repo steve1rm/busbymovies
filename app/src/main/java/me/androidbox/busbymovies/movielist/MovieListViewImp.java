@@ -354,6 +354,16 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
     }
 
     @Override
+    public void failedToGetSearchMovies(String errorMessage) {
+
+    }
+
+    @Override
+    public void successToGetSearchMovies(Results<Movies> movieSearch) {
+
+    }
+
+    @Override
     public void onGetFavouriteMoviesFailure(String errorMessage) {
 
     }
