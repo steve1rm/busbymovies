@@ -33,12 +33,13 @@ public interface MovieListModelContract {
     }
     void getMovieDetail(int movieId, MovieDetailResultsListener movieDetailResultsListener);
 
+    /** Search for movies */
+    interface MovieSearchResultsListener {
+        void onSearchFailure(final String errorMessage);
+        void onSearchSuccess(Results<Movies> searchMovies);
+    }
+    void searchForMovies(final String movieName, final int movieYear, MovieSearchResultsListener movieSearchResultsListener);
 
     /** Testing only */
     Observable<Results<Movies>> getPopularMovies();
-
-
-
-    //void searchPopulareMovies()
-/*    void getTopRatedMovies(MovieResultsListener resultsListener);*/
 }

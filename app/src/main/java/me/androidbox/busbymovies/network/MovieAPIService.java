@@ -45,3 +45,4 @@ public interface MovieAPIService {
     @GET("/search/movie")
     Observable<Results<Movies>> searchMovies(@Query("movieName") String movieName, @Query("movieYear") int movieYear, @Query("api_key") String apiKey);
 }
+
