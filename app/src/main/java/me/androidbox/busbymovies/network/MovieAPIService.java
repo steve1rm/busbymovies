@@ -1,7 +1,5 @@
 package me.androidbox.busbymovies.network;
 
-import java.util.List;
-
 import me.androidbox.busbymovies.models.Actor;
 import me.androidbox.busbymovies.models.Cast;
 import me.androidbox.busbymovies.models.Movie;
@@ -37,14 +35,13 @@ public interface MovieAPIService {
     @GET("movie/{movie_id}/videos")
     Observable<Results<Trailer>> getMovieTrailers(@Path("movie_id") int movie_id, @Query("api_key") String apiKey);
 
-    /* Search for a popular movie */
-/*    @GET("movie/popular")
-    Call<Results> searchPopular(@Query("api_key") String apikey, @Query("q") String query);*/
-
     /* Get the movie reviews based on the movie id */
     @GET("movie/{movie_id}/reviews")
     Observable<Results<Review>> getMovieReview(@Path("movie_id") int movieId, @Query("api_key") String apiKey);
 
     @GET("movie/{movie_id}/credits")
     Observable<Cast<Actor>> getMovieActors(@Path("movie_id") int movieId, @Query("api_key") String apiKey);
+
+    @GET("/search/movie")
+    Observable<Results<Movies>> searchMovies(@Query("movieName") String movieName, @Query("movieYear") int movieYear, @Query("api_key") String apiKey);
 }
