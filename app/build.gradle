@@ -60,12 +60,12 @@ dependencies {
         exclude group: 'com.squareup.okio', module: 'okio'
         exclude group: 'com.squareup.okhttp3', module: 'okhttp'
     })
-    testCompile 'org.mockito:mockito-core:2.7.10'
+    testCompile 'org.mockito:mockito-core:2.8.9'
     testCompile 'org.robolectric:robolectric:3.4.2'
     /** ***************************************************************
      *  Support libraries
      *************************************************************** */
-    def supportVersion = "25.3.1"
+    def supportVersion = "25.4.0"
     compile "com.android.support:appcompat-v7:${supportVersion}"
     compile "com.android.support:support-v4:${supportVersion}"
     compile "com.android.support:design:${supportVersion}"
@@ -79,8 +79,8 @@ dependencies {
      *  View and dependency injection
      *************************************************************** */
     compile 'com.google.dagger:dagger:2.11'
-    compile 'com.jakewharton:butterknife:8.5.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+    compile 'com.jakewharton:butterknife:8.7.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.7.0'
     provided 'javax.annotation:jsr250-api:1.0'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.11'
     /** ***************************************************************
