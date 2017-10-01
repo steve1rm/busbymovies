@@ -27,6 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/btnClose"
+        android:layout_marginTop="8dp"
         android:fontFamily="sans-serif"
         android:hint="@string/enter_name_of_movie"
         android:textSize="16sp" />
@@ -36,6 +37,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/etMovieName"
+        android:layout_marginTop="8dp"
         android:fontFamily="sans-serif"
         android:hint="@string/year_of_movie_optional"
         android:textSize="16sp"
@@ -44,24 +46,33 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/etMovieYear">
+        android:layout_below="@id/etMovieYear"
+        android:layout_marginTop="8dp">
 
         <Button
             android:id="@+id/btnSearch"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_weight="1"
-            android:fontFamily="sans-serif"
+            android:layout_marginEnd="4dp"
+            android:fontFamily="sans-serif-light"
             android:text="@string/search"
-            android:textAllCaps="false"/>
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:background="@drawable/blue_button_bg"/>
 
         <Button
             android:id="@+id/btnClear"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_weight="1"
-            android:fontFamily="sans-serif"
+            android:layout_marginStart="4dp"
+            android:fontFamily="sans-serif-light"
             android:text="@string/clear"
-            android:textAllCaps="false"/>
+            android:textAllCaps="false"
+            android:textColor="@color/primary"
+            android:textSize="20sp"
+            android:background="@drawable/white_button_bg"/>
     </LinearLayout>
 </RelativeLayout>
