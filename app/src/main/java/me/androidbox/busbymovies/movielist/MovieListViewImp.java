@@ -86,9 +86,7 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
         setupSwipeToRefresh();
 
         /* Hide the progress bar */
-        if(mPbMovieList.isShown()) {
-            mPbMovieList.hide();
-        }
+        hideProgressBar();
 
         if(mIsSortFabOpen) {
             mIsSortFabOpen = false;
@@ -228,7 +226,6 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
         movieSearchDialog.show(fragmentManager, "MovieSearchDialog");
 
         closeSortFab();
-
     }
 
     private void setupSwipeToRefresh() {
@@ -259,27 +256,18 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
 
     public void getPopularMovies() {
         /* Display progress indicator */
-        if(!mPbMovieList.isShown()) {
-            mPbMovieList.show();
-        }
-
+        showProgressBar();
         mMovieListPresenterImp.getPopularMovies();
     }
 
     public void getTopRatedMovies() {
         /* Display progress indicator */
-        if(!mPbMovieList.isShown()) {
-            mPbMovieList.show();
-        }
-
+        showProgressBar();
         mMovieListPresenterImp.getTopRatedMovies();
     }
 
     public void getFavouriteMovies() {
-        if(!mPbMovieList.isShown()) {
-            mPbMovieList.show();
-        }
-
+        showProgressBar();
         mMovieFavouritePresenterImp.getFavouriteMovies(MovieListViewImp.this);
     }
     ///
@@ -289,9 +277,7 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
         /* Hide progress indicator */
         Timber.d("displayPopularMovies Received %d", popularMovies.getResults().size());
 
-        if(mPbMovieList.isShown()) {
-            mPbMovieList.hide();
-        }
+        hideProgressBar();
 
         mMovieAdapter.loadAdapter(popularMovies);
         swipeRefreshLayout.setRefreshing(false);
@@ -301,9 +287,7 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
     public void displayTopRatedMovies(Results<Movies> topRatedMovies) {
         Timber.d("displayTopRatedMovies: %d", topRatedMovies.getResults().size());
 
-        if(mPbMovieList.isShown()) {
-            mPbMovieList.hide();
-        }
+        hideProgressBar();
 
         mMovieAdapter.loadAdapter(topRatedMovies);
     }
@@ -312,9 +296,7 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
     public void onGetFavouriteMoviesSuccess(Results<Movie> favouriteList) {
         Timber.d("onGetFavouriteMovieSuccess %d", favouriteList.getResults().size());
 
-        if(mPbMovieList.isShown()) {
-            mPbMovieList.hide();
-        }
+        hideProgressBar();
 
         if(favouriteList.getResults().size() > 0) {
             mMovieAdapter.loadAdapter(favouriteList);
@@ -345,9 +327,7 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
     public void displayFavouriteMovies(List<Favourite> favouriteList) {
         Timber.d("displayTopRatedMovies: %d", favouriteList.size());
 
-        if(mPbMovieList.isShown()) {
-            mPbMovieList.hide();
-        }
+        hideProgressBar();
 
       //  mMovieAdapter.loadAdapter(favouriteList);
     }
@@ -382,21 +362,33 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
 
     @Override
     public void onMovieSearch(@NotNull String movieName, int movieYear) {
-        if(!mPbMovieList.isShown()) {
-            mPbMovieList.show();
-        }
-
+        showProgressBar();
         mMovieListPresenterImp.searchMovies(movieName, movieYear);
     }
 
     @Override
     public void failedToGetSearchMovies(String errorMessage) {
         Timber.e("failedToGetSearchMovies: %s", errorMessage);
+        hideProgressBar();
     }
 
     @Override
     public void successToGetSearchMovies(Results<Movies> movieSearch) {
         Timber.d("successToGetSearchMovies: %d", movieSearch.getResults().size());
+        hideProgressBar();
+        mMovieAdapter.loadAdapter(movieSearch);
+    }
+
+    private void hideProgressBar() {
+        if(mPbMovieList.isShown()) {
+            mPbMovieList.hide();
+        }
+    }
+
+    private void showProgressBar() {
+        if(!mPbMovieList.isShown()) {
+            mPbMovieList.show();
+        }
     }
 
     @Override
