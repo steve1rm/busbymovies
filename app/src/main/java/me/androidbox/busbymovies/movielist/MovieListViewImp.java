@@ -20,6 +20,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -39,13 +41,14 @@ import me.androidbox.busbymovies.models.Movie;
 import me.androidbox.busbymovies.models.Movies;
 import me.androidbox.busbymovies.models.Results;
 import me.androidbox.busbymovies.moviesearch.MovieSearchDialog;
+import me.androidbox.busbymovies.moviesearch.MovieSearchListener;
 import timber.log.Timber;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class MovieListViewImp extends Fragment implements MovieListViewContract,
-        MovieFavouritesPresenterContract.DbOperationsListener {
+        MovieFavouritesPresenterContract.DbOperationsListener, MovieSearchListener {
     public static final String TAG = MovieListViewImp.class.getSimpleName();
 
     @Inject MovieListPresenterContract<MovieListViewContract> mMovieListPresenterImp;
@@ -221,6 +224,7 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
 
         final FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         final MovieSearchDialog movieSearchDialog = MovieSearchDialog.newInstance();
+        movieSearchDialog.setTargetFragment(MovieListViewImp.this, 0);
         movieSearchDialog.show(fragmentManager, "MovieSearchDialog");
 
         closeSortFab();
@@ -278,15 +282,7 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
 
         mMovieFavouritePresenterImp.getFavouriteMovies(MovieListViewImp.this);
     }
-
-    private void getSearchMovies() {
-        if(!mPbMovieList.isShown()) {
-            mPbMovieList.show();
-        }
-
-        mMovieListPresenterImp.searchMovies("Mad Max", 0);
-    }
-
+    ///
     @Override
     public void displayPopularMovies(Results<Movies> popularMovies) {
         /* Load adapter with data to be populated in the recycler view */
@@ -385,13 +381,22 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
     }
 
     @Override
-    public void failedToGetSearchMovies(String errorMessage) {
+    public void onMovieSearch(@NotNull String movieName, int movieYear) {
+        if(!mPbMovieList.isShown()) {
+            mPbMovieList.show();
+        }
 
+        mMovieListPresenterImp.searchMovies(movieName, movieYear);
+    }
+
+    @Override
+    public void failedToGetSearchMovies(String errorMessage) {
+        Timber.e("failedToGetSearchMovies: %s", errorMessage);
     }
 
     @Override
     public void successToGetSearchMovies(Results<Movies> movieSearch) {
-
+        Timber.d("successToGetSearchMovies: %d", movieSearch.getResults().size());
     }
 
     @Override

@@ -42,7 +42,7 @@ public interface MovieAPIService {
     @GET("movie/{movie_id}/credits")
     Observable<Cast<Actor>> getMovieActors(@Path("movie_id") int movieId, @Query("api_key") String apiKey);
 
-    @GET("/search/movie")
-    Observable<Results<Movies>> searchMovies(@Query("movieName") String movieName, @Query("movieYear") int movieYear, @Query("api_key") String apiKey);
+    @GET("search/movie")
+    Observable<Results<Movies>> searchMovies(@Query("query") String movieName, @Query("year") int movieYear, @Query("api_key") String apiKey);
 }
 

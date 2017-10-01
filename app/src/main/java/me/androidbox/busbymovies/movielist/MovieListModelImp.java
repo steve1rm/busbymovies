@@ -138,8 +138,8 @@ public class MovieListModelImp implements MovieListModelContract {
         }
         else {
             mSubscription = mMovieAPIService.searchMovies(movieName, movieYear, Constants.MOVIES_API_KEY)
-                    .observeOn(Schedulers.io())
-                    .subscribeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Subscriber<Results<Movies>>() {
                         @Override
                         public void onCompleted() {
