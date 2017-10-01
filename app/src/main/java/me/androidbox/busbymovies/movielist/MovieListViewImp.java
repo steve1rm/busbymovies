@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -37,6 +38,7 @@ import me.androidbox.busbymovies.models.Favourite;
 import me.androidbox.busbymovies.models.Movie;
 import me.androidbox.busbymovies.models.Movies;
 import me.androidbox.busbymovies.models.Results;
+import me.androidbox.busbymovies.moviesearch.MovieSearchDialog;
 import timber.log.Timber;
 
 /**
@@ -55,6 +57,7 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
     @BindView(R.id.fabTopRated) FloatingActionButton mFabTopRated;
     @BindView(R.id.fabFavourite) FloatingActionButton mFabFavourite;
     @BindView(R.id.swipeContainer) SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.fabSearch) FloatingActionButton mFabSearch;
 
     private Unbinder mUnbinder;
     private MovieAdapter mMovieAdapter;
@@ -146,6 +149,10 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
         openFavourite.setTarget(mFabFavourite);
         openFavourite.start();
 
+        final Animator openSearch = AnimatorInflater.loadAnimator(getActivity(), R.animator.close_search_fab);
+        openSearch.setTarget(mFabSearch);
+        openFavourite.start();
+
         mIsSortFabOpen = false;
     }
 
@@ -164,6 +171,10 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
         final Animator openFavourite = AnimatorInflater.loadAnimator(getActivity(), R.animator.open_favourite_fab);
         openFavourite.setTarget(mFabFavourite);
         openFavourite.start();
+
+        final Animator openSearch = AnimatorInflater.loadAnimator(getActivity(), R.animator.open_search_fab);
+        openSearch.setTarget(mFabSearch);
+        openSearch.start();
 
         mIsSortFabOpen = true;
     }
@@ -202,6 +213,18 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
         Timber.d("getFavourites");
         getFavouriteMovies();
         closeSortFab();
+    }
+
+    @OnClick(R.id.fabSearch)
+    public void searchMovie() {
+        Timber.d("searchMovie");
+
+        final FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        final MovieSearchDialog movieSearchDialog = MovieSearchDialog.newInstance();
+        movieSearchDialog.show(fragmentManager, "MovieSearchDialog");
+
+        closeSortFab();
+
     }
 
     private void setupSwipeToRefresh() {
@@ -254,6 +277,14 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
         }
 
         mMovieFavouritePresenterImp.getFavouriteMovies(MovieListViewImp.this);
+    }
+
+    private void getSearchMovies() {
+        if(!mPbMovieList.isShown()) {
+            mPbMovieList.show();
+        }
+
+        mMovieListPresenterImp.searchMovies("Mad Max", 0);
     }
 
     @Override

@@ -63,7 +63,6 @@ public class MovieListPresenterImp implements
     /**
      * Wait for the response to be called back in the Model on failure
      */
-
     @Override
     public void onPopularMovieFailure(String errorMessage) {
         mMovieListViewContract.failedToDisplayPopularMovies(errorMessage);
