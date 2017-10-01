@@ -391,6 +391,10 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
         }
     }
 
+
+
+
+
     @Override
     public void onGetFavouriteMoviesFailure(String errorMessage) {
 

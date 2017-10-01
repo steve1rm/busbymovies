@@ -59,6 +59,8 @@ public class MovieSearchDialog extends DialogFragment {
         movieSearchListener.onMovieSearch(
                 movieName.getText().toString(),
                 convertYearToInt(movieYear.getText().toString()));
+
+        dismiss();
     }
 
     private int convertYearToInt(final String year) {
