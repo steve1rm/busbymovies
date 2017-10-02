@@ -4,5 +4,10 @@
     <string name="undo">UNDO</string>
     <string name="initialize_vote">0.0</string>
     <string name="play_trailer_icon">Play trailer icon</string>
+    <string name="enter_name_of_movie">Name of movie</string>
+    <string name="year_of_movie_optional">Year of movie (optional)</string>
+    <string name="search">Search</string>
+    <string name="clear">Clear</string>
+    <string name="movie_search">Movie Search</string>
 
 </resources>

@@ -16,6 +16,9 @@ public interface MovieListViewContract {
     void displayTopRatedMovies(Results<Movies> topRatedMovies);
     void failedToDisplayPopularMovies(String errorMessage);
     void failedToDisplayTopRatedMovies(String errorMessage);
+    void failedToGetSearchMovies(final String errorMessage);
+    void successToGetSearchMovies(final Results<Movies> movieSearch);
+
     void displayFavouriteMovies(List<Favourite> favouriteList);
     void failedDisplayFavouriteMovies(String errorMessage);
     void failedFavouriteMovieDelete(String errorMessage);

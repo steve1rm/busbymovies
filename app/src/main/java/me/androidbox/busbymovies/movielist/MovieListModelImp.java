@@ -9,6 +9,7 @@ import me.androidbox.busbymovies.models.Results;
 import me.androidbox.busbymovies.network.MovieAPIService;
 import me.androidbox.busbymovies.utils.Constants;
 import rx.Observable;
+import rx.Scheduler;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -130,38 +131,42 @@ public class MovieListModelImp implements MovieListModelContract {
         }
     }
 
-
-    /*
     @Override
-    public void getMovie(int movieId, MovieResultsListener movieResultsListener) {
-        mMovieAPIService.getMovieById(movieId, Constants.MOVIES_API_KEY).enqueue(new Callback<Movie>() {
-            @Override
-            public void onResponse(Call<Movie> call, Response<Movie> response) {
-                if(response.isSuccessful()) {
-                    Timber.d("Response: %s", response.body().getTitle());
-                    movieResultsListener.onSuccess(response.body());
-                }
-                else {
-                    Timber.e("onResponse failed to get movie %s", response.message());
-                    movieResultsListener.onFailure(response.message());
-                }
-            }
+    public void searchForMovies(String movieName, int movieYear, MovieSearchResultsListener movieSearchResultsListener) {
+        if(Constants.MOVIES_API_KEY.isEmpty()) {
+            movieSearchResultsListener.onSearchFailure("Empty API Key");
+        }
+        else {
+            mSubscription = mMovieAPIService.searchMovies(movieName, movieYear, Constants.MOVIES_API_KEY)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Subscriber<Results<Movies>>() {
+                        @Override
+                        public void onCompleted() {
+                            Timber.d("onCompleted");
+                        }
 
-            @Override
-            public void onFailure(Call<Movie> call, Throwable t) {
-                Timber.e(t, "onFailure");
-                movieResultsListener.onFailure(t.getMessage());
-            }
-        });
+                        @Override
+                        public void onError(Throwable e) {
+                            Timber.e(e, "OnError: %s", e.getMessage());
+                            movieSearchResultsListener.onSearchFailure(e.getMessage());
+                        }
+
+                        @Override
+                        public void onNext(Results<Movies> moviesResults) {
+                            Timber.d("onNext");
+                            movieSearchResultsListener.onSearchSuccess(moviesResults);
+                        }
+                    });
+        }
     }
-*/
 
     @Override
     public void releaseResources() {
         Timber.d("releaseResources");
         if(mSubscription != null && !mSubscription.isUnsubscribed()) {
             mSubscription.unsubscribe();
-            Timber.d("subscription unsubscribed");
+            Timber.d("subscription released");
         }
     }
 
@@ -170,3 +175,19 @@ public class MovieListModelImp implements MovieListModelContract {
         return null;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

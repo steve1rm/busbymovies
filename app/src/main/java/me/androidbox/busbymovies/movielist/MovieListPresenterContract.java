@@ -9,4 +9,5 @@ public interface MovieListPresenterContract<View extends MovieListViewContract> 
     void detachView();
     void getPopularMovies();
     void getTopRatedMovies();
+    void searchMovies(final String movieName, final int movieYear);
 }
