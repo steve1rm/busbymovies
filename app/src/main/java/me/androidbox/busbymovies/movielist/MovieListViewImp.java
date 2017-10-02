@@ -152,7 +152,7 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
 
         final Animator openSearch = AnimatorInflater.loadAnimator(getActivity(), R.animator.close_search_fab);
         openSearch.setTarget(mFabSearch);
-        openFavourite.start();
+        openSearch.start();
 
         mIsSortFabOpen = false;
     }
