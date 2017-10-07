@@ -40,13 +40,6 @@ public interface MovieListModelContract {
     }
     void searchForMovies(final String movieName, final int movieYear, MovieSearchResultsListener movieSearchResultsListener);
 
-    /** Get similar movies based on a movie ID */
-    interface SimilarMovieResultsListener {
-        void onSimilarMovieFailure(final String errorMessage);
-        void onSimilarMovieSuccess(final Results<Movies> similarMovies);
-    }
-    void getSimilarMovies(final int movieId, SimilarMovieResultsListener similarMovieResultsListener);
-
     /** Testing only */
     Observable<Results<Movies>> getPopularMovies();
 }

@@ -15,6 +15,4 @@ public interface MovieListViewContract {
     void failedToDisplayTopRatedMovies(String errorMessage);
     void failedToGetSearchMovies(final String errorMessage);
     void successToGetSearchMovies(final Results<Movies> movieSearch);
-    void failedToGetSimilarMovies(final String errorMessage);
-    void successToGetSimilarMovies(final Results<Movies> similarMovies);
 }

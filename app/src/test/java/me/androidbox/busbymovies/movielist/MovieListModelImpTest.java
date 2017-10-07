@@ -118,69 +118,6 @@ public class MovieListModelImpTest {
         verify(movieSearchResultsListener, never()).onSearchSuccess(mockMovies);
     }
 
-
-    @Test
-    public void testGetSimilarMoviesSuccessInGettingSimilarMovies() {
-        final Throwable exception = new Throwable(new Exception("Error"));
-        final int movieId = 123456;
-        final MovieListModelContract.SimilarMovieResultsListener similarMovieResultsListener = Mockito.mock(MovieListModelContract.SimilarMovieResultsListener.class);
-        final Results<Movies> moviesResults = new Results<>();
-
-        when(mockMovieAPIService.getSimilarMovies(movieId, Constants.MOVIES_API_KEY))
-                .thenReturn(Observable.error(exception));
-
-        movieListModelContract.getSimilarMovies(movieId, similarMovieResultsListener);
-
-        verify(similarMovieResultsListener).onSimilarMovieFailure(exception.getMessage());
-        verify(similarMovieResultsListener, never()).onSimilarMovieSuccess(moviesResults);
-    }
-
-    @Test
-    public void testGetSimilarMoviesFailsToGetSimilarMoviesOnException() {
-        final Throwable exception = new Throwable(new Exception());
-        final int movieId = 123456;
-        final MovieListModelContract.SimilarMovieResultsListener similarMovieResultsListener = Mockito.mock(MovieListModelContract.SimilarMovieResultsListener.class);
-        final Results<Movies> moviesResults = new Results<>();
-
-        when(mockMovieAPIService.getSimilarMovies(movieId, Constants.MOVIES_API_KEY))
-                .thenReturn(Observable.error(exception));
-
-        movieListModelContract.getSimilarMovies(movieId, similarMovieResultsListener);
-
-        verify(similarMovieResultsListener).onSimilarMovieFailure(anyString());
-        verify(similarMovieResultsListener, never()).onSimilarMovieSuccess(moviesResults);
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     @After
     public void tearDown() throws Exception {
         RxJavaHooks.reset();

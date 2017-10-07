@@ -161,36 +161,6 @@ public class MovieListModelImp implements MovieListModelContract {
     }
 
     @Override
-    public void getSimilarMovies(int movieId, SimilarMovieResultsListener similarMovieResultsListener) {
-        if(Constants.MOVIES_API_KEY.isEmpty()) {
-            similarMovieResultsListener.onSimilarMovieFailure("Empty API Key");
-        }
-        else {
-            mSubscription = mMovieAPIService.getSimilarMovies(movieId, Constants.MOVIES_API_KEY)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Subscriber<Results<Movies>>() {
-                        @Override
-                        public void onCompleted() {
-                            Timber.d("onCompleted");
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-                            Timber.e(e, "OnError: %s", e.getMessage());
-                            similarMovieResultsListener.onSimilarMovieFailure(e.getMessage());
-                        }
-
-                        @Override
-                        public void onNext(Results<Movies> moviesResults) {
-                            Timber.d("onNext");
-                            similarMovieResultsListener.onSimilarMovieSuccess(moviesResults);
-                        }
-                    });
-        }
-    }
-
-    @Override
     public void releaseResources() {
         Timber.d("releaseResources");
         if(mSubscription != null && !mSubscription.isUnsubscribed()) {

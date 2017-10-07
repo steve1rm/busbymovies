@@ -393,16 +393,6 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
         }
     }
 
-    @Override
-    public void failedToGetSimilarMovies(String errorMessage) {
-        Timber.e("FailedToGetSimilarMovies: %s", errorMessage);
-    }
-
-    @Override
-    public void successToGetSimilarMovies(Results<Movies> similarMovies) {
-        Timber.d("successToGetSimilarMovies: %d", similarMovies.getResults().size());
-    }
-
 
 
 

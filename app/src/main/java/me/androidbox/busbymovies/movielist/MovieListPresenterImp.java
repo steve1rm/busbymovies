@@ -20,8 +20,7 @@ public class MovieListPresenterImp implements
         MovieListPresenterContract<MovieListViewContract>,
         MovieListModelContract.PopularMovieResultsListener,
         MovieListModelContract.TopRatedMovieResultsListener,
-        MovieListModelContract.MovieSearchResultsListener,
-        MovieListModelContract.SimilarMovieResultsListener {
+        MovieListModelContract.MovieSearchResultsListener {
 
     @VisibleForTesting MovieListViewContract mMovieListViewContract;
     @Inject MovieListModelContract mMovieModelContract;
@@ -112,20 +111,5 @@ public class MovieListPresenterImp implements
     @Override
     public void searchMovies(final String movieName, final int movieYear) {
         mMovieModelContract.searchForMovies(movieName, movieYear, MovieListPresenterImp.this);
-    }
-
-    @Override
-    public void getSimilarMovies(int movieId) {
-        mMovieModelContract.getSimilarMovies(movieId, MovieListPresenterImp.this);
-    }
-
-    @Override
-    public void onSimilarMovieFailure(String errorMessage) {
-        mMovieListViewContract.failedToGetSimilarMovies(errorMessage);
-    }
-
-    @Override
-    public void onSimilarMovieSuccess(Results<Movies> similarMovies) {
-        mMovieListViewContract.successToGetSimilarMovies(similarMovies);
     }
 }

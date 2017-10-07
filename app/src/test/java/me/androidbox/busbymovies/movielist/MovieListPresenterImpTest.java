@@ -73,30 +73,5 @@ public class MovieListPresenterImpTest {
         verify(mockMovieListViewContract).failedToGetSearchMovies(ERROR_MESSAGE);
     }
 
-    @Test
-    public void testGetSimilarMovies() {
-        final int movieId = 12345;
 
-        movieListPresenterContract.getSimilarMovies(movieId);
-
-        verify(mockMovieListModelContract).getSimilarMovies(movieId, movieListPresenterContract);
-    }
-
-    @Test
-    public void testOnSimilarMovieFailure_isCalledWhenOnFailure() {
-        final String errorMessage = "Error Message";
-
-        movieListPresenterContract.onSimilarMovieFailure(errorMessage);
-
-        verify(mockMovieListViewContract).failedToGetSimilarMovies(errorMessage);
-    }
-
-    @Test
-    public void testOnSimilarMovieSuccess_isCallWhenOnSuccess() {
-        final Results<Movies> moviesResults = new Results<>();
-
-        movieListPresenterContract.onSimilarMovieSuccess(moviesResults);
-
-        verify(mockMovieListViewContract).successToGetSimilarMovies(moviesResults);
-    }
 }

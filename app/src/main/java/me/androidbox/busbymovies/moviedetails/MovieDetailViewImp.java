@@ -56,6 +56,7 @@ import me.androidbox.busbymovies.di.DaggerInjector;
 import me.androidbox.busbymovies.models.Actor;
 import me.androidbox.busbymovies.models.Cast;
 import me.androidbox.busbymovies.models.Movie;
+import me.androidbox.busbymovies.models.Movies;
 import me.androidbox.busbymovies.models.Results;
 import me.androidbox.busbymovies.models.Review;
 import me.androidbox.busbymovies.models.Trailer;
@@ -635,5 +636,16 @@ public class MovieDetailViewImp extends Fragment implements
     @Override
     public void successToReceiveMovieActors(Cast<Actor> actorList) {
         movieActorsAdapter.populateActors(actorList);
+    }
+
+
+    @Override
+    public void failedToGetSimilarMovies(String errorMessage) {
+        Timber.e("FailedToGetSimilarMovies: %s", errorMessage);
+    }
+
+    @Override
+    public void successToGetSimilarMovies(Results<Movies> similarMovies) {
+        Timber.d("successToGetSimilarMovies: %d", similarMovies.getResults().size());
     }
 }

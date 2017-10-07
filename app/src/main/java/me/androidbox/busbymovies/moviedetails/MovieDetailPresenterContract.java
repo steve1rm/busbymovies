@@ -14,4 +14,5 @@ public interface MovieDetailPresenterContract<MovieDetailView> {
     void requestMovieTrailer(int movieId);
     void requestMovieReviews(int movieId);
     void requestMovieActors(final int movieId);
+    void getSimilarMovies(final int movieId);
 }

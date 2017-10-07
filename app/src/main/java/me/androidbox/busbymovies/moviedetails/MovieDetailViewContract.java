@@ -3,6 +3,7 @@ package me.androidbox.busbymovies.moviedetails;
 import me.androidbox.busbymovies.models.Actor;
 import me.androidbox.busbymovies.models.Cast;
 import me.androidbox.busbymovies.models.Movie;
+import me.androidbox.busbymovies.models.Movies;
 import me.androidbox.busbymovies.models.Results;
 import me.androidbox.busbymovies.models.Review;
 import me.androidbox.busbymovies.models.Trailer;
@@ -20,4 +21,6 @@ public interface MovieDetailViewContract {
     void failedToReceiveMovieReviews(String errorMessage);
     void failedToReceiveMovieActors(final String errorMessage);
     void successToReceiveMovieActors(final Cast<Actor> actorList);
+    void failedToGetSimilarMovies(final String errorMessage);
+    void successToGetSimilarMovies(final Results<Movies> similarMovies);
 }
