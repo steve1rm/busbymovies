@@ -7,6 +7,7 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.List;
@@ -24,7 +25,9 @@ import rx.android.plugins.RxAndroidSchedulersHook;
 import rx.plugins.RxJavaHooks;
 import rx.schedulers.Schedulers;
 
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -114,6 +117,60 @@ public class MovieListModelImpTest {
         verify(movieSearchResultsListener).onSearchFailure(anyString());
         verify(movieSearchResultsListener, never()).onSearchSuccess(mockMovies);
     }
+
+
+    @Test
+    public void testGetSimilarMoviesSuccessInGettingSimilarMovies() {
+
+    }
+
+
+
+    @Test
+    public void testGetSimilarMoviesFailsToGetSimilarMoviesOnException() {
+        final Throwable exception = new Throwable(new Exception());
+        final int movieId = 123456;
+        final MovieListModelContract.SimilarMovieResultsListener similarMovieResultsListener = Mockito.mock(MovieListModelContract.SimilarMovieResultsListener.class);
+        final Results<Movies> moviesResults = new Results<>();
+
+        when(mockMovieAPIService.getSimilarMovies(movieId, Constants.MOVIES_API_KEY))
+                .thenReturn(Observable.error(exception));
+
+        movieListModelContract.getSimilarMovies(movieId, similarMovieResultsListener);
+
+        verify(similarMovieResultsListener).onSimilarMovieFailure(anyString());
+        verify(similarMovieResultsListener, never()).onSimilarMovieSuccess(moviesResults);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @After
     public void tearDown() throws Exception {
