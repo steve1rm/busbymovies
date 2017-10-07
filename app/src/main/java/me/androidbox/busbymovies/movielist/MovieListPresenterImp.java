@@ -1,6 +1,9 @@
 package me.androidbox.busbymovies.movielist;
 
+import android.annotation.SuppressLint;
+import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
+import android.support.v4.util.Preconditions;
 
 import javax.inject.Inject;
 
@@ -20,7 +23,7 @@ public class MovieListPresenterImp implements
         MovieListModelContract.MovieSearchResultsListener,
         MovieListModelContract.SimilarMovieResultsListener {
 
-    private MovieListViewContract mMovieListViewContract;
+    @VisibleForTesting MovieListViewContract mMovieListViewContract;
     @Inject MovieListModelContract mMovieModelContract;
 
     public MovieListPresenterImp() {
@@ -35,16 +38,17 @@ public class MovieListPresenterImp implements
     /**
      * Attach the view to the presenter
      */
+    @SuppressLint("RestrictedApi")
     @Override
-    public void attachView(MovieListViewContract view) {
-        mMovieListViewContract = view;
+    public void attachView(@NonNull MovieListViewContract view) {
+        mMovieListViewContract = Preconditions.checkNotNull(view);
     }
 
     @Override
     public void detachView() {
         Timber.d("detachView");
-        mMovieListViewContract = null;
         mMovieModelContract.releaseResources();
+        mMovieListViewContract = null;
     }
 
     @Override

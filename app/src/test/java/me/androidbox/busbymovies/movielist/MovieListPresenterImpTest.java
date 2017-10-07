@@ -1,7 +1,6 @@
 package me.androidbox.busbymovies.movielist;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import me.androidbox.busbymovies.models.Movies;
@@ -32,12 +31,9 @@ public class MovieListPresenterImpTest {
         movieListPresenterContract.attachView(mockMovieListViewContract);
     }
 
-    @Test
+    @Test(expected = NullPointerException.class)
     public void shouldFailToAttachViewIfTheViewIsNull() {
-        movieListPresenterContract.attachView(mockMovieListViewContract);
-        movieListPresenterContract.getPopularMovies();
-
-        verify(mockMovieListModelContract, times(0)).getPopularMovies(null);
+        movieListPresenterContract.attachView(null);
     }
 
     @Test
@@ -77,36 +73,13 @@ public class MovieListPresenterImpTest {
         verify(mockMovieListViewContract).failedToGetSearchMovies(ERROR_MESSAGE);
     }
 
-    @Ignore("FIXME")
-    @Test
-    public void shouldAttachViewWhenViewIsNotNull() {
-        movieListPresenterContract.attachView(mockMovieListViewContract);
-        movieListPresenterContract.getPopularMovies();
-        MovieListModelContract.PopularMovieResultsListener mockPopularMoviesResultsListener =
-                mock(MovieListModelContract.PopularMovieResultsListener.class);
-
-        verify(mockMovieListModelContract, times(1)).getPopularMovies(null);
-    }
-
-    @Ignore("FIXME pass in listener")
     @Test
     public void testGetSimilarMovies() {
         final int movieId = 12345;
-        final MovieListModelContract.SimilarMovieResultsListener similarMovieResultsListener = new MovieListModelContract.SimilarMovieResultsListener() {
-            @Override
-            public void onSimilarMovieFailure(String errorMessage) {
-
-            }
-
-            @Override
-            public void onSimilarMovieSuccess(Results<Movies> similarMovies) {
-
-            }
-        };
 
         movieListPresenterContract.getSimilarMovies(movieId);
 
-        verify(mockMovieListModelContract).getSimilarMovies(movieId, null);
+        verify(mockMovieListModelContract).getSimilarMovies(movieId, movieListPresenterContract);
     }
 
     @Test
