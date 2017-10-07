@@ -8,7 +8,6 @@ import me.androidbox.busbymovies.models.Movies;
 import me.androidbox.busbymovies.models.Results;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyObject;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
@@ -87,5 +86,44 @@ public class MovieListPresenterImpTest {
                 mock(MovieListModelContract.PopularMovieResultsListener.class);
 
         verify(mockMovieListModelContract, times(1)).getPopularMovies(null);
+    }
+
+    @Ignore("FIXME pass in listener")
+    @Test
+    public void testGetSimilarMovies() {
+        final int movieId = 12345;
+        final MovieListModelContract.SimilarMovieResultsListener similarMovieResultsListener = new MovieListModelContract.SimilarMovieResultsListener() {
+            @Override
+            public void onSimilarMovieFailure(String errorMessage) {
+
+            }
+
+            @Override
+            public void onSimilarMovieSuccess(Results<Movies> similarMovies) {
+
+            }
+        };
+
+        movieListPresenterContract.getSimilarMovies(movieId);
+
+        verify(mockMovieListModelContract).getSimilarMovies(movieId, null);
+    }
+
+    @Test
+    public void testOnSimilarMovieFailure_isCalledWhenOnFailure() {
+        final String errorMessage = "Error Message";
+
+        movieListPresenterContract.onSimilarMovieFailure(errorMessage);
+
+        verify(mockMovieListViewContract).failedToGetSimilarMovies(errorMessage);
+    }
+
+    @Test
+    public void testOnSimilarMovieSuccess_isCallWhenOnSuccess() {
+        final Results<Movies> moviesResults = new Results<>();
+
+        movieListPresenterContract.onSimilarMovieSuccess(moviesResults);
+
+        verify(mockMovieListViewContract).successToGetSimilarMovies(moviesResults);
     }
 }

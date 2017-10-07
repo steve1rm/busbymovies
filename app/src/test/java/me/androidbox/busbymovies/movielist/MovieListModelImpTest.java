@@ -107,24 +107,33 @@ public class MovieListModelImpTest {
     public void shouldSearchForMoviesAndFailOnException() {
         final String MOVIE_NAME = "movie name";
         final int MOVIE_YEAR = 2002;
-        final Throwable exception = new Throwable(new Exception());
+        final Throwable exception = new Throwable(new Exception("Error"));
 
         when(mockMovieAPIService.searchMovies(MOVIE_NAME, MOVIE_YEAR, Constants.MOVIES_API_KEY))
                 .thenReturn(Observable.error(exception));
 
         movieListModelContract.searchForMovies(MOVIE_NAME, MOVIE_YEAR, movieSearchResultsListener);
 
-        verify(movieSearchResultsListener).onSearchFailure(anyString());
+        verify(movieSearchResultsListener).onSearchFailure(exception.getMessage());
         verify(movieSearchResultsListener, never()).onSearchSuccess(mockMovies);
     }
 
 
     @Test
     public void testGetSimilarMoviesSuccessInGettingSimilarMovies() {
+        final Throwable exception = new Throwable(new Exception("Error"));
+        final int movieId = 123456;
+        final MovieListModelContract.SimilarMovieResultsListener similarMovieResultsListener = Mockito.mock(MovieListModelContract.SimilarMovieResultsListener.class);
+        final Results<Movies> moviesResults = new Results<>();
 
+        when(mockMovieAPIService.getSimilarMovies(movieId, Constants.MOVIES_API_KEY))
+                .thenReturn(Observable.error(exception));
+
+        movieListModelContract.getSimilarMovies(movieId, similarMovieResultsListener);
+
+        verify(similarMovieResultsListener).onSimilarMovieFailure(exception.getMessage());
+        verify(similarMovieResultsListener, never()).onSimilarMovieSuccess(moviesResults);
     }
-
-
 
     @Test
     public void testGetSimilarMoviesFailsToGetSimilarMoviesOnException() {

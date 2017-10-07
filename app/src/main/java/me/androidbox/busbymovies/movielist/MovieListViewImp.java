@@ -323,6 +323,7 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
         Timber.d("Failed to get top rated movies %s", errorMessage);
     }
 
+/*
     @Override
     public void displayFavouriteMovies(List<Favourite> favouriteList) {
         Timber.d("displayTopRatedMovies: %d", favouriteList.size());
@@ -359,6 +360,7 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
         Timber.d("successFavouriteMovieInsert");
         Toast.makeText(getActivity(), "Insert favourite movie", Toast.LENGTH_SHORT).show();
     }
+*/
 
     @Override
     public void onMovieSearch(@NotNull String movieName, int movieYear) {
@@ -389,6 +391,16 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
         if(!mPbMovieList.isShown()) {
             mPbMovieList.show();
         }
+    }
+
+    @Override
+    public void failedToGetSimilarMovies(String errorMessage) {
+        Timber.e("FailedToGetSimilarMovies: %s", errorMessage);
+    }
+
+    @Override
+    public void successToGetSimilarMovies(Results<Movies> similarMovies) {
+        Timber.d("successToGetSimilarMovies: %d", similarMovies.getResults().size());
     }
 
 
