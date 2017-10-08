@@ -10,8 +10,7 @@ import me.androidbox.busbymovies.utils.GlideApp;
  */
 
 public class ImageLoaderImp implements ImageLoader {
-    public ImageLoaderImp() {
-    }
+    public ImageLoaderImp() {}
 
     @Override
     public void load(final Context context, final String path, final int placeholder, final ImageView imageView) {

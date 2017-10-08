@@ -1,9 +1,12 @@
 package me.androidbox.busbymovies.di;
 
+import java.util.Collections;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import me.androidbox.busbymovies.adapters.SimilarMovieAdapter;
 import me.androidbox.busbymovies.moviedetails.ImageLoader;
 import me.androidbox.busbymovies.moviedetails.ImageLoaderImp;
 import me.androidbox.busbymovies.moviedetails.MovieDetailPresenterContract;
@@ -27,5 +30,11 @@ public class PresenterDetailModule {
     @Singleton
     public ImageLoader provideImageLoader() {
         return new ImageLoaderImp();
+    }
+
+    @Provides
+    @Singleton
+    public SimilarMovieAdapter provideSimilarMovieAdapter() {
+        return new SimilarMovieAdapter();
     }
 }
