@@ -4,6 +4,8 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import me.androidbox.busbymovies.moviedetails.ImageLoader;
+import me.androidbox.busbymovies.moviedetails.ImageLoaderImp;
 import me.androidbox.busbymovies.moviedetails.MovieDetailPresenterContract;
 import me.androidbox.busbymovies.moviedetails.MovieDetailPresenterImp;
 import me.androidbox.busbymovies.moviedetails.MovieDetailViewContract;
@@ -21,4 +23,9 @@ public class PresenterDetailModule {
         return new MovieDetailPresenterImp();
     }
 
+    @Provides
+    @Singleton
+    public ImageLoader provideImageLoader() {
+        return new ImageLoaderImp();
+    }
 }

@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.ContentLoadingProgressBar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,6 +19,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,24 +40,27 @@ import me.androidbox.busbymovies.models.Favourite;
 import me.androidbox.busbymovies.models.Movie;
 import me.androidbox.busbymovies.models.Movies;
 import me.androidbox.busbymovies.models.Results;
+import me.androidbox.busbymovies.moviesearch.MovieSearchDialog;
+import me.androidbox.busbymovies.moviesearch.MovieSearchListener;
 import timber.log.Timber;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class MovieListViewImp extends Fragment implements MovieListViewContract,
-        MovieFavouritesPresenterContract.DbOperationsListener {
+        MovieFavouritesPresenterContract.DbOperationsListener, MovieSearchListener {
     public static final String TAG = MovieListViewImp.class.getSimpleName();
 
     @Inject MovieListPresenterContract<MovieListViewContract> mMovieListPresenterImp;
     @Inject MovieFavouritesPresenterContract mMovieFavouritePresenterImp;
 
-    @Nullable @BindView(R.id.tool_bar) Toolbar mToolbar;
     @BindView(R.id.rvMovieList) RecyclerView mRvMovieList;
     @BindView(R.id.pbMovieList) ContentLoadingProgressBar mPbMovieList;
     @BindView(R.id.fabPopular) FloatingActionButton mFabPopular;
     @BindView(R.id.fabTopRated) FloatingActionButton mFabTopRated;
     @BindView(R.id.fabFavourite) FloatingActionButton mFabFavourite;
+    @BindView(R.id.swipeContainer) SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.fabSearch) FloatingActionButton mFabSearch;
 
     private Unbinder mUnbinder;
     private MovieAdapter mMovieAdapter;
@@ -75,17 +82,11 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
 
         mUnbinder = ButterKnife.bind(MovieListViewImp.this, view);
 
-        /* Don't display the toolbar if when in landscape mode to create more real-estate */
-        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            setupToolbar();
-        }
-
         setupRecyclerView();
+        setupSwipeToRefresh();
 
         /* Hide the progress bar */
-        if(mPbMovieList.isShown()) {
-            mPbMovieList.hide();
-        }
+        hideProgressBar();
 
         if(mIsSortFabOpen) {
             mIsSortFabOpen = false;
@@ -149,6 +150,10 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
         openFavourite.setTarget(mFabFavourite);
         openFavourite.start();
 
+        final Animator openSearch = AnimatorInflater.loadAnimator(getActivity(), R.animator.close_search_fab);
+        openSearch.setTarget(mFabSearch);
+        openSearch.start();
+
         mIsSortFabOpen = false;
     }
 
@@ -167,6 +172,10 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
         final Animator openFavourite = AnimatorInflater.loadAnimator(getActivity(), R.animator.open_favourite_fab);
         openFavourite.setTarget(mFabFavourite);
         openFavourite.start();
+
+        final Animator openSearch = AnimatorInflater.loadAnimator(getActivity(), R.animator.open_search_fab);
+        openSearch.setTarget(mFabSearch);
+        openSearch.start();
 
         mIsSortFabOpen = true;
     }
@@ -207,16 +216,26 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
         closeSortFab();
     }
 
-    /**
-     * Setup toolbar
-     */
-    @SuppressWarnings("all")
-    private void setupToolbar() {
-        AppCompatActivity appCompatActivity = (AppCompatActivity)getActivity();
-        appCompatActivity.setSupportActionBar(mToolbar);
-        appCompatActivity.getSupportActionBar().setLogo(R.mipmap.ic_launcher);
-        appCompatActivity.getSupportActionBar().setDisplayUseLogoEnabled(true);
-        appCompatActivity.getSupportActionBar().setDisplayShowTitleEnabled(true);
+    @OnClick(R.id.fabSearch)
+    public void searchMovie() {
+        Timber.d("searchMovie");
+
+        final FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        final MovieSearchDialog movieSearchDialog = MovieSearchDialog.newInstance();
+        movieSearchDialog.setTargetFragment(MovieListViewImp.this, 0);
+        movieSearchDialog.show(fragmentManager, "MovieSearchDialog");
+
+        closeSortFab();
+    }
+
+    private void setupSwipeToRefresh() {
+        swipeRefreshLayout.setColorSchemeResources(
+                android.R.color.holo_blue_bright,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_green_light,
+                android.R.color.holo_red_light);
+
+        swipeRefreshLayout.setOnRefreshListener(() -> mMovieListPresenterImp.getPopularMovies());
     }
 
     private void setupRecyclerView() {
@@ -237,50 +256,38 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
 
     public void getPopularMovies() {
         /* Display progress indicator */
-        if(!mPbMovieList.isShown()) {
-            mPbMovieList.show();
-        }
-
+        showProgressBar();
         mMovieListPresenterImp.getPopularMovies();
     }
 
     public void getTopRatedMovies() {
         /* Display progress indicator */
-        if(!mPbMovieList.isShown()) {
-            mPbMovieList.show();
-        }
-
+        showProgressBar();
         mMovieListPresenterImp.getTopRatedMovies();
     }
 
     public void getFavouriteMovies() {
-        if(!mPbMovieList.isShown()) {
-            mPbMovieList.show();
-        }
-
+        showProgressBar();
         mMovieFavouritePresenterImp.getFavouriteMovies(MovieListViewImp.this);
     }
-
+    ///
     @Override
     public void displayPopularMovies(Results<Movies> popularMovies) {
         /* Load adapter with data to be populated in the recycler view */
         /* Hide progress indicator */
         Timber.d("displayPopularMovies Received %d", popularMovies.getResults().size());
 
-        if(mPbMovieList.isShown()) {
-            mPbMovieList.hide();
-        }
+        hideProgressBar();
 
         mMovieAdapter.loadAdapter(popularMovies);
+        swipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
     public void displayTopRatedMovies(Results<Movies> topRatedMovies) {
         Timber.d("displayTopRatedMovies: %d", topRatedMovies.getResults().size());
 
-        if(mPbMovieList.isShown()) {
-            mPbMovieList.hide();
-        }
+        hideProgressBar();
 
         mMovieAdapter.loadAdapter(topRatedMovies);
     }
@@ -289,9 +296,7 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
     public void onGetFavouriteMoviesSuccess(Results<Movie> favouriteList) {
         Timber.d("onGetFavouriteMovieSuccess %d", favouriteList.getResults().size());
 
-        if(mPbMovieList.isShown()) {
-            mPbMovieList.hide();
-        }
+        hideProgressBar();
 
         if(favouriteList.getResults().size() > 0) {
             mMovieAdapter.loadAdapter(favouriteList);
@@ -306,6 +311,8 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
     public void failedToDisplayPopularMovies(String errorMessage) {
         Toast.makeText(getActivity(), "Failed to get popular movies\n" + errorMessage, Toast.LENGTH_LONG).show();
         mPbMovieList.hide();
+        swipeRefreshLayout.setRefreshing(false);
+
         Timber.w("Failed to get popular movies %s", errorMessage);
     }
 
@@ -320,9 +327,7 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
     public void displayFavouriteMovies(List<Favourite> favouriteList) {
         Timber.d("displayTopRatedMovies: %d", favouriteList.size());
 
-        if(mPbMovieList.isShown()) {
-            mPbMovieList.hide();
-        }
+        hideProgressBar();
 
       //  mMovieAdapter.loadAdapter(favouriteList);
     }
@@ -354,6 +359,41 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
         Timber.d("successFavouriteMovieInsert");
         Toast.makeText(getActivity(), "Insert favourite movie", Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    public void onMovieSearch(@NotNull String movieName, int movieYear) {
+        showProgressBar();
+        mMovieListPresenterImp.searchMovies(movieName, movieYear);
+    }
+
+    @Override
+    public void failedToGetSearchMovies(String errorMessage) {
+        Timber.e("failedToGetSearchMovies: %s", errorMessage);
+        hideProgressBar();
+    }
+
+    @Override
+    public void successToGetSearchMovies(Results<Movies> movieSearch) {
+        Timber.d("successToGetSearchMovies: %d", movieSearch.getResults().size());
+        hideProgressBar();
+        mMovieAdapter.loadAdapter(movieSearch);
+    }
+
+    private void hideProgressBar() {
+        if(mPbMovieList.isShown()) {
+            mPbMovieList.hide();
+        }
+    }
+
+    private void showProgressBar() {
+        if(!mPbMovieList.isShown()) {
+            mPbMovieList.show();
+        }
+    }
+
+
+
+
 
     @Override
     public void onGetFavouriteMoviesFailure(String errorMessage) {

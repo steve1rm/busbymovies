@@ -1,7 +1,5 @@
 package me.androidbox.busbymovies.network;
 
-import java.util.List;
-
 import me.androidbox.busbymovies.models.Actor;
 import me.androidbox.busbymovies.models.Cast;
 import me.androidbox.busbymovies.models.Movie;
@@ -29,7 +27,7 @@ public interface MovieAPIService {
 
     /* Return the movie with the matching movie id */
     @GET("movie/{movie_id}")
-    Call<Movie> getMovieById(@Path("movie_id") int movie_id, @Query("api_key") String apikey);
+    Observable<Movie> getMovieById(@Path("movie_id") int movie_id, @Query("api_key") String apikey);
 
     @GET("movie/{movie_id}")
     Observable<Movie> getMovieByIdExt(@Path("movie_id") int movie_id, @Query("api_key") String apikey);
@@ -37,14 +35,14 @@ public interface MovieAPIService {
     @GET("movie/{movie_id}/videos")
     Observable<Results<Trailer>> getMovieTrailers(@Path("movie_id") int movie_id, @Query("api_key") String apiKey);
 
-    /* Search for a popular movie */
-/*    @GET("movie/popular")
-    Call<Results> searchPopular(@Query("api_key") String apikey, @Query("q") String query);*/
-
     /* Get the movie reviews based on the movie id */
     @GET("movie/{movie_id}/reviews")
     Observable<Results<Review>> getMovieReview(@Path("movie_id") int movieId, @Query("api_key") String apiKey);
 
     @GET("movie/{movie_id}/credits")
     Observable<Cast<Actor>> getMovieActors(@Path("movie_id") int movieId, @Query("api_key") String apiKey);
+
+    @GET("search/movie")
+    Observable<Results<Movies>> searchMovies(@Query("query") String movieName, @Query("year") int movieYear, @Query("api_key") String apiKey);
 }
+

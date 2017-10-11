@@ -27,6 +27,7 @@ public class MovieActorsViewHolder extends RecyclerView.ViewHolder {
 
     private Context context;
 
+
     public MovieActorsViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
