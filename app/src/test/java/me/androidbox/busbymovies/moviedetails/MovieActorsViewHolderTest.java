@@ -7,12 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.bumptech.glide.Glide;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.Shadows;
 import org.robolectric.annotation.Config;
@@ -23,7 +20,6 @@ import me.androidbox.busbymovies.BuildConfig;
 import me.androidbox.busbymovies.R;
 import me.androidbox.busbymovies.di.BusbyMoviesApplication;
 import me.androidbox.busbymovies.models.Actor;
-import me.androidbox.busbymovies.utils.GlideApp;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -55,8 +51,6 @@ public class MovieActorsViewHolderTest {
         final ShadowDrawable shadowDrawable = Shadows.shadowOf(movieActorsViewHolder.actorPicture.getDrawable());
         final Drawable drawable = Drawable.createFromPath(actor.getProfile_path());
         /* assertThat(drawable, is(shadowDrawable.getCreatedFromResId())); */
-
-
 
         assertThat(movieActorsViewHolder.name.getText(), is(actor.getName()));
         assertThat(movieActorsViewHolder.character.getText(), is(actor.getCharacter()));

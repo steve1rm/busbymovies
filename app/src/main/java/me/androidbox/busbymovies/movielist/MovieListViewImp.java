@@ -10,11 +10,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,9 +20,7 @@ import android.widget.Toast;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -36,7 +32,6 @@ import me.androidbox.busbymovies.R;
 import me.androidbox.busbymovies.adapters.MovieAdapter;
 import me.androidbox.busbymovies.data.MovieFavouritesPresenterContract;
 import me.androidbox.busbymovies.di.DaggerInjector;
-import me.androidbox.busbymovies.models.Favourite;
 import me.androidbox.busbymovies.models.Movie;
 import me.androidbox.busbymovies.models.Movies;
 import me.androidbox.busbymovies.models.Results;
@@ -216,6 +211,7 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
         closeSortFab();
     }
 
+    @SuppressWarnings("unused")
     @OnClick(R.id.fabSearch)
     public void searchMovie() {
         Timber.d("searchMovie");
