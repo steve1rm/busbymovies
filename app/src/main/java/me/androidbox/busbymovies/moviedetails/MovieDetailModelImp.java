@@ -148,7 +148,7 @@ public class MovieDetailModelImp implements MovieDetailModelContract {
                     .observeOn(AndroidSchedulers.mainThread())
                     .map(actorCast -> {
                         List<Actor> newActors = new ArrayList<>();
-
+                        /* We only want to get the first 10 actors */
                         for(int i = 0; i < 10; i++) {
                             newActors.add(actorCast.getCast().get(i));
                         }

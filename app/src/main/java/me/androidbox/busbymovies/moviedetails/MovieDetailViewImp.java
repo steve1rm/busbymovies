@@ -82,9 +82,9 @@ public class MovieDetailViewImp extends Fragment implements
     private Movie mMovie;
     private BottomSheetBehavior<FrameLayout> mBottomSheetBehavior;
     private int mMovieId;
-    private MovieActorsAdapter movieActorsAdapter;
 
-    @Inject SimilarMovieAdapter similarMovieAdapter;
+    private MovieActorsAdapter movieActorsAdapter;
+    private SimilarMovieAdapter similarMovieAdapter;
     @Inject MovieDetailPresenterContract<MovieDetailViewContract> mMovieDetailPresenterImp;
     @Inject MovieFavouritesPresenterContract mMovieFavouritePresenterContact;
 
@@ -142,6 +142,7 @@ public class MovieDetailViewImp extends Fragment implements
     }
 
     private void setupSimilarMoviesRecyclerView() {
+        similarMovieAdapter = new SimilarMovieAdapter();
         mRvSimilarMovies.setHasFixedSize(true);
         mRvSimilarMovies.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         mRvSimilarMovies.setAdapter(similarMovieAdapter);
@@ -177,10 +178,10 @@ public class MovieDetailViewImp extends Fragment implements
     }
 
     private void setupActorAdapter() {
-        movieActorsAdapter = new MovieActorsAdapter();
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         rvMovieActors.setLayoutManager(linearLayoutManager);
         rvMovieActors.setHasFixedSize(true);
+        movieActorsAdapter = new MovieActorsAdapter();
         rvMovieActors.setAdapter(movieActorsAdapter);
     }
 

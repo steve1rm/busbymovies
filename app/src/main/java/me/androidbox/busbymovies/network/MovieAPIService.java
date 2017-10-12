@@ -45,6 +45,6 @@ public interface MovieAPIService {
     Observable<Results<Movies>> searchMovies(@Query("query") final String movieName, @Query("year") final int movieYear, @Query("api_key") String apiKey);
 
     @GET("movie/{movie_id}/similar")
-    Observable<Results<Movies>> getSimilarMovies(@Path("movid_id") final int movieId, @Query("api_key") final String apiKey);
+    Observable<Results<Movies>> getSimilarMovies(@Path("movie_id") final int movieId, @Query("api_key") final String apiKey);
 }
 
