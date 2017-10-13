@@ -15,11 +15,9 @@ import me.androidbox.busbymovies.models.Review;
 import me.androidbox.busbymovies.models.Trailer;
 import me.androidbox.busbymovies.network.MovieAPIService;
 import me.androidbox.busbymovies.utils.Constants;
-import rx.Scheduler;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 import timber.log.Timber;
 
@@ -177,7 +175,6 @@ public class MovieDetailModelImp implements MovieDetailModelContract {
                     });
         }
     }
-
 
     @Override
     public void getSimilarMovies(int movieId, SimilarMovieResultsListener similarMovieResultsListener) {
