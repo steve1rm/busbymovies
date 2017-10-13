@@ -188,6 +188,18 @@ public class MovieDetailModelImp implements MovieDetailModelContract {
             mSubscription = mMovieAPIService.getSimilarMovies(movieId, Constants.MOVIES_API_KEY)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
+                    .map(movieResults -> {
+                        /* Only display the first ten movies */
+                        final List<Movies> movies = new ArrayList<>(10);
+                        for(int i = 0; i < 10; i++) {
+                            movies.add(movieResults.getResults().get(i));
+                        }
+
+                        movieResults.getResults().clear();
+                        movieResults.getResults().addAll(movies);
+
+                        return movieResults;
+                    })
                     .subscribe(new Subscriber<Results<Movies>>() {
                         @Override
                         public void onCompleted() {
