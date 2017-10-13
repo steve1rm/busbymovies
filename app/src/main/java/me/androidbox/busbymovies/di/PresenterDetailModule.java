@@ -11,7 +11,6 @@ import me.androidbox.busbymovies.moviedetails.ImageLoaderImp;
 import me.androidbox.busbymovies.moviedetails.MovieDetailPresenterContract;
 import me.androidbox.busbymovies.moviedetails.MovieDetailPresenterImp;
 import me.androidbox.busbymovies.moviedetails.MovieDetailViewContract;
-import me.androidbox.busbymovies.utils.MovieImage;
 
 /**
  * Created by steve on 3/2/17.

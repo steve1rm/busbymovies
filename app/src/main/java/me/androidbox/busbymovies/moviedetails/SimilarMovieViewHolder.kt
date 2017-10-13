@@ -16,6 +16,8 @@ class SimilarMovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
     private val similarMovieThumbnail = itemView.ivSimilarMovieThumbnail
 
     fun assignSimilarMovieImage(movie: Movies) {
+
+
         GlideApp.with(itemView.context)
                 .load(MovieImage.build(movie.poster_path, MovieImage.ImageSize.w92))
                 .placeholder(R.drawable.placeholder_poster)

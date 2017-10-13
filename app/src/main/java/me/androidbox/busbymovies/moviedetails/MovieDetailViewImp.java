@@ -435,7 +435,6 @@ public class MovieDetailViewImp extends Fragment implements
         });
     }
 
-
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
@@ -444,7 +443,6 @@ public class MovieDetailViewImp extends Fragment implements
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-
     }
 
     private void setupToolBar() {
