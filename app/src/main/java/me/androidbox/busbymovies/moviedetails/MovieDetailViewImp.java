@@ -487,13 +487,19 @@ public class MovieDetailViewImp extends Fragment implements
         mTvVoteAverage.setText(String.valueOf(movie.getVote_average()));
         Timber.d("movie.getVote_average %f", movie.getVote_average());
 
-        Glide.with(MovieDetailViewImp.this)
-                .load(MovieImage.build(movie.getPoster_path(), MovieImage.ImageSize.w185))
-    //            .bitmapTransform(new RoundedCornersTransformation(getActivity(), 16, 4, RoundedCornersTransformation.CornerType.ALL))
+        GlideApp.with(getActivity())
+                .load(MovieImage.build(movie.getPoster_path(), MovieImage.ImageSize.w92))
                 .into(mIvThumbnail);
 
-        /* Bind the data */
+/*
         Glide.with(MovieDetailViewImp.this)
+                .load(MovieImage.build(movie.getPoster_path(), MovieImage.ImageSize.w92))
+    //            .bitmapTransform(new RoundedCornersTransformation(getActivity(), 16, 4, RoundedCornersTransformation.CornerType.ALL))
+                .into(mIvThumbnail);
+*/
+
+        /* Bind the data */
+        GlideApp.with(MovieDetailViewImp.this)
                 .load(MovieImage.build(movie.getBackdrop_path(), MovieImage.ImageSize.w500))
                 .into(mIvBackdropPoster);
     }

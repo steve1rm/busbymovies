@@ -10,8 +10,7 @@
         android:layout_height="@dimen/thumbnail_height"
         android:layout_marginTop="@dimen/thumbnail_marginTop"
         android:layout_marginStart="@dimen/thumbnail_marginStart"
-        android:layout_marginBottom="@dimen/thumbnail_marginTop"
-        android:scaleType="centerCrop"/>
+        android:layout_marginBottom="@dimen/thumbnail_marginTop"/>
 
     <TextView
         android:id="@+id/tvVoteAverage"
