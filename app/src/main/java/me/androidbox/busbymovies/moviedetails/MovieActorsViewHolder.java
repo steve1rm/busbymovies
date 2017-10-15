@@ -49,14 +49,6 @@ public class MovieActorsViewHolder extends RecyclerView.ViewHolder {
                 actorPicture,
                 Priority.HIGH);
 
-/*
-        GlideApp.with(context)
-                .load(MovieImage.build(actor.getProfile_path(), MovieImage.ImageSize.w92))
-                .placeholder(R.drawable.peopleplaceholder)
-                .priority(Priority.HIGH)
-                .into(actorPicture);
-*/
-
         name.setText(actor.getName());
         character.setText(actor.getCharacter());
     }
