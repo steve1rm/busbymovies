@@ -7,6 +7,7 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.List;
@@ -24,7 +25,9 @@ import rx.android.plugins.RxAndroidSchedulersHook;
 import rx.plugins.RxJavaHooks;
 import rx.schedulers.Schedulers;
 
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -104,14 +107,14 @@ public class MovieListModelImpTest {
     public void shouldSearchForMoviesAndFailOnException() {
         final String MOVIE_NAME = "movie name";
         final int MOVIE_YEAR = 2002;
-        final Throwable exception = new Throwable(new Exception());
+        final Throwable exception = new Throwable(new Exception("Error"));
 
         when(mockMovieAPIService.searchMovies(MOVIE_NAME, MOVIE_YEAR, Constants.MOVIES_API_KEY))
                 .thenReturn(Observable.error(exception));
 
         movieListModelContract.searchForMovies(MOVIE_NAME, MOVIE_YEAR, movieSearchResultsListener);
 
-        verify(movieSearchResultsListener).onSearchFailure(anyString());
+        verify(movieSearchResultsListener).onSearchFailure(exception.getMessage());
         verify(movieSearchResultsListener, never()).onSearchSuccess(mockMovies);
     }
 

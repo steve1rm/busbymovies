@@ -1,14 +1,12 @@
 package me.androidbox.busbymovies.movielist;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import me.androidbox.busbymovies.models.Movies;
 import me.androidbox.busbymovies.models.Results;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyObject;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
@@ -33,12 +31,9 @@ public class MovieListPresenterImpTest {
         movieListPresenterContract.attachView(mockMovieListViewContract);
     }
 
-    @Test
+    @Test(expected = NullPointerException.class)
     public void shouldFailToAttachViewIfTheViewIsNull() {
-        movieListPresenterContract.attachView(mockMovieListViewContract);
-        movieListPresenterContract.getPopularMovies();
-
-        verify(mockMovieListModelContract, times(0)).getPopularMovies(null);
+        movieListPresenterContract.attachView(null);
     }
 
     @Test
@@ -78,14 +73,5 @@ public class MovieListPresenterImpTest {
         verify(mockMovieListViewContract).failedToGetSearchMovies(ERROR_MESSAGE);
     }
 
-    @Ignore("FIXME")
-    @Test
-    public void shouldAttachViewWhenViewIsNotNull() {
-        movieListPresenterContract.attachView(mockMovieListViewContract);
-        movieListPresenterContract.getPopularMovies();
-        MovieListModelContract.PopularMovieResultsListener mockPopularMoviesResultsListener =
-                mock(MovieListModelContract.PopularMovieResultsListener.class);
 
-        verify(mockMovieListModelContract, times(1)).getPopularMovies(null);
-    }
 }

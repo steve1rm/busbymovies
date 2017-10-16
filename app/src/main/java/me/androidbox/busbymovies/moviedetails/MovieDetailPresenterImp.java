@@ -1,5 +1,7 @@
 package me.androidbox.busbymovies.moviedetails;
 
+import android.support.annotation.VisibleForTesting;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -8,9 +10,11 @@ import me.androidbox.busbymovies.di.DaggerInjector;
 import me.androidbox.busbymovies.models.Actor;
 import me.androidbox.busbymovies.models.Cast;
 import me.androidbox.busbymovies.models.Movie;
+import me.androidbox.busbymovies.models.Movies;
 import me.androidbox.busbymovies.models.Results;
 import me.androidbox.busbymovies.models.Review;
 import me.androidbox.busbymovies.models.Trailer;
+import me.androidbox.busbymovies.movielist.MovieListModelContract;
 import me.androidbox.busbymovies.utils.Misc;
 import timber.log.Timber;
 
@@ -23,7 +27,8 @@ public class MovieDetailPresenterImp implements
         MovieDetailModelContract.GetMovieDetailListener,
         MovieDetailModelContract.GetMovieTrailerListener,
         MovieDetailModelContract.MovieReviewsListener,
-        MovieDetailModelContract.MovieActorsListener {
+        MovieDetailModelContract.MovieActorsListener,
+        MovieDetailModelContract.SimilarMovieResultsListener {
 
     private MovieDetailViewContract mMovieDetailViewContract;
 
@@ -34,6 +39,11 @@ public class MovieDetailPresenterImp implements
         if(mMovieDetailModelContract == null) {
             Timber.e("mMovieDetailModelContract == null");
         }
+    }
+
+    /** TODO Create an injection */
+    public MovieDetailPresenterImp(final MovieDetailModelContract movieDetailModelContract) {
+        this.mMovieDetailModelContract = movieDetailModelContract;
     }
 
     @Override
@@ -139,4 +149,22 @@ public class MovieDetailPresenterImp implements
     public void onGetMovieActorsFailure(String errorMessage) {
         mMovieDetailViewContract.failedToReceiveMovieActors(errorMessage);
     }
+
+
+    @Override
+    public void getSimilarMovies(int movieId) {
+        mMovieDetailModelContract.getSimilarMovies(movieId, MovieDetailPresenterImp.this);
+    }
+
+    @VisibleForTesting
+    @Override
+    public void onSimilarMovieFailure(String errorMessage) {
+        mMovieDetailViewContract.failedToGetSimilarMovies(errorMessage);
+    }
+
+    @Override
+    public void onSimilarMovieSuccess(Results<Movies> similarMovies) {
+        mMovieDetailViewContract.successToGetSimilarMovies(similarMovies);
+    }
+
 }

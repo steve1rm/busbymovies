@@ -1,10 +1,9 @@
 package me.androidbox.busbymovies.moviedetails;
 
-import java.util.List;
-
 import me.androidbox.busbymovies.models.Actor;
 import me.androidbox.busbymovies.models.Cast;
 import me.androidbox.busbymovies.models.Movie;
+import me.androidbox.busbymovies.models.Movies;
 import me.androidbox.busbymovies.models.Results;
 import me.androidbox.busbymovies.models.Review;
 import me.androidbox.busbymovies.models.Trailer;
@@ -37,6 +36,13 @@ public interface MovieDetailModelContract {
         void onGetMovieActorsFailure(final String errorMessage);
     }
     void getMoveActors(int movieId, MovieActorsListener movieActorsListener);
+
+    /** Get similar movies based on a movie ID */
+    interface SimilarMovieResultsListener {
+        void onSimilarMovieFailure(final String errorMessage);
+        void onSimilarMovieSuccess(final Results<Movies> similarMovies);
+    }
+    void getSimilarMovies(final int movieId, SimilarMovieResultsListener similarMovieResultsListener);
 
     void releaseResources();
 }
