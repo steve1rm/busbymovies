@@ -14,31 +14,32 @@ public interface MovieListModelContract {
 
     /** Get all the popular movies */
     interface PopularMovieResultsListener {
-        void onPopularMovieFailure(String errorMessage);
-        void onPopularMovieSuccess(Results<Movies> popularMovies);
+        void onPopularMovieFailure(final String errorMessage);
+        void onPopularMovieSuccess(final Results<Movies> popularMovies);
     }
-    void getPopularMovies(PopularMovieResultsListener popularMovieResultsListener);
+    void getPopularMovies(final PopularMovieResultsListener popularMovieResultsListener);
 
     /** Get all the top rated movies */
     interface TopRatedMovieResultsListener {
-        void onTopRatedMovieFailure(String errorMessage);
-        void onTopRatedMovieSuccess(Results<Movies> topRatedMovies);
+        void onTopRatedMovieFailure(final String errorMessage);
+        void onTopRatedMovieSuccess(final Results<Movies> topRatedMovies);
     }
-    void getTopRatedMovies(TopRatedMovieResultsListener topRatedMovieResultsListener);
+    void getTopRatedMovies(final TopRatedMovieResultsListener topRatedMovieResultsListener);
 
     /** Get a single movie to display the details by its ID */
     interface MovieDetailResultsListener {
-        void onFailure(String errorMessage);
-        void onSuccess(Movie movie);
+        void onFailure(final String errorMessage);
+        void onSuccess(final Movie movie);
     }
     void getMovieDetail(int movieId, MovieDetailResultsListener movieDetailResultsListener);
 
+    /** Search for movies */
+    interface MovieSearchResultsListener {
+        void onSearchFailure(final String errorMessage);
+        void onSearchSuccess(final Results<Movies> searchMovies);
+    }
+    void searchForMovies(final String movieName, final int movieYear, MovieSearchResultsListener movieSearchResultsListener);
 
     /** Testing only */
     Observable<Results<Movies>> getPopularMovies();
-
-
-
-    //void searchPopulareMovies()
-/*    void getTopRatedMovies(MovieResultsListener resultsListener);*/
 }

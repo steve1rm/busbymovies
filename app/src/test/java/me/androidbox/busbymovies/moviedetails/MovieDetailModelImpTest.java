@@ -4,12 +4,15 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
+import me.androidbox.busbymovies.models.Movies;
 import me.androidbox.busbymovies.models.Results;
 import me.androidbox.busbymovies.models.Review;
 import me.androidbox.busbymovies.models.Trailer;
 import me.androidbox.busbymovies.network.MovieAPIService;
+import me.androidbox.busbymovies.utils.Constants;
 import okhttp3.ResponseBody;
 import rx.Observable;
 import rx.Scheduler;
@@ -127,6 +130,40 @@ public class MovieDetailModelImpTest {
         verify(mockMovieTrailerListener, times(1)).onGetMovieTrailerSuccess(null);
         verify(mockMovieTrailerListener, never()).onGetMovieTrailerFailure(anyString());
     }
+
+
+    @Test
+    public void testGetSimilarMoviesSuccessInGettingSimilarMovies() {
+        final Throwable exception = new Throwable(new Exception("Error"));
+        final int movieId = 123456;
+        final MovieDetailModelContract.SimilarMovieResultsListener similarMovieResultsListener = Mockito.mock(MovieDetailModelContract.SimilarMovieResultsListener.class);
+        final Results<Movies> moviesResults = new Results<>();
+
+        when(mockMovieAPIService.getSimilarMovies(movieId, Constants.MOVIES_API_KEY))
+                .thenReturn(Observable.error(exception));
+
+        mMovieDetailModelContract.getSimilarMovies(movieId, similarMovieResultsListener);
+
+        verify(similarMovieResultsListener).onSimilarMovieFailure(exception.getMessage());
+        verify(similarMovieResultsListener, never()).onSimilarMovieSuccess(moviesResults);
+    }
+
+    @Test
+    public void testGetSimilarMoviesFailsToGetSimilarMoviesOnException() {
+        final Throwable exception = new Throwable(new Exception());
+        final int movieId = 123456;
+        final MovieDetailModelContract.SimilarMovieResultsListener similarMovieResultsListener = Mockito.mock(MovieDetailModelContract.SimilarMovieResultsListener.class);
+        final Results<Movies> moviesResults = new Results<>();
+
+        when(mockMovieAPIService.getSimilarMovies(movieId, Constants.MOVIES_API_KEY))
+                .thenReturn(Observable.error(exception));
+
+        mMovieDetailModelContract.getSimilarMovies(movieId, similarMovieResultsListener);
+
+        verify(similarMovieResultsListener).onSimilarMovieFailure(anyString());
+        verify(similarMovieResultsListener, never()).onSimilarMovieSuccess(moviesResults);
+    }
+
 
     @After
     public void tearDown() throws Exception {

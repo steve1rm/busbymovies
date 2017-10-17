@@ -1,6 +1,9 @@
 package me.androidbox.busbymovies.movielist;
 
+import android.annotation.SuppressLint;
+import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
+import android.support.v4.util.Preconditions;
 
 import javax.inject.Inject;
 
@@ -16,9 +19,10 @@ import timber.log.Timber;
 public class MovieListPresenterImp implements
         MovieListPresenterContract<MovieListViewContract>,
         MovieListModelContract.PopularMovieResultsListener,
-        MovieListModelContract.TopRatedMovieResultsListener {
+        MovieListModelContract.TopRatedMovieResultsListener,
+        MovieListModelContract.MovieSearchResultsListener {
 
-    private MovieListViewContract mMovieListViewContract;
+    @VisibleForTesting MovieListViewContract mMovieListViewContract;
     @Inject MovieListModelContract mMovieModelContract;
 
     public MovieListPresenterImp() {
@@ -33,16 +37,17 @@ public class MovieListPresenterImp implements
     /**
      * Attach the view to the presenter
      */
+    @SuppressLint("RestrictedApi")
     @Override
-    public void attachView(MovieListViewContract view) {
-        mMovieListViewContract = view;
+    public void attachView(@NonNull MovieListViewContract view) {
+        mMovieListViewContract = Preconditions.checkNotNull(view);
     }
 
     @Override
     public void detachView() {
         Timber.d("detachView");
-        mMovieListViewContract = null;
         mMovieModelContract.releaseResources();
+        mMovieListViewContract = null;
     }
 
     @Override
@@ -62,7 +67,6 @@ public class MovieListPresenterImp implements
     /**
      * Wait for the response to be called back in the Model on failure
      */
-
     @Override
     public void onPopularMovieFailure(String errorMessage) {
         mMovieListViewContract.failedToDisplayPopularMovies(errorMessage);
@@ -92,5 +96,20 @@ public class MovieListPresenterImp implements
     @Override
     public void onTopRatedMovieSuccess(Results<Movies> topRatedMovies) {
         mMovieListViewContract.displayTopRatedMovies(topRatedMovies);
+    }
+
+    @Override
+    public void onSearchFailure(String errorMessage) {
+        mMovieListViewContract.failedToGetSearchMovies(errorMessage);
+    }
+
+    @Override
+    public void onSearchSuccess(Results<Movies> searchMovies) {
+        mMovieListViewContract.successToGetSearchMovies(searchMovies);
+    }
+
+    @Override
+    public void searchMovies(final String movieName, final int movieYear) {
+        mMovieModelContract.searchForMovies(movieName, movieYear, MovieListPresenterImp.this);
     }
 }

@@ -37,9 +37,6 @@ import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerFragment;
 
-import java.util.Collections;
-import java.util.List;
-
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -51,16 +48,17 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 import me.androidbox.busbymovies.R;
 import me.androidbox.busbymovies.adapters.MovieActorsAdapter;
 import me.androidbox.busbymovies.adapters.MovieTrailerAdapter;
+import me.androidbox.busbymovies.adapters.SimilarMovieAdapter;
 import me.androidbox.busbymovies.data.MovieFavouritesPresenterContract;
 import me.androidbox.busbymovies.di.DaggerInjector;
 import me.androidbox.busbymovies.models.Actor;
 import me.androidbox.busbymovies.models.Cast;
 import me.androidbox.busbymovies.models.Movie;
+import me.androidbox.busbymovies.models.Movies;
 import me.androidbox.busbymovies.models.Results;
 import me.androidbox.busbymovies.models.Review;
 import me.androidbox.busbymovies.models.Trailer;
 import me.androidbox.busbymovies.moviereviews.MovieReviewsDialog;
-import me.androidbox.busbymovies.utils.BlurTransformation;
 import me.androidbox.busbymovies.utils.Constants;
 import me.androidbox.busbymovies.utils.GlideApp;
 import me.androidbox.busbymovies.utils.MovieImage;
@@ -86,6 +84,7 @@ public class MovieDetailViewImp extends Fragment implements
     private int mMovieId;
     private MovieActorsAdapter movieActorsAdapter;
 
+    @Inject SimilarMovieAdapter similarMovieAdapter;
     @Inject MovieDetailPresenterContract<MovieDetailViewContract> mMovieDetailPresenterImp;
     @Inject MovieFavouritesPresenterContract mMovieFavouritePresenterContact;
 
@@ -105,6 +104,7 @@ public class MovieDetailViewImp extends Fragment implements
     @BindView(R.id.tvTrailers) TextView mTvTrailers;
     @BindView(R.id.tvReviews) TextView mTvReviews;
     @BindView(R.id.rvMovieActors) RecyclerView rvMovieActors;
+    @BindView(R.id.rvSimilarMovies) RecyclerView mRvSimilarMovies;
     @BindView(R.id.youtubeFragmentContainer) FrameLayout mYoutubeFragmentContainer;
     @Nullable @BindView(R.id.ivPlayTrailer) ImageView mIvPlayTrailer;
     @Nullable @BindView(R.id.fabMovieFavourite) FloatingActionButton mFabMovieFavourite;
@@ -136,8 +136,15 @@ public class MovieDetailViewImp extends Fragment implements
         setupToolBar();
         setupBottomSheet();
         setupActorAdapter();
+        setupSimilarMoviesRecyclerView();
 
         return view;
+    }
+
+    private void setupSimilarMoviesRecyclerView() {
+        mRvSimilarMovies.setHasFixedSize(true);
+        mRvSimilarMovies.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        mRvSimilarMovies.setAdapter(similarMovieAdapter);
     }
 
     @Override
@@ -154,6 +161,7 @@ public class MovieDetailViewImp extends Fragment implements
                 if(mMovieId != -1) {
                     mMovieDetailPresenterImp.attachView(MovieDetailViewImp.this);
                     mMovieDetailPresenterImp.requestMovieActors(mMovieId);
+                    mMovieDetailPresenterImp.getSimilarMovies(mMovieId);
 
                     /* Check if we are getting a movie favourite */
                     mMovieFavouritePresenterContact.hasMovieAsFavourite(mMovieId, MovieDetailViewImp.this);
@@ -635,5 +643,17 @@ public class MovieDetailViewImp extends Fragment implements
     @Override
     public void successToReceiveMovieActors(Cast<Actor> actorList) {
         movieActorsAdapter.populateActors(actorList);
+    }
+
+    @Override
+    public void failedToGetSimilarMovies(String errorMessage) {
+        Timber.e("FailedToGetSimilarMovies: %s", errorMessage);
+
+    }
+
+    @Override
+    public void successToGetSimilarMovies(Results<Movies> similarMovies) {
+        Timber.d("successToGetSimilarMovies: %d", similarMovies.getResults().size());
+        similarMovieAdapter.loadAdapter(similarMovies);
     }
 }

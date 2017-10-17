@@ -1,7 +1,5 @@
 package me.androidbox.busbymovies.network;
 
-import java.util.List;
-
 import me.androidbox.busbymovies.models.Actor;
 import me.androidbox.busbymovies.models.Cast;
 import me.androidbox.busbymovies.models.Movie;
@@ -9,7 +7,6 @@ import me.androidbox.busbymovies.models.Movies;
 import me.androidbox.busbymovies.models.Results;
 import me.androidbox.busbymovies.models.Review;
 import me.androidbox.busbymovies.models.Trailer;
-import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -22,29 +19,32 @@ import rx.Observable;
 public interface MovieAPIService {
     /* Get a list of the current popular movies on TMDb. This list updates daily */
     @GET("movie/popular")
-    Observable<Results<Movies>> getPopular(@Query("api_key") String apikey);
+    Observable<Results<Movies>> getPopular(@Query("api_key") final String apikey);
 
     @GET("movie/top_rated")
-    Observable<Results<Movies>> getTopRatedMovies(@Query("api_key") String apikey);
+    Observable<Results<Movies>> getTopRatedMovies(@Query("api_key") final String apikey);
 
     /* Return the movie with the matching movie id */
     @GET("movie/{movie_id}")
-    Call<Movie> getMovieById(@Path("movie_id") int movie_id, @Query("api_key") String apikey);
+    Observable<Movie> getMovieById(@Path("movie_id") final int movie_id, @Query("api_key") final String apikey);
 
     @GET("movie/{movie_id}")
-    Observable<Movie> getMovieByIdExt(@Path("movie_id") int movie_id, @Query("api_key") String apikey);
+    Observable<Movie> getMovieByIdExt(@Path("movie_id") final int movie_id, @Query("api_key") final String apikey);
 
     @GET("movie/{movie_id}/videos")
-    Observable<Results<Trailer>> getMovieTrailers(@Path("movie_id") int movie_id, @Query("api_key") String apiKey);
-
-    /* Search for a popular movie */
-/*    @GET("movie/popular")
-    Call<Results> searchPopular(@Query("api_key") String apikey, @Query("q") String query);*/
+    Observable<Results<Trailer>> getMovieTrailers(@Path("movie_id") final int movie_id, @Query("api_key") final String apiKey);
 
     /* Get the movie reviews based on the movie id */
     @GET("movie/{movie_id}/reviews")
-    Observable<Results<Review>> getMovieReview(@Path("movie_id") int movieId, @Query("api_key") String apiKey);
+    Observable<Results<Review>> getMovieReview(@Path("movie_id") final int movieId, @Query("api_key") final String apiKey);
 
     @GET("movie/{movie_id}/credits")
-    Observable<Cast<Actor>> getMovieActors(@Path("movie_id") int movieId, @Query("api_key") String apiKey);
+    Observable<Cast<Actor>> getMovieActors(@Path("movie_id") final int movieId, @Query("api_key") final String apiKey);
+
+    @GET("search/movie")
+    Observable<Results<Movies>> searchMovies(@Query("query") final String movieName, @Query("year") final int movieYear, @Query("api_key") String apiKey);
+
+    @GET("movie/{movie_id}/similar")
+    Observable<Results<Movies>> getSimilarMovies(@Path("movid_id") final int movieId, @Query("api_key") final String apiKey);
 }
+

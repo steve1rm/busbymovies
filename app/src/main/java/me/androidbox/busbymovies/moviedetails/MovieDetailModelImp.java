@@ -9,6 +9,7 @@ import me.androidbox.busbymovies.di.DaggerInjector;
 import me.androidbox.busbymovies.models.Actor;
 import me.androidbox.busbymovies.models.Cast;
 import me.androidbox.busbymovies.models.Movie;
+import me.androidbox.busbymovies.models.Movies;
 import me.androidbox.busbymovies.models.Results;
 import me.androidbox.busbymovies.models.Review;
 import me.androidbox.busbymovies.models.Trailer;
@@ -172,6 +173,37 @@ public class MovieDetailModelImp implements MovieDetailModelContract {
                         public void onNext(Cast<Actor> actors) {
                             Timber.d("onNext");
                                 movieActorsListener.onGetMovieActorsSuccess(actors);
+                        }
+                    });
+        }
+    }
+
+
+    @Override
+    public void getSimilarMovies(int movieId, SimilarMovieResultsListener similarMovieResultsListener) {
+        if(Constants.MOVIES_API_KEY.isEmpty()) {
+            similarMovieResultsListener.onSimilarMovieFailure("Empty API Key");
+        }
+        else {
+            mSubscription = mMovieAPIService.getSimilarMovies(movieId, Constants.MOVIES_API_KEY)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Subscriber<Results<Movies>>() {
+                        @Override
+                        public void onCompleted() {
+                            Timber.d("onCompleted");
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            Timber.e(e, "OnError: %s", e.getMessage());
+                            similarMovieResultsListener.onSimilarMovieFailure(e.getMessage());
+                        }
+
+                        @Override
+                        public void onNext(Results<Movies> moviesResults) {
+                            Timber.d("onNext");
+                            similarMovieResultsListener.onSimilarMovieSuccess(moviesResults);
                         }
                     });
         }
