@@ -4,6 +4,7 @@ import javax.inject.Singleton;
 
 import dagger.Component;
 import me.androidbox.busbymovies.data.MovieFavouritePresenterImp;
+import me.androidbox.busbymovies.moviedetails.MovieActorsViewHolder;
 import me.androidbox.busbymovies.moviedetails.MovieDetailModelImp;
 import me.androidbox.busbymovies.moviedetails.MovieDetailPresenterImp;
 import me.androidbox.busbymovies.moviedetails.MovieDetailViewContract;
@@ -34,4 +35,5 @@ public interface ApplicationComponent {
     void inject(MovieDetailPresenterImp target);
     void inject(MovieFavouritePresenterImp target);
     void inject(MovieListViewHolder target);
+    void inject(MovieActorsViewHolder target);
 }

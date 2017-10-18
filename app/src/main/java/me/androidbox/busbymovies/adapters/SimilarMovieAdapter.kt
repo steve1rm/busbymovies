@@ -13,7 +13,7 @@ import me.androidbox.busbymovies.moviedetails.SimilarMovieViewHolder
  */
 class SimilarMovieAdapter : RecyclerView.Adapter<SimilarMovieViewHolder>() {
 
-    private lateinit var movieList: Results<Movies>
+    private val movieList: MutableList<Movies> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): SimilarMovieViewHolder {
         val view = LayoutInflater.from(parent?.context).inflate(R.layout.similar_movie_item, parent, false)
@@ -22,17 +22,17 @@ class SimilarMovieAdapter : RecyclerView.Adapter<SimilarMovieViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: SimilarMovieViewHolder?, position: Int) {
-        holder?.assignSimilarMovieImage(movieList.results[position])
+        holder?.assignSimilarMovieImage(movieList[position])
     }
 
     override fun getItemCount(): Int {
-        return movieList.results.size
+        return movieList.size
     }
 
     fun loadAdapter(movies: Results<Movies>) {
-        movieList.results.clear()
-        movieList.results.addAll(movies.results)
+        movieList.clear()
+        movieList.addAll(movies.results)
 
-        notifyItemRangeInserted(0, movieList.results.size)
+        notifyItemRangeInserted(0, movieList.size)
     }
 }

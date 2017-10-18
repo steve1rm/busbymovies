@@ -82,9 +82,9 @@ public class MovieDetailViewImp extends Fragment implements
     private Movie mMovie;
     private BottomSheetBehavior<FrameLayout> mBottomSheetBehavior;
     private int mMovieId;
-    private MovieActorsAdapter movieActorsAdapter;
 
-    @Inject SimilarMovieAdapter similarMovieAdapter;
+    private MovieActorsAdapter movieActorsAdapter;
+    private SimilarMovieAdapter similarMovieAdapter;
     @Inject MovieDetailPresenterContract<MovieDetailViewContract> mMovieDetailPresenterImp;
     @Inject MovieFavouritesPresenterContract mMovieFavouritePresenterContact;
 
@@ -142,6 +142,7 @@ public class MovieDetailViewImp extends Fragment implements
     }
 
     private void setupSimilarMoviesRecyclerView() {
+        similarMovieAdapter = new SimilarMovieAdapter();
         mRvSimilarMovies.setHasFixedSize(true);
         mRvSimilarMovies.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         mRvSimilarMovies.setAdapter(similarMovieAdapter);
@@ -177,10 +178,10 @@ public class MovieDetailViewImp extends Fragment implements
     }
 
     private void setupActorAdapter() {
-        movieActorsAdapter = new MovieActorsAdapter();
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         rvMovieActors.setLayoutManager(linearLayoutManager);
         rvMovieActors.setHasFixedSize(true);
+        movieActorsAdapter = new MovieActorsAdapter();
         rvMovieActors.setAdapter(movieActorsAdapter);
     }
 
@@ -301,6 +302,7 @@ public class MovieDetailViewImp extends Fragment implements
                             mMovie.getTitle(),
                             mMovie.getBackdrop_path(),
                             mMovie.getVote_average(),
+                            mMovie.getVote_count(),
                             mMovie.getTagline(),
                             mMovie.getHomepage(),
                             mMovie.getRuntime());
@@ -434,7 +436,6 @@ public class MovieDetailViewImp extends Fragment implements
         });
     }
 
-
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
@@ -443,7 +444,6 @@ public class MovieDetailViewImp extends Fragment implements
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-
     }
 
     private void setupToolBar() {
@@ -486,13 +486,19 @@ public class MovieDetailViewImp extends Fragment implements
         mTvVoteAverage.setText(String.valueOf(movie.getVote_average()));
         Timber.d("movie.getVote_average %f", movie.getVote_average());
 
-        Glide.with(MovieDetailViewImp.this)
-                .load(MovieImage.build(movie.getPoster_path(), MovieImage.ImageSize.w185))
-    //            .bitmapTransform(new RoundedCornersTransformation(getActivity(), 16, 4, RoundedCornersTransformation.CornerType.ALL))
+        GlideApp.with(getActivity())
+                .load(MovieImage.build(movie.getPoster_path(), MovieImage.ImageSize.w92))
                 .into(mIvThumbnail);
 
-        /* Bind the data */
+/*
         Glide.with(MovieDetailViewImp.this)
+                .load(MovieImage.build(movie.getPoster_path(), MovieImage.ImageSize.w92))
+    //            .bitmapTransform(new RoundedCornersTransformation(getActivity(), 16, 4, RoundedCornersTransformation.CornerType.ALL))
+                .into(mIvThumbnail);
+*/
+
+        /* Bind the data */
+        GlideApp.with(MovieDetailViewImp.this)
                 .load(MovieImage.build(movie.getBackdrop_path(), MovieImage.ImageSize.w500))
                 .into(mIvBackdropPoster);
     }

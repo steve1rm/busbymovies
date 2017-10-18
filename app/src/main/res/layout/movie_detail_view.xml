@@ -136,7 +136,6 @@
                     android:fontFamily="sans-serif-condensed"
                     android:textSize="@dimen/runtime_textsize" />
 
-
                 <android.support.v7.widget.RecyclerView
                     xmlns:android="http://schemas.android.com/apk/res/android"
                     android:id="@+id/rvMovieActors"
@@ -155,6 +154,26 @@
                     android:paddingStart="@dimen/detail_movie_marginstart"
                     android:paddingTop="@dimen/detail_marginTop"
                     android:textSize="@dimen/synopsis_textsize" />
+
+                <TextView
+                    android:id="@+id/tvSimilarMovieTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvSynopsis"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:text="@string/similar_movies"
+                    android:fontFamily="sans-serif-medium"
+                    android:background="@drawable/blue_border"/>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rvSimilarMovies"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvSimilarMovieTitle"/>
+
             </RelativeLayout>
         </ScrollView>
 

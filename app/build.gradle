@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 26
@@ -83,9 +84,9 @@ dependencies {
     compile 'com.google.dagger:dagger:2.11'
     kapt 'com.google.dagger:dagger:2.11'
     compile 'com.jakewharton:butterknife:8.8.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    kapt 'com.jakewharton:butterknife-compiler:8.8.1'
     provided 'javax.annotation:jsr250-api:1.0'
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.11'
+  //  annotationProcessor 'com.google.dagger:dagger-compiler:2.11'
     kapt 'com.google.dagger:dagger-compiler:2.11'
     /** ***************************************************************
      *  Logging support
@@ -111,7 +112,7 @@ dependencies {
      ****************************************************************/
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.github.bumptech.glide:glide:4.2.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.2.0'
+    // annotationProcessor 'com.github.bumptech.glide:compiler:4.2.0'
     compile 'jp.wasabeef:glide-transformations:3.0.1'
     compile 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'
     compile 'com.wonderkiln:blurkit:1.0.0'
@@ -120,12 +121,15 @@ dependencies {
      * Misc
      *****************************************************************/
     compile 'com.f2prateek.dart:dart:2.0.2'
-    annotationProcessor 'com.f2prateek.dart:dart-processor:2.0.2'
+    // annotationProcessor 'com.f2prateek.dart:dart-processor:2.0.2'
+    kapt 'com.f2prateek.dart:dart-processor:2.0.2'
     compile 'com.f2prateek.dart:henson:2.0.2'
-    annotationProcessor 'com.f2prateek.dart:henson-processor:2.0.2'
+    // annotationProcessor 'com.f2prateek.dart:henson-processor:2.0.2'
+    kapt 'com.f2prateek.dart:henson-processor:2.0.2'
     implementation 'de.hdodenhof:circleimageview:2.1.0'
     compileOnly 'com.google.auto.factory:auto-factory:1.0-beta5'
-    annotationProcessor 'com.google.auto.factory:auto-factory:1.0-beta5'
+     annotationProcessor 'com.google.auto.factory:auto-factory:1.0-beta5'
+  //  kapt 'com.google.auto.factory:auto-factory:1.0-beta5'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 
     kapt 'com.github.bumptech.glide:compiler:4.2.0'
