@@ -227,6 +227,7 @@ public class MovieFavouriteModelImp implements MovieFavouriteModelContract {
                         cursor.getString(cursor.getColumnIndex(MovieEntry.TITLE)),
                         cursor.getString(cursor.getColumnIndex(MovieEntry.BACKDROP_PATH)),
                         cursor.getFloat(cursor.getColumnIndex(MovieEntry.VOTE_AVERAGE)),
+                        cursor.getFloat(cursor.getColumnIndex(MovieEntry.VOTE_COUNT)),
                         cursor.getString(cursor.getColumnIndex(MovieEntry.TAGLINE)),
                         cursor.getString(cursor.getColumnIndex(MovieEntry.HOMEPATH)),
                         cursor.getInt(cursor.getColumnIndex(MovieEntry.RUNTIME)));

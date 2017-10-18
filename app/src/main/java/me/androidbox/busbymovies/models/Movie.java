@@ -19,8 +19,9 @@ public class Movie extends Movies {
                  String release_date,
                  String title,
                  String backdrop_path,
-                 float vote_average) {
-        this(id, poster_path, overview, release_date, title, backdrop_path, vote_average, "", "", 0);
+                 float vote_average,
+                 float vote_count) {
+        this(id, poster_path, overview, release_date, title, backdrop_path, vote_average, vote_count, "", "", 0);
     }
 
     public Movie(int id,
@@ -30,10 +31,11 @@ public class Movie extends Movies {
                  String title,
                  String backdrop_path,
                  float vote_average,
+                 float vote_count,
                  String tagline,
                  String homepage,
                  int runtime) {
-        super(id, poster_path, overview, release_date, title, backdrop_path, vote_average);
+        super(id, poster_path, overview, release_date, title, backdrop_path, vote_average, vote_count);
 
         this.tagline = tagline;
         this.homepage = homepage;

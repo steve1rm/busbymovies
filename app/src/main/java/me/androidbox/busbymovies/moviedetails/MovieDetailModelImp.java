@@ -15,11 +15,9 @@ import me.androidbox.busbymovies.models.Review;
 import me.androidbox.busbymovies.models.Trailer;
 import me.androidbox.busbymovies.network.MovieAPIService;
 import me.androidbox.busbymovies.utils.Constants;
-import rx.Scheduler;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 import timber.log.Timber;
 
@@ -148,8 +146,9 @@ public class MovieDetailModelImp implements MovieDetailModelContract {
                     .observeOn(AndroidSchedulers.mainThread())
                     .map(actorCast -> {
                         List<Actor> newActors = new ArrayList<>();
-
+                        /* We only want to get the first 10 actors */
                         for(int i = 0; i < 10; i++) {
+
                             newActors.add(actorCast.getCast().get(i));
                         }
                         actorCast.getCast().clear();
@@ -178,7 +177,6 @@ public class MovieDetailModelImp implements MovieDetailModelContract {
         }
     }
 
-
     @Override
     public void getSimilarMovies(int movieId, SimilarMovieResultsListener similarMovieResultsListener) {
         if(Constants.MOVIES_API_KEY.isEmpty()) {
@@ -188,6 +186,21 @@ public class MovieDetailModelImp implements MovieDetailModelContract {
             mSubscription = mMovieAPIService.getSimilarMovies(movieId, Constants.MOVIES_API_KEY)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
+                    .map(movieResults -> {
+                        /* Only display the first ten movies */
+                        final List<Movies> movies = new ArrayList<>(10);
+                        for(int i = 0; i < 10; i++) {
+                            /* Filter on movies to avoid showing terrible or offensive movies */
+                            if(movieResults.getResults().get(i).getVote_count() > 350) {
+                                movies.add(movieResults.getResults().get(i));
+                            }
+                        }
+
+                        movieResults.getResults().clear();
+                        movieResults.getResults().addAll(movies);
+
+                        return movieResults;
+                    })
                     .subscribe(new Subscriber<Results<Movies>>() {
                         @Override
                         public void onCompleted() {
