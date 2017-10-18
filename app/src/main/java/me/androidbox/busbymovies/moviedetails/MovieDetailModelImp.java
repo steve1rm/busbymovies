@@ -148,6 +148,7 @@ public class MovieDetailModelImp implements MovieDetailModelContract {
                         List<Actor> newActors = new ArrayList<>();
                         /* We only want to get the first 10 actors */
                         for(int i = 0; i < 10; i++) {
+
                             newActors.add(actorCast.getCast().get(i));
                         }
                         actorCast.getCast().clear();
@@ -189,7 +190,10 @@ public class MovieDetailModelImp implements MovieDetailModelContract {
                         /* Only display the first ten movies */
                         final List<Movies> movies = new ArrayList<>(10);
                         for(int i = 0; i < 10; i++) {
-                            movies.add(movieResults.getResults().get(i));
+                            /* Filter on movies to avoid showing terrible or offensive movies */
+                            if(movieResults.getResults().get(i).getVote_count() > 350) {
+                                movies.add(movieResults.getResults().get(i));
+                            }
                         }
 
                         movieResults.getResults().clear();

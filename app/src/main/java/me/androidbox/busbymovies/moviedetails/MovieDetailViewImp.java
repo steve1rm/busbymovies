@@ -302,6 +302,7 @@ public class MovieDetailViewImp extends Fragment implements
                             mMovie.getTitle(),
                             mMovie.getBackdrop_path(),
                             mMovie.getVote_average(),
+                            mMovie.getVote_count(),
                             mMovie.getTagline(),
                             mMovie.getHomepage(),
                             mMovie.getRuntime());

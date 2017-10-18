@@ -38,5 +38,6 @@ public final class MovieContract {
         public static final String TAGLINE = "tagline";
         public static final String HOMEPATH = "homepage";
         public static final String RUNTIME = "runtime";
+        public static final String VOTE_COUNT = "vote_count";
     }
 }

@@ -12,6 +12,7 @@ public class Movies {
     private String title;
     private String backdrop_path;
     private float vote_average;
+    private float vote_count;
 
     public Movies() {}
 
@@ -21,7 +22,8 @@ public class Movies {
                   String release_date,
                   String title,
                   String backdrop_path,
-                  float vote_average) {
+                  float vote_average,
+                  float vote_count) {
         this.id = id;
         this.poster_path = poster_path;
         this.overview = overview;
@@ -29,6 +31,7 @@ public class Movies {
         this.title = title;
         this.backdrop_path = backdrop_path;
         this.vote_average = vote_average;
+        this.vote_count = vote_count;
     }
 
     public int getId() {
@@ -59,4 +62,7 @@ public class Movies {
         return vote_average;
     }
 
+    public float getVote_count() {
+        return vote_count;
+    }
 }
