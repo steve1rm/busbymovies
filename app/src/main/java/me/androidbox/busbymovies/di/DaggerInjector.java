@@ -20,4 +20,5 @@ public class DaggerInjector {
     public static ApplicationComponent getApplicationComponent() {
         return sApplicationComponent;
     }
+
 }
