@@ -39,7 +39,4 @@ public interface MovieListModelContract {
         void onSearchSuccess(final Results<Movies> searchMovies);
     }
     void searchForMovies(final String movieName, final int movieYear, MovieSearchResultsListener movieSearchResultsListener);
-
-    /** Testing only */
-    Observable<Results<Movies>> getPopularMovies();
 }

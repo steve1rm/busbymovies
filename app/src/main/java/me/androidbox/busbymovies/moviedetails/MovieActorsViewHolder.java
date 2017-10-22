@@ -16,7 +16,7 @@ import butterknife.ButterKnife;
 import me.androidbox.busbymovies.R;
 import me.androidbox.busbymovies.di.DaggerInjector;
 import me.androidbox.busbymovies.models.Actor;
-import me.androidbox.busbymovies.utils.GlideApp;
+import me.androidbox.busbymovies.utils.ImageLoader;
 import me.androidbox.busbymovies.utils.MovieImage;
 
 /**
@@ -29,7 +29,8 @@ public class MovieActorsViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.tvName) TextView name;
     @BindView(R.id.tvCharacter) TextView character;
 
-    @Inject ImageLoader imageLoader;
+    @Inject
+    ImageLoader imageLoader;
     private Context context;
 
     public MovieActorsViewHolder(View itemView) {

@@ -6,7 +6,7 @@ import dagger.Module;
 import dagger.Provides;
 import me.androidbox.busbymovies.adapters.MovieActorsAdapter;
 import me.androidbox.busbymovies.adapters.SimilarMovieAdapter;
-import me.androidbox.busbymovies.moviedetails.ImageLoader;
+import me.androidbox.busbymovies.utils.ImageLoader;
 import me.androidbox.busbymovies.moviedetails.ImageLoaderImp;
 import me.androidbox.busbymovies.moviedetails.MovieDetailPresenterContract;
 import me.androidbox.busbymovies.moviedetails.MovieDetailPresenterImp;

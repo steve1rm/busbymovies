@@ -1,4 +1,4 @@
-package me.androidbox.busbymovies.moviedetails;
+package me.androidbox.busbymovies.utils;
 
 import android.content.Context;
 import android.support.annotation.DrawableRes;

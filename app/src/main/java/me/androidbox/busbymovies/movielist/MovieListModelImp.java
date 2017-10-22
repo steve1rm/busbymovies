@@ -2,17 +2,16 @@ package me.androidbox.busbymovies.movielist;
 
 import javax.inject.Inject;
 
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.DisposableObserver;
 import me.androidbox.busbymovies.di.DaggerInjector;
 import me.androidbox.busbymovies.models.Movie;
 import me.androidbox.busbymovies.models.Movies;
 import me.androidbox.busbymovies.models.Results;
 import me.androidbox.busbymovies.network.MovieAPIService;
 import me.androidbox.busbymovies.utils.Constants;
+import me.androidbox.busbymovies.utils.MovieSchedulers;
 import rx.Observable;
-import rx.Subscriber;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 import timber.log.Timber;
 
 /**
@@ -22,7 +21,9 @@ import timber.log.Timber;
 public class MovieListModelImp implements MovieListModelContract {
 
     @Inject MovieAPIService mMovieAPIService;
-    private Subscription mSubscription;
+    private MovieSchedulers movieSchedulers;
+
+    private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     public MovieListModelImp() {
         DaggerInjector.getApplicationComponent().inject(MovieListModelImp.this);
@@ -41,10 +42,10 @@ public class MovieListModelImp implements MovieListModelContract {
             popularMovieResultsListener.onPopularMovieFailure("Empty API Key");
         }
         else {
-            mSubscription = mMovieAPIService.getPopular(Constants.MOVIES_API_KEY)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Subscriber<Results<Movies>>() {
+            compositeDisposable.add(mMovieAPIService.getPopular(Constants.MOVIES_API_KEY)
+                    .subscribeOn(movieSchedulers.getBackgroundScheduler())
+                    .observeOn(movieSchedulers.getUIScheduler())
+                    .subscribeWith(new DisposableObserver<Results<Movies>>() {
                         @Override
                         public void onStart() {
                             super.onStart();
@@ -52,7 +53,7 @@ public class MovieListModelImp implements MovieListModelContract {
                         }
 
                         @Override
-                        public void onCompleted() {
+                        public void onComplete() {
                             Timber.d("onCompleted");
                         }
 
@@ -67,7 +68,7 @@ public class MovieListModelImp implements MovieListModelContract {
                             Timber.d("onNext");
                             popularMovieResultsListener.onPopularMovieSuccess(results);
                         }
-                    });
+                    }));
         }
     }
 
@@ -77,12 +78,12 @@ public class MovieListModelImp implements MovieListModelContract {
             topRatedMovieResultsListener.onTopRatedMovieFailure("Empty API Key");
         }
         else {
-            mSubscription = mMovieAPIService.getTopRatedMovies(Constants.MOVIES_API_KEY)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Subscriber<Results<Movies>>() {
+            compositeDisposable.add(mMovieAPIService.getTopRatedMovies(Constants.MOVIES_API_KEY)
+                    .subscribeOn(movieSchedulers.getBackgroundScheduler())
+                    .observeOn(movieSchedulers.getUIScheduler())
+                    .subscribeWith(new DisposableObserver<Results<Movies>>() {
                         @Override
-                        public void onCompleted() {
+                        public void onComplete() {
                             Timber.d("onCompleted");
                         }
 
@@ -96,7 +97,7 @@ public class MovieListModelImp implements MovieListModelContract {
                         public void onNext(Results<Movies> movies) {
                             topRatedMovieResultsListener.onTopRatedMovieSuccess(movies);
                         }
-                    });
+                    }));
         }
     }
 
@@ -106,12 +107,12 @@ public class MovieListModelImp implements MovieListModelContract {
             movieDetailResultsListener.onFailure("Empty API Key");
         }
         else {
-            mSubscription = mMovieAPIService.getMovieByIdExt(movieId, Constants.MOVIES_API_KEY)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Subscriber<Movie>() {
+            compositeDisposable.add(mMovieAPIService.getMovieByIdExt(movieId, Constants.MOVIES_API_KEY)
+                    .subscribeOn(movieSchedulers.getBackgroundScheduler())
+                    .observeOn(movieSchedulers.getUIScheduler())
+                    .subscribeWith(new DisposableObserver<Movie>() {
                         @Override
-                        public void onCompleted() {
+                        public void onComplete() {
                             Timber.d("onCompleted");
                         }
 
@@ -126,7 +127,7 @@ public class MovieListModelImp implements MovieListModelContract {
                             movieDetailResultsListener.onSuccess(movie);
                             Timber.d("onNext");
                         }
-                    });
+                    }));
         }
     }
 
@@ -136,12 +137,12 @@ public class MovieListModelImp implements MovieListModelContract {
             movieSearchResultsListener.onSearchFailure("Empty API Key");
         }
         else {
-            mSubscription = mMovieAPIService.searchMovies(movieName, movieYear, Constants.MOVIES_API_KEY)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Subscriber<Results<Movies>>() {
+            compositeDisposable.add(mMovieAPIService.searchMovies(movieName, movieYear, Constants.MOVIES_API_KEY)
+                    .subscribeOn(movieSchedulers.getBackgroundScheduler())
+                    .observeOn(movieSchedulers.getUIScheduler())
+                    .subscribeWith(new DisposableObserver<Results<Movies>>() {
                         @Override
-                        public void onCompleted() {
+                        public void onComplete() {
                             Timber.d("onCompleted");
                         }
 
@@ -156,37 +157,13 @@ public class MovieListModelImp implements MovieListModelContract {
                             Timber.d("onNext");
                             movieSearchResultsListener.onSearchSuccess(moviesResults);
                         }
-                    });
+                    }));
         }
     }
 
     @Override
     public void releaseResources() {
         Timber.d("releaseResources");
-        if(mSubscription != null && !mSubscription.isUnsubscribed()) {
-            mSubscription.unsubscribe();
-            Timber.d("subscription released");
-        }
-    }
-
-    @Override
-    public Observable<Results<Movies>> getPopularMovies() {
-        return null;
+        compositeDisposable.clear();
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

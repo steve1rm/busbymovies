@@ -7,6 +7,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
+import io.reactivex.Observable;
 import me.androidbox.busbymovies.models.Movies;
 import me.androidbox.busbymovies.models.Results;
 import me.androidbox.busbymovies.models.Review;
@@ -14,12 +15,6 @@ import me.androidbox.busbymovies.models.Trailer;
 import me.androidbox.busbymovies.network.MovieAPIService;
 import me.androidbox.busbymovies.utils.Constants;
 import okhttp3.ResponseBody;
-import rx.Observable;
-import rx.Scheduler;
-import rx.android.plugins.RxAndroidPlugins;
-import rx.android.plugins.RxAndroidSchedulersHook;
-import rx.plugins.RxJavaHooks;
-import rx.schedulers.Schedulers;
 
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -45,21 +40,10 @@ public class MovieDetailModelImpTest {
     private MovieDetailModelContract mMovieDetailModelContract;
 
     @Before
-    public void setUp() throws Exception {
+    public void setup() throws Exception {
         MockitoAnnotations.initMocks(MovieDetailModelImpTest.this);
 
         mMovieDetailModelContract = new MovieDetailModelImp(mockMovieAPIService);
-
-        RxJavaHooks.setOnIOScheduler(scheduler -> Schedulers.immediate());
-
-        /* Override RxAndroid schedulers */
-        final RxAndroidPlugins rxAndroidPlugins = RxAndroidPlugins.getInstance();
-        rxAndroidPlugins.registerSchedulersHook(new RxAndroidSchedulersHook() {
-            @Override
-            public Scheduler getMainThreadScheduler() {
-                return Schedulers.immediate();
-            }
-        });
     }
 
     @Test
@@ -163,12 +147,4 @@ public class MovieDetailModelImpTest {
         verify(similarMovieResultsListener).onSimilarMovieFailure(anyString());
         verify(similarMovieResultsListener, never()).onSimilarMovieSuccess(moviesResults);
     }
-
-
-    @After
-    public void tearDown() throws Exception {
-        RxJavaHooks.reset();
-        RxAndroidPlugins.getInstance().reset();
-    }
-
 }

@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Priority;
 
 import me.androidbox.busbymovies.utils.GlideApp;
+import me.androidbox.busbymovies.utils.ImageLoader;
 
 /**
  * Created by steve on 9/19/17.
