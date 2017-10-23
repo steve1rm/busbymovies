@@ -7,6 +7,9 @@ import android.content.res.Resources
 import android.preference.PreferenceManager
 import dagger.Module
 import dagger.Provides
+import dagger.Reusable
+import me.androidbox.busbymovies.utils.MovieSchedulers
+import me.androidbox.busbymovies.utils.MovieSchedulersImp
 import javax.inject.Singleton
 
 /**
@@ -20,18 +23,20 @@ class AndroidModule(val application: Application) {
         context = application
     }
 
-    @Singleton
+    @Reusable
     @Provides
     fun providesContext(): Context = context
 
-    @Singleton
+    @Reusable
     @Provides
     fun providesResources(): Resources = context.resources
 
-    @Singleton
+    @Reusable
     @Provides
     fun providesSharedPreferences(): SharedPreferences =
             PreferenceManager.getDefaultSharedPreferences(this.context)
 
-
+    @Singleton
+    @Provides
+    fun providesMovieSchedulers(): MovieSchedulers = MovieSchedulersImp()
 }

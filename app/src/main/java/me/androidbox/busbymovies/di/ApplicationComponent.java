@@ -7,7 +7,6 @@ import me.androidbox.busbymovies.data.MovieFavouritePresenterImp;
 import me.androidbox.busbymovies.moviedetails.MovieActorsViewHolder;
 import me.androidbox.busbymovies.moviedetails.MovieDetailModelImp;
 import me.androidbox.busbymovies.moviedetails.MovieDetailPresenterImp;
-import me.androidbox.busbymovies.moviedetails.MovieDetailViewContract;
 import me.androidbox.busbymovies.moviedetails.MovieDetailViewImp;
 import me.androidbox.busbymovies.movielist.MovieListModelImp;
 import me.androidbox.busbymovies.movielist.MovieListPresenterImp;

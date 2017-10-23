@@ -11,7 +11,6 @@ import me.androidbox.busbymovies.models.Results;
 import me.androidbox.busbymovies.network.MovieAPIService;
 import me.androidbox.busbymovies.utils.Constants;
 import me.androidbox.busbymovies.utils.MovieSchedulers;
-import rx.Observable;
 import timber.log.Timber;
 
 /**
@@ -20,16 +19,22 @@ import timber.log.Timber;
 
 public class MovieListModelImp implements MovieListModelContract {
 
-    @Inject MovieAPIService mMovieAPIService;
+    private MovieAPIService mMovieAPIService;
     private MovieSchedulers movieSchedulers;
 
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
-    public MovieListModelImp() {
+    @Inject
+    public MovieListModelImp(final MovieAPIService movieAPIService, final MovieSchedulers movieSchedulers) {
+        this.mMovieAPIService = movieAPIService;
+        this.movieSchedulers = movieSchedulers;
+
+        /*
         DaggerInjector.getApplicationComponent().inject(MovieListModelImp.this);
         if(mMovieAPIService == null) {
             Timber.e("mMovieAPIService == null");
         }
+*/
     }
 
     public MovieListModelImp(MovieAPIService mMovieAPIService) {

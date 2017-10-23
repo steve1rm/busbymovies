@@ -10,8 +10,6 @@ import me.androidbox.busbymovies.data.MovieFavouriteModelContract;
 import me.androidbox.busbymovies.data.MovieFavouriteModelImp;
 import me.androidbox.busbymovies.moviedetails.MovieDetailModelContract;
 import me.androidbox.busbymovies.moviedetails.MovieDetailModelImp;
-import me.androidbox.busbymovies.movielist.MovieListModelContract;
-import me.androidbox.busbymovies.movielist.MovieListModelImp;
 
 /**
  * Created by steve on 2/19/17.
@@ -24,12 +22,12 @@ public class ModelModule {
         mApplication = application;
     }
 
-    @Provides
+   /* @Provides
     @Singleton
     public MovieListModelContract provideMovieListModel() {
         return new MovieListModelImp();
     }
-
+*/
     @Provides
     @Singleton
     public MovieDetailModelContract provideMovieDetailModel() {
