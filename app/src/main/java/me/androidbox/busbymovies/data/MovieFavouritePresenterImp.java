@@ -19,12 +19,15 @@ public class MovieFavouritePresenterImp implements
         MovieFavouriteModelContract.GetMovieFavourite,
         MovieFavouritesPresenterContract {
 
-    @Inject MovieFavouriteModelContract mMovieFavouriteModelContract;
+    private final MovieFavouriteModelContract mMovieFavouriteModelContract;
 
     private DbOperationsListener mDbOperationsListener = null;
 
-    public MovieFavouritePresenterImp() {
-        DaggerInjector.getApplicationComponent().inject(MovieFavouritePresenterImp.this);
+    @Inject
+    public MovieFavouritePresenterImp(final MovieFavouriteModelContract movieFavouriteModelContract) {
+        this.mMovieFavouriteModelContract = movieFavouriteModelContract;
+
+//        DaggerInjector.getApplicationComponent().inject(MovieFavouritePresenterImp.this);
     }
 
     @Override

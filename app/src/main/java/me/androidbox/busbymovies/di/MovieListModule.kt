@@ -1,7 +1,12 @@
 package me.androidbox.busbymovies.di
 
+import android.content.Context
 import dagger.Module
 import dagger.Provides
+import me.androidbox.busbymovies.data.MovieFavouriteModelContract
+import me.androidbox.busbymovies.data.MovieFavouriteModelImp
+import me.androidbox.busbymovies.data.MovieFavouritePresenterImp
+import me.androidbox.busbymovies.data.MovieFavouritesPresenterContract
 import me.androidbox.busbymovies.di.scopes.MovieListScope
 import me.androidbox.busbymovies.movielist.*
 import me.androidbox.busbymovies.network.MovieAPIService
@@ -15,14 +20,30 @@ class MovieListModule {
 
     @MovieListScope
     @Provides
-    fun providesMovieListPresenter(): MovieListPresenterContract<MovieListViewContract> {
-        return MovieListPresenterImp()
+    fun providesMovieListModel(movieApiService: MovieAPIService, movieSchedulers: MovieSchedulers): MovieListModelContract {
+        return MovieListModelImp(movieApiService, movieSchedulers)
     }
 
     @MovieListScope
     @Provides
-    fun providesMovieListModel(movieApiService: MovieAPIService, movieSchedulers: MovieSchedulers): MovieListModelContract {
-        return MovieListModelImp(movieApiService, movieSchedulers)
+    fun providesMovieListPresenter(movieListModelContract: MovieListModelContract)
+            : MovieListPresenterContract<MovieListViewContract> {
+
+        return MovieListPresenterImp(movieListModelContract)
+    }
+
+    @MovieListScope
+    @Provides
+    fun providesMovieFavouriteModel(context: Context): MovieFavouriteModelContract {
+        return MovieFavouriteModelImp(context)
+    }
+
+    @MovieListScope
+    @Provides
+    fun providesMovieFavouritesPresenter(movieFavouriteModelContract: MovieFavouriteModelContract)
+            : MovieFavouritesPresenterContract {
+
+        return MovieFavouritePresenterImp(movieFavouriteModelContract)
     }
 }
         

@@ -25,12 +25,12 @@ import me.androidbox.busbymovies.movielist.MovieListViewImp;
         PresenterDetailModule.class})
 
 public interface ApplicationComponent {
-    void inject(MovieListViewImp target);
+//    void inject(MovieListViewImp target);
     void inject(BusbyMoviesApplication target);
     void inject(MovieListModelImp target);
-    void inject(MovieListPresenterImp target);
+//    void inject(MovieListPresenterImp target);
     void inject(MovieDetailModelImp target);
-    void inject(MovieDetailViewImp target);
+//    void inject(MovieDetailViewImp target);
     void inject(MovieDetailPresenterImp target);
     void inject(MovieFavouritePresenterImp target);
     void inject(MovieListViewHolder target);

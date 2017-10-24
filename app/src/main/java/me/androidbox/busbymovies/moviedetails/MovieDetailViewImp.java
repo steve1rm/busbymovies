@@ -157,7 +157,8 @@ public class MovieDetailViewImp extends Fragment implements
             mMovieId = args.getInt(MOVIE_ID_KEY, -1);
             Timber.d("onActivityCreated %d", mMovieId);
 
-            DaggerInjector.getApplicationComponent().inject(MovieDetailViewImp.this);
+       //     DaggerInjector.getApplicationComponent().inject(MovieDetailViewImp.this);
+
             if(mMovieDetailPresenterImp != null) {
                 if(mMovieId != -1) {
                     mMovieDetailPresenterImp.attachView(MovieDetailViewImp.this);

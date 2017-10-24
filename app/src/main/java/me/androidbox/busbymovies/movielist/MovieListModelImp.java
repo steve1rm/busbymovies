@@ -4,7 +4,6 @@ import javax.inject.Inject;
 
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableObserver;
-import me.androidbox.busbymovies.di.DaggerInjector;
 import me.androidbox.busbymovies.models.Movie;
 import me.androidbox.busbymovies.models.Movies;
 import me.androidbox.busbymovies.models.Results;
@@ -28,13 +27,6 @@ public class MovieListModelImp implements MovieListModelContract {
     public MovieListModelImp(final MovieAPIService movieAPIService, final MovieSchedulers movieSchedulers) {
         this.mMovieAPIService = movieAPIService;
         this.movieSchedulers = movieSchedulers;
-
-        /*
-        DaggerInjector.getApplicationComponent().inject(MovieListModelImp.this);
-        if(mMovieAPIService == null) {
-            Timber.e("mMovieAPIService == null");
-        }
-*/
     }
 
     public MovieListModelImp(MovieAPIService mMovieAPIService) {

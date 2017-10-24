@@ -16,17 +16,21 @@ import me.androidbox.busbymovies.movielist.MovieListViewContract;
 
 @Module
 public class PresenterModule {
+/*
     @Provides
     @Singleton
     public MovieListPresenterContract<MovieListViewContract> provideMovieListPresenter() {
         return new MovieListPresenterImp();
     }
+*/
 
+/*
     @Provides
     @Singleton
     public MovieFavouritesPresenterContract provideMovieFavouritePresenter() {
         return new MovieFavouritePresenterImp();
     }
+*/
 
 
 
