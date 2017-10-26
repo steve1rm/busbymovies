@@ -56,7 +56,7 @@ public class MovieListModelImp implements MovieListModelContract {
 
                         @Override
                         public void onError(Throwable e) {
-                            Timber.e(e, "onError %d", e.getMessage());
+                            Timber.e(e, "onError %s", e.getMessage());
                             popularMovieResultsListener.onPopularMovieFailure(e.getMessage());
                         }
 

@@ -10,8 +10,16 @@ class BusbyMoviesMainApplication : Application() {
     private lateinit var appComponent: AppComponent
     private lateinit var movieListComponent: MovieListComponent
 
+    companion object {
+        private lateinit var instance: BusbyMoviesMainApplication
+
+        @JvmStatic
+        fun getBusbyInstance() = instance
+    }
+
     override fun onCreate() {
         super.onCreate()
+        instance = this
 
         Timber.plant(Timber.DebugTree())
 
@@ -21,7 +29,7 @@ class BusbyMoviesMainApplication : Application() {
 
     private fun createAppComponent(): AppComponent {
         return DaggerAppComponent.builder()
-                .apiModule(ApiModule())
+                .apiModule(ApiModule(this))
                 .androidModule(AndroidModule(this))
                 .build()
     }

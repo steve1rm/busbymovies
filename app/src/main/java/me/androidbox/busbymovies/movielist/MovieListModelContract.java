@@ -3,7 +3,6 @@ package me.androidbox.busbymovies.movielist;
 import me.androidbox.busbymovies.models.Movie;
 import me.androidbox.busbymovies.models.Movies;
 import me.androidbox.busbymovies.models.Results;
-import rx.Observable;
 
 /**
  * Created by steve on 2/19/17.

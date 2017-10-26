@@ -13,7 +13,7 @@ public class DaggerInjector {
                 .presenterModule(new PresenterModule())
                 .presenterDetailModule(new PresenterDetailModule())
                 .modelModule(new ModelModule(application))
-                .apiModule(new ApiModule())
+                .apiModule(new ApiModule(application))
                 .build();
     }
 

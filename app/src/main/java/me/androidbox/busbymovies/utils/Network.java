@@ -7,6 +7,7 @@ import android.net.NetworkInfo;
 import java.io.IOException;
 
 import me.androidbox.busbymovies.di.BusbyMoviesApplication;
+import me.androidbox.busbymovies.di.BusbyMoviesMainApplication;
 import timber.log.Timber;
 
 /**
@@ -16,7 +17,7 @@ import timber.log.Timber;
 public final class Network {
     public static boolean isConnectedToNetwork() {
         final ConnectivityManager connectivityManager =
-                (ConnectivityManager)BusbyMoviesApplication.getInstance().getSystemService(Context.CONNECTIVITY_SERVICE);
+                (ConnectivityManager) BusbyMoviesMainApplication.getBusbyInstance().getSystemService(Context.CONNECTIVITY_SERVICE);
         final NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
 
         return networkInfo != null && networkInfo.isConnectedOrConnecting();

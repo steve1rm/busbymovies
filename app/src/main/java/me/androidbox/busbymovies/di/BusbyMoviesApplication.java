@@ -12,6 +12,10 @@ import timber.log.Timber;
 public class BusbyMoviesApplication extends Application {
     private static BusbyMoviesApplication mBusbyMoviesApplication;
 
+    public static BusbyMoviesApplication getInstance() {
+        return mBusbyMoviesApplication;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -29,9 +33,6 @@ public class BusbyMoviesApplication extends Application {
         new DaggerInjector(mBusbyMoviesApplication);
     }
 
-    public static BusbyMoviesApplication getInstance() {
-        return mBusbyMoviesApplication;
-    }
 
     public String getBaseUrl() {
         return Constants.BASE_URL;
