@@ -26,19 +26,16 @@ import timber.log.Timber;
 
 public class MovieFavouriteModelImp implements MovieFavouriteModelContract {
     private MovieDbHelper mMovieDbHelper;
-    private WeakReference<Context> mContext;
+    private final WeakReference<Context> mContext;
 
-    /* Constructor injector */
     @Inject
-    public MovieFavouriteModelImp(Context context) {
+    public MovieFavouriteModelImp(final Context context) {
         mContext = new WeakReference<>(context);
     }
 
     @Override
     public void startup() {
-        if(mContext != null) {
-            mMovieDbHelper = new MovieDbHelper(mContext.get());
-        }
+        mMovieDbHelper = new MovieDbHelper(mContext.get());
     }
 
     @Override

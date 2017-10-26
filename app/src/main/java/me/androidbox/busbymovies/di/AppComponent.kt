@@ -13,4 +13,5 @@ interface AppComponent {
     fun inject(target: MovieListModelImp)
 
     fun add(movieListModule: MovieListModule): MovieListComponent
+    fun add(movieDetailModule: MovieDetailModule): MovieDetailComponent
 }

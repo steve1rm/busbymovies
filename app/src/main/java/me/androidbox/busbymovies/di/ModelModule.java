@@ -28,11 +28,14 @@ public class ModelModule {
         return new MovieListModelImp();
     }
 */
+
+/*
     @Provides
     @Singleton
     public MovieDetailModelContract provideMovieDetailModel() {
         return new MovieDetailModelImp();
     }
+*/
 
     @Provides
     @Singleton

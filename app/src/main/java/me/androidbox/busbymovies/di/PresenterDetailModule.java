@@ -19,11 +19,11 @@ import me.androidbox.busbymovies.moviedetails.MovieDetailViewContract;
 @Module
 public class PresenterDetailModule {
 
-    @Provides
+ /*   @Provides
     @Singleton
     public MovieDetailPresenterContract<MovieDetailViewContract> provideMovieDetailPresenter() {
         return new MovieDetailPresenterImp();
-    }
+    }*/
 
     @Provides
     @Singleton

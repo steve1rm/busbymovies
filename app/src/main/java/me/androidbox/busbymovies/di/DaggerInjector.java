@@ -9,13 +9,12 @@ public class DaggerInjector {
 
     /* Build dependency injection */
     public DaggerInjector(BusbyMoviesApplication application) {
-        sApplicationComponent = DaggerApplicationComponent.builder()
-                .presenterModule(new PresenterModule())
+ /*       sApplicationComponent = DaggerApplicationComponent.builder()
                 .presenterDetailModule(new PresenterDetailModule())
                 .modelModule(new ModelModule(application))
                 .apiModule(new ApiModule(application))
                 .build();
-    }
+ */   }
 
     public static ApplicationComponent getApplicationComponent() {
         return sApplicationComponent;

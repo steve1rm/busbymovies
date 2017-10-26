@@ -31,17 +31,8 @@ public class MovieDetailPresenterImp implements
         MovieDetailModelContract.SimilarMovieResultsListener {
 
     private MovieDetailViewContract mMovieDetailViewContract;
+    private MovieDetailModelContract mMovieDetailModelContract;
 
-    @Inject MovieDetailModelContract mMovieDetailModelContract;
-
-    public MovieDetailPresenterImp() {
-        DaggerInjector.getApplicationComponent().inject(MovieDetailPresenterImp.this);
-        if(mMovieDetailModelContract == null) {
-            Timber.e("mMovieDetailModelContract == null");
-        }
-    }
-
-    /** TODO Create an injection */
     public MovieDetailPresenterImp(final MovieDetailModelContract movieDetailModelContract) {
         this.mMovieDetailModelContract = movieDetailModelContract;
     }

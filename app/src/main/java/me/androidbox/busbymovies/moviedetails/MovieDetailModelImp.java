@@ -28,20 +28,15 @@ public class MovieDetailModelImp implements MovieDetailModelContract {
 
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
-    @Inject MovieAPIService mMovieAPIService;
-    private MovieSchedulers movieSchedulers;
+    private final MovieAPIService mMovieAPIService;
+    private final MovieSchedulers movieSchedulers;
 
-    public MovieDetailModelImp() {
-        DaggerInjector.getApplicationComponent().inject(MovieDetailModelImp.this);
+    @Inject
+    public MovieDetailModelImp(final MovieAPIService movieAPIService, final MovieSchedulers movieSchedulers) {
+    //    DaggerInjector.getApplicationComponent().inject(MovieDetailModelImp.this);
 
-        if(mMovieAPIService == null) {
-            Timber.e("mMovieAPIService == null");
-        }
-    }
-
-    /* Testing ONLY */
-    public MovieDetailModelImp(MovieAPIService movieAPIService) {
         this.mMovieAPIService = movieAPIService;
+        this.movieSchedulers = movieSchedulers;
     }
 
     @Override

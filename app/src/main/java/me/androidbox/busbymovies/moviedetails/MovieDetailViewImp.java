@@ -2,6 +2,7 @@ package me.androidbox.busbymovies.moviedetails;
 
 import android.animation.Animator;
 import android.animation.AnimatorInflater;
+import android.app.Application;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.res.ColorStateList;
@@ -50,6 +51,7 @@ import me.androidbox.busbymovies.adapters.MovieActorsAdapter;
 import me.androidbox.busbymovies.adapters.MovieTrailerAdapter;
 import me.androidbox.busbymovies.adapters.SimilarMovieAdapter;
 import me.androidbox.busbymovies.data.MovieFavouritesPresenterContract;
+import me.androidbox.busbymovies.di.BusbyMoviesMainApplication;
 import me.androidbox.busbymovies.di.DaggerInjector;
 import me.androidbox.busbymovies.models.Actor;
 import me.androidbox.busbymovies.models.Cast;
@@ -157,7 +159,10 @@ public class MovieDetailViewImp extends Fragment implements
             mMovieId = args.getInt(MOVIE_ID_KEY, -1);
             Timber.d("onActivityCreated %d", mMovieId);
 
-       //     DaggerInjector.getApplicationComponent().inject(MovieDetailViewImp.this);
+            BusbyMoviesMainApplication
+                    .getBusbyInstance()
+                    .getMovieDetailComponent()
+                    .inject(MovieDetailViewImp.this);
 
             if(mMovieDetailPresenterImp != null) {
                 if(mMovieId != -1) {
@@ -173,7 +178,7 @@ public class MovieDetailViewImp extends Fragment implements
                 }
             }
             else {
-                Timber.e("mMovieDetailPresenterIm == null");
+                Timber.e("mMovieDetailPresenterImp == null");
             }
         }
     }

@@ -7,11 +7,8 @@ import me.androidbox.busbymovies.data.MovieFavouritePresenterImp;
 import me.androidbox.busbymovies.moviedetails.MovieActorsViewHolder;
 import me.androidbox.busbymovies.moviedetails.MovieDetailModelImp;
 import me.androidbox.busbymovies.moviedetails.MovieDetailPresenterImp;
-import me.androidbox.busbymovies.moviedetails.MovieDetailViewImp;
 import me.androidbox.busbymovies.movielist.MovieListModelImp;
-import me.androidbox.busbymovies.movielist.MovieListPresenterImp;
 import me.androidbox.busbymovies.movielist.MovieListViewHolder;
-import me.androidbox.busbymovies.movielist.MovieListViewImp;
 
 /**
  * Created by steve on 2/18/17.
@@ -19,7 +16,6 @@ import me.androidbox.busbymovies.movielist.MovieListViewImp;
 
 @Singleton
 @Component(modules = {
-        PresenterModule.class,
         ModelModule.class,
         ApiModule.class,
         PresenterDetailModule.class})

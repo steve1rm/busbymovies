@@ -14,6 +14,7 @@ import me.androidbox.busbymovies.models.Review;
 import me.androidbox.busbymovies.models.Trailer;
 import me.androidbox.busbymovies.network.MovieAPIService;
 import me.androidbox.busbymovies.utils.Constants;
+import me.androidbox.busbymovies.utils.MovieSchedulers;
 import okhttp3.ResponseBody;
 
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -30,6 +31,7 @@ import static org.mockito.Mockito.when;
 public class MovieDetailModelImpTest {
 
     @Mock MovieAPIService mockMovieAPIService;
+    @Mock MovieSchedulers movieSchedulers;
     @Mock Observable<Review> mockCall;
     @Mock ResponseBody mockResponseBody;
     @Mock MovieDetailModelContract.MovieReviewsListener mockMovieReviewsListener;
@@ -43,7 +45,7 @@ public class MovieDetailModelImpTest {
     public void setup() throws Exception {
         MockitoAnnotations.initMocks(MovieDetailModelImpTest.this);
 
-        mMovieDetailModelContract = new MovieDetailModelImp(mockMovieAPIService);
+        mMovieDetailModelContract = new MovieDetailModelImp(mockMovieAPIService, movieSchedulers);
     }
 
     @Test

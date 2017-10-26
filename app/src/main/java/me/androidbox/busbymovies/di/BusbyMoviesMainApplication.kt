@@ -9,6 +9,7 @@ import timber.log.Timber
 class BusbyMoviesMainApplication : Application() {
     private lateinit var appComponent: AppComponent
     private lateinit var movieListComponent: MovieListComponent
+    private lateinit var movieDetailComponent: MovieDetailComponent
 
     companion object {
         private lateinit var instance: BusbyMoviesMainApplication
@@ -25,6 +26,7 @@ class BusbyMoviesMainApplication : Application() {
 
         appComponent = createAppComponent()
         movieListComponent = createMovieListComponent()
+        movieDetailComponent = createMovieDetailComponent()
     }
 
     private fun createAppComponent(): AppComponent {
@@ -40,5 +42,13 @@ class BusbyMoviesMainApplication : Application() {
 
     fun getMovieListComponent(): MovieListComponent {
         return movieListComponent
+    }
+
+    fun createMovieDetailComponent(): MovieDetailComponent {
+        return appComponent.add(MovieDetailModule())
+    }
+
+    fun getMovieDetailComponent(): MovieDetailComponent {
+        return movieDetailComponent
     }
 }
