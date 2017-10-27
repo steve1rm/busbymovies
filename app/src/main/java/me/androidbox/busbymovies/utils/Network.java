@@ -6,7 +6,6 @@ import android.net.NetworkInfo;
 
 import java.io.IOException;
 
-import me.androidbox.busbymovies.di.BusbyMoviesApplication;
 import me.androidbox.busbymovies.di.BusbyMoviesMainApplication;
 import timber.log.Timber;
 

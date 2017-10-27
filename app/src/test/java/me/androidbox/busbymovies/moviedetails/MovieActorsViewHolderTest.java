@@ -18,7 +18,7 @@ import org.robolectric.shadows.ShadowDrawable;
 
 import me.androidbox.busbymovies.BuildConfig;
 import me.androidbox.busbymovies.R;
-import me.androidbox.busbymovies.di.BusbyMoviesApplication;
+import me.androidbox.busbymovies.di.BusbyMoviesMainApplication;
 import me.androidbox.busbymovies.models.Actor;
 
 import static org.hamcrest.core.Is.is;
@@ -29,7 +29,7 @@ import static org.junit.Assert.assertThat;
  */
 @Config(packageName = "me.androidbox.busbymovies",
         sdk = Build.VERSION_CODES.LOLLIPOP,
-        application = BusbyMoviesApplication.class,
+        application = BusbyMoviesMainApplication.class,
         constants = BuildConfig.class)
 @RunWith(RobolectricTestRunner.class)
 public class MovieActorsViewHolderTest {

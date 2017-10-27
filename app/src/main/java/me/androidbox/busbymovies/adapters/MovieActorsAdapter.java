@@ -13,7 +13,6 @@ import me.androidbox.busbymovies.R;
 import me.androidbox.busbymovies.models.Actor;
 import me.androidbox.busbymovies.models.Cast;
 import me.androidbox.busbymovies.moviedetails.MovieActorsViewHolder;
-import me.androidbox.busbymovies.moviedetails.MovieActorsViewHolderFactory;
 
 /**
  * Created by steve on 9/16/17.
@@ -31,7 +30,7 @@ public class MovieActorsAdapter extends RecyclerView.Adapter<MovieActorsViewHold
         final View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.movie_actors_item, parent, false);
 
-        return new MovieActorsViewHolderFactory().create(view);
+        return new MovieActorsViewHolder(view);
     }
 
     @Override

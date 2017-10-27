@@ -2,6 +2,7 @@ package me.androidbox.busbymovies.di
 
 import dagger.Subcomponent
 import me.androidbox.busbymovies.di.scopes.MovieDetailScope
+import me.androidbox.busbymovies.moviedetails.MovieActorsViewHolder
 import me.androidbox.busbymovies.moviedetails.MovieDetailModelImp
 import me.androidbox.busbymovies.moviedetails.MovieDetailViewImp
 
@@ -13,4 +14,5 @@ import me.androidbox.busbymovies.moviedetails.MovieDetailViewImp
 interface MovieDetailComponent {
     fun inject(target: MovieDetailModelImp)
     fun inject(target: MovieDetailViewImp)
+    fun inject(target: MovieActorsViewHolder)
 }

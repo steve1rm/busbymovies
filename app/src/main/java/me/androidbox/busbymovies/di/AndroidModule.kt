@@ -8,6 +8,8 @@ import android.preference.PreferenceManager
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
+import me.androidbox.busbymovies.moviedetails.ImageLoaderImp
+import me.androidbox.busbymovies.utils.ImageLoader
 import me.androidbox.busbymovies.utils.MovieSchedulers
 import me.androidbox.busbymovies.utils.MovieSchedulersImp
 import javax.inject.Singleton
@@ -39,4 +41,8 @@ class AndroidModule(val application: Application) {
     @Singleton
     @Provides
     fun providesMovieSchedulers(): MovieSchedulers = MovieSchedulersImp()
+
+    @Singleton
+    @Provides
+    fun providesImageLoader(): ImageLoader = ImageLoaderImp()
 }

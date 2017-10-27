@@ -1,6 +1,7 @@
 package me.androidbox.busbymovies.di
 
 import dagger.Component
+import me.androidbox.busbymovies.moviedetails.MovieActorsViewHolder
 import me.androidbox.busbymovies.movielist.MovieListModelImp
 import javax.inject.Singleton
 
@@ -10,8 +11,6 @@ import javax.inject.Singleton
 @Singleton
 @Component(modules = arrayOf(ApiModule::class, AndroidModule::class))
 interface AppComponent {
-    fun inject(target: MovieListModelImp)
-
     fun add(movieListModule: MovieListModule): MovieListComponent
     fun add(movieDetailModule: MovieDetailModule): MovieDetailComponent
 }

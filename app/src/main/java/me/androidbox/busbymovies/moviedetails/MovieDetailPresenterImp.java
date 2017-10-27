@@ -2,11 +2,6 @@ package me.androidbox.busbymovies.moviedetails;
 
 import android.support.annotation.VisibleForTesting;
 
-import java.util.List;
-
-import javax.inject.Inject;
-
-import me.androidbox.busbymovies.di.DaggerInjector;
 import me.androidbox.busbymovies.models.Actor;
 import me.androidbox.busbymovies.models.Cast;
 import me.androidbox.busbymovies.models.Movie;
@@ -14,7 +9,6 @@ import me.androidbox.busbymovies.models.Movies;
 import me.androidbox.busbymovies.models.Results;
 import me.androidbox.busbymovies.models.Review;
 import me.androidbox.busbymovies.models.Trailer;
-import me.androidbox.busbymovies.movielist.MovieListModelContract;
 import me.androidbox.busbymovies.utils.Misc;
 import timber.log.Timber;
 
