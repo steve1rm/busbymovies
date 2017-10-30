@@ -35,8 +35,8 @@ public class MovieActorsViewHolder extends RecyclerView.ViewHolder {
 
         ButterKnife.bind(this, itemView);
 
-        this.context = itemView.getContext();
         this.imageLoader = imageLoader;
+        this.context = itemView.getContext();
     }
 
     public void populateActor(Actor actor) {
