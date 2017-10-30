@@ -49,6 +49,7 @@ public class MovieActorsAdapter extends RecyclerView.Adapter<MovieActorsViewHold
     public void populateActors(Cast<Actor> actorList) {
         this.actorList.clear();
         this.actorList.addAll(actorList.getCast());
+
         notifyItemRangeInserted(0, this.actorList.size());
     }
 }

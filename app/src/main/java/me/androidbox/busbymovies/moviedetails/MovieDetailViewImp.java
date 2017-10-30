@@ -134,6 +134,10 @@ public class MovieDetailViewImp extends Fragment implements
 
         mUnbinder = ButterKnife.bind(MovieDetailViewImp.this, view);
 
+        ((BusbyMoviesMainApplication)getActivity().getApplication())
+                .getMovieDetailComponent()
+                .inject(MovieDetailViewImp.this);
+
         setupToolBar();
         setupBottomSheet();
         setupActorAdapter();
@@ -157,10 +161,6 @@ public class MovieDetailViewImp extends Fragment implements
         if(args != null) {
             mMovieId = args.getInt(MOVIE_ID_KEY, -1);
             Timber.d("onActivityCreated %d", mMovieId);
-
-            ((BusbyMoviesMainApplication)getActivity().getApplication())
-                    .getMovieDetailComponent()
-                    .inject(MovieDetailViewImp.this);
 
             if(mMovieDetailPresenterImp != null) {
                 if(mMovieId != -1) {
