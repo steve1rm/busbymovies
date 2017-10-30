@@ -60,6 +60,7 @@ import me.androidbox.busbymovies.models.Trailer;
 import me.androidbox.busbymovies.moviereviews.MovieReviewsDialog;
 import me.androidbox.busbymovies.utils.Constants;
 import me.androidbox.busbymovies.utils.GlideApp;
+import me.androidbox.busbymovies.utils.ImageLoader;
 import me.androidbox.busbymovies.utils.MovieImage;
 import timber.log.Timber;
 
@@ -82,10 +83,11 @@ public class MovieDetailViewImp extends Fragment implements
     private BottomSheetBehavior<FrameLayout> mBottomSheetBehavior;
     private int mMovieId;
 
-    private MovieActorsAdapter movieActorsAdapter;
     private SimilarMovieAdapter similarMovieAdapter;
+    @Inject MovieActorsAdapter movieActorsAdapter;
     @Inject MovieDetailPresenterContract<MovieDetailViewContract> mMovieDetailPresenterImp;
     @Inject MovieFavouritesPresenterContract mMovieFavouritePresenterContact;
+    @Inject ImageLoader imageLoader;
 
     @BindView(R.id.ivBackdropPoster) ImageView mIvBackdropPoster;
     @BindView(R.id.tvTagLine) TextView mTvTagLine;
@@ -156,8 +158,7 @@ public class MovieDetailViewImp extends Fragment implements
             mMovieId = args.getInt(MOVIE_ID_KEY, -1);
             Timber.d("onActivityCreated %d", mMovieId);
 
-            BusbyMoviesMainApplication
-                    .getBusbyInstance()
+            ((BusbyMoviesMainApplication)getActivity().getApplication())
                     .getMovieDetailComponent()
                     .inject(MovieDetailViewImp.this);
 
@@ -184,7 +185,6 @@ public class MovieDetailViewImp extends Fragment implements
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         rvMovieActors.setLayoutManager(linearLayoutManager);
         rvMovieActors.setHasFixedSize(true);
-        movieActorsAdapter = new MovieActorsAdapter();
         rvMovieActors.setAdapter(movieActorsAdapter);
     }
 

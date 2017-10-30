@@ -3,6 +3,7 @@ package me.androidbox.busbymovies.di
 import android.content.Context
 import dagger.Module
 import dagger.Provides
+import me.androidbox.busbymovies.adapters.MovieActorsAdapter
 import me.androidbox.busbymovies.data.MovieFavouriteModelContract
 import me.androidbox.busbymovies.data.MovieFavouriteModelImp
 import me.androidbox.busbymovies.data.MovieFavouritePresenterImp
@@ -10,6 +11,7 @@ import me.androidbox.busbymovies.data.MovieFavouritesPresenterContract
 import me.androidbox.busbymovies.di.scopes.MovieDetailScope
 import me.androidbox.busbymovies.moviedetails.*
 import me.androidbox.busbymovies.network.MovieAPIService
+import me.androidbox.busbymovies.utils.ImageLoader
 import me.androidbox.busbymovies.utils.MovieSchedulers
 
 /**
@@ -43,5 +45,11 @@ class MovieDetailModule {
     fun providesMovieFavouritePresenter(movieModelFavouriteModelContract: MovieFavouriteModelContract)
             : MovieFavouritesPresenterContract {
         return MovieFavouritePresenterImp(movieModelFavouriteModelContract)
+    }
+
+    @MovieDetailScope
+    @Provides
+    fun providesMovieActorsAdapter(imageLoader: ImageLoader): MovieActorsAdapter {
+        return MovieActorsAdapter(imageLoader)
     }
 }

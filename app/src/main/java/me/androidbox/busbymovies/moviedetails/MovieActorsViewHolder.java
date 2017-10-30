@@ -27,27 +27,16 @@ public class MovieActorsViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.tvName) TextView name;
     @BindView(R.id.tvCharacter) TextView character;
 
-    @Inject ImageLoader imageLoader;
-    private Context context;
+    private final Context context;
+    private final ImageLoader imageLoader;
 
-    public MovieActorsViewHolder(View itemView) {
+    public MovieActorsViewHolder(final View itemView, final ImageLoader imageLoader) {
         super(itemView);
+
         ButterKnife.bind(this, itemView);
 
-     //   DaggerInjector.getApplicationComponent().inject(MovieActorsViewHolder.this);
-        // this.imageLoader = imageLoader;
-
-        BusbyMoviesMainApplication.getBusbyInstance()
-                .getMovieDetailComponent()
-                .inject(MovieActorsViewHolder.this);
-
-/*
-        ((BusbyMoviesMainApplication) Application)
-                .getMovieDetailComponent()
-                .inject(MovieActorsViewHolder.this);
-*/
-
         this.context = itemView.getContext();
+        this.imageLoader = imageLoader;
     }
 
     public void populateActor(Actor actor) {
