@@ -37,6 +37,7 @@ public class ApiModule {
         this.application = application;
     }
 
+    @Singleton
     @Provides
     public OkHttpClient provideLoggingCapableHttpClient() {
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
@@ -70,8 +71,6 @@ public class ApiModule {
     /* Create and stores cache on the device for up to 10MB */
     private Cache provideCache() {
         Cache cache = null;
-
-        final File file = BusbyMoviesMainApplication.getBusbyInstance().getCacheDir();
 
         try {
             cache = new Cache(

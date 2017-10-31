@@ -20,7 +20,9 @@ class MovieListModule {
 
     @MovieListScope
     @Provides
-    fun providesMovieListModel(movieApiService: MovieAPIService, movieSchedulers: MovieSchedulers): MovieListModelContract {
+    fun providesMovieListModel(movieApiService: MovieAPIService, movieSchedulers: MovieSchedulers)
+            : MovieListModelContract {
+
         return MovieListModelImp(movieApiService, movieSchedulers)
     }
 
