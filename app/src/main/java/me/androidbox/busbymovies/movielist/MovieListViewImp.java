@@ -31,7 +31,7 @@ import butterknife.Unbinder;
 import me.androidbox.busbymovies.R;
 import me.androidbox.busbymovies.adapters.MovieAdapter;
 import me.androidbox.busbymovies.data.MovieFavouritesPresenterContract;
-import me.androidbox.busbymovies.di.DaggerInjector;
+import me.androidbox.busbymovies.di.BusbyMoviesMainApplication;
 import me.androidbox.busbymovies.models.Movie;
 import me.androidbox.busbymovies.models.Movies;
 import me.androidbox.busbymovies.models.Results;
@@ -94,7 +94,9 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        DaggerInjector.getApplicationComponent().inject(MovieListViewImp.this);
+        ((BusbyMoviesMainApplication)getActivity().getApplication())
+                .getMovieListComponent()
+                .inject(this);
 
         if(mMovieListPresenterImp != null) {
             Timber.d("mMovieListPresenterImp != null");

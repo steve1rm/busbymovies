@@ -7,7 +7,6 @@ import android.support.v4.util.Preconditions;
 
 import javax.inject.Inject;
 
-import me.androidbox.busbymovies.di.DaggerInjector;
 import me.androidbox.busbymovies.models.Movies;
 import me.androidbox.busbymovies.models.Results;
 import timber.log.Timber;
@@ -23,16 +22,19 @@ public class MovieListPresenterImp implements
         MovieListModelContract.MovieSearchResultsListener {
 
     @VisibleForTesting MovieListViewContract mMovieListViewContract;
-    @Inject MovieListModelContract mMovieModelContract;
+    private final MovieListModelContract mMovieModelContract;
 
-    public MovieListPresenterImp() {
-        DaggerInjector.getApplicationComponent().inject(MovieListPresenterImp.this);
+    @Inject
+    public MovieListPresenterImp(final MovieListModelContract movieListModelContract) {
+        this.mMovieModelContract = movieListModelContract;
     }
 
     /** Running Junit Testing only */
+/*
     @VisibleForTesting MovieListPresenterImp(MovieListModelContract mMovieModelContract) {
         this.mMovieModelContract = mMovieModelContract;
     }
+*/
 
     /**
      * Attach the view to the presenter

@@ -13,7 +13,7 @@ import me.androidbox.busbymovies.R;
 import me.androidbox.busbymovies.models.Actor;
 import me.androidbox.busbymovies.models.Cast;
 import me.androidbox.busbymovies.moviedetails.MovieActorsViewHolder;
-import me.androidbox.busbymovies.moviedetails.MovieActorsViewHolderFactory;
+import me.androidbox.busbymovies.utils.ImageLoader;
 
 /**
  * Created by steve on 9/16/17.
@@ -21,9 +21,11 @@ import me.androidbox.busbymovies.moviedetails.MovieActorsViewHolderFactory;
 
 public class MovieActorsAdapter extends RecyclerView.Adapter<MovieActorsViewHolder> {
     private List<Actor> actorList = Collections.emptyList();
+    private final ImageLoader imageLoader;
 
-    public MovieActorsAdapter() {
+    public MovieActorsAdapter(final ImageLoader imageLoader) {
         this.actorList = new ArrayList<>();
+        this.imageLoader = imageLoader;
     }
 
     @Override
@@ -31,7 +33,7 @@ public class MovieActorsAdapter extends RecyclerView.Adapter<MovieActorsViewHold
         final View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.movie_actors_item, parent, false);
 
-        return new MovieActorsViewHolderFactory().create(view);
+        return new MovieActorsViewHolder(view, imageLoader);
     }
 
     @Override
@@ -46,7 +48,9 @@ public class MovieActorsAdapter extends RecyclerView.Adapter<MovieActorsViewHold
 
     public void populateActors(Cast<Actor> actorList) {
         this.actorList.clear();
+        notifyDataSetChanged();
         this.actorList.addAll(actorList.getCast());
+
         notifyItemRangeInserted(0, this.actorList.size());
     }
 }

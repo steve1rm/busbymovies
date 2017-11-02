@@ -7,38 +7,36 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Priority;
-import com.google.auto.factory.AutoFactory;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.androidbox.busbymovies.R;
-import me.androidbox.busbymovies.di.DaggerInjector;
+import me.androidbox.busbymovies.di.BusbyMoviesMainApplication;
 import me.androidbox.busbymovies.models.Actor;
-import me.androidbox.busbymovies.utils.GlideApp;
+import me.androidbox.busbymovies.utils.ImageLoader;
 import me.androidbox.busbymovies.utils.MovieImage;
 
 /**
  * Created by steve on 9/16/17.
  */
 
-@AutoFactory
 public class MovieActorsViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.civActorPicture) ImageView actorPicture;
     @BindView(R.id.tvName) TextView name;
     @BindView(R.id.tvCharacter) TextView character;
 
-    @Inject ImageLoader imageLoader;
-    private Context context;
+    private final Context context;
+    private final ImageLoader imageLoader;
 
-    public MovieActorsViewHolder(View itemView) {
+    public MovieActorsViewHolder(final View itemView, final ImageLoader imageLoader) {
         super(itemView);
+
         ButterKnife.bind(this, itemView);
 
-        DaggerInjector.getApplicationComponent().inject(MovieActorsViewHolder.this);
-
-        context = itemView.getContext();
+        this.imageLoader = imageLoader;
+        this.context = itemView.getContext();
     }
 
     public void populateActor(Actor actor) {

@@ -30,7 +30,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.MultiTransformation;
 import com.google.android.youtube.player.YouTubeInitializationResult;
@@ -50,7 +49,7 @@ import me.androidbox.busbymovies.adapters.MovieActorsAdapter;
 import me.androidbox.busbymovies.adapters.MovieTrailerAdapter;
 import me.androidbox.busbymovies.adapters.SimilarMovieAdapter;
 import me.androidbox.busbymovies.data.MovieFavouritesPresenterContract;
-import me.androidbox.busbymovies.di.DaggerInjector;
+import me.androidbox.busbymovies.di.BusbyMoviesMainApplication;
 import me.androidbox.busbymovies.models.Actor;
 import me.androidbox.busbymovies.models.Cast;
 import me.androidbox.busbymovies.models.Movie;
@@ -61,6 +60,7 @@ import me.androidbox.busbymovies.models.Trailer;
 import me.androidbox.busbymovies.moviereviews.MovieReviewsDialog;
 import me.androidbox.busbymovies.utils.Constants;
 import me.androidbox.busbymovies.utils.GlideApp;
+import me.androidbox.busbymovies.utils.ImageLoader;
 import me.androidbox.busbymovies.utils.MovieImage;
 import timber.log.Timber;
 
@@ -83,10 +83,11 @@ public class MovieDetailViewImp extends Fragment implements
     private BottomSheetBehavior<FrameLayout> mBottomSheetBehavior;
     private int mMovieId;
 
-    private MovieActorsAdapter movieActorsAdapter;
     private SimilarMovieAdapter similarMovieAdapter;
+    @Inject MovieActorsAdapter movieActorsAdapter;
     @Inject MovieDetailPresenterContract<MovieDetailViewContract> mMovieDetailPresenterImp;
     @Inject MovieFavouritesPresenterContract mMovieFavouritePresenterContact;
+    @Inject ImageLoader imageLoader;
 
     @BindView(R.id.ivBackdropPoster) ImageView mIvBackdropPoster;
     @BindView(R.id.tvTagLine) TextView mTvTagLine;
@@ -133,6 +134,10 @@ public class MovieDetailViewImp extends Fragment implements
 
         mUnbinder = ButterKnife.bind(MovieDetailViewImp.this, view);
 
+        ((BusbyMoviesMainApplication)getActivity().getApplication())
+                .getMovieDetailComponent()
+                .inject(MovieDetailViewImp.this);
+
         setupToolBar();
         setupBottomSheet();
         setupActorAdapter();
@@ -157,7 +162,6 @@ public class MovieDetailViewImp extends Fragment implements
             mMovieId = args.getInt(MOVIE_ID_KEY, -1);
             Timber.d("onActivityCreated %d", mMovieId);
 
-            DaggerInjector.getApplicationComponent().inject(MovieDetailViewImp.this);
             if(mMovieDetailPresenterImp != null) {
                 if(mMovieId != -1) {
                     mMovieDetailPresenterImp.attachView(MovieDetailViewImp.this);
@@ -172,7 +176,7 @@ public class MovieDetailViewImp extends Fragment implements
                 }
             }
             else {
-                Timber.e("mMovieDetailPresenterIm == null");
+                Timber.e("mMovieDetailPresenterImp == null");
             }
         }
     }
@@ -181,7 +185,6 @@ public class MovieDetailViewImp extends Fragment implements
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         rvMovieActors.setLayoutManager(linearLayoutManager);
         rvMovieActors.setHasFixedSize(true);
-        movieActorsAdapter = new MovieActorsAdapter();
         rvMovieActors.setAdapter(movieActorsAdapter);
     }
 
