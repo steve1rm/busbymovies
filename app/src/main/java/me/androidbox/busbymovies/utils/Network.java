@@ -28,7 +28,8 @@ public final class Network implements IConnectivityProvider {
         return networkInfo != null && networkInfo.isConnected();
     }
 
-    public static boolean isOnline() {
+    @Override
+    public boolean isOnline() {
         final Runtime runtime = Runtime.getRuntime();
         boolean hasConnected = false;
 
