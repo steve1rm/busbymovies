@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.google.common.base.Preconditions;
 
@@ -44,6 +45,7 @@ public final class Network implements IConnectivityProvider {
         return hasConnected;
     }
 
+
     private @NonNull final ConnectivityManager connectivityManager;
 
     public Network(@NonNull final ConnectivityManager connectivityManager) {
@@ -57,9 +59,33 @@ public final class Network implements IConnectivityProvider {
         return networkInfo != null && networkInfo.isConnected();
     }
 
-    @NotNull
+    @Nullable
     @Override
     public TYPE getType() {
-        return null;
+        final NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+
+        if(networkInfo == null) {
+            return null;
+        }
+        else {
+            final TYPE type;
+
+            switch(networkInfo.getType()) {
+                case ConnectivityManager.TYPE_MOBILE: {
+                    type = TYPE.MOBILE;
+                }
+                break;
+
+                case ConnectivityManager.TYPE_WIFI: {
+                    type = TYPE.WIFI;
+                }
+                break;
+
+                default:
+                    type = TYPE.OTHER;
+            }
+
+            return type;
+        }
     }
 }
