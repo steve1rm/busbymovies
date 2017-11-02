@@ -9,7 +9,7 @@
     <ImageView
         android:id="@+id/civActorPicture"
         android:layout_width="wrap_content"
-        android:layout_height="140dp"
+        android:layout_height="@dimen/thumbnail_height"
         android:layout_gravity="center"
         android:adjustViewBounds="true"
         android:scaleType="fitXY"

@@ -3,7 +3,6 @@ package me.androidbox.busbymovies.movielist;
 import me.androidbox.busbymovies.models.Movie;
 import me.androidbox.busbymovies.models.Movies;
 import me.androidbox.busbymovies.models.Results;
-import rx.Observable;
 
 /**
  * Created by steve on 2/19/17.
@@ -39,7 +38,4 @@ public interface MovieListModelContract {
         void onSearchSuccess(final Results<Movies> searchMovies);
     }
     void searchForMovies(final String movieName, final int movieYear, MovieSearchResultsListener movieSearchResultsListener);
-
-    /** Testing only */
-    Observable<Results<Movies>> getPopularMovies();
 }

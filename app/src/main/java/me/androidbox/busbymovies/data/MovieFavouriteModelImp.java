@@ -26,19 +26,16 @@ import timber.log.Timber;
 
 public class MovieFavouriteModelImp implements MovieFavouriteModelContract {
     private MovieDbHelper mMovieDbHelper;
-    private WeakReference<Context> mContext;
+    private final WeakReference<Context> mContext;
 
-    /* Constructor injector */
     @Inject
-    public MovieFavouriteModelImp(Context context) {
+    public MovieFavouriteModelImp(final Context context) {
         mContext = new WeakReference<>(context);
     }
 
     @Override
     public void startup() {
-        if(mContext != null) {
-            mMovieDbHelper = new MovieDbHelper(mContext.get());
-        }
+        mMovieDbHelper = new MovieDbHelper(mContext.get());
     }
 
     @Override
@@ -227,6 +224,7 @@ public class MovieFavouriteModelImp implements MovieFavouriteModelContract {
                         cursor.getString(cursor.getColumnIndex(MovieEntry.TITLE)),
                         cursor.getString(cursor.getColumnIndex(MovieEntry.BACKDROP_PATH)),
                         cursor.getFloat(cursor.getColumnIndex(MovieEntry.VOTE_AVERAGE)),
+                        cursor.getFloat(cursor.getColumnIndex(MovieEntry.VOTE_COUNT)),
                         cursor.getString(cursor.getColumnIndex(MovieEntry.TAGLINE)),
                         cursor.getString(cursor.getColumnIndex(MovieEntry.HOMEPATH)),
                         cursor.getInt(cursor.getColumnIndex(MovieEntry.RUNTIME)));

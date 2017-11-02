@@ -1,5 +1,6 @@
 package me.androidbox.busbymovies.network;
 
+import io.reactivex.Observable;
 import me.androidbox.busbymovies.models.Actor;
 import me.androidbox.busbymovies.models.Cast;
 import me.androidbox.busbymovies.models.Movie;
@@ -10,7 +11,7 @@ import me.androidbox.busbymovies.models.Trailer;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
-import rx.Observable;
+
 
 /**
  * Created by steve on 2/18/17.
@@ -45,6 +46,6 @@ public interface MovieAPIService {
     Observable<Results<Movies>> searchMovies(@Query("query") final String movieName, @Query("year") final int movieYear, @Query("api_key") String apiKey);
 
     @GET("movie/{movie_id}/similar")
-    Observable<Results<Movies>> getSimilarMovies(@Path("movid_id") final int movieId, @Query("api_key") final String apiKey);
+    Observable<Results<Movies>> getSimilarMovies(@Path("movie_id") final int movieId, @Query("api_key") final String apiKey);
 }
 

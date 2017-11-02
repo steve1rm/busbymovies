@@ -9,5 +9,6 @@
     <string name="search">Search</string>
     <string name="clear">Clear</string>
     <string name="movie_search">Movie Search</string>
+    <string name="similar_movies">Similar Movies</string>
 
 </resources>

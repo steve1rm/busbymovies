@@ -10,6 +10,8 @@ import android.widget.LinearLayout;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.Shadows;
 import org.robolectric.annotation.Config;
@@ -18,8 +20,9 @@ import org.robolectric.shadows.ShadowDrawable;
 
 import me.androidbox.busbymovies.BuildConfig;
 import me.androidbox.busbymovies.R;
-import me.androidbox.busbymovies.di.BusbyMoviesApplication;
+import me.androidbox.busbymovies.di.BusbyMoviesMainApplication;
 import me.androidbox.busbymovies.models.Actor;
+import me.androidbox.busbymovies.utils.ImageLoader;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -29,18 +32,22 @@ import static org.junit.Assert.assertThat;
  */
 @Config(packageName = "me.androidbox.busbymovies",
         sdk = Build.VERSION_CODES.LOLLIPOP,
-        application = BusbyMoviesApplication.class,
+        application = BusbyMoviesMainApplication.class,
         constants = BuildConfig.class)
 @RunWith(RobolectricTestRunner.class)
 public class MovieActorsViewHolderTest {
     private MovieActorsViewHolder movieActorsViewHolder;
+
+    private ImageLoader imageLoader;
 
     @Before
     public void setup() {
         final Context context = ShadowApplication.getInstance().getApplicationContext();
         final View view = LayoutInflater.from(context).inflate(R.layout.movie_actors_item, new LinearLayout(context));
 
-        movieActorsViewHolder = new MovieActorsViewHolder(view);
+        this.imageLoader = Mockito.mock(ImageLoader.class);
+
+        movieActorsViewHolder = new MovieActorsViewHolder(view, imageLoader);
     }
 
     @Test
