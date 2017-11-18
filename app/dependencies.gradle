@@ -1,0 +1,98 @@
+
+def dependencyGroup(Closure closure) {
+    closure.delegate = dependencies
+    return closure
+}
+
+def logging = dependencyGroup {
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.9.0'
+    implementation 'com.jakewharton.timber:timber:4.5.1'
+}
+
+def supportLibraries = dependencyGroup {
+    def supportVersion = "27.0.1"
+    implementation "com.android.support:appcompat-v7:${supportVersion}"
+    implementation "com.android.support:support-v4:${supportVersion}"
+    implementation "com.android.support:design:${supportVersion}"
+    implementation "com.android.support:palette-v7:${supportVersion}"
+    implementation "com.android.support:support-vector-drawable:${supportVersion}"
+    implementation "com.android.support:animated-vector-drawable:${supportVersion}"
+    implementation "com.android.support:customtabs:${supportVersion}"
+    implementation "com.android.support:cardview-v7:${supportVersion}"
+    implementation "com.android.support:gridlayout-v7:${supportVersion}"
+}
+
+def dependencyInjection = dependencyGroup {
+    def daggerVersion = "2.11"
+    def butterKnifeVersion = "8.8.1"
+
+    implementation 'com.jakewharton:butterknife:' + butterKnifeVersion
+    kapt 'com.jakewharton:butterknife-compiler:' + butterKnifeVersion
+
+    implementation 'com.google.dagger:dagger:' + daggerVersion
+    kapt 'com.google.dagger:dagger-compiler:' + daggerVersion
+    compileOnly 'javax.annotation:jsr250-api:1.0'
+
+    compileOnly 'com.google.auto.factory:auto-factory:1.0-beta5'
+    annotationProcessor 'com.google.auto.factory:auto-factory:1.0-beta5'
+    implementation 'com.f2prateek.dart:dart:2.0.2'
+    kapt 'com.f2prateek.dart:dart-processor:2.0.2'
+    implementation 'com.f2prateek.dart:henson:2.0.2'
+    kapt 'com.f2prateek.dart:henson-processor:2.0.2'
+}
+
+def UITesting = dependencyGroup {
+    androidTestImplementation 'com.squareup.okhttp3:mockwebserver:3.6.0'
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    androidTestImplementation('com.jakewharton.espresso:okhttp3-idling-resource:1.0.0', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+        exclude group: 'com.squareup.okio', module: 'okio'
+        exclude group: 'com.squareup.okhttp3', module: 'okhttp'
+    })
+}
+
+def UnitTesting = dependencyGroup {
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.mockito:mockito-core:2.11.0'
+    testImplementation 'org.robolectric:robolectric:3.4.2'
+}
+
+def network = dependencyGroup {
+    def retrofitVersion = '2.3.0'
+
+    implementation 'com.squareup.retrofit2:retrofit:' + retrofitVersion
+    implementation 'com.squareup.retrofit2:converter-gson:' + retrofitVersion
+    implementation 'com.squareup.okhttp3:okhttp:3.9.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:' + retrofitVersion
+
+    /* Because RxAndroid releases are few and far between, it is recommended you also
+                 * explicitly depend on RxJava's latest version for bug fixes and new features */
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.6'
+}
+
+def media = dependencyGroup {
+    implementation 'com.squareup.picasso:picasso:2.5.2'
+    implementation 'com.github.bumptech.glide:glide:4.2.0'
+    kapt 'com.github.bumptech.glide:compiler:4.2.0'
+    implementation 'jp.wasabeef:glide-transformations:3.0.1'
+    implementation 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'
+    implementation 'com.wonderkiln:blurkit:1.0.0'
+    compile files('libs/YouTubeAndroidPlayerApi.jar')
+    implementation 'de.hdodenhof:circleimageview:2.1.0'
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+
+    logging()
+    supportLibraries()
+    dependencyInjection()
+    UITesting()
+    UnitTesting()
+    network()
+    media()
+}

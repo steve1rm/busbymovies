@@ -13,7 +13,6 @@ import me.androidbox.busbymovies.BuildConfig;
 import me.androidbox.busbymovies.network.MovieAPIService;
 import me.androidbox.busbymovies.utils.Constants;
 import me.androidbox.busbymovies.utils.IConnectivityProvider;
-import me.androidbox.busbymovies.utils.Network;
 import okhttp3.Cache;
 import okhttp3.CacheControl;
 import okhttp3.Interceptor;
