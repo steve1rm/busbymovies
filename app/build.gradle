@@ -46,6 +46,7 @@ android {
         abortOnError = false
     }
 }
+
 apply from: "dependencies.gradle"
 
 repositories {
