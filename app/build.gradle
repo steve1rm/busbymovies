@@ -4,8 +4,8 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "26.0.2"
+    compileSdkVersion 27
+    buildToolsVersion '27.0.1'
 
     dexOptions {
         maxProcessCount 2
@@ -111,7 +111,7 @@ dependencies {
      ****************************************************************/
 
     /* Because RxAndroid releases are few and far between, it is recommended you also
-                         * explicitly depend on RxJava's latest version for bug fixes and new features */
+                             * explicitly depend on RxJava's latest version for bug fixes and new features */
     compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
     implementation 'io.reactivex.rxjava2:rxjava:2.1.5'
