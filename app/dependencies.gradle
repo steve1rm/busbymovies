@@ -54,9 +54,13 @@ def UITesting = dependencyGroup {
 }
 
 def UnitTesting = dependencyGroup {
+    def daggerVersion = "2.11"
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.mockito:mockito-core:2.11.0'
     testImplementation 'org.robolectric:robolectric:3.4.2'
+
+    kaptTest 'com.google.dagger:dagger-compiler:' + daggerVersion
+    testImplementation 'com.google.dagger:dagger:' + daggerVersion
 }
 
 def network = dependencyGroup {

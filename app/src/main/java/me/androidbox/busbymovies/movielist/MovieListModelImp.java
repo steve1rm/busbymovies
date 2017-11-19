@@ -1,7 +1,5 @@
 package me.androidbox.busbymovies.movielist;
 
-import javax.inject.Inject;
-
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableObserver;
 import me.androidbox.busbymovies.models.Movie;
@@ -23,14 +21,9 @@ public class MovieListModelImp implements MovieListModelContract {
 
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
-    @Inject
     public MovieListModelImp(final MovieAPIService movieAPIService, final MovieSchedulers movieSchedulers) {
         this.mMovieAPIService = movieAPIService;
         this.movieSchedulers = movieSchedulers;
-    }
-
-    public MovieListModelImp(MovieAPIService mMovieAPIService) {
-        this.mMovieAPIService = mMovieAPIService;
     }
 
     @Override

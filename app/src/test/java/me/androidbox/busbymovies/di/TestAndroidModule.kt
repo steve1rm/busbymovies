@@ -1,5 +1,6 @@
 package me.androidbox.busbymovies.di
 
+import dagger.Module
 import dagger.Provides
 import io.reactivex.Scheduler
 import io.reactivex.schedulers.Schedulers
@@ -9,6 +10,7 @@ import javax.inject.Singleton
 /**
  * Created by steve on 10/23/17.
  */
+@Module
 class TestAndroidModule {
     @Singleton
     @Provides
@@ -23,16 +25,4 @@ class TestAndroidModule {
             }
         }
     }
-
-/*
-    fun providesRecipeSchedulers(): RecipeSchedulers {
-        return object : RecipeSchedulers() {
-            val backgroundScheduler: Scheduler
-                get() = Schedulers.trampoline()
-
-            val uiScheduler: Scheduler
-                get() = Schedulers.trampoline()
-        }
-    }
-*/
 }

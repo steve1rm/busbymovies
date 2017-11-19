@@ -8,10 +8,13 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import javax.inject.Inject;
+
 import io.reactivex.Observable;
 import me.androidbox.busbymovies.models.Movie;
 import me.androidbox.busbymovies.network.MovieAPIService;
 import me.androidbox.busbymovies.utils.Constants;
+import me.androidbox.busbymovies.utils.MovieSchedulers;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -39,11 +42,14 @@ public class MovieListModelImpGetMovieTest {
     @Mock ResponseBody mockResponseBody;
     @Captor ArgumentCaptor<Callback<Movie>> argumentCaptor;
 
+    @Inject
+    MovieSchedulers movieSchedulers;
+
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(MovieListModelImpGetMovieTest.this);
 
-        movieListModelContract = new MovieListModelImp(mockMovieAPIService);
+        movieListModelContract = new MovieListModelImp(mockMovieAPIService, movieSchedulers);
         movie = new Movie();
     }
 
