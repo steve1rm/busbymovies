@@ -64,7 +64,7 @@ public class MovieListViewImpRoboTest {
         assertNotNull(popular);
 
         sort.performClick();
-        
+
         Asserts.viewIsVisible(popular);
     }
 
