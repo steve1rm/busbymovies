@@ -80,7 +80,7 @@ def media = dependencyGroup {
     implementation 'jp.wasabeef:glide-transformations:3.0.1'
     implementation 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'
     implementation 'com.wonderkiln:blurkit:1.0.0'
-    compile files('libs/YouTubeAndroidPlayerApi.jar')
+    implementation files('libs/YouTubeAndroidPlayerApi.jar')
     implementation 'de.hdodenhof:circleimageview:2.1.0'
 }
 
