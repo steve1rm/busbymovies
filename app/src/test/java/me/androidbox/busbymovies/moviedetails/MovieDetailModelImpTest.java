@@ -1,6 +1,5 @@
 package me.androidbox.busbymovies.moviedetails;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
