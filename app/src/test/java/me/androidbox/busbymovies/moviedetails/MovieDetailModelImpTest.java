@@ -2,11 +2,20 @@ package me.androidbox.busbymovies.moviedetails;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnitRunner;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.inject.Inject;
 
 import io.reactivex.Observable;
+import me.androidbox.busbymovies.di.DaggerTestBusbyMovieAppComponent;
+import me.androidbox.busbymovies.di.TestAndroidModule;
 import me.androidbox.busbymovies.models.Movies;
 import me.androidbox.busbymovies.models.Results;
 import me.androidbox.busbymovies.models.Review;
@@ -27,22 +36,29 @@ import static org.mockito.Mockito.when;
 /**
  * Created by steve on 4/9/17.
  */
+
+@RunWith(MockitoJUnitRunner.class)
 public class MovieDetailModelImpTest {
 
     @Mock MovieAPIService mockMovieAPIService;
-    @Mock MovieSchedulers movieSchedulers;
     @Mock Observable<Review> mockCall;
     @Mock ResponseBody mockResponseBody;
     @Mock MovieDetailModelContract.MovieReviewsListener mockMovieReviewsListener;
     @Mock MovieDetailModelContract.GetMovieTrailerListener mockMovieTrailerListener;
-    @Mock Results<Review> mockReviews;
+    Results<Review> mockReviews;
     @Mock Results<Trailer> mockTrailers;
+
+    @Inject MovieSchedulers movieSchedulers;
 
     private MovieDetailModelContract mMovieDetailModelContract;
 
     @Before
     public void setup() throws Exception {
-        MockitoAnnotations.initMocks(MovieDetailModelImpTest.this);
+        DaggerTestBusbyMovieAppComponent
+                .builder()
+                .testAndroidModule(new TestAndroidModule())
+                .build()
+                .inject(MovieDetailModelImpTest.this);
 
         mMovieDetailModelContract = new MovieDetailModelImp(mockMovieAPIService, movieSchedulers);
     }
@@ -61,11 +77,17 @@ public class MovieDetailModelImpTest {
         verify(mockMovieReviewsListener, never()).onGetMovieReviewsSuccess(mockReviews);
     }
 
+
+
     @Test
     public void shouldDisplaySuccessWhenReviewsRetrieved() throws Exception {
         /* Stub the method call for getting reviews */
-        when(mockMovieAPIService.getMovieReview(anyInt(), anyString()))
-                .thenReturn(Observable.just(eq(mockReviews)));
+        final Results<Review> moviesReviews = new Results<>();
+        List<Review> reviewList = new ArrayList<>();
+        reviewList.add(new Review());
+
+        when(mockMovieAPIService.getMovieReview(1, "movie_key"))
+                .thenReturn(Observable.just(moviesReviews));
 
         /* Actual call to get movie reviews */
         mMovieDetailModelContract.getMovieReviews(anyInt(), mockMovieReviewsListener);
