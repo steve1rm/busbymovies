@@ -23,7 +23,7 @@ import timber.log.Timber;
  * Created by steve on 3/2/17.
  */
 
-public class MovieDetailModelImp implements MovieDetailModelContract {
+public final class MovieDetailModelImp implements MovieDetailModelContract {
 
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 

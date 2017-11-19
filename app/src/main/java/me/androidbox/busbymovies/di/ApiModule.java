@@ -42,6 +42,7 @@ public class ApiModule {
     public OkHttpClient provideLoggingCapableHttpClient(final IConnectivityProvider connectivityProvider) {
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
 
+        /* Only print debug output in debug mode */
         loggingInterceptor.setLevel(BuildConfig.DEBUG ?
                 HttpLoggingInterceptor.Level.BODY : HttpLoggingInterceptor.Level.NONE);
 
