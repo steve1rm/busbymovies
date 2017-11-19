@@ -1,5 +1,6 @@
 package me.androidbox.busbymovies.movielist;
 
+import android.os.Build;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 
@@ -12,6 +13,7 @@ import org.robolectric.annotation.Config;
 
 import me.androidbox.busbymovies.BuildConfig;
 import me.androidbox.busbymovies.R;
+import me.androidbox.busbymovies.di.BusbyMoviesMainApplication;
 import me.androidbox.busbymovies.support.Asserts;
 import me.androidbox.busbymovies.support.ResourceLocator;
 import me.androidbox.busbymovies.support.ViewLocator;
@@ -23,8 +25,12 @@ import static org.junit.Assert.assertThat;
 /**
  * Created by steve on 3/27/17.
  */
+
+@Config(packageName = "me.androidbox.busbymovies",
+        sdk = Build.VERSION_CODES.LOLLIPOP,
+        application = BusbyMoviesMainApplication.class,
+        constants = BuildConfig.class)
 @RunWith(RobolectricTestRunner.class)
-@Config(constants = BuildConfig.class, sdk = 21)
 public class MovieListViewImpRoboTest {
     private MovieListActivity mMovieListActivity;
 
@@ -58,6 +64,7 @@ public class MovieListViewImpRoboTest {
         assertNotNull(popular);
 
         sort.performClick();
+        
         Asserts.viewIsVisible(popular);
     }
 
