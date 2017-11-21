@@ -30,10 +30,7 @@ public final class MovieDetailModelImp implements MovieDetailModelContract {
     private final MovieAPIService mMovieAPIService;
     private final MovieSchedulers movieSchedulers;
 
-    @Inject
     public MovieDetailModelImp(final MovieAPIService movieAPIService, final MovieSchedulers movieSchedulers) {
-    //    DaggerInjector.getApplicationComponent().inject(MovieDetailModelImp.this);
-
         this.mMovieAPIService = movieAPIService;
         this.movieSchedulers = movieSchedulers;
     }

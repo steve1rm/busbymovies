@@ -45,7 +45,7 @@ public class MovieDetailModelImpTest {
     @Mock ResponseBody mockResponseBody;
     @Mock MovieDetailModelContract.MovieReviewsListener mockMovieReviewsListener;
     @Mock MovieDetailModelContract.GetMovieTrailerListener mockMovieTrailerListener;
-    Results<Review> mockReviews;
+    @Mock Results<Review> mockReviews;
     @Mock Results<Trailer> mockTrailers;
 
     @Inject MovieSchedulers movieSchedulers;
@@ -77,23 +77,31 @@ public class MovieDetailModelImpTest {
         verify(mockMovieReviewsListener, never()).onGetMovieReviewsSuccess(mockReviews);
     }
 
+    @Test
+    public void shouldGetAllMovieTrailersOnSuccessfulCall() throws Exception {
+        /* Stub the function that will get the movie trailers */
+        when(mockMovieAPIService.getMovieTrailers(1, Constants.MOVIES_API_KEY))
+                .thenReturn(Observable.just(mockTrailers));
 
+        /* The actual call to get the movie trailers */
+        mMovieDetailModelContract.getMovieTrailer(1, mockMovieTrailerListener);
+
+        /* Verify the results are correct */
+        verify(mockMovieTrailerListener, times(1)).onGetMovieTrailerSuccess(mockTrailers);
+        verify(mockMovieTrailerListener, never()).onGetMovieTrailerFailure(anyString());
+    }
 
     @Test
     public void shouldDisplaySuccessWhenReviewsRetrieved() throws Exception {
         /* Stub the method call for getting reviews */
-        final Results<Review> moviesReviews = new Results<>();
-        List<Review> reviewList = new ArrayList<>();
-        reviewList.add(new Review());
-
-        when(mockMovieAPIService.getMovieReview(1, "movie_key"))
-                .thenReturn(Observable.just(moviesReviews));
+        when(mockMovieAPIService.getMovieReview(1, Constants.MOVIES_API_KEY))
+                .thenReturn(Observable.just(mockReviews));
 
         /* Actual call to get movie reviews */
-        mMovieDetailModelContract.getMovieReviews(anyInt(), mockMovieReviewsListener);
+        mMovieDetailModelContract.getMovieReviews(1, mockMovieReviewsListener);
 
         /* Verify that the result was correct */
-        verify(mockMovieReviewsListener, times(1)).onGetMovieReviewsSuccess(null);
+        verify(mockMovieReviewsListener).onGetMovieReviewsSuccess(mockReviews);
         verify(mockMovieReviewsListener, never()).onGetMovieReviewsFailure(anyString());
     }
 
@@ -110,34 +118,6 @@ public class MovieDetailModelImpTest {
         verify(mockMovieTrailerListener, times(1)).onGetMovieTrailerFailure(anyString());
         verify(mockMovieTrailerListener, never()).onGetMovieTrailerSuccess(mockTrailers);
     }
-/*
-
-    @Test
-    public void shouldDisplaySuccessMessageOnSuccess() {
-        when(mockMovieAPIService.getPopular(anyString()))
-                 .thenReturn(Observable.just(mockMovies));
-
-        movieListModelContract.getPopularMovies(mockPopularMoviesResultsListener);
-
-        verify(mockPopularMoviesResultsListener, never()).onPopularMovieFailure(anyString());
-        verify(mockPopularMoviesResultsListener, times(1)).onPopularMovieSuccess(mockMovies);
-    }
-*/
-
-    @Test
-    public void shouldGetAllMovieTrailersOnSuccessfulCall() throws Exception {
-        /* Stub the function that will get the movie trailers */
-        when(mockMovieAPIService.getMovieTrailers(anyInt(), anyString()))
-                .thenReturn(Observable.just(eq(mockTrailers)));
-
-        /* The actual call to get the movie trailers */
-        mMovieDetailModelContract.getMovieTrailer(anyInt(), mockMovieTrailerListener);
-
-        /* Verify the results are correct */
-        verify(mockMovieTrailerListener, times(1)).onGetMovieTrailerSuccess(null);
-        verify(mockMovieTrailerListener, never()).onGetMovieTrailerFailure(anyString());
-    }
-
 
     @Test
     public void testGetSimilarMoviesSuccessInGettingSimilarMovies() {
