@@ -31,7 +31,7 @@ import static org.junit.Assert.assertThat;
         application = BusbyMoviesMainApplication.class,
         constants = BuildConfig.class)
 @RunWith(RobolectricTestRunner.class)
-public class MovieListViewImpRoboTest {
+public class MovieListViewImpRoboTest{
     private MovieListActivity mMovieListActivity;
 
     @Before
