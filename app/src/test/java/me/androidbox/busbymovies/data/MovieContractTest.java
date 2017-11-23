@@ -33,7 +33,7 @@ public class MovieContractTest {
         assertTrue("Should have static for inner class", Modifier.isStatic(innerClass.getModifiers()));
     }
 
-    //@Ignore("FIXME")
+    @Ignore("FIXME")
     @Test
     public void shouldHaveCorrectMemberForInnerClass() throws Exception {
         Class[] innerClasses = MovieContract.class.getDeclaredClasses();

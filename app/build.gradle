@@ -2,12 +2,11 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
-
+apply plugin: 'jacoco-android'
 
 android {
     compileSdkVersion 27
     buildToolsVersion '27.0.1'
-
 
     dexOptions {
         maxProcessCount 2
@@ -50,7 +49,6 @@ android {
     }
 }
 
-
 android.applicationVariants.all { variant ->
     if (variant.buildType.name == "debug") {
         def aptOutputDir = new File(buildDir, "generated/source/apt/${variant.unitTestVariant.dirName}")
@@ -71,4 +69,10 @@ apply from: "dependencies.gradle"
 repositories {
     google()
     mavenCentral()
+}
+
+jacocoAndroidUnitTestReport {
+    csv.enabled false
+    html.enabled true
+    xml.enabled true
 }
