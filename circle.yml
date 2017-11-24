@@ -26,5 +26,5 @@ test:
         - ./gradlew build --info
         - cp -r app/build/outputs $CIRCLE_ARTIFACTS
 
-        post:
-            - bash <(curl -s https://codecov.io/bash)
+#        post:
+#            - bash <(curl -s https://codecov.io/bash)
