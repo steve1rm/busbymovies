@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/steve1rm/busbymovies.svg?branch=master)](https://travis-ci.org/steve1rm/busbymovies)
 [![codecov.io](https://codecov.io/gh/steve1rm/busbymovies/coverage.svg?branch=master)](https://codecov.io/gh/steve1rm/busbymovies/branch/master)
-
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/c148728542684e8095e2d9cf98902dba)](https://www.codacy.com/app/steve1rm/busbymovies?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=steve1rm/busbymovies&amp;utm_campaign=Badge_Grade)
 # busbymovies
 Shows all the movies that are considered the most popular and top rated
 
