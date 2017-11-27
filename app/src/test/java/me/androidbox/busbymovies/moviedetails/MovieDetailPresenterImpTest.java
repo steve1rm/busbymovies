@@ -53,5 +53,4 @@ public class MovieDetailPresenterImpTest {
 
         verify(movieDetailViewContract).successToGetSimilarMovies(moviesResults);
     }
-
 }

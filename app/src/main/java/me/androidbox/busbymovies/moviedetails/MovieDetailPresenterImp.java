@@ -16,7 +16,7 @@ import timber.log.Timber;
  * Created by steve on 3/2/17.
  */
 
-public class MovieDetailPresenterImp implements
+public final class MovieDetailPresenterImp implements
         MovieDetailPresenterContract<MovieDetailViewContract>,
         MovieDetailModelContract.GetMovieDetailListener,
         MovieDetailModelContract.GetMovieTrailerListener,

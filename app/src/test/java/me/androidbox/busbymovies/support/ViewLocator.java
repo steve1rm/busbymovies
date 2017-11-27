@@ -9,7 +9,7 @@ import android.view.View;
  * Created by steve on 3/28/17.
  */
 
-public class ViewLocator {
+public final class ViewLocator {
 
     public static View getView(Activity activity, int viewId) {
         return activity.findViewById(viewId);

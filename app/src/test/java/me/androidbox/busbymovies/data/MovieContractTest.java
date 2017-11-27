@@ -1,5 +1,6 @@
 package me.androidbox.busbymovies.data;
 
+import android.net.Uri;
 import android.provider.BaseColumns;
 
 import org.junit.Ignore;
@@ -40,10 +41,10 @@ public class MovieContractTest {
 
         Class innerClass = innerClasses[0];
         Field[] allFields = innerClass.getDeclaredFields();
-        assertEquals("Should only have 12 fields declared", 12, allFields.length);
+        assertEquals("Should only have 13 fields declared", 13, allFields.length);
 
-        for(Field field : allFields) {
-            assertTrue("Should contain all String for types", field.getType() == String.class);
+        for(Field field  : allFields) {
+            assertTrue("Should contain all String for types", field.getType() == String.class || field.getType() == Uri.class);
             assertTrue("Should contain all final for types", Modifier.isFinal(field.getModifiers()));
             assertTrue("Should contain all static for types", Modifier.isStatic(field.getModifiers()));
         }

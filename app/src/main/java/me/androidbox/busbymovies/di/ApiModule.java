@@ -12,7 +12,7 @@ import dagger.Provides;
 import me.androidbox.busbymovies.BuildConfig;
 import me.androidbox.busbymovies.network.MovieAPIService;
 import me.androidbox.busbymovies.utils.Constants;
-import me.androidbox.busbymovies.utils.Network;
+import me.androidbox.busbymovies.utils.IConnectivityProvider;
 import okhttp3.Cache;
 import okhttp3.CacheControl;
 import okhttp3.Interceptor;
@@ -39,16 +39,17 @@ public class ApiModule {
 
     @Singleton
     @Provides
-    public OkHttpClient provideLoggingCapableHttpClient() {
+    public OkHttpClient provideLoggingCapableHttpClient(final IConnectivityProvider connectivityProvider) {
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
 
+        /* Only print debug output in debug mode */
         loggingInterceptor.setLevel(BuildConfig.DEBUG ?
                 HttpLoggingInterceptor.Level.BODY : HttpLoggingInterceptor.Level.NONE);
 
         return new OkHttpClient.Builder()
                 .addInterceptor(loggingInterceptor)
                 .addNetworkInterceptor(provideCacheInterceptor())
-                .addInterceptor(provideOfflineCacheInterceptor())
+                .addInterceptor(provideOfflineCacheInterceptor(connectivityProvider))
                 .cache(provideCache())
                 .build();
     }
@@ -101,12 +102,12 @@ public class ApiModule {
     }
 
     /* Will use the offline cache that is not older than 7 days to be used for when the device is offline */
-    public static Interceptor provideOfflineCacheInterceptor() {
+    public Interceptor provideOfflineCacheInterceptor(final IConnectivityProvider connectivityProvider) {
         return chain -> {
             Request request = chain.request();
 
             /* if not connected to the network use the offline cache */
-            if(!Network.isConnectedToNetwork()) {
+            if(!connectivityProvider.isConnected()) {
                 final CacheControl cacheControl = new CacheControl.Builder()
                         .maxStale(7, TimeUnit.DAYS)
                         .build();

@@ -53,11 +53,8 @@ public class MovieActorsViewHolderTest {
     @Test
     public void testShouldPopulateActorWithValidData() {
         final Actor actor = getActor();
-        movieActorsViewHolder.populateActor(actor);
 
-        final ShadowDrawable shadowDrawable = Shadows.shadowOf(movieActorsViewHolder.actorPicture.getDrawable());
-        final Drawable drawable = Drawable.createFromPath(actor.getProfile_path());
-        /* assertThat(drawable, is(shadowDrawable.getCreatedFromResId())); */
+        movieActorsViewHolder.populateActor(actor);
 
         assertThat(movieActorsViewHolder.name.getText(), is(actor.getName()));
         assertThat(movieActorsViewHolder.character.getText(), is(actor.getCharacter()));
@@ -70,3 +67,10 @@ public class MovieActorsViewHolderTest {
                 "Iron Man");
     }
 }
+
+
+/*
+        final ShadowDrawable shadowDrawable = Shadows.shadowOf(movieActorsViewHolder.actorPicture.getDrawable());
+        final Drawable drawable = Drawable.createFromPath(actor.getProfile_path());
+*/
+        /* assertThat(drawable, is(shadowDrawable.getCreatedFromResId())); */

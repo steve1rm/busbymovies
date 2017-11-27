@@ -2,10 +2,11 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'jacoco-android'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "26.0.2"
+    compileSdkVersion 27
+    buildToolsVersion '27.0.1'
 
     dexOptions {
         maxProcessCount 2
@@ -14,7 +15,7 @@ android {
     defaultConfig {
         applicationId "me.androidbox.busbymovies"
         minSdkVersion 17
-        targetSdkVersion 26
+        targetSdkVersion 27
         versionCode 7
         versionName "1.4.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -48,107 +49,30 @@ android {
     }
 }
 
-dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-
-    /** ***************************************************************
-     *  Device and unit testing
-     *************************************************************** */
-    testCompile 'junit:junit:4.12'
-    androidTestCompile 'com.squareup.okhttp3:mockwebserver:3.6.0'
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    androidTestCompile('com.jakewharton.espresso:okhttp3-idling-resource:1.0.0', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-        exclude group: 'com.squareup.okio', module: 'okio'
-        exclude group: 'com.squareup.okhttp3', module: 'okhttp'
-    })
-    testCompile 'org.mockito:mockito-core:2.8.47'
-    testCompile 'org.robolectric:robolectric:3.4.2'
-
-    /** ***************************************************************
-     *  Support libraries
-     *************************************************************** */
-    def supportVersion = "26.1.0"
-    compile "com.android.support:appcompat-v7:${supportVersion}"
-    compile "com.android.support:support-v4:${supportVersion}"
-    compile "com.android.support:design:${supportVersion}"
-    compile "com.android.support:palette-v7:${supportVersion}"
-    compile "com.android.support:support-vector-drawable:${supportVersion}"
-    compile "com.android.support:animated-vector-drawable:${supportVersion}"
-    compile "com.android.support:customtabs:${supportVersion}"
-    compile "com.android.support:cardview-v7:${supportVersion}"
-    compile "com.android.support:gridlayout-v7:${supportVersion}"
-
-    /** ***************************************************************
-     *  View and dependency injection
-     *************************************************************** */
-    compile 'com.google.dagger:dagger:2.11'
-    kapt 'com.google.dagger:dagger:2.11'
-    compile 'com.jakewharton:butterknife:8.8.1'
-    kapt 'com.jakewharton:butterknife-compiler:8.8.1'
-    provided 'javax.annotation:jsr250-api:1.0'
-
-    //  annotationProcessor 'com.google.dagger:dagger-compiler:2.11'
-    kapt 'com.google.dagger:dagger-compiler:2.11'
-
-    /** ***************************************************************
-     *  Logging support
-     *****************************************************************/
-    compile 'com.squareup.okhttp3:logging-interceptor:3.9.0'
-    compile 'com.jakewharton.timber:timber:4.5.1'
-
-    /** ***************************************************************
-     *  Retrofit2 Network
-     *****************************************************************/
-    compile 'com.squareup.retrofit2:retrofit:2.3.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
-    compile 'com.squareup.okhttp3:okhttp:3.9.0'
-
-    /** **************************************************************
-     *  RxJava just for a call adapter for retrofit2
-     ****************************************************************/
-
-    /* Because RxAndroid releases are few and far between, it is recommended you also
-                         * explicitly depend on RxJava's latest version for bug fixes and new features */
-    compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
-    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    implementation 'io.reactivex.rxjava2:rxjava:2.1.5'
-
-    /** **************************************************************
-     *  Image utilities
-     ****************************************************************/
-    compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'com.github.bumptech.glide:glide:4.2.0'
-
-    // annotationProcessor 'com.github.bumptech.glide:compiler:4.2.0'
-    compile 'jp.wasabeef:glide-transformations:3.0.1'
-    compile 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'
-    compile 'com.wonderkiln:blurkit:1.0.0'
-    compile files('libs/YouTubeAndroidPlayerApi.jar')
-
-    /******************************************************************
-     * Misc
-     *****************************************************************/
-    compile 'com.f2prateek.dart:dart:2.0.2'
-
-    // annotationProcessor 'com.f2prateek.dart:dart-processor:2.0.2'
-    kapt 'com.f2prateek.dart:dart-processor:2.0.2'
-    compile 'com.f2prateek.dart:henson:2.0.2'
-
-    // annotationProcessor 'com.f2prateek.dart:henson-processor:2.0.2'
-    kapt 'com.f2prateek.dart:henson-processor:2.0.2'
-    implementation 'de.hdodenhof:circleimageview:2.1.0'
-    compileOnly 'com.google.auto.factory:auto-factory:1.0-beta5'
-    annotationProcessor 'com.google.auto.factory:auto-factory:1.0-beta5'
-
-    //  kapt 'com.google.auto.factory:auto-factory:1.0-beta5'
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-    kapt 'com.github.bumptech.glide:compiler:4.2.0'
+android.applicationVariants.all { variant ->
+    if (variant.buildType.name == "debug") {
+        def aptOutputDir = new File(buildDir, "generated/source/apt/${variant.unitTestVariant.dirName}")
+        variant.unitTestVariant.addJavaSourceFoldersToModel(aptOutputDir)
+        assembleDebug.finalizedBy('assembleDebugUnitTest')
+    }
 }
+/*
+
+android.applicationVariants.all {
+    def aptOutputDir = new File(buildDir, "generated/source/apt/${it.unitTestVariant.dirName}")
+    it.unitTestVariant.addJavaSourceFoldersToModel(aptOutputDir)
+}
+*/
+
+apply from: "dependencies.gradle"
 
 repositories {
     google()
     mavenCentral()
+}
+
+jacocoAndroidUnitTestReport {
+    csv.enabled false
+    html.enabled true
+    xml.enabled true
 }

@@ -23,17 +23,14 @@ import timber.log.Timber;
  * Created by steve on 3/2/17.
  */
 
-public class MovieDetailModelImp implements MovieDetailModelContract {
+public final class MovieDetailModelImp implements MovieDetailModelContract {
 
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     private final MovieAPIService mMovieAPIService;
     private final MovieSchedulers movieSchedulers;
 
-    @Inject
     public MovieDetailModelImp(final MovieAPIService movieAPIService, final MovieSchedulers movieSchedulers) {
-    //    DaggerInjector.getApplicationComponent().inject(MovieDetailModelImp.this);
-
         this.mMovieAPIService = movieAPIService;
         this.movieSchedulers = movieSchedulers;
     }

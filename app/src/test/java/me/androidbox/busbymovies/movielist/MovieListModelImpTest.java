@@ -10,11 +10,16 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.reactivex.Observable;
+import me.androidbox.busbymovies.di.DaggerTestBusbyMovieAppComponent;
+import me.androidbox.busbymovies.di.TestAndroidModule;
 import me.androidbox.busbymovies.models.Movies;
 import me.androidbox.busbymovies.models.Results;
 import me.androidbox.busbymovies.network.MovieAPIService;
 import me.androidbox.busbymovies.utils.Constants;
+import me.androidbox.busbymovies.utils.MovieSchedulers;
 import okhttp3.ResponseBody;
 import retrofit2.Callback;
 
@@ -40,11 +45,19 @@ public class MovieListModelImpTest {
 
     @Captor ArgumentCaptor<Callback<List<Results>>> argumentCaptor;
 
+    @Inject
+    MovieSchedulers movieSchedulers;
+
     private MovieListModelContract movieListModelContract;
 
     @Before
     public void setUp() throws Exception {
-        movieListModelContract = new MovieListModelImp(mockMovieAPIService);
+        DaggerTestBusbyMovieAppComponent.builder()
+                .testAndroidModule(new TestAndroidModule())
+                .build()
+                .inject(MovieListModelImpTest.this);
+
+        movieListModelContract = new MovieListModelImp(mockMovieAPIService, movieSchedulers);
     }
 
     @Test
