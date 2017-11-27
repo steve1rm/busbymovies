@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/steve1rm/busbymovies.svg?branch=master)](https://travis-ci.org/steve1rm/busbymovies)
-
+[![codecov.io](https://codecov.io/gh/steve1rm/busbymovies/coverage.svg?branch=master)](https://codecov.io/gh/steve1rm/busbymovies/branch/master)
 
 # busbymovies
 Shows all the movies that are considered the most popular and top rated
