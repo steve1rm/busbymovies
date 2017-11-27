@@ -15,8 +15,9 @@ public class Favourite extends Movies {
                      String releaseDate,
                      String title,
                      String backdropPath,
-                     float voteAverage) {
-        this(movieId, posterPath, overview, releaseDate, title, backdropPath, voteAverage, "", "", -1);
+                     float voteAverage,
+                     float vote_count) {
+        this(movieId, posterPath, overview, releaseDate, title, backdropPath, voteAverage, vote_count, "", "", -1);
     }
 
     public Favourite(int movieId,
@@ -26,10 +27,11 @@ public class Favourite extends Movies {
                      String title,
                      String backdropPath,
                      float voteAverage,
+                     float vote_count,
                      String tagline,
                      String homepage,
                      int runtime) {
-        super(movieId, posterPath, overview, releaseDate, title, backdropPath, voteAverage);
+        super(movieId, posterPath, overview, releaseDate, title, backdropPath, voteAverage, vote_count);
 
         this.mTagline = tagline;
         this.mHomepage = homepage;

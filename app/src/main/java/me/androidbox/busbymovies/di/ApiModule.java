@@ -1,7 +1,8 @@
 package me.androidbox.busbymovies.di;
 
+import android.app.Application;
+
 import java.io.File;
-import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Singleton;
@@ -11,7 +12,7 @@ import dagger.Provides;
 import me.androidbox.busbymovies.BuildConfig;
 import me.androidbox.busbymovies.network.MovieAPIService;
 import me.androidbox.busbymovies.utils.Constants;
-import me.androidbox.busbymovies.utils.Network;
+import me.androidbox.busbymovies.utils.IConnectivityProvider;
 import okhttp3.Cache;
 import okhttp3.CacheControl;
 import okhttp3.Interceptor;
@@ -20,7 +21,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import timber.log.Timber;
 
@@ -30,18 +31,25 @@ import timber.log.Timber;
 @Module
 public class ApiModule {
     private static final String CACHE_CONTROL = "Cache-Control";
+    private Application application;
 
+    public ApiModule(final Application application) {
+        this.application = application;
+    }
+
+    @Singleton
     @Provides
-    public OkHttpClient provideLoggingCapableHttpClient() {
+    public OkHttpClient provideLoggingCapableHttpClient(final IConnectivityProvider connectivityProvider) {
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
 
+        /* Only print debug output in debug mode */
         loggingInterceptor.setLevel(BuildConfig.DEBUG ?
                 HttpLoggingInterceptor.Level.BODY : HttpLoggingInterceptor.Level.NONE);
 
         return new OkHttpClient.Builder()
                 .addInterceptor(loggingInterceptor)
                 .addNetworkInterceptor(provideCacheInterceptor())
-                .addInterceptor(provideOfflineCacheInterceptor())
+                .addInterceptor(provideOfflineCacheInterceptor(connectivityProvider))
                 .cache(provideCache())
                 .build();
     }
@@ -51,7 +59,7 @@ public class ApiModule {
                 .baseUrl(Constants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okHttpClient)
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
     }
 
@@ -62,12 +70,12 @@ public class ApiModule {
     }
 
     /* Create and stores cache on the device for up to 10MB */
-    private static Cache provideCache() {
+    private Cache provideCache() {
         Cache cache = null;
 
         try {
             cache = new Cache(
-                    new File(BusbyMoviesApplication.getInstance().getCacheDir(), "http-cache"),
+                    new File(this.application.getCacheDir(), "http-cache"),
                     10 * 1024 * 1024); /* 10MB */
         }
         catch(Exception ex) {
@@ -94,12 +102,12 @@ public class ApiModule {
     }
 
     /* Will use the offline cache that is not older than 7 days to be used for when the device is offline */
-    public static Interceptor provideOfflineCacheInterceptor() {
+    public Interceptor provideOfflineCacheInterceptor(final IConnectivityProvider connectivityProvider) {
         return chain -> {
             Request request = chain.request();
 
             /* if not connected to the network use the offline cache */
-            if(!Network.isConnectedToNetwork()) {
+            if(!connectivityProvider.isConnected()) {
                 final CacheControl cacheControl = new CacheControl.Builder()
                         .maxStale(7, TimeUnit.DAYS)
                         .build();

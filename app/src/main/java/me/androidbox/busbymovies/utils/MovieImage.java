@@ -5,6 +5,8 @@ import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.graphics.Palette;
 import android.widget.ImageView;
 
+import kotlin.jvm.JvmStatic;
+
 import static me.androidbox.busbymovies.utils.MovieImage.ImageSize.w154;
 import static me.androidbox.busbymovies.utils.MovieImage.ImageSize.w185;
 import static me.androidbox.busbymovies.utils.MovieImage.ImageSize.w342;
@@ -16,12 +18,13 @@ import static me.androidbox.busbymovies.utils.MovieImage.ImageSize.w92;
  * Created by steve on 2/28/17.
  */
 
-public class MovieImage {
+public final class MovieImage {
 
     /* bHarw8xrmQeqf3t8HpuMY7zoK4x.jpg */
     /* https://image.tmdb.org/t/p/w500/ */
     /* https://image.tmdb.org/t/p/w500/bHarw8xrmQeqf3t8HpuMY7zoK4x.jpg */
 
+    @JvmStatic
     public static String build(String imagePath,  ImageSize imageSize) {
         final StringBuilder stringBuilder = new StringBuilder();
 

@@ -1,6 +1,5 @@
 package me.androidbox.busbymovies.movielist;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -9,19 +8,17 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import javax.inject.Inject;
+
+import io.reactivex.Observable;
 import me.androidbox.busbymovies.models.Movie;
 import me.androidbox.busbymovies.network.MovieAPIService;
 import me.androidbox.busbymovies.utils.Constants;
+import me.androidbox.busbymovies.utils.MovieSchedulers;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import rx.Observable;
-import rx.Scheduler;
-import rx.android.plugins.RxAndroidPlugins;
-import rx.android.plugins.RxAndroidSchedulersHook;
-import rx.plugins.RxJavaHooks;
-import rx.schedulers.Schedulers;
 
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -45,29 +42,15 @@ public class MovieListModelImpGetMovieTest {
     @Mock ResponseBody mockResponseBody;
     @Captor ArgumentCaptor<Callback<Movie>> argumentCaptor;
 
+    @Inject
+    MovieSchedulers movieSchedulers;
+
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(MovieListModelImpGetMovieTest.this);
 
-        movieListModelContract = new MovieListModelImp(mockMovieAPIService);
+        movieListModelContract = new MovieListModelImp(mockMovieAPIService, movieSchedulers);
         movie = new Movie();
-
-        RxJavaHooks.setOnIOScheduler(scheduler -> Schedulers.immediate());
-
-        /* Override RxAndroid schedulers */
-        final RxAndroidPlugins rxAndroidPlugins = RxAndroidPlugins.getInstance();
-        rxAndroidPlugins.registerSchedulersHook(new RxAndroidSchedulersHook() {
-            @Override
-            public Scheduler getMainThreadScheduler() {
-                return Schedulers.immediate();
-            }
-        });
-    }
-
-    @After
-    public void tearDown() throws Exception {
-        RxJavaHooks.reset();
-        RxAndroidPlugins.getInstance().reset();
     }
 
     @Ignore("FIXME")

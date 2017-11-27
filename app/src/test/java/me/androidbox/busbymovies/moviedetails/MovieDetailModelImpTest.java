@@ -1,25 +1,25 @@
 package me.androidbox.busbymovies.moviedetails;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnitRunner;
 
+import javax.inject.Inject;
+
+import io.reactivex.Observable;
+import me.androidbox.busbymovies.di.DaggerTestBusbyMovieAppComponent;
+import me.androidbox.busbymovies.di.TestAndroidModule;
 import me.androidbox.busbymovies.models.Movies;
 import me.androidbox.busbymovies.models.Results;
 import me.androidbox.busbymovies.models.Review;
 import me.androidbox.busbymovies.models.Trailer;
 import me.androidbox.busbymovies.network.MovieAPIService;
 import me.androidbox.busbymovies.utils.Constants;
+import me.androidbox.busbymovies.utils.MovieSchedulers;
 import okhttp3.ResponseBody;
-import rx.Observable;
-import rx.Scheduler;
-import rx.android.plugins.RxAndroidPlugins;
-import rx.android.plugins.RxAndroidSchedulersHook;
-import rx.plugins.RxJavaHooks;
-import rx.schedulers.Schedulers;
 
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -32,6 +32,8 @@ import static org.mockito.Mockito.when;
 /**
  * Created by steve on 4/9/17.
  */
+
+@RunWith(MockitoJUnitRunner.class)
 public class MovieDetailModelImpTest {
 
     @Mock MovieAPIService mockMovieAPIService;
@@ -42,24 +44,19 @@ public class MovieDetailModelImpTest {
     @Mock Results<Review> mockReviews;
     @Mock Results<Trailer> mockTrailers;
 
+    @Inject MovieSchedulers movieSchedulers;
+
     private MovieDetailModelContract mMovieDetailModelContract;
 
     @Before
-    public void setUp() throws Exception {
-        MockitoAnnotations.initMocks(MovieDetailModelImpTest.this);
+    public void setup() throws Exception {
+        DaggerTestBusbyMovieAppComponent
+                .builder()
+                .testAndroidModule(new TestAndroidModule())
+                .build()
+                .inject(MovieDetailModelImpTest.this);
 
-        mMovieDetailModelContract = new MovieDetailModelImp(mockMovieAPIService);
-
-        RxJavaHooks.setOnIOScheduler(scheduler -> Schedulers.immediate());
-
-        /* Override RxAndroid schedulers */
-        final RxAndroidPlugins rxAndroidPlugins = RxAndroidPlugins.getInstance();
-        rxAndroidPlugins.registerSchedulersHook(new RxAndroidSchedulersHook() {
-            @Override
-            public Scheduler getMainThreadScheduler() {
-                return Schedulers.immediate();
-            }
-        });
+        mMovieDetailModelContract = new MovieDetailModelImp(mockMovieAPIService, movieSchedulers);
     }
 
     @Test
@@ -77,16 +74,30 @@ public class MovieDetailModelImpTest {
     }
 
     @Test
+    public void shouldGetAllMovieTrailersOnSuccessfulCall() throws Exception {
+        /* Stub the function that will get the movie trailers */
+        when(mockMovieAPIService.getMovieTrailers(1, Constants.MOVIES_API_KEY))
+                .thenReturn(Observable.just(mockTrailers));
+
+        /* The actual call to get the movie trailers */
+        mMovieDetailModelContract.getMovieTrailer(1, mockMovieTrailerListener);
+
+        /* Verify the results are correct */
+        verify(mockMovieTrailerListener, times(1)).onGetMovieTrailerSuccess(mockTrailers);
+        verify(mockMovieTrailerListener, never()).onGetMovieTrailerFailure(anyString());
+    }
+
+    @Test
     public void shouldDisplaySuccessWhenReviewsRetrieved() throws Exception {
         /* Stub the method call for getting reviews */
-        when(mockMovieAPIService.getMovieReview(anyInt(), anyString()))
-                .thenReturn(Observable.just(eq(mockReviews)));
+        when(mockMovieAPIService.getMovieReview(1, Constants.MOVIES_API_KEY))
+                .thenReturn(Observable.just(mockReviews));
 
         /* Actual call to get movie reviews */
-        mMovieDetailModelContract.getMovieReviews(anyInt(), mockMovieReviewsListener);
+        mMovieDetailModelContract.getMovieReviews(1, mockMovieReviewsListener);
 
         /* Verify that the result was correct */
-        verify(mockMovieReviewsListener, times(1)).onGetMovieReviewsSuccess(null);
+        verify(mockMovieReviewsListener).onGetMovieReviewsSuccess(mockReviews);
         verify(mockMovieReviewsListener, never()).onGetMovieReviewsFailure(anyString());
     }
 
@@ -103,34 +114,6 @@ public class MovieDetailModelImpTest {
         verify(mockMovieTrailerListener, times(1)).onGetMovieTrailerFailure(anyString());
         verify(mockMovieTrailerListener, never()).onGetMovieTrailerSuccess(mockTrailers);
     }
-/*
-
-    @Test
-    public void shouldDisplaySuccessMessageOnSuccess() {
-        when(mockMovieAPIService.getPopular(anyString()))
-                 .thenReturn(Observable.just(mockMovies));
-
-        movieListModelContract.getPopularMovies(mockPopularMoviesResultsListener);
-
-        verify(mockPopularMoviesResultsListener, never()).onPopularMovieFailure(anyString());
-        verify(mockPopularMoviesResultsListener, times(1)).onPopularMovieSuccess(mockMovies);
-    }
-*/
-
-    @Test
-    public void shouldGetAllMovieTrailersOnSuccessfulCall() throws Exception {
-        /* Stub the function that will get the movie trailers */
-        when(mockMovieAPIService.getMovieTrailers(anyInt(), anyString()))
-                .thenReturn(Observable.just(eq(mockTrailers)));
-
-        /* The actual call to get the movie trailers */
-        mMovieDetailModelContract.getMovieTrailer(anyInt(), mockMovieTrailerListener);
-
-        /* Verify the results are correct */
-        verify(mockMovieTrailerListener, times(1)).onGetMovieTrailerSuccess(null);
-        verify(mockMovieTrailerListener, never()).onGetMovieTrailerFailure(anyString());
-    }
-
 
     @Test
     public void testGetSimilarMoviesSuccessInGettingSimilarMovies() {
@@ -163,12 +146,4 @@ public class MovieDetailModelImpTest {
         verify(similarMovieResultsListener).onSimilarMovieFailure(anyString());
         verify(similarMovieResultsListener, never()).onSimilarMovieSuccess(moviesResults);
     }
-
-
-    @After
-    public void tearDown() throws Exception {
-        RxJavaHooks.reset();
-        RxAndroidPlugins.getInstance().reset();
-    }
-
 }
