@@ -50,8 +50,10 @@ public final class Network implements IConnectivityProvider {
                 }
                 break;
 
-                default:
+                default: {
                     type = TYPE.OTHER;
+                }
+                break;
             }
 
             return type;

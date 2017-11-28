@@ -8,12 +8,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Priority;
 
-import javax.inject.Inject;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.androidbox.busbymovies.R;
-import me.androidbox.busbymovies.di.BusbyMoviesMainApplication;
 import me.androidbox.busbymovies.models.Actor;
 import me.androidbox.busbymovies.utils.ImageLoader;
 import me.androidbox.busbymovies.utils.MovieImage;

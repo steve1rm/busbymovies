@@ -47,8 +47,8 @@ class AndroidModule(val application: Application) {
 
     @Singleton
     @Provides
-    fun providesIConnectivityProvider(context: Context): IConnectivityProvider {
-        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE)
+    fun providesIConnectivityProvider(context: Context?): IConnectivityProvider {
+        val connectivityManager = context?.getSystemService(Context.CONNECTIVITY_SERVICE)
                 as ConnectivityManager
 
         return Network(connectivityManager)
