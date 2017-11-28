@@ -1,18 +1,25 @@
 package me.androidbox.busbymovies.models;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by steve on 3/11/17.
  */
 
 public class Movies {
     private int id;
-    private String poster_path;
+    @SerializedName("poster_path")
+    private String posterPath;
     private String overview;
-    private String release_date;
+    @SerializedName("release_date")
+    private String releaseDate;
     private String title;
-    private String backdrop_path;
-    private float vote_average;
-    private float vote_count;
+    @SerializedName("backdrop_path")
+    private String backdropPath;
+    @SerializedName("vote_average")
+    private float voteAverage;
+    @SerializedName("vote_count")
+    private float voteCount;
 
     public Movies() {}
 
@@ -25,13 +32,13 @@ public class Movies {
                   float vote_average,
                   float vote_count) {
         this.id = id;
-        this.poster_path = poster_path;
+        this.posterPath = poster_path;
         this.overview = overview;
-        this.release_date = release_date;
+        this.releaseDate = release_date;
         this.title = title;
-        this.backdrop_path = backdrop_path;
-        this.vote_average = vote_average;
-        this.vote_count = vote_count;
+        this.backdropPath = backdrop_path;
+        this.voteAverage = vote_average;
+        this.voteCount = vote_count;
     }
 
     public int getId() {
@@ -39,7 +46,7 @@ public class Movies {
     }
 
     public String getPoster_path() {
-        return poster_path;
+        return posterPath;
     }
 
     public String getOverview() {
@@ -47,7 +54,7 @@ public class Movies {
     }
 
     public String getRelease_date() {
-        return release_date;
+        return releaseDate;
     }
 
     public String getTitle() {
@@ -55,14 +62,14 @@ public class Movies {
     }
 
     public String getBackdrop_path() {
-        return backdrop_path;
+        return backdropPath;
     }
 
     public float getVote_average() {
-        return vote_average;
+        return voteAverage;
     }
 
     public float getVote_count() {
-        return vote_count;
+        return voteCount;
     }
 }
