@@ -42,6 +42,7 @@ def dependencyInjection = dependencyGroup {
 }
 
 def UITesting = dependencyGroup {
+    def daggerVersion = "2.11"
     androidTestImplementation 'com.squareup.okhttp3:mockwebserver:3.6.0'
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
@@ -51,6 +52,8 @@ def UITesting = dependencyGroup {
         exclude group: 'com.squareup.okio', module: 'okio'
         exclude group: 'com.squareup.okhttp3', module: 'okhttp'
     })
+
+    kaptAndroidTest 'com.google.dagger:dagger-compiler:' + daggerVersion
 }
 
 def UnitTesting = dependencyGroup {
@@ -60,7 +63,6 @@ def UnitTesting = dependencyGroup {
     testImplementation 'org.robolectric:robolectric:3.4.2'
 
     kaptTest 'com.google.dagger:dagger-compiler:' + daggerVersion
-    testImplementation 'com.google.dagger:dagger:' + daggerVersion
 }
 
 def network = dependencyGroup {

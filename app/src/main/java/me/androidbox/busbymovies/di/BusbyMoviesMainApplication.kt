@@ -6,8 +6,8 @@ import timber.log.Timber
 /**
  * Created by steve on 10/22/17.
  */
-class BusbyMoviesMainApplication : Application() {
-    private lateinit var appComponent: AppComponent
+open class BusbyMoviesMainApplication : Application() {
+    private lateinit var appComponent: BusbyMoviesAppComponent
     private lateinit var movieListComponent: MovieListComponent
     private lateinit var movieDetailComponent: MovieDetailComponent
 
@@ -29,8 +29,8 @@ class BusbyMoviesMainApplication : Application() {
         movieDetailComponent = createMovieDetailComponent()
     }
 
-    private fun createAppComponent(): AppComponent {
-        return DaggerAppComponent.builder()
+    open fun createAppComponent(): BusbyMoviesAppComponent {
+        return DaggerBusbyMoviesAppComponent.builder()
                 .apiModule(ApiModule(this))
                 .androidModule(AndroidModule(this))
                 .build()
