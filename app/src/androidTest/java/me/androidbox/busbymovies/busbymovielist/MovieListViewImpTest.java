@@ -1,8 +1,9 @@
-package me.androidbox.busbymovies;
+package me.androidbox.busbymovies.busbymovielist;
 
 import android.support.test.espresso.Espresso;
 import android.support.test.espresso.IdlingResource;
 import android.support.test.espresso.assertion.ViewAssertions;
+import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -12,6 +13,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import me.androidbox.busbymovies.R;
 import me.androidbox.busbymovies.movielist.MovieListActivity;
 import me.androidbox.busbymovies.network.OkHttpProvider;
 import me.androidbox.busbymovies.utils.RecyclerViewAssertions;
@@ -37,7 +39,7 @@ public class MovieListViewImpTest {
         IdlingResource idlingResource = OkHttp3IdlingResource.create("okhttp", OkHttpProvider.getOkHttpClientInstance());
 
         Espresso.registerIdlingResources(idlingResource);
-        onView(withText(R.string.app_name)).check(ViewAssertions.matches(isDisplayed()));
+        onView(ViewMatchers.withText(R.string.app_name)).check(ViewAssertions.matches(isDisplayed()));
         Espresso.unregisterIdlingResources(idlingResource);
     }
 

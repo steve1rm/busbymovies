@@ -10,7 +10,7 @@ import javax.inject.Singleton
  */
 @Singleton
 @Component(modules = arrayOf(TestAndroidModule::class))
-interface TestBusbyMovieAppComponent {
+interface TestBusbyMoviesAppComponent {
     fun inject(target: MovieListModelImpTest)
     fun inject(target: MovieDetailModelImpTest)
 }

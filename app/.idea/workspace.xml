@@ -10,12 +10,49 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3635f920-775e-4bb5-95f9-29cf9aa2b166" name="Default" comment="">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/me/androidbox/busbymovies/di/AppComponent.kt" afterPath="$PROJECT_DIR$/src/main/java/me/androidbox/busbymovies/di/BusbyMoviesAppComponent.kt" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/org_jetbrains_kotlin_kotlin_stdlib_1_1_51_jar.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/org_jetbrains_kotlin_kotlin_stdlib_jre7_1_1_51_jar.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/androidTest/java/me/androidbox/busbymovies/MovieListViewImpTest.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/androidTest/java/me/androidbox/busbymovies/di/TestBusbyMoviesAppComponent.kt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/test/java/me/androidbox/busbymovies/di/TestBusbyMovieAppComponent.kt" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/android_arch_lifecycle_runtime_1_0_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/android_arch_lifecycle_runtime_1_0_0.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/com_android_support_animated_vector_drawable_27_0_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/com_android_support_animated_vector_drawable_27_0_1.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/com_android_support_appcompat_v7_27_0_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/com_android_support_appcompat_v7_27_0_1.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/com_android_support_cardview_v7_27_0_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/com_android_support_cardview_v7_27_0_1.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/com_android_support_customtabs_27_0_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/com_android_support_customtabs_27_0_1.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/com_android_support_design_27_0_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/com_android_support_design_27_0_1.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/com_android_support_gridlayout_v7_27_0_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/com_android_support_gridlayout_v7_27_0_1.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/com_android_support_palette_v7_27_0_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/com_android_support_palette_v7_27_0_1.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/com_android_support_recyclerview_v7_27_0_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/com_android_support_recyclerview_v7_27_0_1.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/com_android_support_support_compat_27_0_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/com_android_support_support_compat_27_0_1.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/com_android_support_support_core_ui_27_0_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/com_android_support_support_core_ui_27_0_1.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/com_android_support_support_core_utils_27_0_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/com_android_support_support_core_utils_27_0_1.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/com_android_support_support_fragment_27_0_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/com_android_support_support_fragment_27_0_1.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/com_android_support_support_media_compat_27_0_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/com_android_support_support_media_compat_27_0_1.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/com_android_support_support_v4_27_0_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/com_android_support_support_v4_27_0_1.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/com_android_support_support_vector_drawable_27_0_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/com_android_support_support_vector_drawable_27_0_1.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/com_android_support_test_espresso_espresso_core_2_2_2.xml" afterPath="$PROJECT_DIR$/.idea/libraries/com_android_support_test_espresso_espresso_core_2_2_2.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/com_android_support_test_espresso_espresso_idling_resource_2_2_2.xml" afterPath="$PROJECT_DIR$/.idea/libraries/com_android_support_test_espresso_espresso_idling_resource_2_2_2.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/com_android_support_test_exposed_instrumentation_api_publish_0_5.xml" afterPath="$PROJECT_DIR$/.idea/libraries/com_android_support_test_exposed_instrumentation_api_publish_0_5.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/com_android_support_test_rules_0_5.xml" afterPath="$PROJECT_DIR$/.idea/libraries/com_android_support_test_rules_0_5.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/com_android_support_test_runner_0_5.xml" afterPath="$PROJECT_DIR$/.idea/libraries/com_android_support_test_runner_0_5.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/com_android_support_transition_27_0_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/com_android_support_transition_27_0_1.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/com_jakewharton_butterknife_8_8_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/com_jakewharton_butterknife_8_8_1.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/com_jakewharton_espresso_okhttp3_idling_resource_1_0_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/com_jakewharton_espresso_okhttp3_idling_resource_1_0_0.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/com_jakewharton_timber_timber_4_5_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/com_jakewharton_timber_timber_4_5_1.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/com_wonderkiln_blurkit_1_0_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/com_wonderkiln_blurkit_1_0_0.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/de_hdodenhof_circleimageview_2_1_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/de_hdodenhof_circleimageview_2_1_0.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/io_reactivex_rxjava2_rxandroid_2_0_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/io_reactivex_rxjava2_rxandroid_2_0_1.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/jp_co_cyberagent_android_gpuimage_gpuimage_library_1_4_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/jp_co_cyberagent_android_gpuimage_gpuimage_library_1_4_1.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/jp_wasabeef_glide_transformations_3_0_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/jp_wasabeef_glide_transformations_3_0_1.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build.gradle" afterPath="$PROJECT_DIR$/build.gradle" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dependencies.gradle" afterPath="$PROJECT_DIR$/dependencies.gradle" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/me/androidbox/busbymovies/di/BusbyMoviesMainApplication.kt" afterPath="$PROJECT_DIR$/src/main/java/me/androidbox/busbymovies/di/BusbyMoviesMainApplication.kt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/androidTest/java/me/androidbox/busbymovies/di/TestBusbyMoviesMainApplication.kt" afterPath="$PROJECT_DIR$/src/androidTest/java/me/androidbox/busbymovies/di/TestBusbyMoviesMainApplication.kt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/androidTest/java/me/androidbox/busbymovies/di/TestMovieListComponent.kt" afterPath="$PROJECT_DIR$/src/androidTest/java/me/androidbox/busbymovies/di/TestMovieListComponent.kt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/me/androidbox/busbymovies/moviedetails/MovieDetailModelImpTest.java" afterPath="$PROJECT_DIR$/src/test/java/me/androidbox/busbymovies/moviedetails/MovieDetailModelImpTest.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/me/androidbox/busbymovies/movielist/MovieListModelImpTest.java" afterPath="$PROJECT_DIR$/src/test/java/me/androidbox/busbymovies/movielist/MovieListModelImpTest.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/me/androidbox/busbymovies/support/BaseRobolectricTestRunner.kt" afterPath="$PROJECT_DIR$/src/test/java/me/androidbox/busbymovies/support/BaseRobolectricTestRunner.kt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../build.gradle" afterPath="$PROJECT_DIR$/../build.gradle" />
     </list>
     <ignored path="$PROJECT_DIR$/build/classes/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -42,135 +79,84 @@
     <favorites_list name="busbymovies" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.75895995">
-      <split-first>
-        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="TestBusbyMoviesMainApplication.kt" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/androidTest/java/me/androidbox/busbymovies/di/TestBusbyMoviesMainApplication.kt">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="460">
-                  <caret line="23" column="24" lean-forward="false" selection-start-line="23" selection-start-column="24" selection-end-line="23" selection-end-column="24" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="DaggerTestBusbyMovieAppComponent.java" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/build/generated/source/kapt/debugUnitTest/me/androidbox/busbymovies/di/DaggerTestBusbyMovieAppComponent.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-114">
-                  <caret line="13" column="19" lean-forward="false" selection-start-line="13" selection-start-column="19" selection-end-line="13" selection-end-column="19" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="dependencies.gradle" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/dependencies.gradle">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="371">
-                  <caret line="56" column="0" lean-forward="false" selection-start-line="56" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="build.gradle" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/build.gradle">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="300">
-                  <caret line="54" column="102" lean-forward="false" selection-start-line="54" selection-start-column="102" selection-end-line="54" selection-end-column="102" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="DaggerBusbyMoviesAppComponent.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/build/generated/source/kapt/debug/me/androidbox/busbymovies/di/DaggerBusbyMoviesAppComponent.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="160">
-                  <caret line="36" column="19" lean-forward="false" selection-start-line="36" selection-start-column="19" selection-end-line="36" selection-end-column="19" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="TestMovieListComponent.kt" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/androidTest/java/me/androidbox/busbymovies/di/TestMovieListComponent.kt">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="180">
-                  <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-                  <folding>
-                    <element signature="e#38#91#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="BusbyMoviesAppComponent.kt" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main/java/me/androidbox/busbymovies/di/BusbyMoviesAppComponent.kt">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="180">
-                  <caret line="12" column="33" lean-forward="false" selection-start-line="12" selection-start-column="10" selection-end-line="12" selection-end-column="33" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="MovieListModule.kt" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main/java/me/androidbox/busbymovies/di/MovieListModule.kt">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="65">
-                  <caret line="18" column="6" lean-forward="false" selection-start-line="18" selection-start-column="6" selection-end-line="18" selection-end-column="6" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="TestBusbyMoviesAppComponent.kt" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/androidTest/java/me/androidbox/busbymovies/di/TestBusbyMoviesAppComponent.kt">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="240">
-                  <caret line="12" column="1" lean-forward="true" selection-start-line="12" selection-start-column="1" selection-end-line="12" selection-end-column="1" />
-                  <folding>
-                    <element signature="e#38#91#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="BusbyMoviesMainApplication.kt" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main/java/me/androidbox/busbymovies/di/BusbyMoviesMainApplication.kt">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="275">
-                  <caret line="31" column="13" lean-forward="false" selection-start-line="31" selection-start-column="13" selection-end-line="31" selection-end-column="13" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-first>
-      <split-second>
-        <leaf>
-          <file leaf-file-name="BusbyMoviesMainApplication.kt" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/src/main/java/me/androidbox/busbymovies/di/BusbyMoviesMainApplication.kt">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="360">
-                  <caret line="31" column="41" lean-forward="false" selection-start-line="31" selection-start-column="41" selection-end-line="31" selection-end-column="41" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-second>
-    </splitter>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="TestBusbyMoviesMainApplication.kt" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/androidTest/java/me/androidbox/busbymovies/di/TestBusbyMoviesMainApplication.kt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="340">
+              <caret line="17" column="65" lean-forward="true" selection-start-line="17" selection-start-column="65" selection-end-line="17" selection-end-column="65" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="dependencies.gradle" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/dependencies.gradle">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="402">
+              <caret line="55" column="72" lean-forward="false" selection-start-line="55" selection-start-column="72" selection-end-line="55" selection-end-column="72" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="build.gradle" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../build.gradle">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="480">
+              <caret line="24" column="26" lean-forward="false" selection-start-line="24" selection-start-column="26" selection-end-line="24" selection-end-column="26" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="build.gradle" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/build.gradle">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="262">
+              <caret line="57" column="0" lean-forward="false" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AndroidTestBusbyMoviesAppComponent.kt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/androidTest/java/me/androidbox/busbymovies/di/AndroidTestBusbyMoviesAppComponent.kt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="240">
+              <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MovieListViewImpTest.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/androidTest/java/me/androidbox/busbymovies/busbymovielist/MovieListViewImpTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="220">
+              <caret line="33" column="71" lean-forward="false" selection-start-line="33" selection-start-column="71" selection-end-line="33" selection-end-column="71" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MovieListViewImpTest.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/androidTest/java/me/androidbox/busbymovies/movielist/MovieListViewImpTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="180">
+              <caret line="22" column="22" lean-forward="false" selection-start-line="22" selection-start-column="22" selection-end-line="22" selection-end-column="22" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Kotlin File" />
+        <option value="JUnit4 Test Class" />
       </list>
     </option>
   </component>
@@ -181,6 +167,7 @@
       <find>compile</find>
       <find>mockreviews</find>
       <find>jacoco</find>
+      <find>jack</find>
     </findStrings>
     <replaceStrings>
       <replace>implementationo</replace>
@@ -1866,23 +1853,23 @@
                         <option name="entries">
                           <list>
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.build/gradle/3.0.1/cfa107d4db0c11c11f445a11e768adf61c72ce06/gradle-3.0.1.jar" />
-                            <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/org/jetbrains/kotlin/kotlin-gradle-plugin/1.1.51/kotlin-gradle-plugin-1.1.51-sources.jar" />
-                            <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/org/jetbrains/kotlin/kotlin-gradle-plugin/1.1.51/kotlin-gradle-plugin-1.1.51.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-gradle-plugin/1.2.0/fe112f680c111f1d64517cf4da2517b0d99cb99/kotlin-gradle-plugin-1.2.0-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-gradle-plugin/1.2.0/ff45cc456b96893e7dd0e41317f1c8b5e7086fc8/kotlin-gradle-plugin-1.2.0.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.dicedmelon.gradle/jacoco-android/0.1.2/15e94758f73f245f0775569d340472d205218934/jacoco-android-0.1.2-sources.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.dicedmelon.gradle/jacoco-android/0.1.2/10f843229b924534626c7074c449971a8b9cf65d/jacoco-android-0.1.2.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.build/gradle-core/3.0.1/c2945119335b491ca56e4042f7c8c55dccf5c9c2/gradle-core-3.0.1.jar" />
-                            <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/org/jetbrains/kotlin/kotlin-gradle-plugin-api/1.1.51/kotlin-gradle-plugin-api-1.1.51-sources.jar" />
-                            <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/org/jetbrains/kotlin/kotlin-gradle-plugin-api/1.1.51/kotlin-gradle-plugin-api-1.1.51.jar" />
-                            <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/org/jetbrains/kotlin/kotlin-stdlib/1.1.51/kotlin-stdlib-1.1.51-sources.jar" />
-                            <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/org/jetbrains/kotlin/kotlin-stdlib/1.1.51/kotlin-stdlib-1.1.51.jar" />
-                            <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/org/jetbrains/kotlin/kotlin-android-extensions/1.1.51/kotlin-android-extensions-1.1.51-sources.jar" />
-                            <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/org/jetbrains/kotlin/kotlin-android-extensions/1.1.51/kotlin-android-extensions-1.1.51.jar" />
-                            <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/org/jetbrains/kotlin/kotlin-compiler-embeddable/1.1.51/kotlin-compiler-embeddable-1.1.51-sources.jar" />
-                            <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/org/jetbrains/kotlin/kotlin-compiler-embeddable/1.1.51/kotlin-compiler-embeddable-1.1.51.jar" />
-                            <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/org/jetbrains/kotlin/kotlin-compiler-runner/1.1.51/kotlin-compiler-runner-1.1.51-sources.jar" />
-                            <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/org/jetbrains/kotlin/kotlin-compiler-runner/1.1.51/kotlin-compiler-runner-1.1.51.jar" />
-                            <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/org/jetbrains/kotlin/kotlin-annotation-processing/1.1.51/kotlin-annotation-processing-1.1.51-sources.jar" />
-                            <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/org/jetbrains/kotlin/kotlin-annotation-processing/1.1.51/kotlin-annotation-processing-1.1.51.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-gradle-plugin-api/1.2.0/ac51b29fc2500b0fee36e6abbdfba7c625c893b/kotlin-gradle-plugin-api-1.2.0-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-gradle-plugin-api/1.2.0/c6865d01b8603cb702f3e828e098c43750d565d8/kotlin-gradle-plugin-api-1.2.0.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.2.0/180a4946e471f9f47d4b6139c5dbc5e7603a8424/kotlin-stdlib-1.2.0-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.2.0/25eb440d6eeb9fc60299121020fe726eb2100d03/kotlin-stdlib-1.2.0.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-compiler-embeddable/1.2.0/3c603e0ea4ba1668f91cc1b05146d0e3a0a59d1e/kotlin-compiler-embeddable-1.2.0-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-compiler-embeddable/1.2.0/17eefd45a8efe1fd7d537d3f8e981f6d76c5ae0e/kotlin-compiler-embeddable-1.2.0.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-annotation-processing-gradle/1.2.0/7585be69f6f3ff082b14e351705a113c9637e328/kotlin-annotation-processing-gradle-1.2.0-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-annotation-processing-gradle/1.2.0/d2cd3266a0bba63d34e9a7176e554571739c85d3/kotlin-annotation-processing-gradle-1.2.0.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-android-extensions/1.2.0/272e0d3e756341ba5622e88d70b42f0858e68157/kotlin-android-extensions-1.2.0-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-android-extensions/1.2.0/41b2a2ff56ce9abefb0d0d9d9750cdae749e9143/kotlin-android-extensions-1.2.0.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-compiler-runner/1.2.0/cbb71ab4053ec3fec531ef5243141357ab92ffa0/kotlin-compiler-runner-1.2.0-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-compiler-runner/1.2.0/23208cb3858304db32dbe2767c84cf349ce5813a/kotlin-compiler-runner-1.2.0.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.codehaus.groovy/groovy-all/2.4.4/3e0194e32a08d20d0ecec9f343acc85b7a6c815/groovy-all-2.4.4-sources.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.codehaus.groovy/groovy-all/2.4.4/b22748b6cf9a38c9777792175507a679043cdd64/groovy-all-2.4.4.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.build/builder/3.0.1/1f896967507729bb35ac727c03d3b9306fe87b7d/builder-3.0.1.jar" />
@@ -1900,6 +1887,14 @@
                             <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/net/sf/jopt-simple/jopt-simple/4.9/jopt-simple-4.9.jar" />
                             <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/net/sf/proguard/proguard-gradle/5.3.3/proguard-gradle-5.3.3.jar" />
                             <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/com/google/protobuf/protobuf-java/3.0.0/protobuf-java-3.0.0.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-script-runtime/1.2.0/5c53162df36f79971b043a2df6e8293c2c9071a4/kotlin-script-runtime-1.2.0-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-script-runtime/1.2.0/269ab8b6a2d55c23dbf2e317a1af2b4c7e8d54b6/kotlin-script-runtime-1.2.0.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-reflect/1.2.0/7fb1210ceec26e7e5195894fa83e9e67ea4d2ba/kotlin-reflect-1.2.0-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-reflect/1.2.0/4bbda3b5425aa38a9f6960468a29c5ef3e8a28c9/kotlin-reflect-1.2.0.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-build-common/1.2.0/ddcd48c82f46a864936199a12a238f61f34ac18/kotlin-build-common-1.2.0-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-build-common/1.2.0/fe072643b006ec31ff52b06d3623e8f8208a03a1/kotlin-build-common-1.2.0.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-daemon-client/1.2.0/ff1cc47f92cd2929eae53c4f141fdd34f70ef457/kotlin-daemon-client-1.2.0-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-daemon-client/1.2.0/6d6fdfd9e30d1f71927ddecf7aba88fe80e0243/kotlin-daemon-client-1.2.0.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.build/builder-model/3.0.1/e9de7e34339a8eb90fda30ac6bf580d5f2c4f282/builder-model-3.0.1.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.build/builder-test-api/3.0.1/5f084a2888a7f638c4c89c3278760345b1fb4c8/builder-test-api-3.0.1.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools/sdklib/26.0.1/bdb4723f8e3791f1d3911b1f191acf25840f352a/sdklib-26.0.1.jar" />
@@ -1942,8 +1937,6 @@
                             <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/commons-codec/commons-codec/1.6/commons-codec-1.6.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.external.com-intellij/intellij-core/26.0.1/a373ed549821cb9a932b87c79792790f6d018727/intellij-core-26.0.1.jar" />
                             <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/com/android/tools/external/lombok/lombok-ast/0.2.3/lombok-ast-0.2.3.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-reflect/1.1.3-2/c177cdc01cb72daf352c8ca94d56c3e8ed7c1eee/kotlin-reflect-1.1.3-2-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-reflect/1.1.3-2/2104f139db2a2d230c529b004c34a0993c4c2f19/kotlin-reflect-1.1.3-2.jar" />
                             <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/org/jetbrains/annotations/13.0/annotations-13.0.jar" />
                             <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/org/jetbrains/trove4j/trove4j/20160824/trove4j-20160824.jar" />
                             <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/com/google/code/findbugs/jsr305/1.3.9/jsr305-1.3.9.jar" />
@@ -1962,23 +1955,23 @@
                         <option name="entries">
                           <list>
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.build/gradle/3.0.1/cfa107d4db0c11c11f445a11e768adf61c72ce06/gradle-3.0.1.jar" />
-                            <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/org/jetbrains/kotlin/kotlin-gradle-plugin/1.1.51/kotlin-gradle-plugin-1.1.51-sources.jar" />
-                            <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/org/jetbrains/kotlin/kotlin-gradle-plugin/1.1.51/kotlin-gradle-plugin-1.1.51.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-gradle-plugin/1.2.0/fe112f680c111f1d64517cf4da2517b0d99cb99/kotlin-gradle-plugin-1.2.0-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-gradle-plugin/1.2.0/ff45cc456b96893e7dd0e41317f1c8b5e7086fc8/kotlin-gradle-plugin-1.2.0.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.dicedmelon.gradle/jacoco-android/0.1.2/15e94758f73f245f0775569d340472d205218934/jacoco-android-0.1.2-sources.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.dicedmelon.gradle/jacoco-android/0.1.2/10f843229b924534626c7074c449971a8b9cf65d/jacoco-android-0.1.2.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.build/gradle-core/3.0.1/c2945119335b491ca56e4042f7c8c55dccf5c9c2/gradle-core-3.0.1.jar" />
-                            <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/org/jetbrains/kotlin/kotlin-gradle-plugin-api/1.1.51/kotlin-gradle-plugin-api-1.1.51-sources.jar" />
-                            <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/org/jetbrains/kotlin/kotlin-gradle-plugin-api/1.1.51/kotlin-gradle-plugin-api-1.1.51.jar" />
-                            <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/org/jetbrains/kotlin/kotlin-stdlib/1.1.51/kotlin-stdlib-1.1.51-sources.jar" />
-                            <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/org/jetbrains/kotlin/kotlin-stdlib/1.1.51/kotlin-stdlib-1.1.51.jar" />
-                            <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/org/jetbrains/kotlin/kotlin-android-extensions/1.1.51/kotlin-android-extensions-1.1.51-sources.jar" />
-                            <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/org/jetbrains/kotlin/kotlin-android-extensions/1.1.51/kotlin-android-extensions-1.1.51.jar" />
-                            <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/org/jetbrains/kotlin/kotlin-compiler-embeddable/1.1.51/kotlin-compiler-embeddable-1.1.51-sources.jar" />
-                            <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/org/jetbrains/kotlin/kotlin-compiler-embeddable/1.1.51/kotlin-compiler-embeddable-1.1.51.jar" />
-                            <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/org/jetbrains/kotlin/kotlin-compiler-runner/1.1.51/kotlin-compiler-runner-1.1.51-sources.jar" />
-                            <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/org/jetbrains/kotlin/kotlin-compiler-runner/1.1.51/kotlin-compiler-runner-1.1.51.jar" />
-                            <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/org/jetbrains/kotlin/kotlin-annotation-processing/1.1.51/kotlin-annotation-processing-1.1.51-sources.jar" />
-                            <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/org/jetbrains/kotlin/kotlin-annotation-processing/1.1.51/kotlin-annotation-processing-1.1.51.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-gradle-plugin-api/1.2.0/ac51b29fc2500b0fee36e6abbdfba7c625c893b/kotlin-gradle-plugin-api-1.2.0-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-gradle-plugin-api/1.2.0/c6865d01b8603cb702f3e828e098c43750d565d8/kotlin-gradle-plugin-api-1.2.0.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.2.0/180a4946e471f9f47d4b6139c5dbc5e7603a8424/kotlin-stdlib-1.2.0-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.2.0/25eb440d6eeb9fc60299121020fe726eb2100d03/kotlin-stdlib-1.2.0.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-compiler-embeddable/1.2.0/3c603e0ea4ba1668f91cc1b05146d0e3a0a59d1e/kotlin-compiler-embeddable-1.2.0-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-compiler-embeddable/1.2.0/17eefd45a8efe1fd7d537d3f8e981f6d76c5ae0e/kotlin-compiler-embeddable-1.2.0.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-annotation-processing-gradle/1.2.0/7585be69f6f3ff082b14e351705a113c9637e328/kotlin-annotation-processing-gradle-1.2.0-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-annotation-processing-gradle/1.2.0/d2cd3266a0bba63d34e9a7176e554571739c85d3/kotlin-annotation-processing-gradle-1.2.0.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-android-extensions/1.2.0/272e0d3e756341ba5622e88d70b42f0858e68157/kotlin-android-extensions-1.2.0-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-android-extensions/1.2.0/41b2a2ff56ce9abefb0d0d9d9750cdae749e9143/kotlin-android-extensions-1.2.0.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-compiler-runner/1.2.0/cbb71ab4053ec3fec531ef5243141357ab92ffa0/kotlin-compiler-runner-1.2.0-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-compiler-runner/1.2.0/23208cb3858304db32dbe2767c84cf349ce5813a/kotlin-compiler-runner-1.2.0.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.codehaus.groovy/groovy-all/2.4.4/3e0194e32a08d20d0ecec9f343acc85b7a6c815/groovy-all-2.4.4-sources.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.codehaus.groovy/groovy-all/2.4.4/b22748b6cf9a38c9777792175507a679043cdd64/groovy-all-2.4.4.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.build/builder/3.0.1/1f896967507729bb35ac727c03d3b9306fe87b7d/builder-3.0.1.jar" />
@@ -1996,6 +1989,14 @@
                             <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/net/sf/jopt-simple/jopt-simple/4.9/jopt-simple-4.9.jar" />
                             <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/net/sf/proguard/proguard-gradle/5.3.3/proguard-gradle-5.3.3.jar" />
                             <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/com/google/protobuf/protobuf-java/3.0.0/protobuf-java-3.0.0.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-script-runtime/1.2.0/5c53162df36f79971b043a2df6e8293c2c9071a4/kotlin-script-runtime-1.2.0-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-script-runtime/1.2.0/269ab8b6a2d55c23dbf2e317a1af2b4c7e8d54b6/kotlin-script-runtime-1.2.0.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-reflect/1.2.0/7fb1210ceec26e7e5195894fa83e9e67ea4d2ba/kotlin-reflect-1.2.0-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-reflect/1.2.0/4bbda3b5425aa38a9f6960468a29c5ef3e8a28c9/kotlin-reflect-1.2.0.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-build-common/1.2.0/ddcd48c82f46a864936199a12a238f61f34ac18/kotlin-build-common-1.2.0-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-build-common/1.2.0/fe072643b006ec31ff52b06d3623e8f8208a03a1/kotlin-build-common-1.2.0.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-daemon-client/1.2.0/ff1cc47f92cd2929eae53c4f141fdd34f70ef457/kotlin-daemon-client-1.2.0-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-daemon-client/1.2.0/6d6fdfd9e30d1f71927ddecf7aba88fe80e0243/kotlin-daemon-client-1.2.0.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.build/builder-model/3.0.1/e9de7e34339a8eb90fda30ac6bf580d5f2c4f282/builder-model-3.0.1.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.build/builder-test-api/3.0.1/5f084a2888a7f638c4c89c3278760345b1fb4c8/builder-test-api-3.0.1.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools/sdklib/26.0.1/bdb4723f8e3791f1d3911b1f191acf25840f352a/sdklib-26.0.1.jar" />
@@ -2038,8 +2039,6 @@
                             <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/commons-codec/commons-codec/1.6/commons-codec-1.6.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.external.com-intellij/intellij-core/26.0.1/a373ed549821cb9a932b87c79792790f6d018727/intellij-core-26.0.1.jar" />
                             <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/com/android/tools/external/lombok/lombok-ast/0.2.3/lombok-ast-0.2.3.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-reflect/1.1.3-2/c177cdc01cb72daf352c8ca94d56c3e8ed7c1eee/kotlin-reflect-1.1.3-2-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-reflect/1.1.3-2/2104f139db2a2d230c529b004c34a0993c4c2f19/kotlin-reflect-1.1.3-2.jar" />
                             <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/org/jetbrains/annotations/13.0/annotations-13.0.jar" />
                             <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/org/jetbrains/trove4j/trove4j/20160824/trove4j-20160824.jar" />
                             <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/com/google/code/findbugs/jsr305/1.3.9/jsr305-1.3.9.jar" />
@@ -2223,17 +2222,14 @@
         <option value="$PROJECT_DIR$/src/test/java/me/androidbox/busbymovies/support/ViewLocator.java" />
         <option value="$PROJECT_DIR$/src/test/java/me/androidbox/busbymovies/di/TestAndroidModule.kt" />
         <option value="$PROJECT_DIR$/src/main/java/me/androidbox/busbymovies/movielist/MovieListModelImp.java" />
-        <option value="$PROJECT_DIR$/src/test/java/me/androidbox/busbymovies/movielist/MovieListModelImpTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/me/androidbox/busbymovies/movielist/MovieListModelImpGetMovieTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/me/androidbox/busbymovies/di/BaseRoboelectricTestRunner.kt" />
         <option value="$PROJECT_DIR$/src/test/java/me/androidbox/busbymovies/di/TestBusbyMovieAppComponent.kt" />
         <option value="$PROJECT_DIR$/src/test/java/me/androidbox/busbymovies/moviedetails/MovieDetailPresenterImpTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/me/androidbox/busbymovies/moviedetails/MovieDetailModelImp.java" />
         <option value="$PROJECT_DIR$/../gradle.properties" />
-        <option value="$PROJECT_DIR$/src/test/java/me/androidbox/busbymovies/moviedetails/MovieDetailModelImpTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/me/androidbox/busbymovies/moviedetails/MovieDetailViewImpTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/me/androidbox/busbymovies/di/BaseRobolectricTestRunner.kt" />
-        <option value="$PROJECT_DIR$/../build.gradle" />
         <option value="$PROJECT_DIR$/src/test/java/me/androidbox/busbymovies/data/MovieContractTest.java" />
         <option value="$PROJECT_DIR$/../circle.yml" />
         <option value="$PROJECT_DIR$/../.travis.yml" />
@@ -2241,23 +2237,30 @@
         <option value="$PROJECT_DIR$/src/main/java/me/androidbox/busbymovies/moviedetails/MovieActorsViewHolder.java" />
         <option value="$PROJECT_DIR$/src/main/java/me/androidbox/busbymovies/utils/Network.java" />
         <option value="$PROJECT_DIR$/src/main/java/me/androidbox/busbymovies/di/AndroidModule.kt" />
-        <option value="$PROJECT_DIR$/src/test/java/me/androidbox/busbymovies/support/BaseRobolectricTestRunner.kt" />
         <option value="$PROJECT_DIR$/src/test/java/me/androidbox/busbymovies/moviedetails/MovieActorsViewHolderTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/me/androidbox/busbymovies/movielist/MovieListViewImpRoboTest.java" />
-        <option value="$PROJECT_DIR$/src/androidTest/java/me/androidbox/busbymovies/di/TestMovieListComponent.kt" />
         <option value="$PROJECT_DIR$/src/main/java/me/androidbox/busbymovies/di/BusbyMoviesAppComponent.kt" />
         <option value="$PROJECT_DIR$/src/main/java/me/androidbox/busbymovies/di/BusbyMoviesMainApplication.kt" />
+        <option value="$PROJECT_DIR$/src/test/java/me/androidbox/busbymovies/support/BaseRobolectricTestRunner.kt" />
+        <option value="$PROJECT_DIR$/src/test/java/me/androidbox/busbymovies/movielist/MovieListModelImpTest.java" />
+        <option value="$PROJECT_DIR$/src/test/java/me/androidbox/busbymovies/moviedetails/MovieDetailModelImpTest.java" />
+        <option value="$PROJECT_DIR$/src/androidTest/java/me/androidbox/busbymovies/di/TestMovieListComponent.kt" />
         <option value="$PROJECT_DIR$/src/androidTest/java/me/androidbox/busbymovies/di/TestBusbyMoviesAppComponent.kt" />
+        <option value="$PROJECT_DIR$/src/androidTest/java/me/androidbox/busbymovies/busbymovielist/MovieListViewImpTest.java" />
+        <option value="$PROJECT_DIR$/src/androidTest/java/me/androidbox/busbymovies/di/AndroidTestBusbyMoviesAppComponent.kt" />
+        <option value="$PROJECT_DIR$/build/generated/source/kapt/debugUnitTest/me/androidbox/busbymovies/di/DaggerTestBusbyMovieAppComponent.java" />
         <option value="$PROJECT_DIR$/dependencies.gradle" />
-        <option value="$PROJECT_DIR$/src/androidTest/java/me/androidbox/busbymovies/di/TestBusbyMoviesMainApplication.kt" />
+        <option value="$PROJECT_DIR$/../build.gradle" />
         <option value="$PROJECT_DIR$/build.gradle" />
+        <option value="$PROJECT_DIR$/src/androidTest/java/me/androidbox/busbymovies/di/TestBusbyMoviesMainApplication.kt" />
+        <option value="$PROJECT_DIR$/src/androidTest/java/me/androidbox/busbymovies/movielist/MovieListViewImpTest.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="y" value="29" />
-    <option name="width" value="1920" />
-    <option name="height" value="1053" />
+    <option name="y" value="27" />
+    <option name="width" value="1906" />
+    <option name="height" value="1050" />
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="1" id="Add" />
@@ -2277,99 +2280,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope">
-        <subPane subId="Tests">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="BusbyMovies">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="app">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="src">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="test/java">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="me/androidbox/busbymovies">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="BusbyMovies">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="app">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="src">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="test/java">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="me/androidbox/busbymovies">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="moviedetails">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="BusbyMovies">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="app">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="src">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="BusbyMovies">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="app">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="Scratches" />
       <pane id="AndroidView">
         <subPane>
           <PATH>
@@ -2449,6 +2359,88 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="busbymovies" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="busbymovies" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="busbymovies" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="busbymovies" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="androidTest" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="busbymovies" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="busbymovies" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="busbymovies" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="androidTest" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="busbymovies" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="movielist" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -2604,11 +2596,15 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="apt" />
+              <option name="myItemId" value="kapt" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="test" />
+              <option name="myItemId" value="debug" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="busbymovies" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -2638,13 +2634,110 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="apt" />
+              <option name="myItemId" value="kapt" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="debug" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
       <pane id="PackagesPane" />
+      <pane id="Scope">
+        <subPane subId="Tests">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="BusbyMovies">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="app">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="src">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="test/java">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="me/androidbox/busbymovies">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="BusbyMovies">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="app">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="src">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="test/java">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="me/androidbox/busbymovies">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="moviedetails">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="BusbyMovies">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="app">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="src">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="BusbyMovies">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="app">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -2655,7 +2748,17 @@
     <property name="android.project.structure.proportion" value="0.15" />
     <property name="sync.plugin.last.upgrade.timestamp" value="1511451004366" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../BusbyBaking" />
-    <property name="SearchEverywhereHistoryKey" value="android&#9;null&#9;null&#10;androidmo&#9;FILE&#9;file:///home/steve/androidstudioprojects/busbymovies/app/src/test/java/me/androidbox/busbymovies/di/TestAndroidModule.kt&#10;MovieContract.&#9;FILE&#9;file:///home/steve/androidstudioprojects/busbymovies/app/src/main/java/me/androidbox/busbymovies/data/MovieContract.java" />
+    <property name="SearchEverywhereHistoryKey" value="build&#9;FILE&#9;file:///home/steve/androidstudioprojects/busbymovies/app/build.gradle&#10;android&#9;null&#9;null&#10;androidmo&#9;FILE&#9;file:///home/steve/androidstudioprojects/busbymovies/app/src/test/java/me/androidbox/busbymovies/di/TestAndroidModule.kt&#10;MovieContract.&#9;FILE&#9;file:///home/steve/androidstudioprojects/busbymovies/app/src/main/java/me/androidbox/busbymovies/data/MovieContract.java" />
+    <property name="last_directory_selection" value="$PROJECT_DIR$/src/androidTest/java/me/androidbox/busbymovies" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit4" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="me.androidbox.busbymovies.movielist" />
+    </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -2669,7 +2772,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Android JUnit.MovieActorsViewHolderTest">
+  <component name="RunManager" selected="Android Instrumented Tests.testBusbyMoviesMai...()">
     <configuration default="false" name="MovieListViewImpRoboTest" type="AndroidJUnit" factoryName="Android JUnit" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -2696,38 +2799,12 @@
       <patterns />
       <method />
     </configuration>
-    <configuration default="false" name="MovieContractTest" type="AndroidJUnit" factoryName="Android JUnit" temporary="true" nameIsGenerated="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
-        <pattern>
-          <option name="PATTERN" value="me.androidbox.busbymovies.data.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <module name="BusbyMovies" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="me.androidbox.busbymovies.data" />
-      <option name="MAIN_CLASS_NAME" value="me.androidbox.busbymovies.data.MovieContractTest" />
-      <option name="METHOD_NAME" />
-      <option name="TEST_OBJECT" value="class" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <envs />
-      <patterns />
-      <method />
-    </configuration>
     <configuration default="false" name="MovieListViewImpTest" type="AndroidTestRunConfigurationType" factoryName="Android Instrumented Tests" temporary="true" nameIsGenerated="true">
       <module name="BusbyMovies" />
       <option name="TESTING_TYPE" value="2" />
       <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
       <option name="METHOD_NAME" value="" />
-      <option name="CLASS_NAME" value="me.androidbox.busbymovies.MovieListViewImpTest" />
+      <option name="CLASS_NAME" value="me.androidbox.busbymovies.busbymovielist.MovieListViewImpTest" />
       <option name="PACKAGE_NAME" value="" />
       <option name="EXTRA_OPTIONS" value="" />
       <option name="CLEAR_LOGCAT" value="false" />
@@ -2767,7 +2844,7 @@
       </Profilers>
       <method>
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
-        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1511973356960" />
+        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1512062969537" />
       </method>
     </configuration>
     <configuration default="false" name="DatabaseTest" type="AndroidTestRunConfigurationType" factoryName="Android Instrumented Tests" temporary="true" nameIsGenerated="true">
@@ -2815,7 +2892,7 @@
       </Profilers>
       <method>
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
-        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1511973356960" />
+        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1512062969538" />
       </method>
     </configuration>
     <configuration default="false" name="MovieActorsViewHolderTest" type="AndroidJUnit" factoryName="Android JUnit" temporary="true" nameIsGenerated="true">
@@ -2843,6 +2920,54 @@
       <envs />
       <patterns />
       <method />
+    </configuration>
+    <configuration default="false" name="testBusbyMoviesMai...()" type="AndroidTestRunConfigurationType" factoryName="Android Instrumented Tests" temporary="true" nameIsGenerated="true">
+      <module name="BusbyMovies" />
+      <option name="TESTING_TYPE" value="3" />
+      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
+      <option name="METHOD_NAME" value="testBusbyMoviesMainApplication_isNonNull" />
+      <option name="CLASS_NAME" value="me.androidbox.busbymovies.movielist.MovieListViewImpTest" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="EXTRA_OPTIONS" value="" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
+      <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="TARGET_SELECTION_MODE" value="SHOW_DIALOG" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="DEBUGGER_TYPE" value="Auto" />
+      <Auto>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Auto>
+      <Hybrid>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Hybrid>
+      <Java />
+      <Native>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Native>
+      <Profilers>
+        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
+      </Profilers>
+      <method>
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1512062969538" />
+      </method>
     </configuration>
     <configuration default="true" type="AndroidJUnit" factoryName="Android JUnit">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
@@ -2914,7 +3039,7 @@
       <option name="ACTIVITY_CLASS" value="" />
       <method>
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
-        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1511973356960" />
+        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1512062969538" />
       </method>
     </configuration>
     <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Instrumented Tests">
@@ -2962,7 +3087,7 @@
       </Profilers>
       <method>
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
-        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1511973356960" />
+        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1512062969539" />
       </method>
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -3145,24 +3270,24 @@
       <option name="ACTIVITY_CLASS" value="" />
       <method>
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
-        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1511973356962" />
+        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1512062969541" />
       </method>
     </configuration>
     <list size="6">
       <item index="0" class="java.lang.String" itemvalue="Android App.BusbyMovies" />
       <item index="1" class="java.lang.String" itemvalue="Android JUnit.MovieListViewImpRoboTest" />
-      <item index="2" class="java.lang.String" itemvalue="Android JUnit.MovieContractTest" />
-      <item index="3" class="java.lang.String" itemvalue="Android Instrumented Tests.MovieListViewImpTest" />
-      <item index="4" class="java.lang.String" itemvalue="Android Instrumented Tests.DatabaseTest" />
-      <item index="5" class="java.lang.String" itemvalue="Android JUnit.MovieActorsViewHolderTest" />
+      <item index="2" class="java.lang.String" itemvalue="Android Instrumented Tests.MovieListViewImpTest" />
+      <item index="3" class="java.lang.String" itemvalue="Android Instrumented Tests.DatabaseTest" />
+      <item index="4" class="java.lang.String" itemvalue="Android JUnit.MovieActorsViewHolderTest" />
+      <item index="5" class="java.lang.String" itemvalue="Android Instrumented Tests.testBusbyMoviesMai...()" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Android JUnit.MovieActorsViewHolderTest" />
-        <item index="1" class="java.lang.String" itemvalue="Android JUnit.MovieListViewImpRoboTest" />
-        <item index="2" class="java.lang.String" itemvalue="Android Instrumented Tests.DatabaseTest" />
-        <item index="3" class="java.lang.String" itemvalue="Android Instrumented Tests.MovieListViewImpTest" />
-        <item index="4" class="java.lang.String" itemvalue="Android JUnit.MovieContractTest" />
+        <item index="0" class="java.lang.String" itemvalue="Android Instrumented Tests.testBusbyMoviesMai...()" />
+        <item index="1" class="java.lang.String" itemvalue="Android JUnit.MovieActorsViewHolderTest" />
+        <item index="2" class="java.lang.String" itemvalue="Android JUnit.MovieListViewImpRoboTest" />
+        <item index="3" class="java.lang.String" itemvalue="Android Instrumented Tests.DatabaseTest" />
+        <item index="4" class="java.lang.String" itemvalue="Android Instrumented Tests.MovieListViewImpTest" />
       </list>
     </recent_temporary>
     <configuration name="&lt;template&gt;" type="Applet" default="true" selected="false">
@@ -3201,15 +3326,6 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="MovieActorsViewHolderTest - 2017.11.29 at 21h 57m 03s.xml">
-      <configuration name="MovieActorsViewHolderTest" configurationId="AndroidJUnit" />
-    </history-entry>
-    <history-entry file="MovieContractTest_shouldHaveCorrectMemberForInnerClass - 2017.11.23 at 23h 09m 16s.xml">
-      <configuration name="MovieContractTest.shouldHaveCorrectMemberForInnerClass" configurationId="AndroidJUnit" />
-    </history-entry>
-    <history-entry file="MovieContractTest_shouldHaveCorrectMemberForInnerClass - 2017.11.23 at 23h 09m 25s.xml">
-      <configuration name="MovieContractTest.shouldHaveCorrectMemberForInnerClass" configurationId="AndroidJUnit" />
-    </history-entry>
     <history-entry file="MovieListModelImpGetMovieTest - 2017.11.21 at 23h 12m 37s.xml">
       <configuration name="MovieListModelImpGetMovieTest" configurationId="AndroidJUnit" />
     </history-entry>
@@ -3231,33 +3347,42 @@
     <history-entry file="MovieListViewImpTest - 2017.11.28 at 22h 55m 08s.xml">
       <configuration name="MovieListViewImpTest" configurationId="AndroidTestRunConfigurationType" />
     </history-entry>
+    <history-entry file="testBusbyMoviesMai___() - 2017.12.01 at 00h 26m 27s.xml">
+      <configuration name="testBusbyMoviesMai...()" configurationId="AndroidTestRunConfigurationType" />
+    </history-entry>
+    <history-entry file="testBusbyMoviesMai___() - 2017.12.01 at 00h 26m 49s.xml">
+      <configuration name="testBusbyMoviesMai...()" configurationId="AndroidTestRunConfigurationType" />
+    </history-entry>
+    <history-entry file="testBusbyMoviesMai___() - 2017.12.01 at 00h 27m 07s.xml">
+      <configuration name="testBusbyMoviesMai...()" configurationId="AndroidTestRunConfigurationType" />
+    </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="29" width="1920" height="1053" extended-state="0" />
+    <frame x="0" y="27" width="1906" height="1050" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="Android Profiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.29671574" sideWeight="0.39037085" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2965909" sideWeight="0.39037085" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20882669" sideWeight="0.50795454" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.44210526" sideWeight="0.5048485" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25481313" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2423556" sideWeight="0.8815875" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2423556" sideWeight="0.8815875" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Logcat" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23741007" sideWeight="0.49757576" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3306544" sideWeight="0.118412495" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3696581" sideWeight="0.49303135" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295583" sideWeight="0.49757576" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30624327" sideWeight="0.49204546" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Device File Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4348811" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.44886363" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.28121212" sideWeight="0.5069686" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -3266,6 +3391,7 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3299941" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32954547" sideWeight="0.49757576" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -3286,26 +3412,30 @@
           <properties />
           <option name="timeStamp" value="11" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/androidTest/java/me/androidbox/busbymovies/movielist/MovieListViewImpTest.java</url>
+          <line>40</line>
+          <properties />
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/androidTest/java/me/androidbox/busbymovies/movielist/MovieListViewImpTest.java</url>
+          <line>45</line>
+          <properties />
+          <option name="timeStamp" value="15" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/androidTest/java/me/androidbox/busbymovies/movielist/MovieListViewImpTest.java</url>
+          <line>32</line>
+          <properties />
+          <option name="timeStamp" value="17" />
+        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="13" />
+      <option name="time" value="18" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/me/androidbox/busbymovies/data/MovieFavouriteModelContract.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="9" column="17" lean-forward="false" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/me/androidbox/busbymovies/data/MovieContentProvider.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1100">
-          <caret line="19" column="13" lean-forward="false" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.mockito/mockito-core/2.11.0/62403973fa2e5754078a4586a089f4bd6b9becab/mockito-core-2.11.0-sources.jar!/org/mockito/internal/creation/bytebuddy/MockMethodInterceptor.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="156">
@@ -3399,13 +3529,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/me/androidbox/busbymovies/movielist/MovieListModelImpTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1091">
-          <caret line="76" column="53" lean-forward="false" selection-start-line="76" selection-start-column="53" selection-end-line="76" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/me/androidbox/busbymovies/movielist/MovieListPresenterImpTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="140">
@@ -3427,13 +3550,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/me/androidbox/busbymovies/moviedetails/MovieDetailModelImpTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="36" column="13" lean-forward="false" selection-start-line="36" selection-start-column="13" selection-end-line="36" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/me/androidbox/busbymovies/data/MovieContractTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="420">
@@ -3449,19 +3565,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="11" column="62" lean-forward="false" selection-start-line="11" selection-start-column="62" selection-end-line="11" selection-end-column="62" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/me/androidbox/busbymovies/di/TestAndroidModule.kt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="280">
           <caret line="19" column="0" lean-forward="false" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3497,9 +3604,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
           <caret line="19" column="3" lean-forward="false" selection-start-line="19" selection-start-column="3" selection-end-line="19" selection-end-column="3" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3514,17 +3618,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="260">
           <caret line="24" column="5" lean-forward="false" selection-start-line="24" selection-start-column="5" selection-end-line="24" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/androidTest/java/me/androidbox/busbymovies/MovieListViewImpTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="39" column="0" lean-forward="false" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3540,17 +3633,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="220">
           <caret line="11" column="0" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/me/androidbox/busbymovies/support/BaseRobolectricTestRunner.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="560">
-          <caret line="28" column="0" lean-forward="false" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
-          <folding>
-            <element signature="e#43#478#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3558,11 +3640,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="40">
           <caret line="2" column="7" lean-forward="false" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#643#644#0" expanded="false" />
-            <element signature="e#687#688#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3570,7 +3647,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="380">
           <caret line="35" column="77" lean-forward="false" selection-start-line="35" selection-start-column="77" selection-end-line="35" selection-end-column="77" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3578,17 +3654,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="280">
           <caret line="46" column="0" lean-forward="false" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/me/androidbox/busbymovies/di/TestBusbyMovieAppComponent.kt">
+    <entry file="file://$PROJECT_DIR$/src/test/java/me/androidbox/busbymovies/di/TestBusbyMoviesAppComponent.kt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
           <caret line="12" column="24" lean-forward="false" selection-start-line="12" selection-start-column="24" selection-end-line="12" selection-end-column="24" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3596,59 +3668,28 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="260">
           <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/androidTest/java/me/androidbox/busbymovies/di/TestMovieListComponent.kt">
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/androidbox/busbymovies/di/BusbyMoviesMainApplication.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-          <folding>
-            <element signature="e#38#91#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/me/androidbox/busbymovies/di/BusbyMoviesAppComponent.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" column="33" lean-forward="false" selection-start-line="12" selection-start-column="10" selection-end-line="12" selection-end-column="33" />
+        <state relative-caret-position="600">
+          <caret line="31" column="13" lean-forward="false" selection-start-line="31" selection-start-column="13" selection-end-line="31" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/me/androidbox/busbymovies/di/MovieListModule.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="65">
+        <state relative-caret-position="160">
           <caret line="18" column="6" lean-forward="false" selection-start-line="18" selection-start-column="6" selection-end-line="18" selection-end-column="6" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/androidTest/java/me/androidbox/busbymovies/di/TestBusbyMoviesAppComponent.kt">
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/androidbox/busbymovies/di/BusbyMoviesAppComponent.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="12" column="1" lean-forward="true" selection-start-line="12" selection-start-column="1" selection-end-line="12" selection-end-column="1" />
-          <folding>
-            <element signature="e#38#91#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/me/androidbox/busbymovies/di/BusbyMoviesMainApplication.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="275">
-          <caret line="31" column="13" lean-forward="false" selection-start-line="31" selection-start-column="13" selection-end-line="31" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/androidTest/java/me/androidbox/busbymovies/di/TestBusbyMoviesMainApplication.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="460">
-          <caret line="23" column="24" lean-forward="false" selection-start-line="23" selection-start-column="24" selection-end-line="23" selection-end-column="24" />
-          <folding />
+        <state relative-caret-position="260">
+          <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -3656,30 +3697,97 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="160">
           <caret line="36" column="19" lean-forward="false" selection-start-line="36" selection-start-column="19" selection-end-line="36" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/me/androidbox/busbymovies/support/BaseRobolectricTestRunner.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="320">
+          <caret line="16" column="56" lean-forward="false" selection-start-line="16" selection-start-column="56" selection-end-line="16" selection-end-column="56" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/me/androidbox/busbymovies/movielist/MovieListModelImpTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-413">
+          <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/me/androidbox/busbymovies/moviedetails/MovieDetailModelImpTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-600">
+          <caret line="12" column="35" lean-forward="false" selection-start-line="12" selection-start-column="35" selection-end-line="12" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/androidTest/java/me/androidbox/busbymovies/di/TestMovieListComponent.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/me/androidbox/busbymovies/movielist/MovieListViewImp.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="58" column="0" lean-forward="false" selection-start-line="58" selection-start-column="0" selection-end-line="58" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/generated/source/kapt/debugUnitTest/me/androidbox/busbymovies/di/DaggerTestBusbyMovieAppComponent.java" />
+    <entry file="file://$PROJECT_DIR$/dependencies.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="402">
+          <caret line="55" column="72" lean-forward="false" selection-start-line="55" selection-start-column="72" selection-end-line="55" selection-end-column="72" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dependencies.gradle">
+    <entry file="file://$PROJECT_DIR$/../build.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="371">
-          <caret line="56" column="0" lean-forward="false" selection-start-line="56" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
+        <state relative-caret-position="480">
+          <caret line="24" column="26" lean-forward="false" selection-start-line="24" selection-start-column="26" selection-end-line="24" selection-end-column="26" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="54" column="102" lean-forward="false" selection-start-line="54" selection-start-column="102" selection-end-line="54" selection-end-column="102" />
+        <state relative-caret-position="262">
+          <caret line="57" column="0" lean-forward="false" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/build/generated/source/kapt/debugUnitTest/me/androidbox/busbymovies/di/DaggerTestBusbyMovieAppComponent.java">
+    <entry file="file://$PROJECT_DIR$/src/androidTest/java/me/androidbox/busbymovies/di/AndroidTestBusbyMoviesAppComponent.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-114">
-          <caret line="13" column="19" lean-forward="false" selection-start-line="13" selection-start-column="19" selection-end-line="13" selection-end-column="19" />
+        <state relative-caret-position="240">
+          <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/androidTest/java/me/androidbox/busbymovies/busbymovielist/MovieListViewImpTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="33" column="71" lean-forward="false" selection-start-line="33" selection-start-column="71" selection-end-line="33" selection-end-column="71" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/androidTest/java/me/androidbox/busbymovies/movielist/MovieListViewImpTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="22" column="22" lean-forward="false" selection-start-line="22" selection-start-column="22" selection-end-line="22" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/androidTest/java/me/androidbox/busbymovies/di/TestBusbyMoviesMainApplication.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="17" column="65" lean-forward="true" selection-start-line="17" selection-start-column="65" selection-end-line="17" selection-end-column="65" />
           <folding />
         </state>
       </provider>

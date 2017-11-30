@@ -3,9 +3,6 @@ package me.androidbox.busbymovies.support
 import android.os.Build
 import me.androidbox.busbymovies.BuildConfig
 import me.androidbox.busbymovies.di.BusbyMoviesMainApplication
-import me.androidbox.busbymovies.di.DaggerTestBusbyMovieAppComponent
-import me.androidbox.busbymovies.di.TestAndroidModule
-import me.androidbox.busbymovies.di.TestBusbyMovieAppComponent
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
@@ -20,9 +17,11 @@ import org.robolectric.annotation.Config
         application = BusbyMoviesMainApplication::class)
 @RunWith(RobolectricTestRunner::class)
 abstract class BaseRobolectricTestRunner {
-    fun getTestBusbyMovieAppComponent(): TestBusbyMovieAppComponent =
+/*
+    fun getTestBusbyMovieAppComponent(): TestBusbyMoviesAppComponent =
             DaggerTestBusbyMovieAppComponent
                     .builder()
                     .testAndroidModule(TestAndroidModule())
                     .build()
+*/
 }

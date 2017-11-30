@@ -1,6 +1,7 @@
 package me.androidbox.busbymovies.di
 
 import dagger.Component
+import me.androidbox.busbymovies.movielist.MovieListViewImpTest
 import javax.inject.Singleton
 
 /**
@@ -8,6 +9,6 @@ import javax.inject.Singleton
  */
 @Singleton
 @Component(modules = arrayOf(AndroidModule::class, ApiModule::class))
-interface TestBusbyMoviesAppComponent : BusbyMoviesAppComponent {
-
+interface AndroidTestBusbyMoviesAppComponent : BusbyMoviesAppComponent {
+    fun inject(movieListView: MovieListViewImpTest)
 }
