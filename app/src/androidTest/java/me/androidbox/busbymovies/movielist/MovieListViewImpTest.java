@@ -9,7 +9,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
-import me.androidbox.busbymovies.di.AndroidTestBusbyMoviesApplication;
+import me.androidbox.busbymovies.di.AndroidTestBusbyMoviesMainApplication;
 
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.core.Is.is;
@@ -32,17 +32,10 @@ public class MovieListViewImpTest {
 
         final Context context = instrumentation.getTargetContext().getApplicationContext();
 
-        final AndroidTestBusbyMoviesApplication androidTestBusbyMoviesApplication =
-                (AndroidTestBusbyMoviesApplication)context;
+        final AndroidTestBusbyMoviesMainApplication androidTestBusbyMoviesApplication =
+                (AndroidTestBusbyMoviesMainApplication)context;
 
         androidTestBusbyMoviesApplication.createAppComponent().inject(MovieListViewImpTest.this);
-
-        final AndroidTestBusbyMoviesApplication testBusbyMoviesMainApplication =
-                (AndroidTestBusbyMoviesApplication)instrumentation
-                        .getTargetContext()
-                        .getApplicationContext();
-
-        testBusbyMoviesMainApplication.createAppComponent().inject(MovieListViewImpTest.this);
     }
 
     @Test
