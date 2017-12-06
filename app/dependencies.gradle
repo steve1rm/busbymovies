@@ -54,6 +54,8 @@ def UITesting = dependencyGroup {
     })
     androidTestImplementation 'org.mockito:mockito-core:2.11.0'
     kaptAndroidTest 'com.google.dagger:dagger-compiler:' + daggerVersion
+    kaptAndroidTest 'org.mockito:mockito-android:2.13.0'
+    kaptAndroidTest 'com.linkedin.dexmaker:dexmaker-mockito:2.2.0'
 }
 
 def UnitTesting = dependencyGroup {
