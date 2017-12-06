@@ -13,6 +13,8 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
+import me.androidbox.busbymovies.di.DaggerTestBusbyMoviesAppComponent;
+import me.androidbox.busbymovies.di.TestAndroidModule;
 import me.androidbox.busbymovies.models.Movies;
 import me.androidbox.busbymovies.models.Results;
 import me.androidbox.busbymovies.network.MovieAPIService;
@@ -50,12 +52,10 @@ public class MovieListModelImpTest {
 
     @Before
     public void setUp() throws Exception {
-/*
-        DaggerTestBusbyMovieAppComponent.builder()
+        DaggerTestBusbyMoviesAppComponent.builder()
                 .testAndroidModule(new TestAndroidModule())
                 .build()
                 .inject(MovieListModelImpTest.this);
-*/
 
         movieListModelContract = new MovieListModelImp(mockMovieAPIService, movieSchedulers);
     }
