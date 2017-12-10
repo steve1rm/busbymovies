@@ -20,8 +20,11 @@ licenses:
   - android-sdk-license-.+
   - '.+'
 
+before_install:
+  - mkdir "$ANDROID_HOME/licenses" || true
+
 script:
-    - ./gradlew --daemon build jacocoTestReport --info
+  - ./gradlew --daemon build jacocoTestReport --info
 
 after_success:
-    - bash <(curl -s https://codecov.io/bash)
+   - bash <(curl -s https://codecov.io/bash)
