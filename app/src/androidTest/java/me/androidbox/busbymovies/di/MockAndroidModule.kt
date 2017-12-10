@@ -6,7 +6,7 @@ import dagger.Provides
 import me.androidbox.busbymovies.moviedetails.ImageLoaderImp
 import me.androidbox.busbymovies.utils.ImageLoader
 import me.androidbox.busbymovies.utils.MovieSchedulers
-import me.androidbox.busbymovies.utils.MovieSchedulersImp
+import me.androidbox.busbymovies.utils.TestMovieSchedulersImp
 import org.mockito.Mockito.mock
 import javax.inject.Singleton
 
@@ -22,7 +22,7 @@ class MockAndroidModule {
     @Singleton
     @Provides
     fun providesMovieSchedulers(): MovieSchedulers {
-        return MovieSchedulersImp()
+        return TestMovieSchedulersImp()
     }
 
     @Singleton

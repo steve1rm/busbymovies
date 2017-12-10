@@ -5,10 +5,11 @@ package me.androidbox.busbymovies.di
  */
 class AndroidTestBusbyMoviesMainApplication : BusbyMoviesMainApplication() {
     private lateinit var androidTestBusbyMoviesComponent: AndroidTestBusbyMoviesAppComponent
-
+    private lateinit var androidTestBusbyMovieListComponent: AndroidTestMovieListComponent
 
     override fun createAppComponent(): AndroidTestBusbyMoviesAppComponent {
         androidTestBusbyMoviesComponent = createAndroidTestBusbyMoviesComponent()
+        androidTestBusbyMovieListComponent = createAndroidTestBusbyMovieListComponent()
 
         return androidTestBusbyMoviesComponent;
     }
@@ -17,5 +18,13 @@ class AndroidTestBusbyMoviesMainApplication : BusbyMoviesMainApplication() {
         androidTestBusbyMoviesComponent = DaggerAndroidTestBusbyMoviesAppComponent.builder().build()
 
         return androidTestBusbyMoviesComponent
+    }
+
+    override fun getMovieListComponent(): AndroidTestMovieListComponent {
+        return androidTestBusbyMovieListComponent
+    }
+
+    private fun createAndroidTestBusbyMovieListComponent(): AndroidTestMovieListComponent {
+        return androidTestBusbyMoviesComponent.add(MockMovieListModule())
     }
 }

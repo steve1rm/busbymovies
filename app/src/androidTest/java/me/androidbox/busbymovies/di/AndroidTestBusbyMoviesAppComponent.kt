@@ -10,5 +10,5 @@ import javax.inject.Singleton
 @Singleton
 @Component(modules = arrayOf(MockAndroidModule::class, MockApiModule::class))
 interface AndroidTestBusbyMoviesAppComponent : BusbyMoviesAppComponent {
-    fun inject(movieListView: MovieListViewImpTest)
+    fun add(mockMovieListModule: MockMovieListModule): AndroidTestMovieListComponent
 }

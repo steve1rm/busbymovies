@@ -36,19 +36,20 @@ open class BusbyMoviesMainApplication : Application() {
                 .build()
     }
 
+    open fun getMovieListComponent(): MovieListComponent {
+        return movieListComponent
+    }
+
+
+    fun getMovieDetailComponent(): MovieDetailComponent {
+        return movieDetailComponent
+    }
+
     private fun createMovieListComponent(): MovieListComponent {
         return appComponent.add(MovieListModule())
     }
 
-    fun getMovieListComponent(): MovieListComponent {
-        return movieListComponent
-    }
-
-    fun createMovieDetailComponent(): MovieDetailComponent {
+    private fun createMovieDetailComponent(): MovieDetailComponent {
         return appComponent.add(MovieDetailModule())
-    }
-
-    fun getMovieDetailComponent(): MovieDetailComponent {
-        return movieDetailComponent
     }
 }

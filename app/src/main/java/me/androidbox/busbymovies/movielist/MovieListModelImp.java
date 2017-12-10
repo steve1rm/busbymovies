@@ -14,7 +14,7 @@ import timber.log.Timber;
  * Created by steve on 2/19/17.
  */
 
-public class MovieListModelImp implements MovieListModelContract {
+final public class MovieListModelImp implements MovieListModelContract {
 
     private MovieAPIService mMovieAPIService;
     private MovieSchedulers movieSchedulers;

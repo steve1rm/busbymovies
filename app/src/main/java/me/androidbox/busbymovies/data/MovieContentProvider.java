@@ -17,7 +17,7 @@ import static me.androidbox.busbymovies.data.MovieContract.MovieEntry.TABLE_NAME
  * Created by steve on 4/2/17.
  */
 
-public class MovieContentProvider extends ContentProvider {
+public final class MovieContentProvider extends ContentProvider {
     private MovieDbHelper mMoveDbHelper;
 
     public static final int MOVIES = 100;

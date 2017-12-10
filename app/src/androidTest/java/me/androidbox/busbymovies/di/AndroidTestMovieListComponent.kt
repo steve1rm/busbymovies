@@ -1,6 +1,14 @@
 package me.androidbox.busbymovies.di
 
+import dagger.Subcomponent
+import me.androidbox.busbymovies.di.scopes.MovieListScope
+import me.androidbox.busbymovies.movielist.MovieListViewImpTest
+
 /**
  * Created by steve on 11/29/17.
  */
-interface AndroidTestMovieListComponent
+@MovieListScope
+@Subcomponent(modules = arrayOf(MockMovieListModule::class))
+interface AndroidTestMovieListComponent : MovieListComponent {
+    fun inject(target: MovieListViewImpTest)
+}

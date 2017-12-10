@@ -48,7 +48,7 @@ import me.androidbox.busbymovies.R;
 import me.androidbox.busbymovies.adapters.MovieActorsAdapter;
 import me.androidbox.busbymovies.adapters.MovieTrailerAdapter;
 import me.androidbox.busbymovies.adapters.SimilarMovieAdapter;
-import me.androidbox.busbymovies.data.MovieFavouritesPresenterContract;
+import me.androidbox.busbymovies.data.MovieFavouritePresenterContract;
 import me.androidbox.busbymovies.di.BusbyMoviesMainApplication;
 import me.androidbox.busbymovies.models.Actor;
 import me.androidbox.busbymovies.models.Cast;
@@ -70,7 +70,7 @@ import timber.log.Timber;
 public class MovieDetailViewImp extends Fragment implements
         MovieDetailViewContract,
         StartMovieTrailerListener,
-        MovieFavouritesPresenterContract.DbOperationsListener {
+        MovieFavouritePresenterContract.DbOperationsListener {
 
     public static final String TAG = MovieDetailViewImp.class.getSimpleName();
     public static final String MOVIE_ID_KEY = "movie_id_key";
@@ -86,7 +86,8 @@ public class MovieDetailViewImp extends Fragment implements
     private SimilarMovieAdapter similarMovieAdapter;
     @Inject MovieActorsAdapter movieActorsAdapter;
     @Inject MovieDetailPresenterContract<MovieDetailViewContract> mMovieDetailPresenterImp;
-    @Inject MovieFavouritesPresenterContract mMovieFavouritePresenterContact;
+    @Inject
+    MovieFavouritePresenterContract mMovieFavouritePresenterContact;
     @Inject ImageLoader imageLoader;
 
     @BindView(R.id.ivBackdropPoster) ImageView mIvBackdropPoster;

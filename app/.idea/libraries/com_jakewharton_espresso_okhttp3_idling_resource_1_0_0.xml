@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="com.jakewharton.espresso:okhttp3-idling-resource-1.0.0">
     <CLASSES>
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/okhttp3-idling-resource-1.0.0.aar/c66807098fffe564cdeb447a98b12611/res" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/okhttp3-idling-resource-1.0.0.aar/c66807098fffe564cdeb447a98b12611/jars/classes.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/okhttp3-idling-resource-1.0.0.aar/5a9134ba32501f6ab88bb9db521f4137/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/okhttp3-idling-resource-1.0.0.aar/5a9134ba32501f6ab88bb9db521f4137/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

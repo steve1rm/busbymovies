@@ -24,7 +24,7 @@ import timber.log.Timber;
  * Created by steve on 3/26/17.
  */
 
-public class MovieFavouriteModelImp implements MovieFavouriteModelContract {
+public final class MovieFavouriteModelImp implements MovieFavouriteModelContract {
     private MovieDbHelper mMovieDbHelper;
     private final WeakReference<Context> mContext;
 

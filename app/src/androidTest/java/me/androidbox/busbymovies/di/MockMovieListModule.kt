@@ -5,25 +5,26 @@ import dagger.Module
 import dagger.Provides
 import me.androidbox.busbymovies.data.MovieFavouriteModelContract
 import me.androidbox.busbymovies.data.MovieFavouriteModelImp
-import me.androidbox.busbymovies.data.MovieFavouritePresenterImp
 import me.androidbox.busbymovies.data.MovieFavouritePresenterContract
+import me.androidbox.busbymovies.data.MovieFavouritePresenterImp
 import me.androidbox.busbymovies.di.scopes.MovieListScope
 import me.androidbox.busbymovies.movielist.*
 import me.androidbox.busbymovies.network.MovieAPIService
 import me.androidbox.busbymovies.utils.MovieSchedulers
+import javax.inject.Singleton
 
 /**
- * Created by steve on 10/22/17.
+ * Created by steve on 12/10/17.
  */
 @Module
-class MovieListModule {
+class MockMovieListModule {
 
     @MovieListScope
     @Provides
-    fun providesMovieListModel(movieApiService: MovieAPIService, movieSchedulers: MovieSchedulers)
+    fun providesMovieListModel(moviesAPIService: MovieAPIService, movieSchedulers: MovieSchedulers)
             : MovieListModelContract {
 
-        return MovieListModelImp(movieApiService, movieSchedulers)
+        return MovieListModelImp(moviesAPIService, movieSchedulers)
     }
 
     @MovieListScope
@@ -48,4 +49,3 @@ class MovieListModule {
         return MovieFavouritePresenterImp(movieFavouriteModelContract)
     }
 }
-        
