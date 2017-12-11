@@ -1,4 +1,4 @@
-package me.androidbox.busbymovies.support
+package support
 
 import android.os.Build
 import me.androidbox.busbymovies.BuildConfig

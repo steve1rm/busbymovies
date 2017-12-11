@@ -12,9 +12,9 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import di.DaggerTestBusbyMoviesAppComponent;
 import io.reactivex.Observable;
-import me.androidbox.busbymovies.di.DaggerTestBusbyMoviesAppComponent;
-import me.androidbox.busbymovies.di.TestAndroidModule;
+import di.TestAndroidModule;
 import me.androidbox.busbymovies.models.Movies;
 import me.androidbox.busbymovies.models.Results;
 import me.androidbox.busbymovies.network.MovieAPIService;

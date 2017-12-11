@@ -9,9 +9,9 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import javax.inject.Inject;
 
+import di.DaggerTestBusbyMoviesAppComponent;
+import di.TestAndroidModule;
 import io.reactivex.Observable;
-import me.androidbox.busbymovies.di.DaggerTestBusbyMoviesAppComponent;
-import me.androidbox.busbymovies.di.TestAndroidModule;
 import me.androidbox.busbymovies.models.Movies;
 import me.androidbox.busbymovies.models.Results;
 import me.androidbox.busbymovies.models.Review;
@@ -21,7 +21,6 @@ import me.androidbox.busbymovies.utils.Constants;
 import me.androidbox.busbymovies.utils.MovieSchedulers;
 import okhttp3.ResponseBody;
 
-import static me.androidbox.busbymovies.di.DaggerTestBusbyMoviesAppComponent.builder;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;

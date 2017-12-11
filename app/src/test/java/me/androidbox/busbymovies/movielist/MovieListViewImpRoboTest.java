@@ -9,7 +9,7 @@ import org.robolectric.Robolectric;
 
 import me.androidbox.busbymovies.R;
 import me.androidbox.busbymovies.support.Asserts;
-import me.androidbox.busbymovies.support.BaseRobolectricTestRunner;
+import support.BaseRobolectricTestRunner;
 import me.androidbox.busbymovies.support.ResourceLocator;
 import me.androidbox.busbymovies.support.ViewLocator;
 

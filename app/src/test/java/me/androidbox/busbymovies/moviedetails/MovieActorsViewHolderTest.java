@@ -12,7 +12,7 @@ import org.robolectric.shadows.ShadowApplication;
 
 import me.androidbox.busbymovies.R;
 import me.androidbox.busbymovies.models.Actor;
-import me.androidbox.busbymovies.support.BaseRobolectricTestRunner;
+import support.BaseRobolectricTestRunner;
 import me.androidbox.busbymovies.utils.ImageLoader;
 
 import static org.hamcrest.core.Is.is;

@@ -1,4 +1,4 @@
-package me.androidbox.busbymovies.di
+package di
 
 import dagger.Component
 import me.androidbox.busbymovies.moviedetails.MovieDetailModelImpTest
