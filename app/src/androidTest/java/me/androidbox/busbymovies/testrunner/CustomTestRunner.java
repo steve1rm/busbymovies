@@ -4,7 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.support.test.runner.AndroidJUnitRunner;
 
-import me.androidbox.busbymovies.di.AndroidTestBusbyMoviesMainApplication;
+import di.AndroidTestBusbyMoviesMainApplication;
 
 /**
  * Created by steve on 2/25/17.

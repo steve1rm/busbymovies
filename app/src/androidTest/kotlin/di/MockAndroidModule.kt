@@ -1,4 +1,4 @@
-package me.androidbox.busbymovies.di
+package di
 
 import android.content.Context
 import dagger.Module
@@ -6,7 +6,7 @@ import dagger.Provides
 import me.androidbox.busbymovies.moviedetails.ImageLoaderImp
 import me.androidbox.busbymovies.utils.ImageLoader
 import me.androidbox.busbymovies.utils.MovieSchedulers
-import me.androidbox.busbymovies.utils.TestMovieSchedulersImp
+import utils.TestMovieSchedulersImp
 import org.mockito.Mockito.mock
 import javax.inject.Singleton
 

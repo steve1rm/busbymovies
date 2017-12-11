@@ -1,6 +1,7 @@
-package me.androidbox.busbymovies.di
+package di
 
 import dagger.Subcomponent
+import me.androidbox.busbymovies.di.MovieListComponent
 import me.androidbox.busbymovies.di.scopes.MovieListScope
 import me.androidbox.busbymovies.movielist.MovieListViewImpTest
 

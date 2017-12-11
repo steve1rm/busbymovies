@@ -1,4 +1,6 @@
-package me.androidbox.busbymovies.di
+package di
+
+import me.androidbox.busbymovies.di.BusbyMoviesMainApplication
 
 /**
  * Created by steve on 11/29/17.

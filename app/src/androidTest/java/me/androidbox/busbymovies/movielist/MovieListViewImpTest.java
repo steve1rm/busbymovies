@@ -18,7 +18,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
-import me.androidbox.busbymovies.di.AndroidTestBusbyMoviesMainApplication;
+import di.AndroidTestBusbyMoviesMainApplication;
 import me.androidbox.busbymovies.models.Movie;
 import me.androidbox.busbymovies.models.Movies;
 import me.androidbox.busbymovies.models.Results;

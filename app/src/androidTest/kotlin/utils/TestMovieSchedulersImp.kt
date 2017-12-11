@@ -1,7 +1,8 @@
-package me.androidbox.busbymovies.utils
+package utils
 
 import io.reactivex.Scheduler
 import io.reactivex.schedulers.Schedulers
+import me.androidbox.busbymovies.utils.MovieSchedulers
 
 /**
  * Created by steve on 12/8/17.

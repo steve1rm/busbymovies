@@ -1,4 +1,4 @@
-package me.androidbox.busbymovies.di
+package di
 
 import android.content.Context
 import dagger.Module
