@@ -19,11 +19,17 @@ import javax.inject.Inject;
 
 import io.reactivex.Observable;
 import di.AndroidTestBusbyMoviesMainApplication;
+import me.androidbox.busbymovies.R;
 import me.androidbox.busbymovies.models.Movie;
 import me.androidbox.busbymovies.models.Movies;
 import me.androidbox.busbymovies.models.Results;
 import me.androidbox.busbymovies.network.MovieAPIService;
 
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.matcher.ViewMatchers.hasDescendant;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -67,11 +73,21 @@ public class MovieListViewImpTest {
     public void testBusbyMoviesMainApplication_isNonNull() {
         final Results<Movies> moviesResults = new Results<>();
         final List<Movies> moviesList = new ArrayList<>();
-        moviesList.add(new Movie());
+        moviesList.add(new Movie(
+                1234,
+                "poster_path",
+                "overview",
+                "release_date",
+                "title",
+                "backdrop_path",
+                1145L,
+                2344L));
         moviesResults.setResults(moviesList);
 
-        when(movieAPIService.getPopular(anyString())).thenReturn(Observable.just(mockMovies));
+        when(movieAPIService.getPopular(anyString())).thenReturn(Observable.just(moviesResults));
 
         movieListActivity.launchActivity(new Intent());
+
+        onView(withId(R.id.rvMovieList)).check(matches(hasDescendant(withText("title"))));
     }
 }
