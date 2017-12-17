@@ -4,7 +4,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.util.Preconditions;
+import com.google.common.base.Preconditions;
 
 import java.io.IOException;
 
@@ -62,11 +62,10 @@ public final class Network implements IConnectivityProvider {
 
     @Override
     public boolean isOnline() {
-        final Runtime runtime = Runtime.getRuntime();
         boolean hasConnected = false;
 
         try {
-            final Process ipProcess = runtime.exec("/system/bin/ping -c 8.8.8.8");
+            final Process ipProcess = Runtime.getRuntime().exec("/system/bin/ping -c 8.8.8.8");
             final int exitValue = ipProcess.waitFor();
 
             hasConnected = (exitValue == 0 || exitValue == 2);
