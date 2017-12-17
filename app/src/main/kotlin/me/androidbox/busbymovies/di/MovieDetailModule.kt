@@ -7,7 +7,7 @@ import me.androidbox.busbymovies.adapters.MovieActorsAdapter
 import me.androidbox.busbymovies.data.MovieFavouriteModelContract
 import me.androidbox.busbymovies.data.MovieFavouriteModelImp
 import me.androidbox.busbymovies.data.MovieFavouritePresenterImp
-import me.androidbox.busbymovies.data.MovieFavouritesPresenterContract
+import me.androidbox.busbymovies.data.MovieFavouritePresenterContract
 import me.androidbox.busbymovies.di.scopes.MovieDetailScope
 import me.androidbox.busbymovies.moviedetails.*
 import me.androidbox.busbymovies.network.MovieAPIService
@@ -43,7 +43,7 @@ class MovieDetailModule {
     @MovieDetailScope
     @Provides
     fun providesMovieFavouritePresenter(movieModelFavouriteModelContract: MovieFavouriteModelContract)
-            : MovieFavouritesPresenterContract {
+            : MovieFavouritePresenterContract {
         return MovieFavouritePresenterImp(movieModelFavouriteModelContract)
     }
 

@@ -1,4 +1,4 @@
-package me.androidbox.busbymovies.di
+package di
 
 import dagger.Component
 import me.androidbox.busbymovies.moviedetails.MovieDetailModelImpTest
@@ -10,7 +10,7 @@ import javax.inject.Singleton
  */
 @Singleton
 @Component(modules = arrayOf(TestAndroidModule::class))
-interface TestBusbyMovieAppComponent {
+interface TestBusbyMoviesAppComponent {
     fun inject(target: MovieListModelImpTest)
     fun inject(target: MovieDetailModelImpTest)
 }

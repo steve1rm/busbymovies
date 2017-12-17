@@ -9,9 +9,9 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import javax.inject.Inject;
 
+import di.DaggerTestBusbyMoviesAppComponent;
+import di.TestAndroidModule;
 import io.reactivex.Observable;
-import me.androidbox.busbymovies.di.DaggerTestBusbyMovieAppComponent;
-import me.androidbox.busbymovies.di.TestAndroidModule;
 import me.androidbox.busbymovies.models.Movies;
 import me.androidbox.busbymovies.models.Results;
 import me.androidbox.busbymovies.models.Review;
@@ -50,12 +50,11 @@ public class MovieDetailModelImpTest {
 
     @Before
     public void setup() throws Exception {
-        DaggerTestBusbyMovieAppComponent
+        DaggerTestBusbyMoviesAppComponent
                 .builder()
                 .testAndroidModule(new TestAndroidModule())
                 .build()
                 .inject(MovieDetailModelImpTest.this);
-
         mMovieDetailModelContract = new MovieDetailModelImp(mockMovieAPIService, movieSchedulers);
     }
 

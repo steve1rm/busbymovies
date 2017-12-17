@@ -18,8 +18,8 @@ android {
         targetSdkVersion 27
         versionCode 7
         versionName "1.4.1"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
+        /*testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"*/
+        testInstrumentationRunner "me.androidbox.busbymovies.testrunner.CustomTestRunner"
         jackOptions {
             /* Use of rendering for palette library */
             renderscriptTargetApi 25
@@ -48,22 +48,28 @@ android {
     lintOptions {
         abortOnError = false
     }
+    sourceSets {
+        main { java.srcDirs = ['src/main/java', 'src/main/kotlin'] }
+        test.java.srcDirs += 'src/test/kotlin'
+        androidTest.java.srcDirs += 'src/androidTest/kotlin'
+    }
 }
 
 android.applicationVariants.all { variant ->
     if (variant.buildType.name == "debug") {
-        def aptOutputDir = new File(buildDir, "generated/source/apt/${variant.unitTestVariant.dirName}")
+        def aptOutputDir = new File(buildDir, "generated/source/kapt/${variant.unitTestVariant.dirName}")
         variant.unitTestVariant.addJavaSourceFoldersToModel(aptOutputDir)
         assembleDebug.finalizedBy('assembleDebugUnitTest')
     }
 }
-/*
 
+/*
 android.applicationVariants.all {
-    def aptOutputDir = new File(buildDir, "generated/source/apt/${it.unitTestVariant.dirName}")
+    def aptOutputDir = new File(buildDir, "generated/source/kapt/${it.unitTestVariant.dirName}")
     it.unitTestVariant.addJavaSourceFoldersToModel(aptOutputDir)
 }
 */
+
 
 apply from: "dependencies.gradle"
 

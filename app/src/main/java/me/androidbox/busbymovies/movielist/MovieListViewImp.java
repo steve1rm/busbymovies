@@ -30,7 +30,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import me.androidbox.busbymovies.R;
 import me.androidbox.busbymovies.adapters.MovieAdapter;
-import me.androidbox.busbymovies.data.MovieFavouritesPresenterContract;
+import me.androidbox.busbymovies.data.MovieFavouritePresenterContract;
 import me.androidbox.busbymovies.di.BusbyMoviesMainApplication;
 import me.androidbox.busbymovies.models.Movie;
 import me.androidbox.busbymovies.models.Movies;
@@ -43,11 +43,12 @@ import timber.log.Timber;
  * A simple {@link Fragment} subclass.
  */
 public class MovieListViewImp extends Fragment implements MovieListViewContract,
-        MovieFavouritesPresenterContract.DbOperationsListener, MovieSearchListener {
+        MovieFavouritePresenterContract.DbOperationsListener, MovieSearchListener {
     public static final String TAG = MovieListViewImp.class.getSimpleName();
 
     @Inject MovieListPresenterContract<MovieListViewContract> mMovieListPresenterImp;
-    @Inject MovieFavouritesPresenterContract mMovieFavouritePresenterImp;
+    @Inject
+    MovieFavouritePresenterContract mMovieFavouritePresenterImp;
 
     @BindView(R.id.rvMovieList) RecyclerView mRvMovieList;
     @BindView(R.id.pbMovieList) ContentLoadingProgressBar mPbMovieList;

@@ -10,7 +10,7 @@ import javax.inject.Singleton
  */
 @Singleton
 @Component(modules = arrayOf(ApiModule::class, AndroidModule::class))
-interface AppComponent {
+interface BusbyMoviesAppComponent {
     fun add(movieListModule: MovieListModule): MovieListComponent
     fun add(movieDetailModule: MovieDetailModule): MovieDetailComponent
 }
