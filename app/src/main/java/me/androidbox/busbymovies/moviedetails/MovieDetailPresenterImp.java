@@ -141,7 +141,6 @@ public final class MovieDetailPresenterImp implements
         mMovieDetailModelContract.getSimilarMovies(movieId, MovieDetailPresenterImp.this);
     }
 
-    @VisibleForTesting
     @Override
     public void onSimilarMovieFailure(String errorMessage) {
         mMovieDetailViewContract.failedToGetSimilarMovies(errorMessage);
