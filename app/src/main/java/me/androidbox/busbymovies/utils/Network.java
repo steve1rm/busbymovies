@@ -4,9 +4,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.util.Preconditions;
 
-import java.io.IOException;
+import com.google.common.base.Preconditions;
 
 import timber.log.Timber;
 
@@ -60,18 +59,22 @@ public final class Network implements IConnectivityProvider {
         }
     }
 
+
+    /**
+     *
+     * @param process Runtime.getRuntime().exec("/system/bin/ping -c 8.8.8.8")
+     * @return true of false if online
+     */
     @Override
-    public boolean isOnline() {
-        final Runtime runtime = Runtime.getRuntime();
+    public boolean isOnline(final Process process) {
         boolean hasConnected = false;
 
         try {
-            final Process ipProcess = runtime.exec("/system/bin/ping -c 8.8.8.8");
-            final int exitValue = ipProcess.waitFor();
+            final int exitValue = process.waitFor();
 
             hasConnected = (exitValue == 0 || exitValue == 2);
         }
-        catch(InterruptedException | IOException e) {
+        catch(InterruptedException e) {
             Timber.e(e.getMessage());
         }
 

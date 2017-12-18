@@ -6,7 +6,7 @@ import dagger.Provides
 import me.androidbox.busbymovies.data.MovieFavouriteModelContract
 import me.androidbox.busbymovies.data.MovieFavouriteModelImp
 import me.androidbox.busbymovies.data.MovieFavouritePresenterImp
-import me.androidbox.busbymovies.data.MovieFavouritesPresenterContract
+import me.androidbox.busbymovies.data.MovieFavouritePresenterContract
 import me.androidbox.busbymovies.di.scopes.MovieListScope
 import me.androidbox.busbymovies.movielist.*
 import me.androidbox.busbymovies.network.MovieAPIService
@@ -42,8 +42,8 @@ class MovieListModule {
 
     @MovieListScope
     @Provides
-    fun providesMovieFavouritesPresenter(movieFavouriteModelContract: MovieFavouriteModelContract)
-            : MovieFavouritesPresenterContract {
+    fun providesMovieFavouritePresenter(movieFavouriteModelContract: MovieFavouriteModelContract)
+            : MovieFavouritePresenterContract {
 
         return MovieFavouritePresenterImp(movieFavouriteModelContract)
     }

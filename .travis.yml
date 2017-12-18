@@ -7,6 +7,11 @@ env:
     - ANDROID_TARGET=android-27
     - ANDROID_ABI=armeabi-v7a
 
+cache:
+  directories:
+    - ${TRAVIS_BUILD_DIR}/gradle/caches/
+    - ${TRAVIS_BUILD_DIR}/gradle/wrapper/dists/
+
 android:
   components:
   - tools
@@ -20,8 +25,11 @@ licenses:
   - android-sdk-license-.+
   - '.+'
 
+before_install:
+  - yes | sdkmanager "platforms;android-27"
+
 script:
-    - ./gradlew --daemon build jacocoTestReport --info
+  - ./gradlew --daemon build jacocoTestReport --info
 
 after_success:
-    - bash <(curl -s https://codecov.io/bash)
+   - bash <(curl -s https://codecov.io/bash)

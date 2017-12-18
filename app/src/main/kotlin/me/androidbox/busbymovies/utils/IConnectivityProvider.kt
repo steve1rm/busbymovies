@@ -7,7 +7,7 @@ import android.support.annotation.Nullable
  */
 interface IConnectivityProvider {
     fun isConnected(): Boolean
-    fun isOnline(): Boolean
+    fun isOnline(process: Process): Boolean
     @Nullable fun getType(): TYPE
 
     enum class TYPE {

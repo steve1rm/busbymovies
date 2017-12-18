@@ -7,7 +7,7 @@ import me.androidbox.busbymovies.models.Results;
  * Created by steve on 3/26/17.
  */
 
-public interface MovieFavouritesPresenterContract {
+public interface MovieFavouritePresenterContract {
     interface DbOperationsListener {
         void onGetFavouriteMoviesSuccess(Results<Movie> favouriteList);
         void onGetFavouriteMoviesFailure(String errorMessage);

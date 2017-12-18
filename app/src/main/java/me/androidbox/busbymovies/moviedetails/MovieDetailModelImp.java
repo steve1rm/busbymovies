@@ -3,8 +3,6 @@ package me.androidbox.busbymovies.moviedetails;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableObserver;
 import me.androidbox.busbymovies.models.Actor;

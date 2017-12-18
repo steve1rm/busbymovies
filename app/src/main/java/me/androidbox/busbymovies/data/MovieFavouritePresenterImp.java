@@ -9,13 +9,13 @@ import me.androidbox.busbymovies.models.Results;
  * Created by steve on 3/26/17.
  */
 
-public class MovieFavouritePresenterImp implements
+public final class MovieFavouritePresenterImp implements
         MovieFavouriteModelContract.DeleteListener,
         MovieFavouriteModelContract.InsertListener,
         MovieFavouriteModelContract.RetrieveListener,
         MovieFavouriteModelContract.QueryMovieListener,
         MovieFavouriteModelContract.GetMovieFavourite,
-        MovieFavouritesPresenterContract {
+        MovieFavouritePresenterContract {
 
     private final MovieFavouriteModelContract mMovieFavouriteModelContract;
 
@@ -37,7 +37,7 @@ public class MovieFavouritePresenterImp implements
     }
 
     @Override
-    public void getFavouriteMovies(MovieFavouritesPresenterContract.DbOperationsListener dbOperationsListener) {
+    public void getFavouriteMovies(MovieFavouritePresenterContract.DbOperationsListener dbOperationsListener) {
         mDbOperationsListener = dbOperationsListener;
         if(mMovieFavouriteModelContract != null) {
             mMovieFavouriteModelContract.retrieve(MovieFavouritePresenterImp.this);
@@ -45,7 +45,7 @@ public class MovieFavouritePresenterImp implements
     }
 
     @Override
-    public void insertFavouriteMovie(Movie favourite, MovieFavouritesPresenterContract.DbOperationsListener dbOperationsListener) {
+    public void insertFavouriteMovie(Movie favourite, MovieFavouritePresenterContract.DbOperationsListener dbOperationsListener) {
         mDbOperationsListener = dbOperationsListener;
         if(mMovieFavouriteModelContract != null) {
             mMovieFavouriteModelContract.insert(favourite, MovieFavouritePresenterImp.this);
@@ -53,7 +53,7 @@ public class MovieFavouritePresenterImp implements
     }
 
     @Override
-    public void deleteFavouriteMovie(int movieId, MovieFavouritesPresenterContract.DbOperationsListener dbOperationsListener) {
+    public void deleteFavouriteMovie(int movieId, MovieFavouritePresenterContract.DbOperationsListener dbOperationsListener) {
         mDbOperationsListener = dbOperationsListener;
         if(mMovieFavouriteModelContract != null) {
             mMovieFavouriteModelContract.delete(movieId, MovieFavouritePresenterImp.this);
