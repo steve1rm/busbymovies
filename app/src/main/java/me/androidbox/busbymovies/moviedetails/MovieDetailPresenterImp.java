@@ -1,7 +1,5 @@
 package me.androidbox.busbymovies.moviedetails;
 
-import android.support.annotation.VisibleForTesting;
-
 import me.androidbox.busbymovies.models.Actor;
 import me.androidbox.busbymovies.models.Cast;
 import me.androidbox.busbymovies.models.Movie;
@@ -10,7 +8,6 @@ import me.androidbox.busbymovies.models.Results;
 import me.androidbox.busbymovies.models.Review;
 import me.androidbox.busbymovies.models.Trailer;
 import me.androidbox.busbymovies.utils.Misc;
-import timber.log.Timber;
 
 /**
  * Created by steve on 3/2/17.
@@ -46,7 +43,6 @@ public final class MovieDetailPresenterImp implements
 
     @Override
     public void getMovieDetail(int movieId) {
-        Timber.d("getMovieDetail %d", movieId);
         mMovieDetailModelContract.getMovieDetail(movieId, MovieDetailPresenterImp.this);
     }
 
@@ -69,7 +65,6 @@ public final class MovieDetailPresenterImp implements
 
     @Override
     public void onGetMovieDetailSuccess(Movie movie) {
-        Timber.d("onGetMovieDetailSuccess: %s", movie.getTitle());
         if(mMovieDetailViewContract != null) {
             mMovieDetailViewContract.displayMovieDetails(movie);
         }
@@ -77,7 +72,6 @@ public final class MovieDetailPresenterImp implements
 
     @Override
     public void requestMovieTrailer(int movieId) {
-        Timber.d("requestMovieTrailers %d", movieId);
         if(mMovieDetailModelContract != null) {
             mMovieDetailModelContract.getMovieTrailer(movieId, MovieDetailPresenterImp.this);
         }
@@ -141,7 +135,6 @@ public final class MovieDetailPresenterImp implements
         mMovieDetailModelContract.getSimilarMovies(movieId, MovieDetailPresenterImp.this);
     }
 
-    @VisibleForTesting
     @Override
     public void onSimilarMovieFailure(String errorMessage) {
         mMovieDetailViewContract.failedToGetSimilarMovies(errorMessage);
