@@ -2,18 +2,26 @@ package me.androidbox.busbymovies.movielist;
 
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
+import android.widget.ProgressBar;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.robolectric.Robolectric;
+import org.robolectric.util.FragmentTestUtil;
 
 import me.androidbox.busbymovies.R;
+import me.androidbox.busbymovies.models.Movies;
+import me.androidbox.busbymovies.models.Results;
 import me.androidbox.busbymovies.support.Asserts;
 import support.BaseRobolectricTestRunner;
 import me.androidbox.busbymovies.support.ResourceLocator;
 import me.androidbox.busbymovies.support.ViewLocator;
 
+import static me.androidbox.busbymovies.support.Asserts.viewIsNotVisible;
+import static me.androidbox.busbymovies.support.Asserts.viewIsVisible;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
@@ -22,10 +30,13 @@ import static org.junit.Assert.assertThat;
  */
 public class MovieListViewImpRoboTest extends BaseRobolectricTestRunner {
     private MovieListActivity mMovieListActivity;
+    private MovieListViewImp movieListViewImp;
 
     @Before
     public void setup() {
         mMovieListActivity = Robolectric.setupActivity(MovieListActivity.class);
+
+        movieListViewImp = new MovieListViewImp();
     }
 
     @Test
@@ -42,7 +53,7 @@ public class MovieListViewImpRoboTest extends BaseRobolectricTestRunner {
     public void shouldDisplaySortFab() throws Exception {
         FloatingActionButton sort = ViewLocator.getFab(mMovieListActivity, R.id.fabSort);
         assertNotNull(sort);
-        Asserts.viewIsVisible(sort);
+        viewIsVisible(sort);
     }
 
     @Test
@@ -54,7 +65,7 @@ public class MovieListViewImpRoboTest extends BaseRobolectricTestRunner {
 
         sort.performClick();
 
-        Asserts.viewIsVisible(popular);
+        viewIsVisible(popular);
     }
 
     @Test
@@ -66,7 +77,34 @@ public class MovieListViewImpRoboTest extends BaseRobolectricTestRunner {
         assertNotNull(topRated);
 
         sort.performClick();
-        Asserts.viewIsVisible(topRated);
+        viewIsVisible(topRated);
+    }
+
+    @Test
+    public void shouldDisplayFavouriteFab_onClickingSortFab() {
+        final FloatingActionButton sort = ViewLocator.getFab(mMovieListActivity, R.id.fabSort);
+        final FloatingActionButton favourite = ViewLocator.getFab(mMovieListActivity, R.id.fabSort);
+
+        assertThat(sort, is(notNullValue()));
+        assertThat(favourite, is(notNullValue()));
+
+        sort.performClick();
+        viewIsVisible(favourite);
+    }
+
+    @Test
+    public void testSuccessToGetSearchMovies_HideProgressBar_loadAdapter() {
+        final Results<Movies> moviesResults = new Results<>();
+        final ProgressBar pbMovieList = ViewLocator.getProgressBar(mMovieListActivity, R.id.pbMovieList);
+
+        assertThat(pbMovieList, is(notNullValue()));
+
+
+     //   Robolectric.buildFragment(MovieListViewImp.class);
+
+        movieListViewImp.successToGetSearchMovies(moviesResults);
+
+        viewIsVisible(pbMovieList);
     }
 
     @Test

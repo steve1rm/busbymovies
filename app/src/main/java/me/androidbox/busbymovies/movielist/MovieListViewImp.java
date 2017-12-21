@@ -47,8 +47,7 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
     public static final String TAG = MovieListViewImp.class.getSimpleName();
 
     @Inject MovieListPresenterContract<MovieListViewContract> mMovieListPresenterImp;
-    @Inject
-    MovieFavouritePresenterContract mMovieFavouritePresenterImp;
+    @Inject MovieFavouritePresenterContract mMovieFavouritePresenterImp;
 
     @BindView(R.id.rvMovieList) RecyclerView mRvMovieList;
     @BindView(R.id.pbMovieList) ContentLoadingProgressBar mPbMovieList;
@@ -122,10 +121,6 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
         /* close the fab button if open */
         if(mIsSortFabOpen) {
             mIsSortFabOpen = false;
-/*
-            mFabPopular.setVisibility(View.INVISIBLE);
-            mFabTopRated.setVisibility(View.INVISIBLE);
-*/
         }
 
         mMovieListPresenterImp.detachView();
@@ -322,45 +317,6 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
         Timber.d("Failed to get top rated movies %s", errorMessage);
     }
 
-/*
-    @Override
-    public void displayFavouriteMovies(List<Favourite> favouriteList) {
-        Timber.d("displayTopRatedMovies: %d", favouriteList.size());
-
-        hideProgressBar();
-
-      //  mMovieAdapter.loadAdapter(favouriteList);
-    }
-
-    @Override
-    public void failedDisplayFavouriteMovies(String errorMessage) {
-        Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void failedFavouriteMovieDelete(String errorMessage) {
-        Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void successFavouriteMovieDelete() {
-        Timber.d("Movie deleted from favourites");
-        Toast.makeText(getActivity(), "Movie favourite movie deleted", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void failedFavouriteMovieInsert(String errorMessage) {
-        Timber.e("failedFavouriteMovieInsert %s", errorMessage);
-        Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void successFavouriteMovieInsert() {
-        Timber.d("successFavouriteMovieInsert");
-        Toast.makeText(getActivity(), "Insert favourite movie", Toast.LENGTH_SHORT).show();
-    }
-*/
-
     @Override
     public void onMovieSearch(@NotNull String movieName, int movieYear) {
         showProgressBar();
@@ -375,7 +331,7 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
 
     @Override
     public void successToGetSearchMovies(Results<Movies> movieSearch) {
-        Timber.d("successToGetSearchMovies: %d", movieSearch.getResults().size());
+     //   Timber.d("successToGetSearchMovies: %d", movieSearch.getResults().size());
         hideProgressBar();
         mMovieAdapter.loadAdapter(movieSearch);
     }
@@ -391,9 +347,6 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
             mPbMovieList.show();
         }
     }
-
-
-
 
 
     @Override

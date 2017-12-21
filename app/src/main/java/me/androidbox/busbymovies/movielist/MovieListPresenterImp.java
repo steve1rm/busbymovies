@@ -29,13 +29,6 @@ public class MovieListPresenterImp implements
         this.mMovieModelContract = movieListModelContract;
     }
 
-    /** Running Junit Testing only */
-/*
-    @VisibleForTesting MovieListPresenterImp(MovieListModelContract mMovieModelContract) {
-        this.mMovieModelContract = mMovieModelContract;
-    }
-*/
-
     /**
      * Attach the view to the presenter
      */
