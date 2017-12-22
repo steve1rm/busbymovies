@@ -9,6 +9,9 @@ import org.junit.Test;
 import org.robolectric.Robolectric;
 import org.robolectric.util.FragmentTestUtil;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import me.androidbox.busbymovies.R;
 import me.androidbox.busbymovies.models.Movies;
 import me.androidbox.busbymovies.models.Results;
@@ -94,12 +97,19 @@ public class MovieListViewImpRoboTest extends BaseRobolectricTestRunner {
 
     @Test
     public void testSuccessToGetSearchMovies_HideProgressBar_loadAdapter() {
-        final Results<Movies> moviesResults = new Results<>();
-        final ProgressBar pbMovieList = ViewLocator.getProgressBar(mMovieListActivity, R.id.pbMovieList);
-
+        final List<Movies> moviesList = new ArrayList<>();
+        final Movies movies = new Movies(1234,
+                "poster_path",
+                "overview",
+                "release_date",
+                "title",
+                "backdrop_path",
+                7.2F,
+                4.9F);
+        moviesList.add(movies);
+        final Results<Movies> moviesResults = new Results<>(moviesList);
+        final ProgressBar pbMovieList = ViewLocator.getProgressBar(movieListViewImp.getActivity(), R.id.pbMovieList);
         assertThat(pbMovieList, is(notNullValue()));
-
-
         initializeFragment(movieListViewImp);
 
         movieListViewImp.successToGetSearchMovies(moviesResults);
