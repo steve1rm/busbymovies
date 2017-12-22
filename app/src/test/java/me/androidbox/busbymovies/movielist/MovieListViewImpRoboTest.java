@@ -100,7 +100,7 @@ public class MovieListViewImpRoboTest extends BaseRobolectricTestRunner {
         assertThat(pbMovieList, is(notNullValue()));
 
 
-     //   Robolectric.buildFragment(MovieListViewImp.class);
+        initializeFragment(movieListViewImp);
 
         movieListViewImp.successToGetSearchMovies(moviesResults);
 

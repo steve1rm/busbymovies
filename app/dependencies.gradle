@@ -62,8 +62,7 @@ def UnitTesting = dependencyGroup {
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.mockito:mockito-core:2.11.0'
     testImplementation 'org.robolectric:robolectric:3.6.1'
-   // testImplementation 'org.robolectric:shadows-support-v4:3.6.1'
-
+    testImplementation 'org.robolectric:shadows-support-v4:3.4-rc2'
     kaptTest 'com.google.dagger:dagger-compiler:' + daggerVersion
 }
 
