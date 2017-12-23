@@ -6,8 +6,10 @@ import android.widget.ProgressBar;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.robolectric.Robolectric;
-import org.robolectric.util.FragmentTestUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,32 +17,36 @@ import java.util.List;
 import me.androidbox.busbymovies.R;
 import me.androidbox.busbymovies.models.Movies;
 import me.androidbox.busbymovies.models.Results;
-import me.androidbox.busbymovies.support.Asserts;
-import support.Assert;
-import support.BaseRobolectricTestRunner;
 import me.androidbox.busbymovies.support.ResourceLocator;
 import me.androidbox.busbymovies.support.ViewLocator;
+import support.Assert;
+import support.BaseRobolectricTestRunner;
 
-import static me.androidbox.busbymovies.support.Asserts.viewIsNotVisible;
 import static me.androidbox.busbymovies.support.Asserts.viewIsVisible;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 /**
  * Created by steve on 3/27/17.
  */
+@RunWith(MockitoJUnitRunner.class)
 public class MovieListViewImpRoboTest extends BaseRobolectricTestRunner {
     private MovieListActivity mMovieListActivity;
     private MovieListViewImp movieListViewImp;
+
+    @Mock MovieListPresenterImp movieListPresenterImp;
 
     @Before
     public void setup() {
         mMovieListActivity = Robolectric.setupActivity(MovieListActivity.class);
 
         movieListViewImp = new MovieListViewImp();
+        movieListViewImp.mMovieListPresenterImp = movieListPresenterImp;
 
         initializeFragment(movieListViewImp);
     }
@@ -122,10 +128,14 @@ public class MovieListViewImpRoboTest extends BaseRobolectricTestRunner {
         movieListViewImp.successToGetSearchMovies(createMovieResults());
 
         Assert.Companion.viewIsGone(pbMovieList);
+    }
 
-//        viewIsVisible(pbMovieList);
+    @Test
+    public void testgetTopRatedMovies_showProgressBar_getTopRatedMovies() {
+        movieListViewImp.getTopRatedMovies();
 
-
+        verify(movieListPresenterImp).getTopRatedMovies();
+        verifyNoMoreInteractions(movieListPresenterImp);
     }
 
     @Test

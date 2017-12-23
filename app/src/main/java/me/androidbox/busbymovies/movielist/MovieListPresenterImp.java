@@ -46,6 +46,26 @@ public class MovieListPresenterImp implements
     }
 
     @Override
+    public void openSortFab() {
+        
+    }
+
+    @Override
+    public void closeSortFab() {
+
+    }
+
+    @Override
+    public void hideProgressBar() {
+
+    }
+
+    @Override
+    public void showProgressBar() {
+
+    }
+
+    @Override
     public void getPopularMovies() {
         if(mMovieModelContract != null) {
             mMovieModelContract.getPopularMovies(MovieListPresenterImp.this);

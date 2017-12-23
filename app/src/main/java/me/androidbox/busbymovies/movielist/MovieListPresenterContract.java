@@ -10,4 +10,8 @@ public interface MovieListPresenterContract<View extends MovieListViewContract> 
     void getPopularMovies();
     void getTopRatedMovies();
     void searchMovies(final String movieName, final int movieYear);
+    void openSortFab();
+    void closeSortFab();
+    void hideProgressBar();
+    void showProgressBar();
 }
