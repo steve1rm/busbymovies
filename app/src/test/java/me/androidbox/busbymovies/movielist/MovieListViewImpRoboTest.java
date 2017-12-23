@@ -9,10 +9,14 @@ import org.junit.Test;
 import org.robolectric.Robolectric;
 import org.robolectric.util.FragmentTestUtil;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import me.androidbox.busbymovies.R;
 import me.androidbox.busbymovies.models.Movies;
 import me.androidbox.busbymovies.models.Results;
 import me.androidbox.busbymovies.support.Asserts;
+import support.Assert;
 import support.BaseRobolectricTestRunner;
 import me.androidbox.busbymovies.support.ResourceLocator;
 import me.androidbox.busbymovies.support.ViewLocator;
@@ -37,6 +41,8 @@ public class MovieListViewImpRoboTest extends BaseRobolectricTestRunner {
         mMovieListActivity = Robolectric.setupActivity(MovieListActivity.class);
 
         movieListViewImp = new MovieListViewImp();
+
+        initializeFragment(movieListViewImp);
     }
 
     @Test
@@ -92,19 +98,34 @@ public class MovieListViewImpRoboTest extends BaseRobolectricTestRunner {
         viewIsVisible(favourite);
     }
 
+    private Results<Movies> createMovieResults() {
+        final List<Movies> moviesList = new ArrayList<>();
+        final Movies movies = new Movies(
+                12345,
+                "poster_path",
+                "overview",
+                "release_date",
+                "title",
+                "backdrop_path",
+                7.4F,
+                4.2F);
+        moviesList.add(movies);
+
+        return new Results<>(moviesList);
+    }
+
     @Test
     public void testSuccessToGetSearchMovies_HideProgressBar_loadAdapter() {
-        final Results<Movies> moviesResults = new Results<>();
-        final ProgressBar pbMovieList = ViewLocator.getProgressBar(mMovieListActivity, R.id.pbMovieList);
-
+        final ProgressBar pbMovieList = ViewLocator.getProgressBar(movieListViewImp.getActivity(), R.id.pbMovieList);
         assertThat(pbMovieList, is(notNullValue()));
 
+        movieListViewImp.successToGetSearchMovies(createMovieResults());
 
-        initializeFragment(movieListViewImp);
+        Assert.Companion.viewIsGone(pbMovieList);
 
-        movieListViewImp.successToGetSearchMovies(moviesResults);
+//        viewIsVisible(pbMovieList);
 
-        viewIsVisible(pbMovieList);
+
     }
 
     @Test
