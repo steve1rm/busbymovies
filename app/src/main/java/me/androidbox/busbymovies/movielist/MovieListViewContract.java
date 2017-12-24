@@ -15,8 +15,5 @@ public interface MovieListViewContract {
     void failedToDisplayTopRatedMovies(String errorMessage);
     void failedToGetSearchMovies(final String errorMessage);
     void successToGetSearchMovies(final Results<Movies> movieSearch);
-    void onOpenSortFab();
-    void onCloseSortFab();
-    void onHideProgressBar();
-    void onShowProgressBar();
+
 }

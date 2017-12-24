@@ -5,8 +5,11 @@ import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
 import android.support.v4.util.Preconditions;
 
+import org.jetbrains.annotations.Nullable;
+
 import javax.inject.Inject;
 
+import me.androidbox.busbymovies.basepresenter.BasePresenter;
 import me.androidbox.busbymovies.models.Movies;
 import me.androidbox.busbymovies.models.Results;
 import timber.log.Timber;
@@ -15,7 +18,7 @@ import timber.log.Timber;
  * Created by steve on 2/18/17.
  */
 
-public class MovieListPresenterImp implements
+public class MovieListPresenterImp extends BasePresenter<MovieListViewContract> implements
         MovieListPresenterContract<MovieListViewContract>,
         MovieListModelContract.PopularMovieResultsListener,
         MovieListModelContract.TopRatedMovieResultsListener,
@@ -28,6 +31,7 @@ public class MovieListPresenterImp implements
     public MovieListPresenterImp(final MovieListModelContract movieListModelContract) {
         this.mMovieModelContract = movieListModelContract;
     }
+
 
     /**
      * Attach the view to the presenter
@@ -47,7 +51,6 @@ public class MovieListPresenterImp implements
 
     @Override
     public void openSortFab() {
-        
     }
 
     @Override
