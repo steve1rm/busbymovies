@@ -29,7 +29,7 @@ class MovieListModule {
     @MovieListScope
     @Provides
     fun providesMovieListPresenter(movieListModelContract: MovieListModelContract)
-            : MovieListPresenterContract<MovieListViewContract> {
+            : MovieListPresenterContract {
 
         return MovieListPresenterImp(movieListModelContract)
     }

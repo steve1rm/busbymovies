@@ -6,7 +6,7 @@ import java.lang.ref.WeakReference
 /**
  * Created by steve on 12/24/17.
  */
-class BasePresenterImp<V> : BasePresenter<V> {
+open class BasePresenterImp<V> : BasePresenter<V> {
     private var viewReference: WeakReference<V>? = null
 
     @UiThread

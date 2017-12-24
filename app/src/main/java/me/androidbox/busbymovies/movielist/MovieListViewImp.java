@@ -46,7 +46,7 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
         MovieFavouritePresenterContract.DbOperationsListener, MovieSearchListener {
     public static final String TAG = MovieListViewImp.class.getSimpleName();
 
-    @Inject MovieListPresenterContract<MovieListViewContract> mMovieListPresenterImp;
+    @Inject MovieListPresenterContract mMovieListPresenterImp;
     @Inject MovieFavouritePresenterContract mMovieFavouritePresenterImp;
 
     @BindView(R.id.rvMovieList) RecyclerView mRvMovieList;

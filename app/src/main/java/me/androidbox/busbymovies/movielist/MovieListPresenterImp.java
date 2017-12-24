@@ -1,25 +1,22 @@
 package me.androidbox.busbymovies.movielist;
 
-import android.annotation.SuppressLint;
-import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
-import android.support.v4.util.Preconditions;
-
-import org.jetbrains.annotations.Nullable;
 
 import javax.inject.Inject;
 
-import me.androidbox.busbymovies.basepresenter.BasePresenter;
+import me.androidbox.busbymovies.basepresenter.BasePresenterImp;
 import me.androidbox.busbymovies.models.Movies;
 import me.androidbox.busbymovies.models.Results;
-import timber.log.Timber;
 
 /**
  * Created by steve on 2/18/17.
  */
 
-public class MovieListPresenterImp extends BasePresenter<MovieListViewContract> implements
-        MovieListPresenterContract<MovieListViewContract>,
+public final class MovieListPresenterImp
+        extends
+        BasePresenterImp<MovieListViewContract>
+        implements
+        MovieListPresenterContract,
         MovieListModelContract.PopularMovieResultsListener,
         MovieListModelContract.TopRatedMovieResultsListener,
         MovieListModelContract.MovieSearchResultsListener {
@@ -32,40 +29,32 @@ public class MovieListPresenterImp extends BasePresenter<MovieListViewContract> 
         this.mMovieModelContract = movieListModelContract;
     }
 
-
-    /**
-     * Attach the view to the presenter
-     */
-    @SuppressLint("RestrictedApi")
-    @Override
-    public void attachView(@NonNull MovieListViewContract view) {
-        mMovieListViewContract = Preconditions.checkNotNull(view);
-    }
-
-    @Override
-    public void detachView() {
-        Timber.d("detachView");
-        mMovieModelContract.releaseResources();
-        mMovieListViewContract = null;
-    }
-
     @Override
     public void openSortFab() {
+        if(isViewAttached()) {
+            mMovieListViewContract.onOpenSortFab();
+        }
     }
 
     @Override
     public void closeSortFab() {
-
+        if(isViewAttached()) {
+            mMovieListViewContract.onCloseSortFab();
+        }
     }
 
     @Override
     public void hideProgressBar() {
-
+        if(isViewAttached()) {
+            mMovieListViewContract.onHideProgressBar();
+        }
     }
 
     @Override
     public void showProgressBar() {
-
+        if(isViewAttached()) {
+            mMovieListViewContract.onShowProgressBar();
+        }
     }
 
     @Override
