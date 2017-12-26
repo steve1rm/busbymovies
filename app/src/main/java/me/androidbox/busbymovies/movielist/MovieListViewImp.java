@@ -99,8 +99,6 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
         super.onActivityCreated(savedInstanceState);
 
         mMovieListPresenterImp.getPopularMovies();
-        mMovieListPresenterImp.getTopRatedMovies();
-        mMovieFavouritePresenterImp.getFavouriteMovies(MovieListViewImp.this);
     }
 
     @Override
@@ -120,8 +118,6 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
     /* Close the sort Fab */
     @Override
     public void onCloseSortFab() {
-        Timber.d("Close the fab");
-
         final Animator closePopularFab = AnimatorInflater.loadAnimator(getActivity(), R.animator.close_popular_fab);
         closePopularFab.setTarget(mFabPopular);
         closePopularFab.start();
@@ -144,8 +140,6 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
     /* Open the sort Fab */
     @Override
     public void onOpenSortFab() {
-        Timber.d("Close the fab");
-
         final Animator openPopularFab = AnimatorInflater.loadAnimator(getActivity(), R.animator.open_popular_fab);
         openPopularFab.setTarget(mFabPopular);
         openPopularFab.start();
@@ -168,7 +162,12 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
     @SuppressWarnings("unused")
     @OnClick(R.id.fabSort)
     public void openSort() {
-        mMovieListPresenterImp.openSortFab();
+        if(mIsSortFabOpen) {
+            mMovieListPresenterImp.closeSortFab();
+        }
+        else {
+            mMovieListPresenterImp.openSortFab();
+        }
     }
 
     @SuppressWarnings("unused")
