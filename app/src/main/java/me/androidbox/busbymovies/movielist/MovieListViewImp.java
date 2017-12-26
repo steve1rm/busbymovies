@@ -71,21 +71,25 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        ((BusbyMoviesMainApplication)getActivity().getApplication())
+                .getMovieListComponent()
+                .inject(this);
+
+        mMovieListPresenterImp.attachView(MovieListViewImp.this);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.movie_list_view, container, false);
 
         mUnbinder = ButterKnife.bind(MovieListViewImp.this, view);
-
         setupRecyclerView();
         setupSwipeToRefresh();
-
-        /* Hide the progress bar */
         mMovieListPresenterImp.hideProgressBar();
-
-        if(mIsSortFabOpen) {
-            mIsSortFabOpen = false;
-        }
 
         return view;
     }
@@ -94,23 +98,9 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        ((BusbyMoviesMainApplication)getActivity().getApplication())
-                .getMovieListComponent()
-                .inject(this);
-
-        if(mMovieListPresenterImp != null) {
-            Timber.d("mMovieListPresenterImp != null");
-            mMovieListPresenterImp.attachView(MovieListViewImp.this);
-            getPopularMovies();
-
-            if(mMovieFavouritePresenterImp != null) {
-                Timber.d("mMovieFavouritePresenterImp != null");
-                mMovieFavouritePresenterImp.getFavouriteMovies(MovieListViewImp.this);
-            }
-        }
-        else {
-            Timber.e("mMovieListPresenterImp == null");
-        }
+        mMovieListPresenterImp.getPopularMovies();
+        mMovieListPresenterImp.getTopRatedMovies();
+        mMovieFavouritePresenterImp.getFavouriteMovies(MovieListViewImp.this);
     }
 
     @Override

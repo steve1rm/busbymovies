@@ -45,7 +45,7 @@ class AndroidModule(val application: Application) {
     @Provides
     fun providesImageLoader(): ImageLoader = ImageLoaderImp()
 
-    @Singleton
+    @Reusable
     @Provides
     fun providesIConnectivityProvider(context: Context?): IConnectivityProvider {
         val connectivityManager = context?.getSystemService(Context.CONNECTIVITY_SERVICE)

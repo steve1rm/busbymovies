@@ -32,21 +32,21 @@ public final class MovieListPresenterImp
     @Override
     public void openSortFab() {
         if(isViewAttached()) {
-            mMovieListViewContract.onOpenSortFab();
+            getView().onOpenSortFab();
         }
     }
 
     @Override
     public void closeSortFab() {
         if(isViewAttached()) {
-            mMovieListViewContract.onCloseSortFab();
+            getView().onCloseSortFab();
         }
     }
 
     @Override
     public void hideProgressBar() {
         if(isViewAttached()) {
-            mMovieListViewContract.onHideProgressBar();
+            getView().onHideProgressBar();
         }
     }
 
@@ -76,7 +76,9 @@ public final class MovieListPresenterImp
      */
     @Override
     public void onPopularMovieFailure(String errorMessage) {
-        mMovieListViewContract.failedToDisplayPopularMovies(errorMessage);
+        if(isViewAttached()) {
+            getView().failedToDisplayPopularMovies(errorMessage);
+        }
     }
 
     /**
@@ -84,7 +86,9 @@ public final class MovieListPresenterImp
      */
     @Override
     public void onPopularMovieSuccess(Results<Movies> popularMovies) {
-        mMovieListViewContract.displayPopularMovies(popularMovies);
+        if(isViewAttached()) {
+            getView().displayPopularMovies(popularMovies);
+        }
     }
 
     /**
@@ -93,7 +97,9 @@ public final class MovieListPresenterImp
      */
     @Override
     public void onTopRatedMovieFailure(String errorMessage) {
-        mMovieListViewContract.failedToDisplayTopRatedMovies(errorMessage);
+        if(isViewAttached()) {
+            getView().failedToDisplayTopRatedMovies(errorMessage);
+        }
     }
 
     /**
@@ -102,17 +108,23 @@ public final class MovieListPresenterImp
      */
     @Override
     public void onTopRatedMovieSuccess(Results<Movies> topRatedMovies) {
-        mMovieListViewContract.displayTopRatedMovies(topRatedMovies);
+        if(isViewAttached()) {
+            getView().displayTopRatedMovies(topRatedMovies);
+        }
     }
 
     @Override
     public void onSearchFailure(String errorMessage) {
-        mMovieListViewContract.failedToGetSearchMovies(errorMessage);
+        if(isViewAttached()) {
+            getView().failedToGetSearchMovies(errorMessage);
+        }
     }
 
     @Override
     public void onSearchSuccess(Results<Movies> searchMovies) {
-        mMovieListViewContract.successToGetSearchMovies(searchMovies);
+        if(isViewAttached()) {
+            getView().successToGetSearchMovies(searchMovies);
+        }
     }
 
     @Override
