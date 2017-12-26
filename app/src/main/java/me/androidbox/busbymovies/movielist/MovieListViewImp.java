@@ -179,15 +179,6 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
     @OnClick(R.id.fabSort)
     public void openSort() {
         mMovieListPresenterImp.openSortFab();
-/*
-
-        if(mIsSortFabOpen) {
-            closeSortFab();
-        }
-        else {
-            openSortFab();
-        }
-*/
     }
 
     @SuppressWarnings("unused")
