@@ -67,7 +67,10 @@ import timber.log.Timber;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MovieDetailViewImp extends Fragment implements
+public class MovieDetailViewImp
+        extends
+        Fragment
+        implements
         MovieDetailViewContract,
         StartMovieTrailerListener,
         MovieFavouritePresenterContract.DbOperationsListener {
@@ -544,6 +547,12 @@ public class MovieDetailViewImp extends Fragment implements
     }
 
     @Override
+    public void onGetMovieFavouriteFailure(String errorMessage) {
+        Timber.e("onGetMovieFavouriteFailure %s", errorMessage);
+        Toast.makeText(getActivity(), "Cannnot retrive favourite movie", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
     public void onGetMovieFavouriteSuccess(Movie favourite) {
         Timber.d("onGetMovieFavouriteSuccess %d", favourite.getId());
         mMovie = favourite;
@@ -581,23 +590,8 @@ public class MovieDetailViewImp extends Fragment implements
     }
 
     @Override
-    public void onGetMovieFavouriteFailure(String errorMessage) {
-        Timber.d("onGetMovieFavouriteFailure %s", errorMessage);
-    }
-
-    @Override
     public void failedToReceiveMovieReviews(String errorMessage) {
         Timber.e("failedToReceiveMovieReviews %s", errorMessage);
-    }
-
-    @Override
-    public void onGetFavouriteMoviesSuccess(Results<Movie> favouriteList) {
-        /* no-op */
-    }
-
-    @Override
-    public void onGetFavouriteMoviesFailure(String errorMessage) {
-        /* no-op */
     }
 
     @Override

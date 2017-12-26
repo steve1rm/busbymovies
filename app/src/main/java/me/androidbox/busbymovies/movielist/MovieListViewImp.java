@@ -42,8 +42,13 @@ import timber.log.Timber;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MovieListViewImp extends Fragment implements MovieListViewContract,
-        MovieFavouritePresenterContract.DbOperationsListener, MovieSearchListener {
+public class MovieListViewImp
+        extends
+        Fragment
+        implements
+        MovieListViewContract,
+        MovieFavouritePresenterContract.MovieFavouriteListListener,
+        MovieSearchListener {
     public static final String TAG = MovieListViewImp.class.getSimpleName();
 
     @Inject MovieListPresenterContract mMovieListPresenterImp;
@@ -268,9 +273,14 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
     }
 
     @Override
+    public void onGetFavouriteMoviesFailure(String errorMessage) {
+        Timber.e("onGetFavouriteMoviesFailure: %s", errorMessage);
+        Toast.makeText(getActivity(), "Failed to get favourite movies", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
     public void failedToDisplayPopularMovies(String errorMessage) {
         Toast.makeText(getActivity(), "Failed to get popular movies\n" + errorMessage, Toast.LENGTH_LONG).show();
-        mPbMovieList.hide();
         swipeRefreshLayout.setRefreshing(false);
 
         Timber.w("Failed to get popular movies %s", errorMessage);
@@ -290,7 +300,7 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
 
     @Override
     public void failedToGetSearchMovies(String errorMessage) {
-        Timber.d("failedToGetSearchMovies: %s", errorMessage);
+        Timber.w("failedToGetSearchMovies: %s", errorMessage);
         Toast.makeText(getActivity(), "Failed to find any movies", Toast.LENGTH_SHORT).show();
     }
 
@@ -309,50 +319,7 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
     @Override
     public void onShowProgressBar() {
         if(!mPbMovieList.isShown()) {
-            Timber.d("onShowProgressBar");
             mPbMovieList.show();
         }
-    }
-
-    @Override
-    public void onGetFavouriteMoviesFailure(String errorMessage) {
-
-    }
-
-    @Override
-    public void onInsertFavouriteSuccess() {
-        Timber.d("onInsertFavouriteSuccess");
-    }
-
-    @Override
-    public void onInsertFavouriteFailure(String errorMessage) {
-    }
-
-    @Override
-    public void onDeleteFavouriteMovieSuccess(int rowDeletedId) {
-    }
-
-    @Override
-    public void onDeleteFavouriteMovieFailure(String errorMessage) {
-    }
-
-    @Override
-    public void onHasMovieFavouriteSuccess(int movieId, boolean isFavourite) {
-
-    }
-
-    @Override
-    public void onHasMovieFavouriteFailure(String errorMessage) {
-
-    }
-
-    @Override
-    public void onGetMovieFavouriteSuccess(Movie favourite) {
-
-    }
-
-    @Override
-    public void onGetMovieFavouriteFailure(String errorMessage) {
-
     }
 }
