@@ -44,23 +44,12 @@ public final class MovieListPresenterImp
     }
 
     @Override
-    public void hideProgressBar() {
-        if(isViewAttached()) {
-            getView().onHideProgressBar();
-        }
-    }
-
-    @Override
-    public void showProgressBar() {
-        if(isViewAttached()) {
-            mMovieListViewContract.onShowProgressBar();
-        }
-    }
-
-    @Override
     public void getPopularMovies() {
         if(mMovieModelContract != null) {
-            mMovieModelContract.getPopularMovies(MovieListPresenterImp.this);
+            if(isViewAttached()) {
+                getView().onShowProgressBar();
+                mMovieModelContract.getPopularMovies(MovieListPresenterImp.this);
+            }
         }
     }
 
@@ -77,6 +66,7 @@ public final class MovieListPresenterImp
     @Override
     public void onPopularMovieFailure(String errorMessage) {
         if(isViewAttached()) {
+            getView().onHideProgressBar();
             getView().failedToDisplayPopularMovies(errorMessage);
         }
     }
@@ -87,6 +77,7 @@ public final class MovieListPresenterImp
     @Override
     public void onPopularMovieSuccess(Results<Movies> popularMovies) {
         if(isViewAttached()) {
+            getView().onHideProgressBar();
             getView().displayPopularMovies(popularMovies);
         }
     }

@@ -12,6 +12,4 @@ public interface MovieListPresenterContract extends BasePresenter<MovieListViewC
     void searchMovies(final String movieName, final int movieYear);
     void openSortFab();
     void closeSortFab();
-    void hideProgressBar();
-    void showProgressBar();
 }

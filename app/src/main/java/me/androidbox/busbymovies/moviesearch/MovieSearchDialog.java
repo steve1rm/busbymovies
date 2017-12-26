@@ -3,11 +3,13 @@ package me.androidbox.busbymovies.moviesearch;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -56,11 +58,16 @@ public class MovieSearchDialog extends DialogFragment {
     @SuppressWarnings("unused")
     @OnClick(R.id.btnSearch)
     public void searchMovies() {
-        movieSearchListener.onMovieSearch(
-                movieName.getText().toString(),
-                convertYearToInt(movieYear.getText().toString()));
+        if(!TextUtils.isEmpty(movieName.getText().toString())) {
+            movieSearchListener.onMovieSearch(
+                    movieName.getText().toString(),
+                    convertYearToInt(movieYear.getText().toString()));
 
-        dismiss();
+            dismiss();
+        }
+        else {
+            Toast.makeText(getActivity(), "Enter a name of a movie before searching", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private int convertYearToInt(final String year) {

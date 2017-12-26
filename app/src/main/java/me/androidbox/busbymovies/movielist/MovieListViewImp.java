@@ -89,16 +89,9 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
         mUnbinder = ButterKnife.bind(MovieListViewImp.this, view);
         setupRecyclerView();
         setupSwipeToRefresh();
-        mMovieListPresenterImp.hideProgressBar();
+        mMovieListPresenterImp.getPopularMovies();
 
         return view;
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        mMovieListPresenterImp.getPopularMovies();
     }
 
     @Override
@@ -213,7 +206,7 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_green_light,
                 android.R.color.holo_red_light);
-
+        /* TODO Swipe to refresh should fetch movies related to what is on the search i.e. popular, top rated, searched, or favourites */
         swipeRefreshLayout.setOnRefreshListener(() -> mMovieListPresenterImp.getPopularMovies());
     }
 
@@ -234,29 +227,23 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
     }
 
     public void getPopularMovies() {
-        /* Display progress indicator */
-        mMovieListPresenterImp.showProgressBar();
         mMovieListPresenterImp.getPopularMovies();
     }
 
     public void getTopRatedMovies() {
         /* Display progress indicator */
-        mMovieListPresenterImp.showProgressBar();
         mMovieListPresenterImp.getTopRatedMovies();
     }
 
     public void getFavouriteMovies() {
-        mMovieListPresenterImp.showProgressBar();
         mMovieFavouritePresenterImp.getFavouriteMovies(MovieListViewImp.this);
     }
-    ///
+
     @Override
     public void displayPopularMovies(Results<Movies> popularMovies) {
         /* Load adapter with data to be populated in the recycler view */
         /* Hide progress indicator */
         Timber.d("displayPopularMovies Received %d", popularMovies.getResults().size());
-
-        mMovieListPresenterImp.hideProgressBar();
         mMovieAdapter.loadAdapter(popularMovies);
         swipeRefreshLayout.setRefreshing(false);
     }
@@ -264,16 +251,12 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
     @Override
     public void displayTopRatedMovies(Results<Movies> topRatedMovies) {
         Timber.d("displayTopRatedMovies: %d", topRatedMovies.getResults().size());
-
-        mMovieListPresenterImp.hideProgressBar();
         mMovieAdapter.loadAdapter(topRatedMovies);
     }
 
     @Override
     public void onGetFavouriteMoviesSuccess(Results<Movie> favouriteList) {
         Timber.d("onGetFavouriteMovieSuccess %d", favouriteList.getResults().size());
-
-        mMovieListPresenterImp.hideProgressBar();
 
         if(favouriteList.getResults().size() > 0) {
             mMovieAdapter.loadAdapter(favouriteList);
@@ -302,20 +285,17 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
 
     @Override
     public void onMovieSearch(@NotNull String movieName, int movieYear) {
-        mMovieListPresenterImp.showProgressBar();
         mMovieListPresenterImp.searchMovies(movieName, movieYear);
     }
 
     @Override
     public void failedToGetSearchMovies(String errorMessage) {
-        Timber.e("failedToGetSearchMovies: %s", errorMessage);
-        mMovieListPresenterImp.hideProgressBar();
+        Timber.d("failedToGetSearchMovies: %s", errorMessage);
+        Toast.makeText(getActivity(), "Failed to find any movies", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void successToGetSearchMovies(Results<Movies> movieSearch) {
-     //   Timber.d("successToGetSearchMovies: %d", movieSearch.getResults().size());
-        mMovieListPresenterImp.hideProgressBar();
         mMovieAdapter.loadAdapter(movieSearch);
     }
 
@@ -329,6 +309,7 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
     @Override
     public void onShowProgressBar() {
         if(!mPbMovieList.isShown()) {
+            Timber.d("onShowProgressBar");
             mPbMovieList.show();
         }
     }
