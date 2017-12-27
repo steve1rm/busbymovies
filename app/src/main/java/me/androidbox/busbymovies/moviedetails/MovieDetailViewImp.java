@@ -139,7 +139,7 @@ public class MovieDetailViewImp
         mUnbinder = ButterKnife.bind(MovieDetailViewImp.this, view);
 
         ((BusbyMoviesMainApplication)getActivity().getApplication())
-                .getMovieDetailComponent()
+                .getMovieDetailComponent(MovieDetailViewImp.this)
                 .inject(MovieDetailViewImp.this);
 
         setupToolBar();

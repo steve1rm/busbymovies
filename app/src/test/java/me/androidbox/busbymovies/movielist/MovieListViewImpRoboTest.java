@@ -39,7 +39,7 @@ public class MovieListViewImpRoboTest extends BaseRobolectricTestRunner {
     private MovieListActivity mMovieListActivity;
     private MovieListViewImp movieListViewImp;
 
-    @Mock MovieListPresenterImp movieListPresenterImp;
+    @Mock MovieListPresenterContract movieListPresenterImp;
 
     @Before
     public void setup() {
