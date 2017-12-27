@@ -171,7 +171,6 @@ public class MovieListViewImp
     @SuppressWarnings("unused")
     @OnClick(R.id.fabPopular)
     public void getPopular() {
-        Timber.d("getPopular");
         mMovieListPresenterImp.getPopularMovies();
         mMovieListPresenterImp.closeSortFab();
     }
@@ -179,7 +178,6 @@ public class MovieListViewImp
     @SuppressWarnings("unused")
     @OnClick(R.id.fabTopRated)
     public void getTopRated() {
-        Timber.d("getTopRated");
         mMovieListPresenterImp.getTopRatedMovies();
         mMovieListPresenterImp.closeSortFab();
     }
@@ -187,7 +185,6 @@ public class MovieListViewImp
     @SuppressWarnings("unused")
     @OnClick(R.id.fabFavourite)
     public void getFavourites() {
-        Timber.d("getFavourites");
         mMovieFavouritePresenterImp.getFavouriteMovies(MovieListViewImp.this);
         mMovieListPresenterImp.closeSortFab();
     }
