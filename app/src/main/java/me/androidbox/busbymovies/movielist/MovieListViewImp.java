@@ -172,7 +172,7 @@ public class MovieListViewImp
     @OnClick(R.id.fabPopular)
     public void getPopular() {
         Timber.d("getPopular");
-        getPopularMovies();
+        mMovieListPresenterImp.getPopularMovies();
         mMovieListPresenterImp.closeSortFab();
     }
 
@@ -180,7 +180,7 @@ public class MovieListViewImp
     @OnClick(R.id.fabTopRated)
     public void getTopRated() {
         Timber.d("getTopRated");
-        getTopRatedMovies();
+        mMovieListPresenterImp.getTopRatedMovies();
         mMovieListPresenterImp.closeSortFab();
     }
 
@@ -188,7 +188,7 @@ public class MovieListViewImp
     @OnClick(R.id.fabFavourite)
     public void getFavourites() {
         Timber.d("getFavourites");
-        getFavouriteMovies();
+        mMovieFavouritePresenterImp.getFavouriteMovies(MovieListViewImp.this);
         mMovieListPresenterImp.closeSortFab();
     }
 
@@ -229,19 +229,6 @@ public class MovieListViewImp
         mRvMovieList.setHasFixedSize(true);
         mMovieAdapter = new MovieAdapter(Collections.emptyList());
         mRvMovieList.setAdapter(mMovieAdapter);
-    }
-
-    public void getPopularMovies() {
-        mMovieListPresenterImp.getPopularMovies();
-    }
-
-    public void getTopRatedMovies() {
-        /* Display progress indicator */
-        mMovieListPresenterImp.getTopRatedMovies();
-    }
-
-    public void getFavouriteMovies() {
-        mMovieFavouritePresenterImp.getFavouriteMovies(MovieListViewImp.this);
     }
 
     @Override

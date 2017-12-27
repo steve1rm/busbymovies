@@ -1,7 +1,5 @@
 package me.androidbox.busbymovies.movielist;
 
-import android.support.annotation.VisibleForTesting;
-
 import javax.inject.Inject;
 
 import me.androidbox.busbymovies.basepresenter.BasePresenterImp;
@@ -21,7 +19,6 @@ public final class MovieListPresenterImp
         MovieListModelContract.TopRatedMovieResultsListener,
         MovieListModelContract.MovieSearchResultsListener {
 
-    @VisibleForTesting MovieListViewContract mMovieListViewContract;
     private final MovieListModelContract mMovieModelContract;
 
     @Inject
@@ -121,5 +118,14 @@ public final class MovieListPresenterImp
     @Override
     public void searchMovies(final String movieName, final int movieYear) {
         mMovieModelContract.searchForMovies(movieName, movieYear, MovieListPresenterImp.this);
+    }
+
+    @Override
+    public void detachView() {
+        if(mMovieModelContract != null) {
+            mMovieModelContract.releaseResources();
+        }
+
+        super.detachView();
     }
 }
