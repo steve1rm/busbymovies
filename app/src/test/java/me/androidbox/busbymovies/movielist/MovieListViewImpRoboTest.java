@@ -5,9 +5,15 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.ProgressBar;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.robolectric.Robolectric;
-import org.robolectric.util.FragmentTestUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,31 +21,39 @@ import java.util.List;
 import me.androidbox.busbymovies.R;
 import me.androidbox.busbymovies.models.Movies;
 import me.androidbox.busbymovies.models.Results;
-import me.androidbox.busbymovies.support.Asserts;
-import support.BaseRobolectricTestRunner;
 import me.androidbox.busbymovies.support.ResourceLocator;
 import me.androidbox.busbymovies.support.ViewLocator;
+import support.Assert;
+import support.BaseRobolectricTestRunner;
 
-import static me.androidbox.busbymovies.support.Asserts.viewIsNotVisible;
 import static me.androidbox.busbymovies.support.Asserts.viewIsVisible;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 /**
  * Created by steve on 3/27/17.
  */
+@Ignore
+@RunWith(MockitoJUnitRunner.class)
 public class MovieListViewImpRoboTest extends BaseRobolectricTestRunner {
     private MovieListActivity mMovieListActivity;
     private MovieListViewImp movieListViewImp;
+
+    @Mock MovieListPresenterContract movieListPresenterImp;
 
     @Before
     public void setup() {
         mMovieListActivity = Robolectric.setupActivity(MovieListActivity.class);
 
         movieListViewImp = new MovieListViewImp();
+        movieListViewImp.mMovieListPresenterImp = movieListPresenterImp;
+
+        initializeFragment(movieListViewImp);
     }
 
     @Test
@@ -95,26 +109,37 @@ public class MovieListViewImpRoboTest extends BaseRobolectricTestRunner {
         viewIsVisible(favourite);
     }
 
-    @Test
-    public void testSuccessToGetSearchMovies_HideProgressBar_loadAdapter() {
+    private Results<Movies> createMovieResults() {
         final List<Movies> moviesList = new ArrayList<>();
-        final Movies movies = new Movies(1234,
+        final Movies movies = new Movies(
+                12345,
                 "poster_path",
                 "overview",
                 "release_date",
                 "title",
                 "backdrop_path",
-                7.2F,
-                4.9F);
+                7.4F,
+                4.2F);
         moviesList.add(movies);
-        final Results<Movies> moviesResults = new Results<>(moviesList);
+
+        return new Results<>(moviesList);
+    }
+
+    @Test
+    public void testSuccessToGetSearchMovies_HideProgressBar_loadAdapter() {
         final ProgressBar pbMovieList = ViewLocator.getProgressBar(movieListViewImp.getActivity(), R.id.pbMovieList);
         assertThat(pbMovieList, is(notNullValue()));
-        initializeFragment(movieListViewImp);
 
-        movieListViewImp.successToGetSearchMovies(moviesResults);
 
-        viewIsVisible(pbMovieList);
+        movieListViewImp.successToGetSearchMovies(createMovieResults());
+
+        Assert.Companion.viewIsGone(pbMovieList);
+    }
+
+    @Test
+    public void testgetTopRatedMovies_showProgressBar_getTopRatedMovies() {
+        verify(movieListPresenterImp).getTopRatedMovies();
+        verifyNoMoreInteractions(movieListPresenterImp);
     }
 
     @Test

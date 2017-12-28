@@ -30,6 +30,7 @@ public class MovieDbHelper extends SQLiteOpenHelper {
                 MovieContract.MovieEntry.TITLE + " TEXT NOT NULL, " +
                 MovieContract.MovieEntry.BACKDROP_PATH + " TEXT, " +
                 MovieContract.MovieEntry.VOTE_AVERAGE + " REAL, " +
+                MovieContract.MovieEntry.VOTE_COUNT + " REAL, " +
                 MovieContract.MovieEntry.TAGLINE + " TEXT, " +
                 MovieContract.MovieEntry.HOMEPATH + " TEXT, " +
                 MovieContract.MovieEntry.RUNTIME + " INTEGER" + ");";

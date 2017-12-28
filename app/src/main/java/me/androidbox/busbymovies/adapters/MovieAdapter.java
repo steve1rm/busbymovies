@@ -10,7 +10,6 @@ import java.util.Collections;
 import java.util.List;
 
 import me.androidbox.busbymovies.R;
-import me.androidbox.busbymovies.models.Movie;
 import me.androidbox.busbymovies.models.Movies;
 import me.androidbox.busbymovies.models.Results;
 import me.androidbox.busbymovies.movielist.MovieListViewHolder;
