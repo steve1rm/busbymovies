@@ -11,6 +11,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.robolectric.Robolectric;
+import org.robolectric.shadows.support.v4.SupportFragmentTestUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +39,7 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 /**
  * Created by steve on 3/27/17.
  */
-@Ignore
+
 @RunWith(MockitoJUnitRunner.class)
 public class MovieListViewImpRoboTest extends BaseRobolectricTestRunner {
     private MovieListActivity mMovieListActivity;
@@ -48,7 +49,7 @@ public class MovieListViewImpRoboTest extends BaseRobolectricTestRunner {
 
     @Before
     public void setup() {
-        mMovieListActivity = Robolectric.setupActivity(MovieListActivity.class);
+//        mMovieListActivity = Robolectric.setupActivity(MovieListActivity.class);
 
         movieListViewImp = new MovieListViewImp();
         movieListViewImp.mMovieListPresenterImp = movieListPresenterImp;

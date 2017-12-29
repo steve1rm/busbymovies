@@ -4,7 +4,9 @@ import android.animation.Animator;
 import android.animation.AnimatorInflater;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -13,10 +15,13 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import com.google.common.base.Preconditions;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -63,7 +68,8 @@ public class MovieListViewImp
     @BindView(R.id.fabSearch) FloatingActionButton mFabSearch;
 
     private Unbinder mUnbinder;
-    private MovieAdapter mMovieAdapter;
+
+    @VisibleForTesting MovieAdapter mMovieAdapter;
     private boolean mIsSortFabOpen;
 
     public MovieListViewImp() {
@@ -92,8 +98,10 @@ public class MovieListViewImp
         final View view = inflater.inflate(R.layout.movie_list_view, container, false);
 
         mUnbinder = ButterKnife.bind(MovieListViewImp.this, view);
+
         setupRecyclerView();
         setupSwipeToRefresh();
+
         mMovieListPresenterImp.getPopularMovies();
 
         return view;
@@ -101,71 +109,65 @@ public class MovieListViewImp
 
     @Override
     public void onDestroyView() {
-        super.onDestroyView();
-        Timber.d("onDestroyView");
-
-        /* close the fab button if open */
-        if(mIsSortFabOpen) {
-            mIsSortFabOpen = false;
-        }
-
+        mMovieListPresenterImp.closeSortFab();
         mMovieListPresenterImp.detachView();
+
         mUnbinder.unbind();
+
+        super.onDestroyView();
     }
 
     /* Close the sort Fab */
     @Override
     public void onCloseSortFab() {
-        final Animator closePopularFab = AnimatorInflater.loadAnimator(getActivity(), R.animator.close_popular_fab);
-        closePopularFab.setTarget(mFabPopular);
-        closePopularFab.start();
+        if(mIsSortFabOpen) {
+            final Animator closePopularFab = AnimatorInflater.loadAnimator(getActivity(), R.animator.close_popular_fab);
+            closePopularFab.setTarget(mFabPopular);
+            closePopularFab.start();
 
-        final Animator closeTopRatedFab = AnimatorInflater.loadAnimator(getActivity(), R.animator.close_toprated_fab);
-        closeTopRatedFab.setTarget(mFabTopRated);
-        closeTopRatedFab.start();
+            final Animator closeTopRatedFab = AnimatorInflater.loadAnimator(getActivity(), R.animator.close_toprated_fab);
+            closeTopRatedFab.setTarget(mFabTopRated);
+            closeTopRatedFab.start();
 
-        final Animator openFavourite = AnimatorInflater.loadAnimator(getActivity(), R.animator.close_favourite_fab);
-        openFavourite.setTarget(mFabFavourite);
-        openFavourite.start();
+            final Animator openFavourite = AnimatorInflater.loadAnimator(getActivity(), R.animator.close_favourite_fab);
+            openFavourite.setTarget(mFabFavourite);
+            openFavourite.start();
 
-        final Animator openSearch = AnimatorInflater.loadAnimator(getActivity(), R.animator.close_search_fab);
-        openSearch.setTarget(mFabSearch);
-        openSearch.start();
+            final Animator openSearch = AnimatorInflater.loadAnimator(getActivity(), R.animator.close_search_fab);
+            openSearch.setTarget(mFabSearch);
+            openSearch.start();
 
-        mIsSortFabOpen = false;
+            mIsSortFabOpen = false;
+        }
     }
 
-    /* Open the sort Fab */
     @Override
     public void onOpenSortFab() {
-        final Animator openPopularFab = AnimatorInflater.loadAnimator(getActivity(), R.animator.open_popular_fab);
-        openPopularFab.setTarget(mFabPopular);
-        openPopularFab.start();
+        if(!mIsSortFabOpen) {
+            final Animator openPopularFab = AnimatorInflater.loadAnimator(getActivity(), R.animator.open_popular_fab);
+            openPopularFab.setTarget(mFabPopular);
+            openPopularFab.start();
 
-        final Animator openTopRatedTab = AnimatorInflater.loadAnimator(getActivity(), R.animator.open_toprated_fab);
-        openTopRatedTab.setTarget(mFabTopRated);
-        openTopRatedTab.start();
+            final Animator openTopRatedTab = AnimatorInflater.loadAnimator(getActivity(), R.animator.open_toprated_fab);
+            openTopRatedTab.setTarget(mFabTopRated);
+            openTopRatedTab.start();
 
-        final Animator openFavourite = AnimatorInflater.loadAnimator(getActivity(), R.animator.open_favourite_fab);
-        openFavourite.setTarget(mFabFavourite);
-        openFavourite.start();
+            final Animator openFavourite = AnimatorInflater.loadAnimator(getActivity(), R.animator.open_favourite_fab);
+            openFavourite.setTarget(mFabFavourite);
+            openFavourite.start();
 
-        final Animator openSearch = AnimatorInflater.loadAnimator(getActivity(), R.animator.open_search_fab);
-        openSearch.setTarget(mFabSearch);
-        openSearch.start();
+            final Animator openSearch = AnimatorInflater.loadAnimator(getActivity(), R.animator.open_search_fab);
+            openSearch.setTarget(mFabSearch);
+            openSearch.start();
 
-        mIsSortFabOpen = true;
+            mIsSortFabOpen = true;
+        }
     }
 
     @SuppressWarnings("unused")
     @OnClick(R.id.fabSort)
     public void openSort() {
-        if(mIsSortFabOpen) {
-            mMovieListPresenterImp.closeSortFab();
-        }
-        else {
-            mMovieListPresenterImp.openSortFab();
-        }
+        mMovieListPresenterImp.openSortFab();
     }
 
     @SuppressWarnings("unused")
@@ -213,7 +215,6 @@ public class MovieListViewImp
     }
 
     private void setupRecyclerView() {
-
         /* Portrait mode 2 columns as there is less width to display movies
            Landscape mode 3 columns as there is more width to display movies
          */
@@ -278,8 +279,12 @@ public class MovieListViewImp
     }
 
     @Override
-    public void onMovieSearch(@NotNull String movieName, int movieYear) {
-        mMovieListPresenterImp.searchMovies(movieName, movieYear);
+    public void onMovieSearch(@NonNull String movieName, final int movieYear) {
+        final String nameOfMovie = Preconditions.checkNotNull(movieName, "Movie name hasn't been entered");
+
+        if(!TextUtils.isEmpty(nameOfMovie)) {
+            mMovieListPresenterImp.searchMovies(nameOfMovie, movieYear);
+        }
     }
 
     @Override

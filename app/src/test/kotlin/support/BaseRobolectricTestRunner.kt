@@ -1,6 +1,5 @@
 package support
 
-
 import android.os.Build
 import android.support.v4.app.Fragment
 import me.androidbox.busbymovies.BuildConfig
