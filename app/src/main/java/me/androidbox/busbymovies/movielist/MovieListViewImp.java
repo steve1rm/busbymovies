@@ -67,10 +67,9 @@ public class MovieListViewImp
     @BindView(R.id.swipeContainer) SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.fabSearch) FloatingActionButton mFabSearch;
 
-    private Unbinder mUnbinder;
-
+    @VisibleForTesting Unbinder mUnbinder;
     @VisibleForTesting MovieAdapter mMovieAdapter;
-    private boolean mIsSortFabOpen;
+    @VisibleForTesting boolean mIsSortFabOpen;
 
     public MovieListViewImp() {
         // Required empty public constructor
@@ -246,8 +245,6 @@ public class MovieListViewImp
 
     @Override
     public void onGetFavouriteMoviesSuccess(Results<Movie> favouriteList) {
-        Timber.d("onGetFavouriteMovieSuccess %d", favouriteList.getResults().size());
-
         if(favouriteList.getResults().size() > 0) {
             mMovieAdapter.loadAdapter(favouriteList);
         }

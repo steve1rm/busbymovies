@@ -6,10 +6,13 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import butterknife.Unbinder;
 import me.androidbox.busbymovies.adapters.MovieAdapter;
 import me.androidbox.busbymovies.data.MovieFavouritePresenterContract;
+import me.androidbox.busbymovies.models.Movie;
 import me.androidbox.busbymovies.models.Movies;
 import me.androidbox.busbymovies.models.Results;
 import support.BaseRobolectricTestRunner;
@@ -143,6 +146,101 @@ public class MovieListViewImpTest extends BaseRobolectricTestRunner {
         verifyNoMoreInteractions(movieListViewImp.mMovieListPresenterImp);
     }
 
+    @Test
+    public void testGetFavouriteMovieSuccess_DoNotLoadAdapter_whenListEmpty() {
+        final Results<Movie> movieResults = createEmptyFavouriteList();
+
+        movieListViewImp.onGetFavouriteMoviesSuccess(movieResults);
+
+        verify(movieListViewImp.mMovieAdapter, never()).loadAdapter(movieResults);
+        verifyNoMoreInteractions(movieListViewImp.mMovieAdapter);
+    }
+
+    @Test
+    public void testGetFavouriteMovieSuccess_LoadAdapter_whenListNotEmpty() {
+        final Results<Movie> movieResults = createFavouriteList();
+
+        movieListViewImp.onGetFavouriteMoviesSuccess(movieResults);
+
+        verify(movieListViewImp.mMovieAdapter).loadAdapter(movieResults);
+        verifyNoMoreInteractions(movieListViewImp.mMovieAdapter);
+    }
+
+    @Test
+    public void testOnDestroyView_closeSortFab_andDetachView() {
+        movieListViewImp.mUnbinder = mock(Unbinder.class);
+
+        movieListViewImp.onDestroyView();
+
+        verify(movieListViewImp.mMovieListPresenterImp).closeSortFab();
+        verify(movieListViewImp.mMovieListPresenterImp).detachView();
+        verifyNoMoreInteractions(movieListViewImp.mMovieListPresenterImp);
+        verify(movieListViewImp.mUnbinder).unbind();
+        verifyNoMoreInteractions(movieListViewImp.mUnbinder);
+    }
+
+    @Test
+    public void onCloseSortFab_ifSortOpen_setToFalse() {
+        initializeFragment(movieListViewImp);
+        movieListViewImp.mIsSortFabOpen = true;
+
+        movieListViewImp.onCloseSortFab();
+
+        assertThat(movieListViewImp.mIsSortFabOpen, is(false));
+    }
+
+    @Test
+    public void onCloseSortFab_ifSortOpen_setToTrue() {
+        initializeFragment(movieListViewImp);
+        movieListViewImp.mIsSortFabOpen = true;
+
+        movieListViewImp.onCloseSortFab();
+
+        assertThat(movieListViewImp.mIsSortFabOpen, is(false));
+    }
+
+    @Test
+    public void onOpenSortFab_ifSortOpen_setToFalse() {
+        initializeFragment(movieListViewImp);
+        movieListViewImp.mIsSortFabOpen = true;
+
+        movieListViewImp.onOpenSortFab();
+
+        assertThat(movieListViewImp.mIsSortFabOpen, is(true));
+    }
+
+    @Test
+    public void onOpenSortFab_ifSortOpen_setToTrue() {
+        initializeFragment(movieListViewImp);
+        movieListViewImp.mIsSortFabOpen = false;
+
+        movieListViewImp.onOpenSortFab();
+
+        assertThat(movieListViewImp.mIsSortFabOpen, is(true));
+    }
+
+    private Results<Movie> createFavouriteList() {
+        final List<Movie> movies = new ArrayList<>();
+
+        movies.add(new Movie(
+                1234,
+                "poster_path",
+                "overview",
+                "release_date",
+                "title",
+                "backdrop_path",
+                4.5F,
+                7.8F));
+
+        return new Results<>(movies);
+    }
+
+    private Results<Movie> createEmptyFavouriteList() {
+        final List<Movie> movies = Collections.emptyList();
+
+        return new Results<>(movies);
+    }
+
     private Results<Movies> createMovieResults() {
         final List<Movies> movies = new ArrayList<>();
 
@@ -158,4 +256,7 @@ public class MovieListViewImpTest extends BaseRobolectricTestRunner {
 
         return new Results<>(movies);
     }
+
+
+    
 }
