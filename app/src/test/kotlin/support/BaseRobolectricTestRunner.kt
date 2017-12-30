@@ -2,6 +2,9 @@ package support
 
 import android.os.Build
 import android.support.v4.app.Fragment
+import di.DaggerTestBusbyMoviesAppComponent
+import di.TestAndroidModule
+import di.TestBusbyMoviesAppComponent
 import me.androidbox.busbymovies.BuildConfig
 import me.androidbox.busbymovies.di.BusbyMoviesMainApplication
 import org.junit.runner.RunWith
@@ -24,11 +27,9 @@ abstract class BaseRobolectricTestRunner {
         SupportFragmentTestUtil.startVisibleFragment(fragment)
     }
 
-/*
     fun getTestBusbyMovieAppComponent(): TestBusbyMoviesAppComponent =
-            DaggerTestBusbyMovieAppComponent
+            DaggerTestBusbyMoviesAppComponent
                     .builder()
                     .testAndroidModule(TestAndroidModule())
                     .build()
-*/
 }

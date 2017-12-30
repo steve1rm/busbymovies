@@ -3,11 +3,7 @@ package me.androidbox.busbymovies.movielist;
 import android.support.v4.widget.ContentLoadingProgressBar;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +17,7 @@ import support.BaseRobolectricTestRunner;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
@@ -29,26 +26,16 @@ import static org.mockito.Mockito.when;
 /**
  * Created by steve on 12/27/17.
  */
-@RunWith(MockitoJUnitRunner.class)
 public class MovieListViewImpTest extends BaseRobolectricTestRunner {
     private MovieListViewImp movieListViewImp;
-
-    @Mock
-    private MovieListPresenterContract movieListPresenter;
-    @Mock
-    private MovieFavouritePresenterContract movieFavouritePresenter;
-    @Mock
-    private ContentLoadingProgressBar pbMovieList;
-    @Mock
-    private MovieAdapter movieAdapter;
 
     @Before
     public void setup() {
         movieListViewImp = MovieListViewImp.newInstance();
-        movieListViewImp.mMovieListPresenterImp = movieListPresenter;
-        movieListViewImp.mMovieFavouritePresenterImp = movieFavouritePresenter;
-        movieListViewImp.mPbMovieList = pbMovieList;
-        movieListViewImp.mMovieAdapter = movieAdapter;
+        movieListViewImp.mMovieListPresenterImp = mock(MovieListPresenterContract.class);
+        movieListViewImp.mMovieFavouritePresenterImp = mock(MovieFavouritePresenterContract.class);
+        movieListViewImp.mPbMovieList = mock(ContentLoadingProgressBar.class);
+        movieListViewImp.mMovieAdapter = mock(MovieAdapter.class);
     }
 
     @Test
@@ -60,70 +47,70 @@ public class MovieListViewImpTest extends BaseRobolectricTestRunner {
     public void testGetPopular_getsPopularMovies() {
         movieListViewImp.getPopular();
 
-        verify(movieListPresenter).getPopularMovies();
-        verify(movieListPresenter).closeSortFab();
-        verifyNoMoreInteractions(movieListPresenter);
+        verify(movieListViewImp.mMovieListPresenterImp).getPopularMovies();
+        verify(movieListViewImp.mMovieListPresenterImp).closeSortFab();
+        verifyNoMoreInteractions(movieListViewImp.mMovieListPresenterImp);
     }
 
     @Test
     public void testGetTopRated_getsTopRated() {
         movieListViewImp.getTopRated();
 
-        verify(movieListPresenter).getTopRatedMovies();
-        verify(movieListPresenter).closeSortFab();
-        verifyNoMoreInteractions(movieListPresenter);
+        verify(movieListViewImp.mMovieListPresenterImp).getTopRatedMovies();
+        verify(movieListViewImp.mMovieListPresenterImp).closeSortFab();
+        verifyNoMoreInteractions(movieListViewImp.mMovieListPresenterImp);
     }
 
     @Test
     public void testGetFavourites_getsFavourites() {
         movieListViewImp.getFavourites();
 
-        verify(movieFavouritePresenter).getFavouriteMovies(movieListViewImp);
-        verify(movieListPresenter).closeSortFab();
-        verifyNoMoreInteractions(movieFavouritePresenter);
-        verifyNoMoreInteractions(movieListPresenter);
+        verify(movieListViewImp.mMovieFavouritePresenterImp).getFavouriteMovies(movieListViewImp);
+        verify(movieListViewImp.mMovieListPresenterImp).closeSortFab();
+        verifyNoMoreInteractions(movieListViewImp.mMovieFavouritePresenterImp);
+        verifyNoMoreInteractions(movieListViewImp.mMovieListPresenterImp);
     }
 
     @Test
     public void testOnShowProgressBar_showProgressBar_whenHidden() {
-        when(pbMovieList.isShown()).thenReturn(false);
+        when(movieListViewImp.mPbMovieList.isShown()).thenReturn(false);
 
         movieListViewImp.onShowProgressBar();
 
-        verify(pbMovieList).isShown();
-        verify(pbMovieList).show();
-        verifyNoMoreInteractions(pbMovieList);
+        verify(movieListViewImp.mPbMovieList).isShown();
+        verify(movieListViewImp.mPbMovieList).show();
+        verifyNoMoreInteractions(movieListViewImp.mPbMovieList);
     }
 
     @Test
     public void testOnShowProgressBar_doNothing_whenAlreadyHidden() {
-        when(pbMovieList.isShown()).thenReturn(true);
+        when(movieListViewImp.mPbMovieList.isShown()).thenReturn(true);
 
         movieListViewImp.onShowProgressBar();
 
-        verify(pbMovieList).isShown();
-        verifyNoMoreInteractions(pbMovieList);
+        verify(movieListViewImp.mPbMovieList).isShown();
+        verifyNoMoreInteractions(movieListViewImp.mPbMovieList);
     }
 
     @Test
     public void testOnHideProgressBar_hideProgressBar_whenShown() {
-        when(pbMovieList.isShown()).thenReturn(true);
+        when(movieListViewImp.mPbMovieList.isShown()).thenReturn(true);
 
         movieListViewImp.onHideProgressBar();
 
-        verify(pbMovieList).isShown();
-        verify(pbMovieList).hide();
-        verifyNoMoreInteractions(pbMovieList);
+        verify(movieListViewImp.mPbMovieList).isShown();
+        verify(movieListViewImp.mPbMovieList).hide();
+        verifyNoMoreInteractions(movieListViewImp.mPbMovieList);
     }
 
     @Test
     public void testOnHideProgressBar_doNothing_whenAlreadyShown() {
-        when(pbMovieList.isShown()).thenReturn(false);
+        when(movieListViewImp.mPbMovieList.isShown()).thenReturn(false);
 
         movieListViewImp.onHideProgressBar();
 
-        verify(pbMovieList).isShown();
-        verifyNoMoreInteractions(pbMovieList);
+        verify(movieListViewImp.mPbMovieList).isShown();
+        verifyNoMoreInteractions(movieListViewImp.mPbMovieList);
     }
 
     @Test
@@ -131,8 +118,8 @@ public class MovieListViewImpTest extends BaseRobolectricTestRunner {
         final Results<Movies> moviesResults = createMovieResults();
         movieListViewImp.successToGetSearchMovies(moviesResults);
 
-        verify(movieAdapter).loadAdapter(moviesResults);
-        verifyNoMoreInteractions(movieAdapter);
+        verify(movieListViewImp.mMovieAdapter).loadAdapter(moviesResults);
+        verifyNoMoreInteractions(movieListViewImp.mMovieAdapter);
     }
 
     @Test(expected = NullPointerException.class)
@@ -140,15 +127,20 @@ public class MovieListViewImpTest extends BaseRobolectricTestRunner {
         movieListViewImp.onMovieSearch(null, 0);
     }
 
-    @Ignore
     @Test
-    public void testOnMovieSearch_doNothing_withEmptyMovieName() {
-      //  initializeFragment(movieListViewImp);
-
+    public void testOnMovieSearch_doMovieSearch_whenMovieNameIsNotEmpty() {
         movieListViewImp.onMovieSearch("Great movie", 1982);
 
-        verify(movieListPresenter, never()).searchMovies("", 1982);
-        verifyNoMoreInteractions(movieListPresenter);
+        verify(movieListViewImp.mMovieListPresenterImp).searchMovies("Great movie", 1982);
+        verifyNoMoreInteractions(movieListViewImp.mMovieListPresenterImp);
+    }
+
+    @Test
+    public void testOnMovieSearch_doNothing_whenMovieNameIsEmpty() {
+        movieListViewImp.onMovieSearch("", 2002);
+
+        verify(movieListViewImp.mMovieListPresenterImp, never()).searchMovies("", 2002);
+        verifyNoMoreInteractions(movieListViewImp.mMovieListPresenterImp);
     }
 
     private Results<Movies> createMovieResults() {
