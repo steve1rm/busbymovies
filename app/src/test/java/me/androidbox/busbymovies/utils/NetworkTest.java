@@ -4,6 +4,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -30,6 +31,7 @@ public class NetworkTest {
         connectivityProvider = new Network(connectivityManager);
     }
 
+    @Ignore
     @Test(expected = NullPointerException.class)
     public void testNetwork_ThrowNullException_whenNull() {
         connectivityProvider = new Network(null);

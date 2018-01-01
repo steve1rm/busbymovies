@@ -3,6 +3,7 @@ package me.androidbox.busbymovies.support;
 import android.view.View;
 
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
 /**
@@ -14,5 +15,9 @@ public final class Asserts {
 
     public static void viewIsVisible(View view) {
         assertThat(view.getVisibility(), equalTo(View.VISIBLE));
+    }
+
+    public static void viewIsNotVisible(final View view) {
+        assertThat(view.getVisibility(), is(View.INVISIBLE));
     }
 }

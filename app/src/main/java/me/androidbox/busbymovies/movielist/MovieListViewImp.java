@@ -4,7 +4,9 @@ import android.animation.Animator;
 import android.animation.AnimatorInflater;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -13,12 +15,13 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import org.jetbrains.annotations.NotNull;
+import com.google.common.base.Preconditions;
 
 import java.util.Collections;
 
@@ -42,13 +45,18 @@ import timber.log.Timber;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MovieListViewImp extends Fragment implements MovieListViewContract,
-        MovieFavouritePresenterContract.DbOperationsListener, MovieSearchListener {
+public class MovieListViewImp
+        extends
+        Fragment
+        implements
+        MovieListViewContract,
+        MovieFavouritePresenterContract.MovieFavouriteListListener,
+        MovieSearchListener {
     public static final String TAG = MovieListViewImp.class.getSimpleName();
 
-    @Inject MovieListPresenterContract<MovieListViewContract> mMovieListPresenterImp;
-    @Inject
-    MovieFavouritePresenterContract mMovieFavouritePresenterImp;
+    @Inject MovieListPresenterContract mMovieListPresenterImp;
+    @Inject MovieFavouritePresenterContract mMovieFavouritePresenterImp;
+    @Inject MovieAdapter mMovieAdapter;
 
     @BindView(R.id.rvMovieList) RecyclerView mRvMovieList;
     @BindView(R.id.pbMovieList) ContentLoadingProgressBar mPbMovieList;
@@ -58,9 +66,8 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
     @BindView(R.id.swipeContainer) SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.fabSearch) FloatingActionButton mFabSearch;
 
-    private Unbinder mUnbinder;
-    private MovieAdapter mMovieAdapter;
-    private boolean mIsSortFabOpen;
+    @VisibleForTesting Unbinder mUnbinder;
+    @VisibleForTesting boolean mIsSortFabOpen;
 
     public MovieListViewImp() {
         // Required empty public constructor
@@ -69,6 +76,17 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
     /* Factory method */
     public static MovieListViewImp newInstance() {
         return new MovieListViewImp();
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        ((BusbyMoviesMainApplication)getActivity().getApplication())
+                .getMovieListComponent(MovieListViewImp.this)
+                .inject(this);
+
+        mMovieListPresenterImp.attachView(MovieListViewImp.this);
     }
 
     @Override
@@ -81,137 +99,93 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
         setupRecyclerView();
         setupSwipeToRefresh();
 
-        /* Hide the progress bar */
-        hideProgressBar();
-
-        if(mIsSortFabOpen) {
-            mIsSortFabOpen = false;
-        }
+        mMovieListPresenterImp.getPopularMovies();
 
         return view;
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onDestroyView() {
+        mMovieListPresenterImp.closeSortFab();
+        mMovieListPresenterImp.detachView();
 
-        ((BusbyMoviesMainApplication)getActivity().getApplication())
-                .getMovieListComponent()
-                .inject(this);
+        mUnbinder.unbind();
 
-        if(mMovieListPresenterImp != null) {
-            Timber.d("mMovieListPresenterImp != null");
-            mMovieListPresenterImp.attachView(MovieListViewImp.this);
-            getPopularMovies();
+        super.onDestroyView();
+    }
 
-            if(mMovieFavouritePresenterImp != null) {
-                Timber.d("mMovieFavouritePresenterImp != null");
-                mMovieFavouritePresenterImp.getFavouriteMovies(MovieListViewImp.this);
-            }
-        }
-        else {
-            Timber.e("mMovieListPresenterImp == null");
+    /* Close the sort Fab */
+    @Override
+    public void onCloseSortFab() {
+        if(mIsSortFabOpen) {
+            final Animator closePopularFab = AnimatorInflater.loadAnimator(getActivity(), R.animator.close_popular_fab);
+            closePopularFab.setTarget(mFabPopular);
+            closePopularFab.start();
+
+            final Animator closeTopRatedFab = AnimatorInflater.loadAnimator(getActivity(), R.animator.close_toprated_fab);
+            closeTopRatedFab.setTarget(mFabTopRated);
+            closeTopRatedFab.start();
+
+            final Animator openFavourite = AnimatorInflater.loadAnimator(getActivity(), R.animator.close_favourite_fab);
+            openFavourite.setTarget(mFabFavourite);
+            openFavourite.start();
+
+            final Animator openSearch = AnimatorInflater.loadAnimator(getActivity(), R.animator.close_search_fab);
+            openSearch.setTarget(mFabSearch);
+            openSearch.start();
+
+            mIsSortFabOpen = false;
         }
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        Timber.d("onDestroyView");
+    public void onOpenSortFab() {
+        if(!mIsSortFabOpen) {
+            final Animator openPopularFab = AnimatorInflater.loadAnimator(getActivity(), R.animator.open_popular_fab);
+            openPopularFab.setTarget(mFabPopular);
+            openPopularFab.start();
 
-        /* close the fab button if open */
-        if(mIsSortFabOpen) {
-            mIsSortFabOpen = false;
-/*
-            mFabPopular.setVisibility(View.INVISIBLE);
-            mFabTopRated.setVisibility(View.INVISIBLE);
-*/
+            final Animator openTopRatedTab = AnimatorInflater.loadAnimator(getActivity(), R.animator.open_toprated_fab);
+            openTopRatedTab.setTarget(mFabTopRated);
+            openTopRatedTab.start();
+
+            final Animator openFavourite = AnimatorInflater.loadAnimator(getActivity(), R.animator.open_favourite_fab);
+            openFavourite.setTarget(mFabFavourite);
+            openFavourite.start();
+
+            final Animator openSearch = AnimatorInflater.loadAnimator(getActivity(), R.animator.open_search_fab);
+            openSearch.setTarget(mFabSearch);
+            openSearch.start();
+
+            mIsSortFabOpen = true;
         }
-
-        mMovieListPresenterImp.detachView();
-        mUnbinder.unbind();
-    }
-
-    /* Close the sort Fab */
-    private void closeSortFab() {
-        Timber.d("Close the fab");
-
-        final Animator closePopularFab = AnimatorInflater.loadAnimator(getActivity(), R.animator.close_popular_fab);
-        closePopularFab.setTarget(mFabPopular);
-        closePopularFab.start();
-
-        final Animator closeTopRatedFab = AnimatorInflater.loadAnimator(getActivity(), R.animator.close_toprated_fab);
-        closeTopRatedFab.setTarget(mFabTopRated);
-        closeTopRatedFab.start();
-
-        final Animator openFavourite = AnimatorInflater.loadAnimator(getActivity(), R.animator.close_favourite_fab);
-        openFavourite.setTarget(mFabFavourite);
-        openFavourite.start();
-
-        final Animator openSearch = AnimatorInflater.loadAnimator(getActivity(), R.animator.close_search_fab);
-        openSearch.setTarget(mFabSearch);
-        openSearch.start();
-
-        mIsSortFabOpen = false;
-    }
-
-    /* Open the sort Fab */
-    private void openSortFab() {
-        Timber.d("Close the fab");
-
-        final Animator openPopularFab = AnimatorInflater.loadAnimator(getActivity(), R.animator.open_popular_fab);
-        openPopularFab.setTarget(mFabPopular);
-        openPopularFab.start();
-
-        final Animator openTopRatedTab = AnimatorInflater.loadAnimator(getActivity(), R.animator.open_toprated_fab);
-        openTopRatedTab.setTarget(mFabTopRated);
-        openTopRatedTab.start();
-
-        final Animator openFavourite = AnimatorInflater.loadAnimator(getActivity(), R.animator.open_favourite_fab);
-        openFavourite.setTarget(mFabFavourite);
-        openFavourite.start();
-
-        final Animator openSearch = AnimatorInflater.loadAnimator(getActivity(), R.animator.open_search_fab);
-        openSearch.setTarget(mFabSearch);
-        openSearch.start();
-
-        mIsSortFabOpen = true;
     }
 
     @SuppressWarnings("unused")
     @OnClick(R.id.fabSort)
     public void openSort() {
-
-        if(mIsSortFabOpen) {
-            closeSortFab();
-        }
-        else {
-            openSortFab();
-        }
+        mMovieListPresenterImp.openSortFab();
     }
 
     @SuppressWarnings("unused")
     @OnClick(R.id.fabPopular)
     public void getPopular() {
-        Timber.d("getPopular");
-        getPopularMovies();
-        closeSortFab();
+        mMovieListPresenterImp.getPopularMovies();
+        mMovieListPresenterImp.closeSortFab();
     }
 
     @SuppressWarnings("unused")
     @OnClick(R.id.fabTopRated)
     public void getTopRated() {
-        Timber.d("getTopRated");
-        getTopRatedMovies();
-        closeSortFab();
+        mMovieListPresenterImp.getTopRatedMovies();
+        mMovieListPresenterImp.closeSortFab();
     }
 
     @SuppressWarnings("unused")
     @OnClick(R.id.fabFavourite)
     public void getFavourites() {
-        Timber.d("getFavourites");
-        getFavouriteMovies();
-        closeSortFab();
+        mMovieFavouritePresenterImp.getFavouriteMovies(MovieListViewImp.this);
+        mMovieListPresenterImp.closeSortFab();
     }
 
     @SuppressWarnings("unused")
@@ -224,7 +198,7 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
         movieSearchDialog.setTargetFragment(MovieListViewImp.this, 0);
         movieSearchDialog.show(fragmentManager, "MovieSearchDialog");
 
-        closeSortFab();
+        mMovieListPresenterImp.closeSortFab();
     }
 
     private void setupSwipeToRefresh() {
@@ -233,70 +207,37 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_green_light,
                 android.R.color.holo_red_light);
-
+        /* TODO Swipe to refresh should fetch movies related to what is on the search i.e. popular, top rated, searched, or favourites */
         swipeRefreshLayout.setOnRefreshListener(() -> mMovieListPresenterImp.getPopularMovies());
     }
 
     private void setupRecyclerView() {
-
         /* Portrait mode 2 columns as there is less width to display movies
            Landscape mode 3 columns as there is more width to display movies
          */
-        final int columnCount = (getResources().getConfiguration().orientation
-                == Configuration.ORIENTATION_PORTRAIT) ? 2 : 3;
+        final int columnCount = getResources().getConfiguration().orientation
+                == Configuration.ORIENTATION_PORTRAIT ? 2 : 3;
 
         final RecyclerView.LayoutManager gridLayoutManager
                 = new GridLayoutManager(getActivity(), columnCount, LinearLayoutManager.VERTICAL, false);
         mRvMovieList.setLayoutManager(gridLayoutManager);
         mRvMovieList.setHasFixedSize(true);
-        mMovieAdapter = new MovieAdapter(Collections.emptyList());
         mRvMovieList.setAdapter(mMovieAdapter);
     }
 
-    public void getPopularMovies() {
-        /* Display progress indicator */
-        showProgressBar();
-        mMovieListPresenterImp.getPopularMovies();
-    }
-
-    public void getTopRatedMovies() {
-        /* Display progress indicator */
-        showProgressBar();
-        mMovieListPresenterImp.getTopRatedMovies();
-    }
-
-    public void getFavouriteMovies() {
-        showProgressBar();
-        mMovieFavouritePresenterImp.getFavouriteMovies(MovieListViewImp.this);
-    }
-    ///
     @Override
     public void displayPopularMovies(Results<Movies> popularMovies) {
-        /* Load adapter with data to be populated in the recycler view */
-        /* Hide progress indicator */
-        Timber.d("displayPopularMovies Received %d", popularMovies.getResults().size());
-
-        hideProgressBar();
-
         mMovieAdapter.loadAdapter(popularMovies);
         swipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
     public void displayTopRatedMovies(Results<Movies> topRatedMovies) {
-        Timber.d("displayTopRatedMovies: %d", topRatedMovies.getResults().size());
-
-        hideProgressBar();
-
         mMovieAdapter.loadAdapter(topRatedMovies);
     }
 
     @Override
     public void onGetFavouriteMoviesSuccess(Results<Movie> favouriteList) {
-        Timber.d("onGetFavouriteMovieSuccess %d", favouriteList.getResults().size());
-
-        hideProgressBar();
-
         if(favouriteList.getResults().size() > 0) {
             mMovieAdapter.loadAdapter(favouriteList);
         }
@@ -307,134 +248,57 @@ public class MovieListViewImp extends Fragment implements MovieListViewContract,
     }
 
     @Override
+    public void onGetFavouriteMoviesFailure(String errorMessage) {
+        Timber.e("onGetFavouriteMoviesFailure: %s", errorMessage);
+        Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
     public void failedToDisplayPopularMovies(String errorMessage) {
-        Toast.makeText(getActivity(), "Failed to get popular movies\n" + errorMessage, Toast.LENGTH_LONG).show();
-        mPbMovieList.hide();
+        Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_LONG).show();
         swipeRefreshLayout.setRefreshing(false);
 
-        Timber.w("Failed to get popular movies %s", errorMessage);
+        Timber.e("Failed to get popular movies %s", errorMessage);
     }
 
     @Override
     public void failedToDisplayTopRatedMovies(String errorMessage) {
-        Toast.makeText(getActivity(), "Failed to get top rated movies\n" + errorMessage, Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_LONG).show();
         mPbMovieList.hide();
-        Timber.d("Failed to get top rated movies %s", errorMessage);
-    }
-
-/*
-    @Override
-    public void displayFavouriteMovies(List<Favourite> favouriteList) {
-        Timber.d("displayTopRatedMovies: %d", favouriteList.size());
-
-        hideProgressBar();
-
-      //  mMovieAdapter.loadAdapter(favouriteList);
+        Timber.e("Failed to get top rated movies %s", errorMessage);
     }
 
     @Override
-    public void failedDisplayFavouriteMovies(String errorMessage) {
-        Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_LONG).show();
-    }
+    public void onMovieSearch(@NonNull String movieName, final int movieYear) {
+        final String nameOfMovie = Preconditions.checkNotNull(movieName, "Movie name hasn't been entered");
 
-    @Override
-    public void failedFavouriteMovieDelete(String errorMessage) {
-        Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void successFavouriteMovieDelete() {
-        Timber.d("Movie deleted from favourites");
-        Toast.makeText(getActivity(), "Movie favourite movie deleted", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void failedFavouriteMovieInsert(String errorMessage) {
-        Timber.e("failedFavouriteMovieInsert %s", errorMessage);
-        Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void successFavouriteMovieInsert() {
-        Timber.d("successFavouriteMovieInsert");
-        Toast.makeText(getActivity(), "Insert favourite movie", Toast.LENGTH_SHORT).show();
-    }
-*/
-
-    @Override
-    public void onMovieSearch(@NotNull String movieName, int movieYear) {
-        showProgressBar();
-        mMovieListPresenterImp.searchMovies(movieName, movieYear);
+        if(!TextUtils.isEmpty(nameOfMovie)) {
+            mMovieListPresenterImp.searchMovies(nameOfMovie, movieYear);
+        }
     }
 
     @Override
     public void failedToGetSearchMovies(String errorMessage) {
-        Timber.e("failedToGetSearchMovies: %s", errorMessage);
-        hideProgressBar();
+        Timber.w("failedToGetSearchMovies: %s", errorMessage);
+        Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void successToGetSearchMovies(Results<Movies> movieSearch) {
-        Timber.d("successToGetSearchMovies: %d", movieSearch.getResults().size());
-        hideProgressBar();
         mMovieAdapter.loadAdapter(movieSearch);
     }
 
-    private void hideProgressBar() {
+    @Override
+    public void onHideProgressBar() {
         if(mPbMovieList.isShown()) {
             mPbMovieList.hide();
         }
     }
 
-    private void showProgressBar() {
+    @Override
+    public void onShowProgressBar() {
         if(!mPbMovieList.isShown()) {
             mPbMovieList.show();
         }
-    }
-
-
-
-
-
-    @Override
-    public void onGetFavouriteMoviesFailure(String errorMessage) {
-
-    }
-
-    @Override
-    public void onInsertFavouriteSuccess() {
-        Timber.d("onInsertFavouriteSuccess");
-    }
-
-    @Override
-    public void onInsertFavouriteFailure(String errorMessage) {
-    }
-
-    @Override
-    public void onDeleteFavouriteMovieSuccess(int rowDeletedId) {
-    }
-
-    @Override
-    public void onDeleteFavouriteMovieFailure(String errorMessage) {
-    }
-
-    @Override
-    public void onHasMovieFavouriteSuccess(int movieId, boolean isFavourite) {
-
-    }
-
-    @Override
-    public void onHasMovieFavouriteFailure(String errorMessage) {
-
-    }
-
-    @Override
-    public void onGetMovieFavouriteSuccess(Movie favourite) {
-
-    }
-
-    @Override
-    public void onGetMovieFavouriteFailure(String errorMessage) {
-
     }
 }
