@@ -22,8 +22,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieListViewHolder> {
     /* Make this more generic */
     private List<? extends Movies> mMovieList = Collections.emptyList();
 
-    public MovieAdapter(List<? extends Movies> movieList) {
-        mMovieList = new ArrayList<>(movieList);
+    public MovieAdapter(final List<? extends Movies> movieList) {
+        this.mMovieList = new ArrayList<>(movieList);
     }
 
     @Override

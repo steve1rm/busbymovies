@@ -4,15 +4,18 @@ import android.content.Context
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
+import me.androidbox.busbymovies.adapters.MovieAdapter
 import me.androidbox.busbymovies.data.MovieFavouriteModelContract
 import me.androidbox.busbymovies.data.MovieFavouriteModelImp
 import me.androidbox.busbymovies.data.MovieFavouritePresenterImp
 import me.androidbox.busbymovies.data.MovieFavouritePresenterContract
 import me.androidbox.busbymovies.di.scopes.MovieListScope
 import me.androidbox.busbymovies.models.Movie
+import me.androidbox.busbymovies.models.Movies
 import me.androidbox.busbymovies.movielist.*
 import me.androidbox.busbymovies.network.MovieAPIService
 import me.androidbox.busbymovies.utils.MovieSchedulers
+import java.util.*
 
 /**
  * Created by steve on 10/22/17.
@@ -90,6 +93,12 @@ class MovieListModule(private val movieListViewImp: MovieListViewImp) {
                 movieModelFavouriteModelContract,
                 dbOperationsListener,
                 movieFavouriteListListener)
+    }
+
+    @MovieListScope
+    @Provides
+    fun providesMovieAdapter(): MovieAdapter {
+        return MovieAdapter(Collections.emptyList<Movies>())
     }
 }
         

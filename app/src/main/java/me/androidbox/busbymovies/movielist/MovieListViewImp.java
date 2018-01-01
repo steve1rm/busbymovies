@@ -56,6 +56,7 @@ public class MovieListViewImp
 
     @Inject MovieListPresenterContract mMovieListPresenterImp;
     @Inject MovieFavouritePresenterContract mMovieFavouritePresenterImp;
+    @Inject MovieAdapter mMovieAdapter;
 
     @BindView(R.id.rvMovieList) RecyclerView mRvMovieList;
     @BindView(R.id.pbMovieList) ContentLoadingProgressBar mPbMovieList;
@@ -66,7 +67,6 @@ public class MovieListViewImp
     @BindView(R.id.fabSearch) FloatingActionButton mFabSearch;
 
     @VisibleForTesting Unbinder mUnbinder;
-    @VisibleForTesting MovieAdapter mMovieAdapter;
     @VisibleForTesting boolean mIsSortFabOpen;
 
     public MovieListViewImp() {
@@ -215,14 +215,13 @@ public class MovieListViewImp
         /* Portrait mode 2 columns as there is less width to display movies
            Landscape mode 3 columns as there is more width to display movies
          */
-        final int columnCount = (getResources().getConfiguration().orientation
-                == Configuration.ORIENTATION_PORTRAIT) ? 2 : 3;
+        final int columnCount = getResources().getConfiguration().orientation
+                == Configuration.ORIENTATION_PORTRAIT ? 2 : 3;
 
         final RecyclerView.LayoutManager gridLayoutManager
                 = new GridLayoutManager(getActivity(), columnCount, LinearLayoutManager.VERTICAL, false);
         mRvMovieList.setLayoutManager(gridLayoutManager);
         mRvMovieList.setHasFixedSize(true);
-        mMovieAdapter = new MovieAdapter(Collections.emptyList());
         mRvMovieList.setAdapter(mMovieAdapter);
     }
 

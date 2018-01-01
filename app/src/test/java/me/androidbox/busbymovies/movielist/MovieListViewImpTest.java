@@ -1,11 +1,13 @@
 package me.androidbox.busbymovies.movielist;
 
 import android.app.Dialog;
+import android.content.res.Configuration;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.widget.TextView;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.robolectric.shadows.ShadowDialog;
 import org.robolectric.shadows.ShadowToast;
@@ -313,6 +315,19 @@ public class MovieListViewImpTest extends BaseRobolectricTestRunner {
         assertThat(title.getText().toString(), is(ResourceLocator.getString(R.string.movie_search)));
         dialogFragment.dismiss();
         assertThat(dialogFragment.isShowing(), is(false));
+    }
+
+    @Ignore
+    @Test
+    public void testSetupRecyclerView_setColumnCount_landscapeMode() {
+        final Configuration configuration = new Configuration();
+        configuration.orientation = Configuration.ORIENTATION_LANDSCAPE;
+
+        initializeFragment(movieListViewImp);
+        movieListViewImp.onConfigurationChanged(configuration);
+
+        assertThat(movieListViewImp.getResources().getConfiguration().orientation,
+                is(Configuration.ORIENTATION_LANDSCAPE));
     }
 
     private Results<Movie> createFavouriteList() {
