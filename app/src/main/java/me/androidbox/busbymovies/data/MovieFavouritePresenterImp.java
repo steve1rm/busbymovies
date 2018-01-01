@@ -1,7 +1,5 @@
 package me.androidbox.busbymovies.data;
 
-import javax.inject.Inject;
-
 import me.androidbox.busbymovies.models.Movie;
 import me.androidbox.busbymovies.models.Results;
 
@@ -9,7 +7,8 @@ import me.androidbox.busbymovies.models.Results;
  * Created by steve on 3/26/17.
  */
 
-public final class MovieFavouritePresenterImp implements
+public final class MovieFavouritePresenterImp
+        implements
         MovieFavouriteModelContract.DeleteListener,
         MovieFavouriteModelContract.InsertListener,
         MovieFavouriteModelContract.RetrieveListener,
@@ -18,27 +17,26 @@ public final class MovieFavouritePresenterImp implements
         MovieFavouritePresenterContract {
 
     private final MovieFavouriteModelContract mMovieFavouriteModelContract;
+    private final DbOperationsListener mDbOperationsListener;
+    private final MovieFavouriteListListener movieFavouriteListListener;
 
-    private DbOperationsListener mDbOperationsListener = null;
-
-    @Inject
-    public MovieFavouritePresenterImp(final MovieFavouriteModelContract movieFavouriteModelContract) {
+    public MovieFavouritePresenterImp(final MovieFavouriteModelContract movieFavouriteModelContract,
+                                      final DbOperationsListener dbOperationsListener,
+                                      final MovieFavouriteListListener movieFavouriteListListener) {
         this.mMovieFavouriteModelContract = movieFavouriteModelContract;
-
-//        DaggerInjector.getApplicationComponent().inject(MovieFavouritePresenterImp.this);
+        this.mDbOperationsListener = dbOperationsListener;
+        this.movieFavouriteListListener = movieFavouriteListListener;
     }
 
     @Override
     public void getMovieFavourite(int movieId, DbOperationsListener dbOperationsListener) {
-        mDbOperationsListener = dbOperationsListener;
         if(mMovieFavouriteModelContract != null) {
             mMovieFavouriteModelContract.getMovieFavourite(movieId, MovieFavouritePresenterImp.this);
         }
     }
 
     @Override
-    public void getFavouriteMovies(MovieFavouritePresenterContract.DbOperationsListener dbOperationsListener) {
-        mDbOperationsListener = dbOperationsListener;
+    public void getFavouriteMovies(MovieFavouriteListListener movieFavouriteListListener) {
         if(mMovieFavouriteModelContract != null) {
             mMovieFavouriteModelContract.retrieve(MovieFavouritePresenterImp.this);
         }
@@ -46,7 +44,6 @@ public final class MovieFavouritePresenterImp implements
 
     @Override
     public void insertFavouriteMovie(Movie favourite, MovieFavouritePresenterContract.DbOperationsListener dbOperationsListener) {
-        mDbOperationsListener = dbOperationsListener;
         if(mMovieFavouriteModelContract != null) {
             mMovieFavouriteModelContract.insert(favourite, MovieFavouritePresenterImp.this);
         }
@@ -54,7 +51,6 @@ public final class MovieFavouritePresenterImp implements
 
     @Override
     public void deleteFavouriteMovie(int movieId, MovieFavouritePresenterContract.DbOperationsListener dbOperationsListener) {
-        mDbOperationsListener = dbOperationsListener;
         if(mMovieFavouriteModelContract != null) {
             mMovieFavouriteModelContract.delete(movieId, MovieFavouritePresenterImp.this);
         }
@@ -62,7 +58,6 @@ public final class MovieFavouritePresenterImp implements
 
     @Override
     public void hasMovieAsFavourite(int movieId, DbOperationsListener dbOperationsListener) {
-        mDbOperationsListener = dbOperationsListener;
         if(mMovieFavouriteModelContract != null) {
             mMovieFavouriteModelContract.queryMovie(movieId, MovieFavouritePresenterImp.this);
         }
@@ -79,20 +74,6 @@ public final class MovieFavouritePresenterImp implements
     public void onInsertSuccess() {
         if(mDbOperationsListener != null) {
             mDbOperationsListener.onInsertFavouriteSuccess();
-        }
-    }
-
-    @Override
-    public void onRetrieveFailed(String errorMessage) {
-        if(mDbOperationsListener != null) {
-            mDbOperationsListener.onGetFavouriteMoviesFailure(errorMessage);
-        }
-    }
-
-    @Override
-    public void onRetrievedSuccess(Results<Movie> favouriteList) {
-        if(mDbOperationsListener != null) {
-            mDbOperationsListener.onGetFavouriteMoviesSuccess(favouriteList);
         }
     }
 
@@ -127,7 +108,7 @@ public final class MovieFavouritePresenterImp implements
     @Override
     public void onGetMovieFavouriteFailure(String errorMessage) {
         if(mDbOperationsListener != null) {
-            mDbOperationsListener.onGetFavouriteMoviesFailure(errorMessage);
+            mDbOperationsListener.onGetMovieFavouriteFailure(errorMessage);
         }
     }
 
@@ -135,6 +116,20 @@ public final class MovieFavouritePresenterImp implements
     public void onGetMovieFavouriteSuccess(Movie favourite) {
         if(mDbOperationsListener != null) {
             mDbOperationsListener.onGetMovieFavouriteSuccess(favourite);
+        }
+    }
+
+    @Override
+    public void onRetrieveFailed(String errorMessage) {
+        if(movieFavouriteListListener != null) {
+            movieFavouriteListListener.onGetFavouriteMoviesFailure(errorMessage);
+        }
+    }
+
+    @Override
+    public void onRetrievedSuccess(Results<Movie> favouriteList) {
+        if(movieFavouriteListListener != null) {
+            movieFavouriteListListener.onGetFavouriteMoviesSuccess(favouriteList);
         }
     }
 }

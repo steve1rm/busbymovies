@@ -8,11 +8,14 @@ import me.androidbox.busbymovies.models.Results;
  */
 
 public interface MovieListViewContract {
-    void getPopularMovies();
-    void displayPopularMovies(Results<Movies> popularMovies);
-    void displayTopRatedMovies(Results<Movies> topRatedMovies);
-    void failedToDisplayPopularMovies(String errorMessage);
-    void failedToDisplayTopRatedMovies(String errorMessage);
+    void displayPopularMovies(final Results<Movies> popularMovies);
+    void displayTopRatedMovies(final Results<Movies> topRatedMovies);
+    void failedToDisplayPopularMovies(final String errorMessage);
+    void failedToDisplayTopRatedMovies(final String errorMessage);
     void failedToGetSearchMovies(final String errorMessage);
     void successToGetSearchMovies(final Results<Movies> movieSearch);
+    void onHideProgressBar();
+    void onShowProgressBar();
+    void onCloseSortFab();
+    void onOpenSortFab();
 }

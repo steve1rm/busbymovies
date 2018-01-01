@@ -1,8 +1,6 @@
 package me.androidbox.busbymovies.di
 
 import dagger.Component
-import me.androidbox.busbymovies.moviedetails.MovieActorsViewHolder
-import me.androidbox.busbymovies.movielist.MovieListModelImp
 import javax.inject.Singleton
 
 /**

@@ -2,7 +2,6 @@ package di
 
 import dagger.Component
 import me.androidbox.busbymovies.di.BusbyMoviesAppComponent
-import me.androidbox.busbymovies.movielist.MovieListViewImpTest
 import javax.inject.Singleton
 
 /**

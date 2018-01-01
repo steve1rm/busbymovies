@@ -55,6 +55,7 @@ public class MovieDetailModelImpTest {
                 .testAndroidModule(new TestAndroidModule())
                 .build()
                 .inject(MovieDetailModelImpTest.this);
+
         mMovieDetailModelContract = new MovieDetailModelImp(mockMovieAPIService, movieSchedulers);
     }
 

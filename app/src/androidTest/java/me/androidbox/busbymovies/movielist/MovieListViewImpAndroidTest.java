@@ -40,7 +40,7 @@ import static org.mockito.Mockito.when;
  * Created by steve on 11/30/17.
  */
 @RunWith(MockitoJUnitRunner.class)
-public class MovieListViewImpTest {
+public class MovieListViewImpAndroidTest {
     @Inject
     MovieAPIService movieAPIService;
 
@@ -61,7 +61,7 @@ public class MovieListViewImpTest {
                         .getTargetContext()
                         .getApplicationContext();
 
-        androidTestBusbyMoviesApplication.getMovieListComponent().inject(MovieListViewImpTest.this);
+        androidTestBusbyMoviesApplication.getMovieListComponent().inject(MovieListViewImpAndroidTest.this);
     }
 
     @Test

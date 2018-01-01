@@ -1,27 +1,24 @@
 package me.androidbox.busbymovies.movielist;
 
-import android.annotation.SuppressLint;
-import android.support.annotation.NonNull;
-import android.support.annotation.VisibleForTesting;
-import android.support.v4.util.Preconditions;
-
 import javax.inject.Inject;
 
+import me.androidbox.busbymovies.basepresenter.BasePresenterImp;
 import me.androidbox.busbymovies.models.Movies;
 import me.androidbox.busbymovies.models.Results;
-import timber.log.Timber;
 
 /**
  * Created by steve on 2/18/17.
  */
 
-public class MovieListPresenterImp implements
-        MovieListPresenterContract<MovieListViewContract>,
+public final class MovieListPresenterImp
+        extends
+        BasePresenterImp<MovieListViewContract>
+        implements
+        MovieListPresenterContract,
         MovieListModelContract.PopularMovieResultsListener,
         MovieListModelContract.TopRatedMovieResultsListener,
         MovieListModelContract.MovieSearchResultsListener {
 
-    @VisibleForTesting MovieListViewContract mMovieListViewContract;
     private final MovieListModelContract mMovieModelContract;
 
     @Inject
@@ -29,32 +26,24 @@ public class MovieListPresenterImp implements
         this.mMovieModelContract = movieListModelContract;
     }
 
-    /** Running Junit Testing only */
-/*
-    @VisibleForTesting MovieListPresenterImp(MovieListModelContract mMovieModelContract) {
-        this.mMovieModelContract = mMovieModelContract;
-    }
-*/
-
-    /**
-     * Attach the view to the presenter
-     */
-    @SuppressLint("RestrictedApi")
     @Override
-    public void attachView(@NonNull MovieListViewContract view) {
-        mMovieListViewContract = Preconditions.checkNotNull(view);
+    public void openSortFab() {
+        if(isViewAttached()) {
+            getView().onOpenSortFab();
+        }
     }
 
     @Override
-    public void detachView() {
-        Timber.d("detachView");
-        mMovieModelContract.releaseResources();
-        mMovieListViewContract = null;
+    public void closeSortFab() {
+        if(isViewAttached()) {
+            getView().onCloseSortFab();
+        }
     }
 
     @Override
     public void getPopularMovies() {
-        if(mMovieModelContract != null) {
+        if(mMovieModelContract != null && isViewAttached()) {
+            getView().onShowProgressBar();
             mMovieModelContract.getPopularMovies(MovieListPresenterImp.this);
         }
     }
@@ -71,7 +60,10 @@ public class MovieListPresenterImp implements
      */
     @Override
     public void onPopularMovieFailure(String errorMessage) {
-        mMovieListViewContract.failedToDisplayPopularMovies(errorMessage);
+        if(isViewAttached()) {
+            getView().onHideProgressBar();
+            getView().failedToDisplayPopularMovies(errorMessage);
+        }
     }
 
     /**
@@ -79,7 +71,10 @@ public class MovieListPresenterImp implements
      */
     @Override
     public void onPopularMovieSuccess(Results<Movies> popularMovies) {
-        mMovieListViewContract.displayPopularMovies(popularMovies);
+        if(isViewAttached()) {
+            getView().onHideProgressBar();
+            getView().displayPopularMovies(popularMovies);
+        }
     }
 
     /**
@@ -88,7 +83,9 @@ public class MovieListPresenterImp implements
      */
     @Override
     public void onTopRatedMovieFailure(String errorMessage) {
-        mMovieListViewContract.failedToDisplayTopRatedMovies(errorMessage);
+        if(isViewAttached()) {
+            getView().failedToDisplayTopRatedMovies(errorMessage);
+        }
     }
 
     /**
@@ -97,21 +94,36 @@ public class MovieListPresenterImp implements
      */
     @Override
     public void onTopRatedMovieSuccess(Results<Movies> topRatedMovies) {
-        mMovieListViewContract.displayTopRatedMovies(topRatedMovies);
+        if(isViewAttached()) {
+            getView().displayTopRatedMovies(topRatedMovies);
+        }
     }
 
     @Override
     public void onSearchFailure(String errorMessage) {
-        mMovieListViewContract.failedToGetSearchMovies(errorMessage);
+        if(isViewAttached()) {
+            getView().failedToGetSearchMovies(errorMessage);
+        }
     }
 
     @Override
     public void onSearchSuccess(Results<Movies> searchMovies) {
-        mMovieListViewContract.successToGetSearchMovies(searchMovies);
+        if(isViewAttached()) {
+            getView().successToGetSearchMovies(searchMovies);
+        }
     }
 
     @Override
     public void searchMovies(final String movieName, final int movieYear) {
         mMovieModelContract.searchForMovies(movieName, movieYear, MovieListPresenterImp.this);
+    }
+
+    @Override
+    public void detachView() {
+        if(mMovieModelContract != null) {
+            mMovieModelContract.releaseResources();
+        }
+
+        super.detachView();
     }
 }

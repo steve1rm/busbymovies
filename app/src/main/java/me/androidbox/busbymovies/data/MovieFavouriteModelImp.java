@@ -58,6 +58,7 @@ public final class MovieFavouriteModelImp implements MovieFavouriteModelContract
         contentValues.put(MovieEntry.TAGLINE, favourite.getTagline());
         contentValues.put(MovieEntry.TITLE, favourite.getTitle());
         contentValues.put(MovieEntry.VOTE_AVERAGE, favourite.getVote_average());
+        contentValues.put(MovieEntry.VOTE_COUNT, favourite.getVote_count());
 
         if(mContext.get().getContentResolver().insert(MovieEntry.CONTENT_URI, contentValues) != null) {
             Timber.d("Success to insert movie %d into database", favourite.getId());

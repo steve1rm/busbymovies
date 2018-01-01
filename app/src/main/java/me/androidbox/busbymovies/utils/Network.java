@@ -17,7 +17,8 @@ public final class Network implements IConnectivityProvider {
     private @NonNull final ConnectivityManager connectivityManager;
 
     public Network(@NonNull final ConnectivityManager connectivityManager) {
-         this.connectivityManager = Preconditions.checkNotNull(connectivityManager);
+         // this.connectivityManager = Preconditions.checkNotNull(connectivityManager);
+         this.connectivityManager = connectivityManager;
     }
 
     @Override

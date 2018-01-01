@@ -1,6 +1,8 @@
 package me.androidbox.busbymovies.di
 
 import android.app.Application
+import me.androidbox.busbymovies.moviedetails.MovieDetailViewImp
+import me.androidbox.busbymovies.movielist.MovieListViewImp
 import timber.log.Timber
 
 /**
@@ -8,8 +10,6 @@ import timber.log.Timber
  */
 open class BusbyMoviesMainApplication : Application() {
     private lateinit var appComponent: BusbyMoviesAppComponent
-    private lateinit var movieListComponent: MovieListComponent
-    private lateinit var movieDetailComponent: MovieDetailComponent
 
     companion object {
         private lateinit var instance: BusbyMoviesMainApplication
@@ -25,8 +25,7 @@ open class BusbyMoviesMainApplication : Application() {
         Timber.plant(Timber.DebugTree())
 
         appComponent = createAppComponent()
-        movieListComponent = createMovieListComponent()
-        movieDetailComponent = createMovieDetailComponent()
+
     }
 
     open fun createAppComponent(): BusbyMoviesAppComponent {
@@ -36,20 +35,12 @@ open class BusbyMoviesMainApplication : Application() {
                 .build()
     }
 
-    open fun getMovieListComponent(): MovieListComponent {
-        return movieListComponent
+    open fun getMovieListComponent(movieListViewImp: MovieListViewImp): MovieListComponent {
+        return appComponent.add(MovieListModule(movieListViewImp))
     }
 
 
-    fun getMovieDetailComponent(): MovieDetailComponent {
-        return movieDetailComponent
-    }
-
-    private fun createMovieListComponent(): MovieListComponent {
-        return appComponent.add(MovieListModule())
-    }
-
-    private fun createMovieDetailComponent(): MovieDetailComponent {
-        return appComponent.add(MovieDetailModule())
+    fun getMovieDetailComponent(movieDetailViewImp: MovieDetailViewImp): MovieDetailComponent {
+        return appComponent.add(MovieDetailModule(movieDetailViewImp))
     }
 }

@@ -9,6 +9,8 @@ import me.androidbox.busbymovies.data.MovieFavouriteModelImp
 import me.androidbox.busbymovies.data.MovieFavouritePresenterImp
 import me.androidbox.busbymovies.data.MovieFavouritePresenterContract
 import me.androidbox.busbymovies.di.scopes.MovieDetailScope
+import me.androidbox.busbymovies.models.Movie
+import me.androidbox.busbymovies.models.Results
 import me.androidbox.busbymovies.moviedetails.*
 import me.androidbox.busbymovies.network.MovieAPIService
 import me.androidbox.busbymovies.utils.ImageLoader
@@ -18,7 +20,7 @@ import me.androidbox.busbymovies.utils.MovieSchedulers
  * Created by steve on 10/26/17.
  */
 @Module
-class MovieDetailModule {
+class MovieDetailModule(private val movieDetailViewImp: MovieDetailViewImp) {
 
     @MovieDetailScope
     @Provides
@@ -42,9 +44,33 @@ class MovieDetailModule {
 
     @MovieDetailScope
     @Provides
-    fun providesMovieFavouritePresenter(movieModelFavouriteModelContract: MovieFavouriteModelContract)
+    fun providesDbOperationsListener(): MovieFavouritePresenterContract.DbOperationsListener {
+        return movieDetailViewImp
+    }
+
+    @MovieDetailScope
+    @Provides
+    fun providesMovieFavouriteListListener(): MovieFavouritePresenterContract.MovieFavouriteListListener {
+        return object: MovieFavouritePresenterContract.MovieFavouriteListListener{
+            override fun onGetFavouriteMoviesSuccess(favouriteList: Results<Movie>?) {
+            }
+
+            override fun onGetFavouriteMoviesFailure(errorMessage: String?) {
+            }
+        }
+    }
+
+    @MovieDetailScope
+    @Provides
+    fun providesMovieFavouritePresenter(movieModelFavouriteModelContract: MovieFavouriteModelContract,
+                                        dbOperationsListener: MovieFavouritePresenterContract.DbOperationsListener,
+                                        movieFavouriteListListener: MovieFavouritePresenterContract.MovieFavouriteListListener)
             : MovieFavouritePresenterContract {
-        return MovieFavouritePresenterImp(movieModelFavouriteModelContract)
+
+        return MovieFavouritePresenterImp(
+                movieModelFavouriteModelContract,
+                dbOperationsListener,
+                movieFavouriteListListener)
     }
 
     @MovieDetailScope

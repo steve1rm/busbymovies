@@ -37,15 +37,15 @@ class AndroidModule(val application: Application) {
     fun providesSharedPreferences(): SharedPreferences =
             PreferenceManager.getDefaultSharedPreferences(this.context)
 
-    @Singleton
+    @Reusable
     @Provides
     fun providesMovieSchedulers(): MovieSchedulers = MovieSchedulersImp()
 
-    @Singleton
+    @Reusable
     @Provides
     fun providesImageLoader(): ImageLoader = ImageLoaderImp()
 
-    @Singleton
+    @Reusable
     @Provides
     fun providesIConnectivityProvider(context: Context?): IConnectivityProvider {
         val connectivityManager = context?.getSystemService(Context.CONNECTIVITY_SERVICE)
