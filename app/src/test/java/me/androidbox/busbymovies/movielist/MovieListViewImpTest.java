@@ -1,20 +1,28 @@
 package me.androidbox.busbymovies.movielist;
 
+import android.app.Dialog;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.ContentLoadingProgressBar;
+import android.widget.TextView;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.robolectric.shadows.ShadowDialog;
+import org.robolectric.shadows.ShadowToast;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import butterknife.Unbinder;
+import me.androidbox.busbymovies.R;
 import me.androidbox.busbymovies.adapters.MovieAdapter;
 import me.androidbox.busbymovies.data.MovieFavouritePresenterContract;
 import me.androidbox.busbymovies.models.Movie;
 import me.androidbox.busbymovies.models.Movies;
 import me.androidbox.busbymovies.models.Results;
+import me.androidbox.busbymovies.support.ResourceLocator;
+import me.androidbox.busbymovies.support.ViewLocator;
 import support.BaseRobolectricTestRunner;
 
 import static org.hamcrest.Matchers.notNullValue;
@@ -31,14 +39,12 @@ import static org.mockito.Mockito.when;
  */
 public class MovieListViewImpTest extends BaseRobolectricTestRunner {
     private MovieListViewImp movieListViewImp;
+    private final String ERROR_MESSAGE = "Failure message to get movies";
 
     @Before
     public void setup() {
         movieListViewImp = MovieListViewImp.newInstance();
-        movieListViewImp.mMovieListPresenterImp = mock(MovieListPresenterContract.class);
-        movieListViewImp.mMovieFavouritePresenterImp = mock(MovieFavouritePresenterContract.class);
-        movieListViewImp.mPbMovieList = mock(ContentLoadingProgressBar.class);
-        movieListViewImp.mMovieAdapter = mock(MovieAdapter.class);
+        setupMocks();
     }
 
     @Test
@@ -219,6 +225,96 @@ public class MovieListViewImpTest extends BaseRobolectricTestRunner {
         assertThat(movieListViewImp.mIsSortFabOpen, is(true));
     }
 
+    @Test
+    public void testOpenSort_opensSortFab() {
+        movieListViewImp.openSort();
+
+        verify(movieListViewImp.mMovieListPresenterImp).openSortFab();
+        verifyNoMoreInteractions(movieListViewImp.mMovieListPresenterImp);
+    }
+
+    @Test
+    public void testDisplayPopularMovies_loadAdapter() {
+        final Results<Movies> moviesResults = createMovieResults();
+
+        initializeFragment(movieListViewImp);
+        setupMocks();
+
+        movieListViewImp.displayPopularMovies(moviesResults);
+
+        verify(movieListViewImp.mMovieAdapter).loadAdapter(moviesResults);
+    }
+
+    @Test
+    public void testDisplayTopRatedMovies_loadAdapter() {
+        final Results<Movies> moviesResults = createMovieResults();
+
+        movieListViewImp.displayTopRatedMovies(moviesResults);
+
+        verify(movieListViewImp.mMovieAdapter).loadAdapter(moviesResults);
+        verifyNoMoreInteractions(movieListViewImp.mMovieAdapter);
+    }
+
+    @Test
+    public void testFailedToGetSearchMovies_showErrorMessageInToast() {
+        movieListViewImp.failedToGetSearchMovies(ERROR_MESSAGE);
+
+        assertThat(ShadowToast.getTextOfLatestToast(), is(ERROR_MESSAGE));
+    }
+
+    @Test
+    public void testFailedToDisplayTopRatedMovies_showErrorMessageInToast() {
+        movieListViewImp.failedToDisplayTopRatedMovies(ERROR_MESSAGE);
+
+        assertThat(ShadowToast.getTextOfLatestToast(), is(ERROR_MESSAGE));
+        verify(movieListViewImp.mPbMovieList).hide();
+        verifyNoMoreInteractions(movieListViewImp.mPbMovieList);
+    }
+
+    @Test
+    public void testFailedToDisplayPopularMovies_showErrorMessageInToast() {
+        initializeFragment(movieListViewImp);
+
+        movieListViewImp.failedToDisplayPopularMovies(ERROR_MESSAGE);
+
+        assertThat(ShadowToast.getTextOfLatestToast(), is(ERROR_MESSAGE));
+    }
+
+    @Test
+    public void testOnGetFavouriteMoviesFailure_showErrorMessageInToast() {
+        movieListViewImp.onGetFavouriteMoviesFailure(ERROR_MESSAGE);
+
+        assertThat(ShadowToast.getTextOfLatestToast(), is(ERROR_MESSAGE));
+    }
+
+    @Test
+    public void testSearchMovie_displayDialogFragment() {
+        initializeFragment(movieListViewImp);
+        setupMocks();
+
+        movieListViewImp.searchMovie();
+
+        verify(movieListViewImp.mMovieListPresenterImp).closeSortFab();
+        verifyNoMoreInteractions(movieListViewImp.mMovieListPresenterImp);
+    }
+
+    @Test
+    public void testSearchMovie_dialogDisplayed() {
+        initializeFragment(movieListViewImp);
+        final FloatingActionButton searchFab = ViewLocator.getFab(movieListViewImp.getActivity(), R.id.fabSearch);
+
+        searchFab.performClick();
+
+        final Dialog dialogFragment = ShadowDialog.getLatestDialog();
+
+        assertThat(dialogFragment, is(notNullValue()));
+        assertThat(dialogFragment.isShowing(), is(true));
+        final TextView title = dialogFragment.findViewById(R.id.tvTitle);
+        assertThat(title.getText().toString(), is(ResourceLocator.getString(R.string.movie_search)));
+        dialogFragment.dismiss();
+        assertThat(dialogFragment.isShowing(), is(false));
+    }
+
     private Results<Movie> createFavouriteList() {
         final List<Movie> movies = new ArrayList<>();
 
@@ -257,6 +353,10 @@ public class MovieListViewImpTest extends BaseRobolectricTestRunner {
         return new Results<>(movies);
     }
 
-
-    
+    private void setupMocks() {
+        movieListViewImp.mMovieListPresenterImp = mock(MovieListPresenterContract.class);
+        movieListViewImp.mMovieFavouritePresenterImp = mock(MovieFavouritePresenterContract.class);
+        movieListViewImp.mPbMovieList = mock(ContentLoadingProgressBar.class);
+        movieListViewImp.mMovieAdapter = mock(MovieAdapter.class);
+    }
 }

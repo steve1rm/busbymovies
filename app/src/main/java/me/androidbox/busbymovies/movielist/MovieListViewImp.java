@@ -23,8 +23,6 @@ import android.widget.Toast;
 
 import com.google.common.base.Preconditions;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.Collections;
 
 import javax.inject.Inject;
@@ -230,16 +228,12 @@ public class MovieListViewImp
 
     @Override
     public void displayPopularMovies(Results<Movies> popularMovies) {
-        /* Load adapter with data to be populated in the recycler view */
-        /* Hide progress indicator */
-        Timber.d("displayPopularMovies Received %d", popularMovies.getResults().size());
         mMovieAdapter.loadAdapter(popularMovies);
         swipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
     public void displayTopRatedMovies(Results<Movies> topRatedMovies) {
-        Timber.d("displayTopRatedMovies: %d", topRatedMovies.getResults().size());
         mMovieAdapter.loadAdapter(topRatedMovies);
     }
 
@@ -257,22 +251,22 @@ public class MovieListViewImp
     @Override
     public void onGetFavouriteMoviesFailure(String errorMessage) {
         Timber.e("onGetFavouriteMoviesFailure: %s", errorMessage);
-        Toast.makeText(getActivity(), "Failed to get favourite movies", Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void failedToDisplayPopularMovies(String errorMessage) {
-        Toast.makeText(getActivity(), "Failed to get popular movies\n" + errorMessage, Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_LONG).show();
         swipeRefreshLayout.setRefreshing(false);
 
-        Timber.w("Failed to get popular movies %s", errorMessage);
+        Timber.e("Failed to get popular movies %s", errorMessage);
     }
 
     @Override
     public void failedToDisplayTopRatedMovies(String errorMessage) {
-        Toast.makeText(getActivity(), "Failed to get top rated movies\n" + errorMessage, Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_LONG).show();
         mPbMovieList.hide();
-        Timber.d("Failed to get top rated movies %s", errorMessage);
+        Timber.e("Failed to get top rated movies %s", errorMessage);
     }
 
     @Override
@@ -287,7 +281,7 @@ public class MovieListViewImp
     @Override
     public void failedToGetSearchMovies(String errorMessage) {
         Timber.w("failedToGetSearchMovies: %s", errorMessage);
-        Toast.makeText(getActivity(), "Failed to find any movies", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_SHORT).show();
     }
 
     @Override

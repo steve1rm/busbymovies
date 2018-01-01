@@ -1,6 +1,7 @@
 package me.androidbox.busbymovies.moviesearch;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.text.TextUtils;
@@ -15,8 +16,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import me.androidbox.busbymovies.R;
-
-import static java.lang.Integer.valueOf;
 
 /**
  * Created by steve on 9/30/17.
@@ -37,7 +36,7 @@ public class MovieSearchDialog extends DialogFragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.movie_search, container);
 
         ButterKnife.bind(MovieSearchDialog.this, view);
@@ -46,7 +45,7 @@ public class MovieSearchDialog extends DialogFragment {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         getDialog().getWindow()
