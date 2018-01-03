@@ -90,6 +90,13 @@ public class MovieListViewImp
     }
 
     @Override
+    public void onDestroy() {
+        mMovieListPresenterImp.detachView();
+
+        super.onDestroy();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.movie_list_view, container, false);

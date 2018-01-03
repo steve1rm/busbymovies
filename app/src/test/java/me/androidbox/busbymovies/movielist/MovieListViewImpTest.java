@@ -317,7 +317,6 @@ public class MovieListViewImpTest extends BaseRobolectricTestRunner {
         assertThat(dialogFragment.isShowing(), is(false));
     }
 
-    @Ignore
     @Test
     public void testSetupRecyclerView_setColumnCount_landscapeMode() {
         final Configuration configuration = new Configuration();
