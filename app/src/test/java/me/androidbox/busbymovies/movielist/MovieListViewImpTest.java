@@ -1,7 +1,6 @@
 package me.androidbox.busbymovies.movielist;
 
 import android.app.Dialog;
-import android.content.res.Configuration;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.widget.TextView;
@@ -9,7 +8,6 @@ import android.widget.TextView;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.robolectric.Robolectric;
 import org.robolectric.shadows.ShadowDialog;
 import org.robolectric.shadows.ShadowToast;
 
@@ -317,19 +315,16 @@ public class MovieListViewImpTest extends BaseRobolectricTestRunner {
         dialogFragment.dismiss();
         assertThat(dialogFragment.isShowing(), is(false));
     }
-
-    @Ignore
+    
     @Test
-    public void testSetupRecyclerView_setColumnCount_landscapeMode() {
-        final Configuration configuration = new Configuration();
-        configuration.orientation = Configuration.ORIENTATION_LANDSCAPE;
-
+    public void testOnDestroy_detachView() {
         initializeFragment(movieListViewImp);
-        movieListViewImp.onConfigurationChanged(configuration);
-        movieListViewImp.getActivity().recreate();
+        setupMocks();
 
-        assertThat(movieListViewImp.getResources().getConfiguration().orientation,
-                is(Configuration.ORIENTATION_LANDSCAPE));
+        movieListViewImp.onDestroy();
+
+        verify(movieListViewImp.mMovieListPresenterImp).detachView();
+        verifyNoMoreInteractions(movieListViewImp.mMovieListPresenterImp);
     }
 
     private Results<Movie> createFavouriteList() {
