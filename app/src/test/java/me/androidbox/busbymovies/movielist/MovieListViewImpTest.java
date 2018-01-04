@@ -315,10 +315,11 @@ public class MovieListViewImpTest extends BaseRobolectricTestRunner {
         dialogFragment.dismiss();
         assertThat(dialogFragment.isShowing(), is(false));
     }
-    
+
     @Test
     public void testOnDestroy_detachView() {
         initializeFragment(movieListViewImp);
+        /* Re-assign mocks as when the fragment started real mocks were assigned */
         setupMocks();
 
         movieListViewImp.onDestroy();
