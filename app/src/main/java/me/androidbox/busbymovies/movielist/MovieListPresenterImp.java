@@ -1,6 +1,6 @@
 package me.androidbox.busbymovies.movielist;
 
-import javax.inject.Inject;
+import android.support.annotation.NonNull;
 
 import me.androidbox.busbymovies.basepresenter.BasePresenterImp;
 import me.androidbox.busbymovies.models.Movies;
@@ -21,8 +21,7 @@ public final class MovieListPresenterImp
 
     private final MovieListModelContract mMovieModelContract;
 
-    @Inject
-    public MovieListPresenterImp(final MovieListModelContract movieListModelContract) {
+    public MovieListPresenterImp(@NonNull final MovieListModelContract movieListModelContract) {
         this.mMovieModelContract = movieListModelContract;
     }
 
@@ -50,7 +49,8 @@ public final class MovieListPresenterImp
 
     @Override
     public void getTopRatedMovies() {
-        if(mMovieModelContract != null) {
+        if(mMovieModelContract != null && isViewAttached()) {
+            getView().onShowProgressBar();
             mMovieModelContract.getTopRatedMovies(MovieListPresenterImp.this);
         }
     }
@@ -84,6 +84,7 @@ public final class MovieListPresenterImp
     @Override
     public void onTopRatedMovieFailure(String errorMessage) {
         if(isViewAttached()) {
+            getView().onHideProgressBar();
             getView().failedToDisplayTopRatedMovies(errorMessage);
         }
     }
@@ -95,6 +96,7 @@ public final class MovieListPresenterImp
     @Override
     public void onTopRatedMovieSuccess(Results<Movies> topRatedMovies) {
         if(isViewAttached()) {
+            getView().onHideProgressBar();
             getView().displayTopRatedMovies(topRatedMovies);
         }
     }

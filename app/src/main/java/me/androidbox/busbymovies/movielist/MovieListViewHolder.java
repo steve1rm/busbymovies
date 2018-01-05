@@ -47,7 +47,6 @@ public class MovieListViewHolder
         ButterKnife.bind(MovieListViewHolder.this, itemView);
         mContext = new WeakReference<>(context);
         mMovieAdapter = movieAdapter;
-    //    DaggerInjector.getApplicationComponent().inject(MovieListViewHolder.this);
     }
 
     public void bindViewData(String tagline, String posterPath) {

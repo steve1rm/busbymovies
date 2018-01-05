@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorInflater;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.VisibleForTesting;
@@ -87,6 +88,13 @@ public class MovieListViewImp
                 .inject(this);
 
         mMovieListPresenterImp.attachView(MovieListViewImp.this);
+    }
+
+    @Override
+    public void onDestroy() {
+        mMovieListPresenterImp.detachView();
+
+        super.onDestroy();
     }
 
     @Override
@@ -215,8 +223,8 @@ public class MovieListViewImp
         /* Portrait mode 2 columns as there is less width to display movies
            Landscape mode 3 columns as there is more width to display movies
          */
-        final int columnCount = getResources().getConfiguration().orientation
-                == Configuration.ORIENTATION_PORTRAIT ? 2 : 3;
+        @IdRes
+        final int columnCount = getResources().getInteger(R.integer.recyclerview_column_count);
 
         final RecyclerView.LayoutManager gridLayoutManager
                 = new GridLayoutManager(getActivity(), columnCount, LinearLayoutManager.VERTICAL, false);
