@@ -290,6 +290,9 @@ public class MovieListPresenterImpTest {
                 = new MovieListPresenterImp(null);
 
         movieListPresenterContract.detachView();
+
+        verify(mockMovieListModelContract, never()).releaseResources();
+        verifyNoMoreInteractions(mockMovieListModelContract);
     }
 
     private Results<Movies> createMovies() {
