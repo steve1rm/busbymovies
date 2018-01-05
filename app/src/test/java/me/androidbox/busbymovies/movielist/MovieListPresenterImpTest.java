@@ -1,11 +1,13 @@
 package me.androidbox.busbymovies.movielist;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import me.androidbox.busbymovies.models.Movies;
 import me.androidbox.busbymovies.models.Results;
@@ -17,7 +19,6 @@ import static org.hamcrest.core.IsNull.nullValue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -35,6 +36,7 @@ public class MovieListPresenterImpTest {
     private MovieListViewContract mockMovieListViewContract;
 
     private MovieListPresenterImp movieListPresenterContract;
+    private final String ERROR_MESSAGE = "error_message";
 
     @Before
     public void setUp() throws Exception {
@@ -74,6 +76,15 @@ public class MovieListPresenterImpTest {
     }
 
     @Test
+    public void testOnSearchSuccess_doNothing_whenViewAttached() {
+        movieListPresenterContract.detachView();
+
+        movieListPresenterContract.onSearchSuccess(createMovies());
+
+        assertThat(movieListPresenterContract.getView(), is(nullValue()));
+    }
+
+    @Test
     public void testSearchMovieOnFailureWhenFailedToGetMovies() {
         final String ERROR_MESSAGE = "error_message";
 
@@ -81,6 +92,16 @@ public class MovieListPresenterImpTest {
 
         verify(mockMovieListViewContract).failedToGetSearchMovies(ERROR_MESSAGE);
         verifyNoMoreInteractions(mockMovieListModelContract);
+    }
+
+    @Test
+    public void testSearchMovieOnFailure_doNothing_whenViewDetached() {
+        final String ERROR_MESSAGE = "error_message";
+        movieListPresenterContract.detachView();
+
+        movieListPresenterContract.onSearchFailure(ERROR_MESSAGE);
+
+        assertThat(movieListPresenterContract.getView(), is(nullValue()));
     }
 
     @Test
@@ -131,15 +152,13 @@ public class MovieListPresenterImpTest {
 
     @Test
     public void testGetPopularMovies_doNothing_whenViewIsNotDetached() {
-        MovieListModelContract.PopularMovieResultsListener listener
-                = mock(MovieListModelContract.PopularMovieResultsListener.class);
         movieListPresenterContract.detachView();
 
         movieListPresenterContract.getPopularMovies();
 
         assertThat(movieListPresenterContract.getView(), is(nullValue()));
         verify(mockMovieListModelContract).releaseResources();
-        verify(mockMovieListModelContract, never()).getPopularMovies(listener);
+        verify(mockMovieListModelContract, never()).getPopularMovies(movieListPresenterContract);
         verifyNoMoreInteractions(mockMovieListModelContract);
     }
 
@@ -154,5 +173,137 @@ public class MovieListPresenterImpTest {
         verifyNoMoreInteractions(mockMovieListModelContract);
     }
 
+    @Test
+    public void testGetTopRatedMovies_doNothing_whenMovieModelContract_isNullValue() {
+        final MovieListPresenterContract movieListPresenterContract =
+                new MovieListPresenterImp(null);
 
+        movieListPresenterContract.attachView(mockMovieListViewContract);
+        movieListPresenterContract.getTopRatedMovies();
+
+        verify(movieListPresenterContract.getView(), never()).onShowProgressBar();
+        verifyNoMoreInteractions(movieListPresenterContract.getView());
+    }
+
+    @Test
+    public void testGetTopRatedMovies_doNothing_whenViewIsNotDetached() {
+        movieListPresenterContract.detachView();
+
+        movieListPresenterContract.getTopRatedMovies();
+
+        assertThat(movieListPresenterContract.getView(), is(nullValue()));
+        verify(mockMovieListModelContract).releaseResources();
+        verify(mockMovieListModelContract, never()).getTopRatedMovies(movieListPresenterContract);
+        verifyNoMoreInteractions(mockMovieListModelContract);
+    }
+
+    @Test
+    public void testGetTopRatedMovies_getTopRatedMovies() {
+        movieListPresenterContract.getTopRatedMovies();
+
+        assertThat(movieListPresenterContract.getView(), is(notNullValue()));
+        verify(movieListPresenterContract.getView()).onShowProgressBar();
+        verifyNoMoreInteractions(movieListPresenterContract.getView());
+        verify(mockMovieListModelContract).getTopRatedMovies(movieListPresenterContract);
+        verifyNoMoreInteractions(mockMovieListModelContract);
+    }
+
+    @Test
+    public void testOnPopularMovieFailure_doNothing_ViewNotAttached() {
+        movieListPresenterContract.detachView();
+
+        movieListPresenterContract.onPopularMovieFailure(ERROR_MESSAGE);
+
+        assertThat(movieListPresenterContract.getView(), is(nullValue()));
+    }
+
+    @Test
+    public void testOnPopularMovieFailure_whenIsViewAttached() {
+        movieListPresenterContract.onPopularMovieFailure(ERROR_MESSAGE);
+
+        verify(movieListPresenterContract.getView()).onHideProgressBar();
+        verify(movieListPresenterContract.getView()).failedToDisplayPopularMovies(ERROR_MESSAGE);
+        verifyNoMoreInteractions(movieListPresenterContract.getView());
+    }
+
+    @Test
+    public void testOnTopRatedMovieFailure_doNothing_ViewNotAttached() {
+        movieListPresenterContract.detachView();
+
+        movieListPresenterContract.onTopRatedMovieFailure(ERROR_MESSAGE);
+
+        assertThat(movieListPresenterContract.getView(), is(nullValue()));
+    }
+
+    @Test
+    public void testOnTopRatedMovieFailure_whenIsViewAttached() {
+        movieListPresenterContract.onTopRatedMovieFailure(ERROR_MESSAGE);
+
+        verify(movieListPresenterContract.getView()).onHideProgressBar();
+        verify(movieListPresenterContract.getView()).failedToDisplayTopRatedMovies(ERROR_MESSAGE);
+        verifyNoMoreInteractions(movieListPresenterContract.getView());
+    }
+
+    @Test
+    public void testOnPopularMovieSuccess_doNothing_whenViewDetached() {
+        movieListPresenterContract.detachView();
+
+        movieListPresenterContract.onPopularMovieSuccess(createMovies());
+
+        assertThat(movieListPresenterContract.getView(), is(nullValue()));
+    }
+
+    @Test
+    public void testOnPopularMovieSuccess_whenViewAttached() {
+        final Results<Movies> moviesResults = createMovies();
+
+        movieListPresenterContract.onPopularMovieSuccess(moviesResults);
+
+        verify(movieListPresenterContract.getView()).onHideProgressBar();
+        verify(movieListPresenterContract.getView()).displayPopularMovies(moviesResults);
+        verifyNoMoreInteractions(movieListPresenterContract.getView());
+    }
+
+    @Test
+    public void testOnTopRatedMovieSuccess_doNothing_whenViewDetached() {
+        movieListPresenterContract.detachView();
+
+        movieListPresenterContract.onTopRatedMovieSuccess(createMovies());
+
+        assertThat(movieListPresenterContract.getView(), is(nullValue()));
+    }
+
+    @Test
+    public void testOnTopRatedMovieSuccess_whenViewAttached() {
+        final Results<Movies> moviesResults = createMovies();
+
+        movieListPresenterContract.onTopRatedMovieSuccess(moviesResults);
+
+        verify(movieListPresenterContract.getView()).onHideProgressBar();
+        verify(movieListPresenterContract.getView()).displayTopRatedMovies(moviesResults);
+        verifyNoMoreInteractions(movieListPresenterContract.getView());
+    }
+
+    @Test
+    public void testDetachView_doNothing_whenMovieModelContract() {
+        final MovieListPresenterContract movieListPresenterContract
+                = new MovieListPresenterImp(null);
+
+        movieListPresenterContract.detachView();
+    }
+
+    private Results<Movies> createMovies() {
+        final List<Movies> moviesList = new ArrayList<>();
+        moviesList.add(new Movies(
+                1234,
+                "poster_path",
+                "overview",
+                "release_date",
+                "title",
+                "backdrop_path",
+                3.4F,
+                72F));
+
+        return new Results<>(moviesList);
+    }
 }
