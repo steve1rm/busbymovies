@@ -31,12 +31,12 @@ public class MovieTrailerViewHolder extends RecyclerView.ViewHolder implements V
 
 //    private StartMovieTrailerListener mMovieTrailerListener;
     private MovieTrailerAdapter mMovieTrailerAdapter;
-    private WeakReference<Context> mContext;
+
     public MovieTrailerViewHolder(View itemView, MovieTrailerAdapter movieTrailerAdapter, StartMovieTrailerListener movieTrailerListener, Context context) {
         super(itemView);
 
         ButterKnife.bind(MovieTrailerViewHolder.this, itemView);
-        mContext = new WeakReference<>(context);
+
         mIvPlayTrailerItem.setOnClickListener(MovieTrailerViewHolder.this);
         mMovieTrailerAdapter = movieTrailerAdapter;
     }

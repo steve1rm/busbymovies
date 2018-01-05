@@ -22,22 +22,21 @@ public class MovieReviewViewHolder extends RecyclerView.ViewHolder {
     @NonNull
     private final Context context;
 
-    public MovieReviewViewHolder(View itemView) {
+    public MovieReviewViewHolder(final View itemView) {
         super(itemView);
 
         ButterKnife.bind(MovieReviewViewHolder.this, itemView);
         context = itemView.getContext();
     }
 
-    public void populateReviewData(Review review) {
-        mTvContent.setText(review.getContent());
-
+    public void populateReviewData(@NonNull final Review review) {
         final String avatar = appendAvatarWithAuthorsInitial(review.getAuthor());
 
         final int drawableResourceId = context.getResources()
                 .getIdentifier(avatar, "drawable", context.getPackageName());
 
         mInitialReviewer.setImageResource(drawableResourceId);
+        mTvContent.setText(review.getContent());
     }
 
     private String appendAvatarWithAuthorsInitial(@NonNull final String author) {

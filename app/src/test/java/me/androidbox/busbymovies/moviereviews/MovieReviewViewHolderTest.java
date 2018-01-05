@@ -60,7 +60,7 @@ public class MovieReviewViewHolderTest extends BaseRobolectricTestRunner {
         assertThat(movieReviewViewHolder.mTvContent.getText().toString(),
                 is(review.getContent()));
     }
-    
+
     private Review createReview() {
         return new Review(
                 "id number",
