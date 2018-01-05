@@ -42,12 +42,30 @@ public class MovieReviewViewHolderTest extends BaseRobolectricTestRunner {
 
     @Test
     public void testPopulateReviewData_setImageViewWithDrawableOfAuthorsInitial() {
-        final Review review = new Review("id number", "steve", "content", "url");
+        final Review review = createReview();
         final Drawable drawable = context.getResources().getDrawable(R.drawable.avatar_s, null);
 
         movieReviewViewHolder.populateReviewData(review);
 
         final ShadowDrawable shadowDrawable = Shadows.shadowOf(movieReviewViewHolder.mInitialReviewer.getDrawable());
         assertThat(shadowDrawable, is(drawable));
+    }
+
+    @Test
+    public void testPopulateReviewData_setTextViewWithContent() {
+        final Review review = createReview();
+
+        movieReviewViewHolder.populateReviewData(review);
+
+        assertThat(movieReviewViewHolder.mTvContent.getText().toString(),
+                is(review.getContent()));
+    }
+    
+    private Review createReview() {
+        return new Review(
+                "id number",
+                "steve",
+                "content",
+                "url");
     }
 }
