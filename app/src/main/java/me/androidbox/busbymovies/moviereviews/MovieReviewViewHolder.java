@@ -1,6 +1,7 @@
 package me.androidbox.busbymovies.moviereviews;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -18,28 +19,30 @@ import me.androidbox.busbymovies.models.Review;
 public class MovieReviewViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.tvContent) TextView mTvContent;
     @BindView(R.id.tvInitialReviewer) ImageView mInitialReviewer;
-    private Context context;
+    @NonNull
+    private final Context context;
 
-    public MovieReviewViewHolder(View itemView) {
+    public MovieReviewViewHolder(final View itemView) {
         super(itemView);
 
-        context = itemView.getContext();
         ButterKnife.bind(MovieReviewViewHolder.this, itemView);
+        context = itemView.getContext();
     }
 
-    public void populateReviewData(Review review) {
-        mTvContent.setText(review.getContent());
+    public void populateReviewData(@NonNull final Review review) {
+        final String avatar = appendAvatarWithAuthorsInitial(review.getAuthor());
 
-        String avatar = appendAvatarWithAuthorsInitial(review.getAuthor());
+        final int drawableResourceId = context.getResources()
+                .getIdentifier(avatar, "drawable", context.getPackageName());
 
-        final int drawableResourceId = context.getResources().getIdentifier(avatar, "drawable", context.getPackageName());
         mInitialReviewer.setImageResource(drawableResourceId);
+        mTvContent.setText(review.getContent());
     }
 
-    private String appendAvatarWithAuthorsInitial(final String author) {
+    private String appendAvatarWithAuthorsInitial(@NonNull final String author) {
         final String initial = String.valueOf(author.charAt(0));
+        final String avatar = "avatar_";
 
-        String avatar = "avatar_";
         return avatar + initial.toLowerCase();
     }
 }

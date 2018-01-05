@@ -10,8 +10,6 @@ import android.widget.ImageView;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.youtube.player.YouTubeStandalonePlayer;
 
-import java.lang.ref.WeakReference;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.androidbox.busbymovies.R;
@@ -29,14 +27,13 @@ public class MovieTrailerViewHolder extends RecyclerView.ViewHolder implements V
     @BindView(R.id.youtubeThumbnail) ImageView mYoutubeThumbnail;
     @BindView(R.id.ivPlayTrailerItem) ImageView mIvPlayTrailerItem;
 
-//    private StartMovieTrailerListener mMovieTrailerListener;
     private MovieTrailerAdapter mMovieTrailerAdapter;
-    private WeakReference<Context> mContext;
+
     public MovieTrailerViewHolder(View itemView, MovieTrailerAdapter movieTrailerAdapter, StartMovieTrailerListener movieTrailerListener, Context context) {
         super(itemView);
 
         ButterKnife.bind(MovieTrailerViewHolder.this, itemView);
-        mContext = new WeakReference<>(context);
+
         mIvPlayTrailerItem.setOnClickListener(MovieTrailerViewHolder.this);
         mMovieTrailerAdapter = movieTrailerAdapter;
     }
