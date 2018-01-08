@@ -1,7 +1,7 @@
 package me.androidbox.busbymovies.data;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import me.androidbox.busbymovies.data.MovieFavouriteModelContract.GetMovieFavourite;
@@ -18,7 +18,7 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
-public class MovieFavouritePresenterImpTest {
+class MovieFavouritePresenterImpTest {
     private MovieFavouriteModelContract movieFavouriteModelContract;
     private MovieFavouritePresenterContract.DbOperationsListener dbOperationsListener;
     private MovieFavouriteListListener movieFavouriteListListener;
@@ -26,8 +26,8 @@ public class MovieFavouritePresenterImpTest {
 
     private final int MOVIE_ID = 12345;
 
-    @Before
-    public void setup() {
+    @BeforeEach
+    void setup() {
         setupMocks();
         movieFavouritePresenterContract = new MovieFavouritePresenterImp(
                 movieFavouriteModelContract,
@@ -36,12 +36,12 @@ public class MovieFavouritePresenterImpTest {
     }
 
     @Test
-    public void testMovieFavouritePresenter_shouldNonNullValue() {
+    void testMovieFavouritePresenter_shouldNonNullValue() {
         assertThat(movieFavouritePresenterContract, is(notNullValue()));
     }
 
     @Test
-    public void testGetMovieFavourite_doNothing_whenMovieFavouriteModelContract_isNullValue() {
+    void testGetMovieFavourite_doNothing_whenMovieFavouriteModelContract_isNullValue() {
         final GetMovieFavourite getMovieFavourite = mock(GetMovieFavourite.class);
         final MovieFavouritePresenterContract movieFavouritePresenterContract = createPresenterWithNullModel();
 
@@ -52,7 +52,7 @@ public class MovieFavouritePresenterImpTest {
     }
 
     @Test
-    public void testGetMovieFavourite_getMovieFavourite() {
+    void testGetMovieFavourite_getMovieFavourite() {
         movieFavouritePresenterContract.getMovieFavourite(MOVIE_ID);
 
         verify(movieFavouriteModelContract)
@@ -61,7 +61,7 @@ public class MovieFavouritePresenterImpTest {
     }
 
     @Test
-    public void testGetFavouriteMovies_doNothing_whenMovieFavouriteModelContract_isNullValue() {
+    void testGetFavouriteMovies_doNothing_whenMovieFavouriteModelContract_isNullValue() {
         final RetrieveListener retrieveListener = mock(RetrieveListener.class);
         final MovieFavouritePresenterContract movieFavouritePresenterContract = createPresenterWithNullModel();
 
@@ -73,7 +73,7 @@ public class MovieFavouritePresenterImpTest {
     }
 
     @Test
-    public void testGetFavouriteMovies_retrieve() {
+    void testGetFavouriteMovies_retrieve() {
         movieFavouritePresenterContract.getFavouriteMovies();
 
         verify(movieFavouriteModelContract)
@@ -82,7 +82,7 @@ public class MovieFavouritePresenterImpTest {
     }
 
     @Test
-    public void testInsertFavouriteMovie_insertsMovie() {
+    void testInsertFavouriteMovie_insertsMovie() {
         final Movie favourite = new Movie(1234, "poster_path", "overview", "release_date", "title", "backdrop_path", 4.3F, 7.2F);
 
         movieFavouritePresenterContract.insertFavouriteMovie(favourite);
