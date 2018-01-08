@@ -20,7 +20,7 @@ Shows all the movies that are considered the most popular and top rated
 * [x] RxJava - reactive programming for downloading the content from the service 
 * [x] OkHttp3 - Logging interceptor, caching 120 seconds to avoid requesting from the server, offline cache enabled for 7 days and will use this if not connected to the internet
 * [x] Palette - Creating dynamic vibrant colors based on the image poster
-* [x] mockito - mocking classes for running tests using junit4 running on JVM
+* [x] mockito - mocking classes for running tests using junit4 and the newer junit5 running on JVM
 * [x] espresso - running instrumentation UI tests
 * [x] blurkit - creating a blur effect
 * [x] chrome custom tabs - opening the movie home page
