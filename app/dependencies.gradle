@@ -64,6 +64,10 @@ def UnitTesting = dependencyGroup {
     testImplementation 'org.robolectric:robolectric:3.6.1'
     testImplementation 'org.robolectric:shadows-support-v4:3.4-rc2'
     kaptTest 'com.google.dagger:dagger-compiler:' + daggerVersion
+
+    testImplementation junit5.unitTests()
+    testImplementation junit5.parameterized()
+    testCompileOnly junit5.unitTestsRuntime()
 }
 
 def network = dependencyGroup {

@@ -1,11 +1,11 @@
 package me.androidbox.busbymovies.data;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
 
 import me.androidbox.busbymovies.data.MovieFavouriteModelContract.GetMovieFavourite;
+import me.androidbox.busbymovies.data.MovieFavouriteModelContract.InsertListener;
 import me.androidbox.busbymovies.data.MovieFavouriteModelContract.RetrieveListener;
 import me.androidbox.busbymovies.data.MovieFavouritePresenterContract.MovieFavouriteListListener;
 import me.androidbox.busbymovies.models.Movie;
@@ -87,7 +87,8 @@ public class MovieFavouritePresenterImpTest {
 
         movieFavouritePresenterContract.insertFavouriteMovie(favourite);
 
-        verify(movieFavouriteModelContract.insert(favourite, mock(MovieFavouriteModelContract.InsertListener.class));
+        verify(movieFavouriteModelContract).insert(favourite, (InsertListener)movieFavouritePresenterContract);
+        verifyNoMoreInteractions(movieFavouriteModelContract);
     }
 
     private MovieFavouritePresenterContract createPresenterWithNullModel() {
