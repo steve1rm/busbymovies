@@ -8,6 +8,7 @@ import org.mockito.Mockito;
 import me.androidbox.busbymovies.data.MovieFavouriteModelContract.GetMovieFavourite;
 import me.androidbox.busbymovies.data.MovieFavouriteModelContract.RetrieveListener;
 import me.androidbox.busbymovies.data.MovieFavouritePresenterContract.MovieFavouriteListListener;
+import me.androidbox.busbymovies.models.Movie;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -40,12 +41,9 @@ public class MovieFavouritePresenterImpTest {
     }
 
     @Test
-    public void testGetMovieFavourite_doNothing_whenMovieFavouriteModelContract_equalsNull() {
+    public void testGetMovieFavourite_doNothing_whenMovieFavouriteModelContract_isNullValue() {
         final GetMovieFavourite getMovieFavourite = mock(GetMovieFavourite.class);
-        final MovieFavouritePresenterContract movieFavouritePresenterContract = new MovieFavouritePresenterImp(
-                null,
-                dbOperationsListener,
-                movieFavouriteListListener);
+        final MovieFavouritePresenterContract movieFavouritePresenterContract = createPresenterWithNullModel();
 
         movieFavouritePresenterContract.getMovieFavourite(MOVIE_ID);
 
@@ -55,23 +53,48 @@ public class MovieFavouritePresenterImpTest {
 
     @Test
     public void testGetMovieFavourite_getMovieFavourite() {
-        final GetMovieFavourite getMovieFavourite = mock(GetMovieFavourite.class);
-
         movieFavouritePresenterContract.getMovieFavourite(MOVIE_ID);
 
-        verify(movieFavouriteModelContract).getMovieFavourite(MOVIE_ID, getMovieFavourite);
+        verify(movieFavouriteModelContract)
+                .getMovieFavourite(MOVIE_ID, (GetMovieFavourite)movieFavouritePresenterContract);
         verifyNoMoreInteractions(movieFavouriteModelContract);
     }
 
-    @Ignore
     @Test
-    public void testGetFavouriteMovies_retrieve() {
+    public void testGetFavouriteMovies_doNothing_whenMovieFavouriteModelContract_isNullValue() {
         final RetrieveListener retrieveListener = mock(RetrieveListener.class);
+        final MovieFavouritePresenterContract movieFavouritePresenterContract = createPresenterWithNullModel();
 
         movieFavouritePresenterContract.getFavouriteMovies();
 
-        verify(movieFavouriteModelContract).retrieve(retrieveListener);
+        verify(movieFavouriteModelContract, never())
+                .retrieve(retrieveListener);
         verifyNoMoreInteractions(movieFavouriteModelContract);
+    }
+
+    @Test
+    public void testGetFavouriteMovies_retrieve() {
+        movieFavouritePresenterContract.getFavouriteMovies();
+
+        verify(movieFavouriteModelContract)
+                .retrieve((RetrieveListener)movieFavouritePresenterContract);
+        verifyNoMoreInteractions(movieFavouriteModelContract);
+    }
+
+    @Test
+    public void testInsertFavouriteMovie_insertsMovie() {
+        final Movie favourite = new Movie(1234, "poster_path", "overview", "release_date", "title", "backdrop_path", 4.3F, 7.2F);
+
+        movieFavouritePresenterContract.insertFavouriteMovie(favourite);
+
+        verify(movieFavouriteModelContract.insert(favourite, mock(MovieFavouriteModelContract.InsertListener.class));
+    }
+
+    private MovieFavouritePresenterContract createPresenterWithNullModel() {
+                return new MovieFavouritePresenterImp(
+                null,
+                dbOperationsListener,
+                movieFavouriteListListener);
     }
 
     private void setupMocks() {
