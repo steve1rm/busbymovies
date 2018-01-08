@@ -1,10 +1,10 @@
 package me.androidbox.busbymovies.data;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import me.androidbox.busbymovies.data.MovieFavouriteModelContract.DeleteListener;
 import me.androidbox.busbymovies.data.MovieFavouriteModelContract.GetMovieFavourite;
@@ -41,7 +41,7 @@ class MovieFavouritePresenterImpTest {
 
     @Nested
     @DisplayName("Running testing using MovieFavouriteModelContract")
-    class WhenNew {
+    class FavouriteModelContract {
         @Test
         @DisplayName("The presenter should not be a null value")
         void testMovieFavouritePresenter_shouldNonNullValue() {
@@ -164,6 +164,17 @@ class MovieFavouritePresenterImpTest {
             verify(movieFavouriteModelContract)
                     .queryMovie(MOVIE_ID, (QueryMovieListener)movieFavouritePresenterContract);
             verifyNoMoreInteractions(movieFavouriteModelContract);
+        }
+
+        @Nested
+        @DisplayName("Testing db operations")
+        class DbOperations {
+            @Disabled
+            @Test
+            @DisplayName("")
+            void testOnInsertFailed_doNothing_onInsertFavouriteFailure() {
+
+            }
         }
 
         private Movie createFavouriteMovie() {
