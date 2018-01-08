@@ -58,6 +58,7 @@ android {
     testOptions {
         unitTests.all {
             jacoco {
+                /* Display code coverage for robolectric unit tests */
                 includeNoLocationClasses = true
             }
         }
@@ -90,5 +91,5 @@ repositories {
 jacocoAndroidUnitTestReport {
     csv.enabled false
     html.enabled true
-    xml.enabled false
+    xml.enabled true
 }
