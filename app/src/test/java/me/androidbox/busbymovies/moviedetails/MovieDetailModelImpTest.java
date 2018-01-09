@@ -49,7 +49,7 @@ public class MovieDetailModelImpTest {
     private MovieDetailModelContract mMovieDetailModelContract;
 
     @Before
-    public void setup() throws Exception {
+    public void setup() {
         DaggerTestBusbyMoviesAppComponent
                 .builder()
                 .testAndroidModule(new TestAndroidModule())
@@ -60,7 +60,7 @@ public class MovieDetailModelImpTest {
     }
 
     @Test
-    public void shouldDisplayErrorWhenFailureToGetReviews() throws Exception {
+    public void shouldDisplayErrorWhenFailureToGetReviews() {
         /* Stub the call to get movie reviews */
         when(mockMovieAPIService.getMovieReview(anyInt(), anyString()))
                 .thenReturn(Observable.error(new Throwable(new RuntimeException(eq("Failed to get movie reviews")))));
@@ -74,7 +74,7 @@ public class MovieDetailModelImpTest {
     }
 
     @Test
-    public void shouldGetAllMovieTrailersOnSuccessfulCall() throws Exception {
+    public void shouldGetAllMovieTrailersOnSuccessfulCall()  {
         /* Stub the function that will get the movie trailers */
         when(mockMovieAPIService.getMovieTrailers(1, Constants.MOVIES_API_KEY))
                 .thenReturn(Observable.just(mockTrailers));
@@ -88,7 +88,7 @@ public class MovieDetailModelImpTest {
     }
 
     @Test
-    public void shouldDisplaySuccessWhenReviewsRetrieved() throws Exception {
+    public void shouldDisplaySuccessWhenReviewsRetrieved() {
         /* Stub the method call for getting reviews */
         when(mockMovieAPIService.getMovieReview(1, Constants.MOVIES_API_KEY))
                 .thenReturn(Observable.just(mockReviews));
@@ -102,7 +102,7 @@ public class MovieDetailModelImpTest {
     }
 
     @Test
-    public void shouldDisplayErrorWhenFailureToGetTrailers() throws Exception {
+    public void shouldDisplayErrorWhenFailureToGetTrailers() {
         /* Stub the function that gets the movie trailers */
         when(mockMovieAPIService.getMovieTrailers(anyInt(), anyString()))
                 .thenReturn(Observable.error(new Throwable(new RuntimeException(eq("Failed to get movie trailers")))));

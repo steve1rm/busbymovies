@@ -22,7 +22,7 @@ class AndroidTestBusbyMoviesMainApplication : BusbyMoviesMainApplication() {
         return androidTestBusbyMoviesComponent
     }
 
-    override fun getMovieListComponent(): AndroidTestMovieListComponent {
+    fun getMovieListComponent(): AndroidTestMovieListComponent {
         return androidTestBusbyMovieListComponent
     }
 

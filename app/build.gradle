@@ -64,6 +64,7 @@ android {
         }
     }
 }
+/*
 
 android.applicationVariants.all { variant ->
     if (variant.buildType.name == "debug") {
@@ -72,6 +73,7 @@ android.applicationVariants.all { variant ->
         assembleDebug.finalizedBy('assembleDebugUnitTest')
     }
 }
+*/
 
 /*
 android.applicationVariants.all {
@@ -79,7 +81,6 @@ android.applicationVariants.all {
     it.unitTestVariant.addJavaSourceFoldersToModel(aptOutputDir)
 }
 */
-
 
 apply from: "dependencies.gradle"
 

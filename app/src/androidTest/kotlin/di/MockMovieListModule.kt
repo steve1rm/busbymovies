@@ -3,6 +3,7 @@ package di
 import android.content.Context
 import dagger.Module
 import dagger.Provides
+import me.androidbox.busbymovies.adapters.MovieAdapter
 import me.androidbox.busbymovies.data.MovieFavouriteModelContract
 import me.androidbox.busbymovies.data.MovieFavouriteModelImp
 import me.androidbox.busbymovies.data.MovieFavouritePresenterContract
@@ -11,6 +12,7 @@ import me.androidbox.busbymovies.di.scopes.MovieListScope
 import me.androidbox.busbymovies.movielist.*
 import me.androidbox.busbymovies.network.MovieAPIService
 import me.androidbox.busbymovies.utils.MovieSchedulers
+import org.mockito.Mockito.mock
 import javax.inject.Singleton
 
 /**
@@ -30,7 +32,7 @@ class MockMovieListModule {
     @MovieListScope
     @Provides
     fun providesMovieListPresenter(movieListModelContract: MovieListModelContract)
-            : MovieListPresenterContract<MovieListViewContract> {
+            : MovieListPresenterContract {
 
         return MovieListPresenterImp(movieListModelContract)
     }
@@ -43,9 +45,29 @@ class MockMovieListModule {
 
     @MovieListScope
     @Provides
-    fun providesMovieFavouritePresenter(movieFavouriteModelContract: MovieFavouriteModelContract)
+    fun providesDbOperations(): MovieFavouritePresenterContract.DbOperationsListener {
+        return mock(MovieFavouritePresenterContract.DbOperationsListener::class.java)
+    }
+
+    @MovieListScope
+    @Provides
+    fun providesMovieFavouriteListListener(): MovieFavouritePresenterContract.MovieFavouriteListListener {
+        return mock(MovieFavouritePresenterContract.MovieFavouriteListListener::class.java)
+    }
+
+    @MovieListScope
+    @Provides
+    fun providesMovieAdapter(): MovieAdapter {
+        return mock(MovieAdapter::class.java)
+    }
+
+    @MovieListScope
+    @Provides
+    fun providesMovieFavouritePresenter(movieFavouriteModelContract: MovieFavouriteModelContract,
+                                        dbOperationsListener: MovieFavouritePresenterContract.DbOperationsListener,
+                                        movieFavouriteListListener: MovieFavouritePresenterContract.MovieFavouriteListListener)
             : MovieFavouritePresenterContract {
 
-        return MovieFavouritePresenterImp(movieFavouriteModelContract)
+        return MovieFavouritePresenterImp(movieFavouriteModelContract, dbOperationsListener, movieFavouriteListListener)
     }
 }
