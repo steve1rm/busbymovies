@@ -173,7 +173,7 @@ public class MovieDetailViewImp
                     mMovieDetailPresenterImp.getSimilarMovies(mMovieId);
 
                     /* Check if we are getting a movie favourite */
-                    mMovieFavouritePresenterContact.hasMovieAsFavourite(mMovieId, MovieDetailViewImp.this);
+                    mMovieFavouritePresenterContact.hasMovieAsFavourite(mMovieId);
                 }
                 else {
                     Timber.e("Invalid movie id '-1'");
@@ -245,7 +245,7 @@ public class MovieDetailViewImp
 
     private void isAlreadyBeenFavourited() {
         /* Check that the movie is not already in the database */
-        mMovieFavouritePresenterContact.hasMovieAsFavourite(mMovie.getId(), MovieDetailViewImp.this);
+        mMovieFavouritePresenterContact.hasMovieAsFavourite(mMovie.getId());
     }
 
     private boolean isFlaggedAsFavourite(FloatingActionButton floatingActionButton) {
@@ -296,7 +296,7 @@ public class MovieDetailViewImp
                 if(isFlaggedAsFavourite(floatingActionButton)) {
                     /* remove from database */
                     removeMovieAsFavourite(floatingActionButton);
-                    mMovieFavouritePresenterContact.deleteFavouriteMovie(mMovie.getId(), MovieDetailViewImp.this);
+                    mMovieFavouritePresenterContact.deleteFavouriteMovie(mMovie.getId());
                 }
                 else {
                     /* Add to database */
@@ -314,7 +314,7 @@ public class MovieDetailViewImp
                             mMovie.getHomepage(),
                             mMovie.getRuntime());
 
-                    mMovieFavouritePresenterContact.insertFavouriteMovie(favouriteMovie, MovieDetailViewImp.this);
+                    mMovieFavouritePresenterContact.insertFavouriteMovie(favouriteMovie);
                 }
             }
 
@@ -621,7 +621,7 @@ public class MovieDetailViewImp
             addMovieAsFavourite(mFabMovieFavourite);
             animateAddingFavourite();
             /* Populate the views from the database */
-            mMovieFavouritePresenterContact.getMovieFavourite(movieId, MovieDetailViewImp.this);
+            mMovieFavouritePresenterContact.getMovieFavourite(movieId);
             mMovieDetailPresenterImp.requestMovieTrailer(movieId);
             mMovieDetailPresenterImp.requestMovieReviews(movieId);
         }

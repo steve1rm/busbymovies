@@ -75,7 +75,7 @@ public class MovieListViewImpTest extends BaseRobolectricTestRunner {
     public void testGetFavourites_getsFavourites() {
         movieListViewImp.getFavourites();
 
-        verify(movieListViewImp.mMovieFavouritePresenterImp).getFavouriteMovies(movieListViewImp);
+        verify(movieListViewImp.mMovieFavouritePresenterImp).getFavouriteMovies();
         verify(movieListViewImp.mMovieListPresenterImp).closeSortFab();
         verifyNoMoreInteractions(movieListViewImp.mMovieFavouritePresenterImp);
         verifyNoMoreInteractions(movieListViewImp.mMovieListPresenterImp);

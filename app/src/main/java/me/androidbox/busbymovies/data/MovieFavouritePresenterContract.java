@@ -24,9 +24,9 @@ public interface MovieFavouritePresenterContract {
         void onGetFavouriteMoviesFailure(String errorMessage);
     }
 
-    void getMovieFavourite(int movieId, DbOperationsListener dbOperationsListener);
-    void hasMovieAsFavourite(int movieId, DbOperationsListener dbOperationsListener);
-    void getFavouriteMovies(final MovieFavouriteListListener movieFavouriteListListener);
-    void insertFavouriteMovie(Movie favourite, DbOperationsListener dbOperationsListener);
-    void deleteFavouriteMovie(int movieId, DbOperationsListener dbOperationsListener);
+    void getMovieFavourite(int movieId);
+    void hasMovieAsFavourite(int movieId);
+    void getFavouriteMovies();
+    void insertFavouriteMovie(Movie favourite);
+    void deleteFavouriteMovie(int movieId);
 }
