@@ -79,8 +79,7 @@ class MovieFavouritePresenterImpTest {
 
             movieFavouritePresenterContract.getFavouriteMovies();
 
-            verify(movieFavouriteModelContract, never())
-                    .retrieve(retrieveListener);
+            verify(movieFavouriteModelContract, never()).retrieve(retrieveListener);
             verifyNoMoreInteractions(movieFavouriteModelContract);
         }
 
@@ -107,7 +106,7 @@ class MovieFavouritePresenterImpTest {
             movieFavouritePresenterContract.insertFavouriteMovie(movie);
 
             verify(movieFavouriteModelContract)
-                    .insert(movie, (InsertListener) movieFavouritePresenterContract);
+                    .insert(movie, (InsertListener)movieFavouritePresenterContract);
             verifyNoMoreInteractions(movieFavouriteModelContract);
         }
 
@@ -130,11 +129,12 @@ class MovieFavouritePresenterImpTest {
         void testDeleteFavouriteMovie_doNotDeleteMovie() {
             final MovieFavouritePresenterContract movieFavouritePresenterContract
                     = createPresenterWithNullModel();
+            final DeleteListener deleteListener = mock(DeleteListener.class);
 
             movieFavouritePresenterContract.deleteFavouriteMovie(MOVIE_ID);
 
             verify(movieFavouriteModelContract, never())
-                    .delete(MOVIE_ID, (DeleteListener) movieFavouritePresenterContract);
+                    .delete(MOVIE_ID, deleteListener);
             verifyNoMoreInteractions(movieFavouriteModelContract);
         }
 
@@ -147,7 +147,7 @@ class MovieFavouritePresenterImpTest {
             movieFavouritePresenterContract.deleteFavouriteMovie(MOVIE_ID);
 
             verify(movieFavouriteModelContract)
-                    .delete(MOVIE_ID, (DeleteListener) movieFavouritePresenterContract);
+                    .delete(MOVIE_ID, (DeleteListener)movieFavouritePresenterContract);
             verifyNoMoreInteractions(movieFavouriteModelContract);
         }
 
@@ -156,24 +156,23 @@ class MovieFavouritePresenterImpTest {
         void testHasMovieAsFavourite_doNotQueryMovie() {
             final MovieFavouritePresenterContract movieFavouritePresenterContract
                     = createPresenterWithNullModel();
+            final QueryMovieListener queryMovieListener = mock(QueryMovieListener.class);
 
             movieFavouritePresenterContract.hasMovieAsFavourite(MOVIE_ID);
 
             verify(movieFavouriteModelContract, never())
-                    .queryMovie(MOVIE_ID, (QueryMovieListener) movieFavouritePresenterContract);
+                    .queryMovie(MOVIE_ID, queryMovieListener);
             verifyNoMoreInteractions(movieFavouriteModelContract);
         }
 
         @Test
         @DisplayName("Query favourite movie to see if it exists")
         void testHasMovieAsFavourite_queryMovie() {
-            final MovieFavouritePresenterContract movieFavouritePresenterContract
-                    = createPresenterModel();
-
+            final MovieFavouritePresenterContract movieFavouritePresenterContract = createPresenterModel();
             movieFavouritePresenterContract.hasMovieAsFavourite(MOVIE_ID);
 
             verify(movieFavouriteModelContract)
-                    .queryMovie(MOVIE_ID, (QueryMovieListener) movieFavouritePresenterContract);
+                    .queryMovie(MOVIE_ID, (QueryMovieListener)movieFavouritePresenterContract);
             verifyNoMoreInteractions(movieFavouriteModelContract);
         }
 
@@ -349,6 +348,21 @@ class MovieFavouritePresenterImpTest {
         }
 
         @Test
+        @DisplayName("Do display error message when db is null for querying")
+        void testOnQueryMovieSuccess_doNotDisplayMessage() {
+            final MovieFavouriteModelContract.QueryMovieListener queryMovieListener = new MovieFavouritePresenterImp(
+                    movieFavouriteModelContract,
+                    null,
+                    movieFavouriteListListener);
+
+            queryMovieListener.onQueryMovieSuccess(12345, true);
+
+            verify(dbOperationsListener, never()).onHasMovieFavouriteSuccess(12345, true);
+            verifyNoMoreInteractions(dbOperationsListener);
+        }
+
+
+        @Test
         @DisplayName("Do not display error message when db is null for getting movie")
         void testOnGetMovieFavourite_doNotDisplayMessage() {
             final MovieFavouriteModelContract.GetMovieFavourite getMovieFavourite = new MovieFavouritePresenterImp(
@@ -409,7 +423,21 @@ class MovieFavouritePresenterImpTest {
 
         @Test
         @DisplayName("Do not display error message when db is null for getting movie")
-        void testOnRetrieve_doNotDisplayMessage() {
+        void testOnRetrieve_doDisplayMessage() {
+            final MovieFavouriteModelContract.RetrieveListener retrieveListener = new MovieFavouritePresenterImp(
+                    movieFavouriteModelContract,
+                    dbOperationsListener,
+                    movieFavouriteListListener);
+
+            retrieveListener.onRetrieveFailed(ERROR_MESSAGE);
+
+            verify(movieFavouriteListListener).onGetFavouriteMoviesFailure(ERROR_MESSAGE);
+            verifyNoMoreInteractions(movieFavouriteListListener);
+        }
+
+        @Test
+        @DisplayName("Do not display error message when db is null for getting movie")
+        void testOnRetrieve_doNotDisplayMessageError() {
             final MovieFavouriteModelContract.RetrieveListener retrieveListener = new MovieFavouritePresenterImp(
                     movieFavouriteModelContract,
                     dbOperationsListener,
@@ -422,23 +450,26 @@ class MovieFavouritePresenterImpTest {
         }
 
         @Test
-        @DisplayName("Do not display error message when db is null for getting movie")
-        void testOnRetrieve_displayMessageError() {
+        @DisplayName("Do not get favourite movies if movie listener is null")
+        void testOnRetrieve_doNotGetFavouriteMovies() {
             final MovieFavouriteModelContract.RetrieveListener retrieveListener = new MovieFavouritePresenterImp(
                     movieFavouriteModelContract,
                     dbOperationsListener,
-                    movieFavouriteListListener);
+                    null);
+            final Movie favourite = createFavouriteMovie();
+            final List<Movie> movieList = new ArrayList<>();
+            movieList.add(favourite);
+            final Results<Movie> results = new Results<>(movieList);
 
-            retrieveListener.onRetrieveFailed(ERROR_MESSAGE);
+            retrieveListener.onRetrievedSuccess(results);
 
-            verify(movieFavouriteListListener).onGetFavouriteMoviesFailure(ERROR_MESSAGE);
+            verify(movieFavouriteListListener, never()).onGetFavouriteMoviesSuccess(results);
             verifyNoMoreInteractions(movieFavouriteListListener);
         }
 
-
         @Test
-        @DisplayName("Do display error message when db is null for getting movie")
-        void testOnRetrieve_displayMessage() {
+        @DisplayName("Display error message when db is null for getting movie")
+        void testOnRetrieve_getFavouriteMovies() {
             final MovieFavouriteModelContract.RetrieveListener retrieveListener = new MovieFavouritePresenterImp(
                     movieFavouriteModelContract,
                     dbOperationsListener,
