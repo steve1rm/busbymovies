@@ -2,7 +2,6 @@ package me.androidbox.busbymovies.movielist;
 
 import android.animation.Animator;
 import android.animation.AnimatorInflater;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
@@ -23,8 +22,6 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.google.common.base.Preconditions;
-
-import java.util.Collections;
 
 import javax.inject.Inject;
 
@@ -192,7 +189,7 @@ public class MovieListViewImp
     @SuppressWarnings("unused")
     @OnClick(R.id.fabFavourite)
     public void getFavourites() {
-        mMovieFavouritePresenterImp.getFavouriteMovies(MovieListViewImp.this);
+        mMovieFavouritePresenterImp.getFavouriteMovies();
         mMovieListPresenterImp.closeSortFab();
     }
 

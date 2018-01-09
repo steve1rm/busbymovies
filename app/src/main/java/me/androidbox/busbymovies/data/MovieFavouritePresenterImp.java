@@ -29,35 +29,35 @@ public final class MovieFavouritePresenterImp
     }
 
     @Override
-    public void getMovieFavourite(int movieId, DbOperationsListener dbOperationsListener) {
+    public void getMovieFavourite(int movieId) {
         if(mMovieFavouriteModelContract != null) {
             mMovieFavouriteModelContract.getMovieFavourite(movieId, MovieFavouritePresenterImp.this);
         }
     }
 
     @Override
-    public void getFavouriteMovies(MovieFavouriteListListener movieFavouriteListListener) {
+    public void getFavouriteMovies() {
         if(mMovieFavouriteModelContract != null) {
             mMovieFavouriteModelContract.retrieve(MovieFavouritePresenterImp.this);
         }
     }
 
     @Override
-    public void insertFavouriteMovie(Movie favourite, MovieFavouritePresenterContract.DbOperationsListener dbOperationsListener) {
+    public void insertFavouriteMovie(Movie favourite) {
         if(mMovieFavouriteModelContract != null) {
             mMovieFavouriteModelContract.insert(favourite, MovieFavouritePresenterImp.this);
         }
     }
 
     @Override
-    public void deleteFavouriteMovie(int movieId, MovieFavouritePresenterContract.DbOperationsListener dbOperationsListener) {
+    public void deleteFavouriteMovie(int movieId) {
         if(mMovieFavouriteModelContract != null) {
             mMovieFavouriteModelContract.delete(movieId, MovieFavouritePresenterImp.this);
         }
     }
 
     @Override
-    public void hasMovieAsFavourite(int movieId, DbOperationsListener dbOperationsListener) {
+    public void hasMovieAsFavourite(int movieId) {
         if(mMovieFavouriteModelContract != null) {
             mMovieFavouriteModelContract.queryMovie(movieId, MovieFavouritePresenterImp.this);
         }
