@@ -13,6 +13,7 @@ import me.androidbox.busbymovies.R;
 import me.androidbox.busbymovies.models.Movies;
 import me.androidbox.busbymovies.models.Results;
 import me.androidbox.busbymovies.movielist.MovieListViewHolder;
+import me.androidbox.busbymovies.utils.ImageLoader;
 
 /**
  * Created by steve on 2/27/17.
@@ -20,10 +21,11 @@ import me.androidbox.busbymovies.movielist.MovieListViewHolder;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieListViewHolder> {
     /* Make this more generic */
-    private List<? extends Movies> mMovieList = Collections.emptyList();
-
-    public MovieAdapter(final List<? extends Movies> movieList) {
+    private List<? extends Movies> mMovieList;
+    private ImageLoader imageLoader;
+    public MovieAdapter(final List<? extends Movies> movieList, final ImageLoader imageLoader) {
         this.mMovieList = new ArrayList<>(movieList);
+        this.imageLoader = imageLoader;
     }
 
     @Override
@@ -31,7 +33,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieListViewHolder> {
         final LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         final View view = layoutInflater.inflate(R.layout.movielist_item, parent, false);
 
-        return new MovieListViewHolder(view, MovieAdapter.this, parent.getContext());
+        return new MovieListViewHolder(view, MovieAdapter.this, imageLoader);
     }
 
     @Override
@@ -45,7 +47,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieListViewHolder> {
         notifyItemRangeInserted(0, mMovieList.size());
     }
 
-    public void clearAllMovies() {
+    private void clearAllMovies() {
         int count = getItemCount();
         mMovieList.clear();
         notifyItemRangeRemoved(0, count);

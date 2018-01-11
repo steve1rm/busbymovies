@@ -11,10 +11,13 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Priority;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
 import java.lang.ref.WeakReference;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,13 +26,13 @@ import me.androidbox.busbymovies.R;
 import me.androidbox.busbymovies.adapters.MovieAdapter;
 import me.androidbox.busbymovies.moviedetails.MovieDetailActivity;
 import me.androidbox.busbymovies.moviedetails.MovieDetailViewImp;
+import me.androidbox.busbymovies.utils.ImageLoader;
 import me.androidbox.busbymovies.utils.MovieImage;
 import timber.log.Timber;
 
 /**
  * Created by steve on 2/26/17.
  */
-
 public class MovieListViewHolder
         extends RecyclerView.ViewHolder {
 
@@ -37,16 +40,19 @@ public class MovieListViewHolder
     @BindView(R.id.tvTagLine) TextView mTvTagLine;
     @BindView(R.id.palette) View mPalette;
 
+    private ImageLoader imageLoader;
+
     private MovieAdapter mMovieAdapter;
     /* Ensure the context is garbage collected so using a weak reference */
     private WeakReference<Context> mContext;
 
-    public MovieListViewHolder(View itemView, MovieAdapter movieAdapter, Context context) {
+    public MovieListViewHolder(View itemView, MovieAdapter movieAdapter, final ImageLoader imageLoader) {
         super(itemView);
 
         ButterKnife.bind(MovieListViewHolder.this, itemView);
-        mContext = new WeakReference<>(context);
+        mContext = new WeakReference<>(itemView.getContext());
         mMovieAdapter = movieAdapter;
+        this.imageLoader = imageLoader;
     }
 
     public void bindViewData(String tagline, String posterPath) {
@@ -55,42 +61,16 @@ public class MovieListViewHolder
         final String fullImagePath = MovieImage.build(posterPath, MovieImage.ImageSize.w185);
         Timber.d("%s - %s", tagline, fullImagePath);
 
-        Picasso.with(mContext.get())
-                .load(fullImagePath)
-                .resize(200, 300)
-                .centerCrop()
-                .placeholder(R.drawable.placeholder_poster)
-                .error(R.drawable.placeholder_poster)
-                .into(new Target() {
-                    @Override
-                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                        mIvPosterImage.setImageBitmap(bitmap);
-                        Palette.from(bitmap)
-                                .maximumColorCount(16)
-                                .generate(palette -> {
-                                    Palette.Swatch titleBackground = palette.getDarkVibrantSwatch();
-                                    if(titleBackground != null) {
-                                        mPalette.setBackgroundColor(titleBackground.getRgb());
-                                        mTvTagLine.setTextColor(titleBackground.getBodyTextColor());
-                                    }
-                                    else {
-                                        Timber.e("titleBackground == null");
-                                    }
-                                });
-                    }
-
-                    @Override
-                    public void onBitmapFailed(Drawable errorDrawable) {
-                        Timber.e("onBitmapFailed");
-                        mIvPosterImage.setImageDrawable(errorDrawable);
-                    }
-
-                    @Override
-                    public void onPrepareLoad(Drawable placeHolderDrawable) {
-                        Timber.d("onPrepareLoad");
-                        mIvPosterImage.setImageDrawable(placeHolderDrawable);
-                    }
-                });
+        imageLoader.load(
+                mContext.get(),
+                200,
+                300,
+                16,
+                R.drawable.peopleplaceholder,
+                mIvPosterImage,
+                posterPath,
+                mPalette,
+                mTvTagLine);
     }
 
     @SuppressWarnings("unused")

@@ -14,6 +14,7 @@ import me.androidbox.busbymovies.models.Movie
 import me.androidbox.busbymovies.models.Movies
 import me.androidbox.busbymovies.movielist.*
 import me.androidbox.busbymovies.network.MovieAPIService
+import me.androidbox.busbymovies.utils.ImageLoader
 import me.androidbox.busbymovies.utils.MovieSchedulers
 import java.util.*
 
@@ -96,8 +97,8 @@ class MovieListModule(private val movieListViewImp: MovieListViewImp) {
 
     @MovieListScope
     @Provides
-    fun providesMovieAdapter(): MovieAdapter {
-        return MovieAdapter(Collections.emptyList<Movies>())
+    fun providesMovieAdapter(imageLoader: ImageLoader): MovieAdapter {
+        return MovieAdapter(Collections.emptyList<Movies>(), imageLoader)
     }
 }
         

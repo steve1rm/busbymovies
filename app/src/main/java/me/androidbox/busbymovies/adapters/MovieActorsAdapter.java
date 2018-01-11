@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import me.androidbox.busbymovies.R;
@@ -20,7 +19,7 @@ import me.androidbox.busbymovies.utils.ImageLoader;
  */
 
 public class MovieActorsAdapter extends RecyclerView.Adapter<MovieActorsViewHolder> {
-    private List<Actor> actorList = Collections.emptyList();
+    private final List<Actor> actorList;
     private final ImageLoader imageLoader;
 
     public MovieActorsAdapter(final ImageLoader imageLoader) {
