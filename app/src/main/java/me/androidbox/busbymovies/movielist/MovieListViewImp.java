@@ -84,6 +84,7 @@ public class MovieListViewImp
                 .getMovieListComponent(MovieListViewImp.this)
                 .inject(this);
 
+
         mMovieListPresenterImp.attachView(MovieListViewImp.this);
     }
 

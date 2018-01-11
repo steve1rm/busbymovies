@@ -1,6 +1,8 @@
 package me.androidbox.busbymovies.di
 
 import dagger.Subcomponent
+import me.androidbox.busbymovies.data.MovieFavouritePresenterContract
+import me.androidbox.busbymovies.data.MovieFavouritePresenterImp
 import me.androidbox.busbymovies.di.scopes.MovieListScope
 import me.androidbox.busbymovies.movielist.MovieListPresenterImp
 import me.androidbox.busbymovies.movielist.MovieListViewImp

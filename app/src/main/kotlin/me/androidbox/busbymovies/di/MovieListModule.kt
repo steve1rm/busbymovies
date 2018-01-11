@@ -45,7 +45,6 @@ class MovieListModule(private val movieListViewImp: MovieListViewImp) {
         return MovieFavouriteModelImp(context)
     }
 
-
     @MovieListScope
     @Provides
     fun providesMovieFavouriteDbOptionsListener(): MovieFavouritePresenterContract.DbOperationsListener {
