@@ -28,6 +28,7 @@ import me.androidbox.busbymovies.moviedetails.MovieDetailActivity;
 import me.androidbox.busbymovies.moviedetails.MovieDetailViewImp;
 import me.androidbox.busbymovies.utils.ImageLoader;
 import me.androidbox.busbymovies.utils.MovieImage;
+import me.androidbox.busbymovies.utils.MovieImage.ImageSize;
 import timber.log.Timber;
 
 /**
@@ -58,7 +59,7 @@ public class MovieListViewHolder
     public void bindViewData(String tagline, String posterPath) {
         mTvTagLine.setText(tagline);
 
-        final String fullImagePath = MovieImage.build(posterPath, MovieImage.ImageSize.w185);
+        final String fullImagePath = MovieImage.build(posterPath, ImageSize.w185);
         Timber.d("%s - %s", tagline, fullImagePath);
 
         imageLoader.load(
@@ -68,7 +69,7 @@ public class MovieListViewHolder
                 16,
                 R.drawable.peopleplaceholder,
                 mIvPosterImage,
-                posterPath,
+                fullImagePath,
                 mPalette,
                 mTvTagLine);
     }

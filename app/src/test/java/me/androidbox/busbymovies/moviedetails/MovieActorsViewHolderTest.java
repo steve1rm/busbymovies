@@ -27,7 +27,8 @@ public class MovieActorsViewHolderTest extends BaseRobolectricTestRunner {
     @Before
     public void setup() {
         final Context context = ShadowApplication.getInstance().getApplicationContext();
-        final View view = LayoutInflater.from(context).inflate(R.layout.movie_actors_item, new LinearLayout(context));
+        final View view = LayoutInflater.from(context)
+                .inflate(R.layout.movie_actors_item, new LinearLayout(context));
 
         final ImageLoader imageLoader = Mockito.mock(ImageLoader.class);
 
