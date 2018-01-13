@@ -2,6 +2,7 @@ package me.androidbox.busbymovies.di
 
 import android.app.Application
 import me.androidbox.busbymovies.moviedetails.MovieDetailViewImp
+import me.androidbox.busbymovies.movielist.MovieListActivity
 import me.androidbox.busbymovies.movielist.MovieListViewImp
 import timber.log.Timber
 
@@ -35,8 +36,8 @@ open class BusbyMoviesMainApplication : Application() {
                 .build()
     }
 
-    open fun getMovieListComponent(movieListViewImp: MovieListViewImp): MovieListComponent {
-        return appComponent.add(MovieListModule(movieListViewImp))
+    open fun getMovieListComponent(movieListViewImp: MovieListViewImp, movieListActivity: MovieListActivity): MovieListComponent {
+        return appComponent.add(MovieListModule(movieListViewImp, movieListActivity))
     }
 
 

@@ -3,12 +3,11 @@ package me.androidbox.busbymovies.di
 import android.content.Context
 import dagger.Module
 import dagger.Provides
-import dagger.Reusable
 import me.androidbox.busbymovies.adapters.MovieAdapter
 import me.androidbox.busbymovies.data.MovieFavouriteModelContract
 import me.androidbox.busbymovies.data.MovieFavouriteModelImp
-import me.androidbox.busbymovies.data.MovieFavouritePresenterImp
 import me.androidbox.busbymovies.data.MovieFavouritePresenterContract
+import me.androidbox.busbymovies.data.MovieFavouritePresenterImp
 import me.androidbox.busbymovies.di.scopes.MovieListScope
 import me.androidbox.busbymovies.models.Movie
 import me.androidbox.busbymovies.models.Movies
@@ -22,7 +21,7 @@ import java.util.*
  * Created by steve on 10/22/17.
  */
 @Module
-class MovieListModule(private val movieListViewImp: MovieListViewImp) {
+class MovieListModule(private val movieListViewImp: MovieListViewImp, private val movieListActivity: MovieListActivity) {
 
     @MovieListScope
     @Provides
@@ -98,7 +97,12 @@ class MovieListModule(private val movieListViewImp: MovieListViewImp) {
     @MovieListScope
     @Provides
     fun providesMovieAdapter(imageLoader: ImageLoader): MovieAdapter {
-        return MovieAdapter(Collections.emptyList<Movies>(), imageLoader)
+        return MovieAdapter(Collections.emptyList<Movies>(), imageLoader, movieListActivity)
+    }
+
+    @MovieListScope
+    @Provides
+    fun providesMovieCheckedListener(): MovieClickedListener {
+        return movieListActivity
     }
 }
-        

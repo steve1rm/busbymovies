@@ -12,6 +12,7 @@ import java.util.List;
 import me.androidbox.busbymovies.R;
 import me.androidbox.busbymovies.models.Movies;
 import me.androidbox.busbymovies.models.Results;
+import me.androidbox.busbymovies.movielist.MovieListActivity;
 import me.androidbox.busbymovies.movielist.MovieListViewHolder;
 import me.androidbox.busbymovies.utils.ImageLoader;
 
@@ -23,9 +24,12 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieListViewHolder> {
     /* Make this more generic */
     private List<? extends Movies> mMovieList;
     private ImageLoader imageLoader;
-    public MovieAdapter(final List<? extends Movies> movieList, final ImageLoader imageLoader) {
+    private MovieListActivity movieListActivity;
+
+    public MovieAdapter(final List<? extends Movies> movieList, final ImageLoader imageLoader, final MovieListActivity movieListActivity) {
         this.mMovieList = new ArrayList<>(movieList);
         this.imageLoader = imageLoader;
+        this.movieListActivity = movieListActivity;
     }
 
     @Override
@@ -33,7 +37,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieListViewHolder> {
         final LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         final View view = layoutInflater.inflate(R.layout.movielist_item, parent, false);
 
-        return new MovieListViewHolder(view, MovieAdapter.this, imageLoader);
+        return new MovieListViewHolder(view, MovieAdapter.this, imageLoader, movieListActivity);
     }
 
     @Override
