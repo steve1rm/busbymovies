@@ -28,6 +28,11 @@ android {
             /* Config only works for Android Gradle Plugin v2.1.0 or higher */
             vectorDrawables.useSupportLibrary = true
         }
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath false
+            }
+        }
     }
     buildTypes {
         release {
@@ -81,8 +86,4 @@ task codeCoverageReport(type: JacocoReport) {
         html.enabled false
         csv.enabled false
     }
-}
-
-dependencies {
-    testImplementation 'org.jacoco:org.jacoco.core:0.8.0'
 }

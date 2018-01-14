@@ -8,12 +8,16 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+
+import javax.inject.Inject;
 
 import me.androidbox.busbymovies.R;
 import me.androidbox.busbymovies.models.Movies;
 import me.androidbox.busbymovies.models.Results;
-import me.androidbox.busbymovies.movielist.MovieListActivity;
+import me.androidbox.busbymovies.movielist.IMovieListViewHolderFactory;
 import me.androidbox.busbymovies.movielist.MovieListViewHolder;
+import me.androidbox.busbymovies.movielist.MovieListViewHolderFactory;
 import me.androidbox.busbymovies.utils.ImageLoader;
 
 /**
@@ -23,13 +27,13 @@ import me.androidbox.busbymovies.utils.ImageLoader;
 public class MovieAdapter extends RecyclerView.Adapter<MovieListViewHolder> {
     /* Make this more generic */
     private List<? extends Movies> mMovieList;
+    private Map<Integer, MovieListViewHolderFactory> viewHolderFactories;
     private ImageLoader imageLoader;
-    private MovieListActivity movieListActivity;
 
-    public MovieAdapter(final List<? extends Movies> movieList, final ImageLoader imageLoader, final MovieListActivity movieListActivity) {
-        this.mMovieList = new ArrayList<>(movieList);
+    public MovieAdapter(final ImageLoader imageLoader, final Map<Integer, MovieListViewHolderFactory> viewHolderFactories) {
+        this.mMovieList = new ArrayList<>(Collections.emptyList());
         this.imageLoader = imageLoader;
-        this.movieListActivity = movieListActivity;
+        this.viewHolderFactories = viewHolderFactories;
     }
 
     @Override
@@ -37,7 +41,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieListViewHolder> {
         final LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         final View view = layoutInflater.inflate(R.layout.movielist_item, parent, false);
 
-        return new MovieListViewHolder(view, MovieAdapter.this, imageLoader, movieListActivity);
+        return viewHolderFactories.get(1).createViewHolder(parent, imageLoader);
     }
 
     @Override

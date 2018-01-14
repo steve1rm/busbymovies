@@ -3,6 +3,8 @@ package me.androidbox.busbymovies.di
 import android.content.Context
 import dagger.Module
 import dagger.Provides
+import dagger.multibindings.IntKey
+import dagger.multibindings.IntoMap
 import me.androidbox.busbymovies.adapters.MovieAdapter
 import me.androidbox.busbymovies.data.MovieFavouriteModelContract
 import me.androidbox.busbymovies.data.MovieFavouriteModelImp
@@ -10,12 +12,11 @@ import me.androidbox.busbymovies.data.MovieFavouritePresenterContract
 import me.androidbox.busbymovies.data.MovieFavouritePresenterImp
 import me.androidbox.busbymovies.di.scopes.MovieListScope
 import me.androidbox.busbymovies.models.Movie
-import me.androidbox.busbymovies.models.Movies
 import me.androidbox.busbymovies.movielist.*
 import me.androidbox.busbymovies.network.MovieAPIService
+import me.androidbox.busbymovies.utils.Constants
 import me.androidbox.busbymovies.utils.ImageLoader
 import me.androidbox.busbymovies.utils.MovieSchedulers
-import java.util.*
 
 /**
  * Created by steve on 10/22/17.
@@ -94,15 +95,30 @@ class MovieListModule(private val movieListViewImp: MovieListViewImp, private va
                 movieFavouriteListListener)
     }
 
+
     @MovieListScope
     @Provides
-    fun providesMovieAdapter(imageLoader: ImageLoader): MovieAdapter {
-        return MovieAdapter(Collections.emptyList<Movies>(), imageLoader, movieListActivity)
+    fun providesMovieAdapter(imageLoader: ImageLoader, movieListFactories: Map<Int, MovieListViewHolderFactory>): MovieAdapter {
+        return MovieAdapter(imageLoader, movieListFactories)
     }
 
     @MovieListScope
     @Provides
-    fun providesMovieCheckedListener(): MovieClickedListener {
-        return movieListActivity
+    fun providesMovieListItemClickedListenerImp(): MovieListItemClickedListener {
+        return MovieListItemClickedListenerImp()
+    }
+
+  /*  @MovieListScope
+    @Provides
+    fun providesMapMovieListViewHolderFactory(): Map<Integer, MovieListViewHolderFactory> {
+        return Map<Integer, MovieListViewHolderFactory>
+    }*/
+
+    @MovieListScope
+    @Provides
+    @IntoMap
+    @IntKey(1)
+    fun provideMovieListViewHolderNormal(): MovieListViewHolderFactory {
+        return MovieListViewHolderFactory()
     }
 }

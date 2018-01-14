@@ -6,21 +6,20 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.auto.factory.AutoFactory;
+
 import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import me.androidbox.busbymovies.R;
-import me.androidbox.busbymovies.adapters.MovieAdapter;
 import me.androidbox.busbymovies.utils.ImageLoader;
-import me.androidbox.busbymovies.utils.MovieImage;
-import me.androidbox.busbymovies.utils.MovieImage.ImageSize;
-import timber.log.Timber;
 
 /**
  * Created by steve on 2/26/17.
  */
+@AutoFactory(implementing = IMovieListViewHolderFactory.class)
 public class MovieListViewHolder
         extends RecyclerView.ViewHolder {
 
@@ -29,20 +28,16 @@ public class MovieListViewHolder
     @BindView(R.id.palette) View mPalette;
 
     private ImageLoader imageLoader;
-    private MovieAdapter movieAdapter;
-    private MovieListActivity movieListActivity;
 
     /* Ensure the context is garbage collected so using a weak reference */
     private WeakReference<Context> mContext;
 
-    public MovieListViewHolder(View itemView, final MovieAdapter movieAdapter, final ImageLoader imageLoader, final MovieListActivity movieListActivity) {
+    public MovieListViewHolder(View itemView, final ImageLoader imageLoader) {
         super(itemView);
 
         ButterKnife.bind(MovieListViewHolder.this, itemView);
         mContext = new WeakReference<>(itemView.getContext());
         this.imageLoader = imageLoader;
-        this.movieAdapter = movieAdapter;
-        this.movieListActivity = movieListActivity;
     }
 
     public void bindViewData(String tagline, String posterPath) {
@@ -63,10 +58,8 @@ public class MovieListViewHolder
     @SuppressWarnings("unused")
     @OnClick(R.id.movieListItem)
     public void onMovieClicked() {
-        int movieId = movieAdapter.getMovieId(getAdapterPosition());
-        Timber.d("Movie ID: %d", movieId);
+   //     int movieId = movieAdapter.getMovieId(getAdapterPosition());
 
-        movieListActivity.onMovieClicked(movieId);
 
 /*
         final Intent intent = new Intent(mContext.get(), MovieDetailActivity.class);

@@ -34,11 +34,11 @@ def dependencyInjection = dependencyGroup {
     compileOnly 'javax.annotation:jsr250-api:1.0'
 
     compileOnly 'com.google.auto.factory:auto-factory:1.0-beta5'
-    annotationProcessor 'com.google.auto.factory:auto-factory:1.0-beta5'
+    kapt 'com.google.auto.factory:auto-factory:1.0-beta5'
     implementation 'com.f2prateek.dart:dart:2.0.2'
     kapt 'com.f2prateek.dart:dart-processor:2.0.2'
-    implementation 'com.f2prateek.dart:henson:2.0.2'
-    kapt 'com.f2prateek.dart:henson-processor:2.0.2'
+    implementation 'com.f2prateek.dart:henson:2.0.3'
+    kapt 'com.f2prateek.dart:henson-processor:2.0.3'
 }
 
 def UITesting = dependencyGroup {
@@ -60,6 +60,7 @@ def UITesting = dependencyGroup {
 def UnitTesting = dependencyGroup {
     def daggerVersion = "2.11"
     testImplementation 'junit:junit:4.12'
+    testImplementation 'org.jacoco:org.jacoco.core:0.8.0'
     testImplementation 'org.mockito:mockito-core:2.11.0'
     testImplementation 'org.robolectric:robolectric:3.6.1'
     testImplementation 'org.robolectric:shadows-support-v4:3.4-rc2'
@@ -96,7 +97,7 @@ def media = dependencyGroup {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 
     logging()
