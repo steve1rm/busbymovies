@@ -1,6 +1,5 @@
 package me.androidbox.busbymovies.moviedetails;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -24,7 +23,6 @@ public class MovieActorsViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.tvName) TextView name;
     @BindView(R.id.tvCharacter) TextView character;
 
-    private final Context context;
     private final ImageLoader imageLoader;
 
     public MovieActorsViewHolder(final View itemView, final ImageLoader imageLoader) {
@@ -33,12 +31,10 @@ public class MovieActorsViewHolder extends RecyclerView.ViewHolder {
         ButterKnife.bind(this, itemView);
 
         this.imageLoader = imageLoader;
-        this.context = itemView.getContext();
     }
 
     public void populateActor(Actor actor) {
         imageLoader.load(
-                context,
                 MovieImage.build(actor.getProfile_path(), MovieImage.ImageSize.w92),
                 R.drawable.placeholder_poster,
                 actorPicture,

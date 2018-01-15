@@ -21,15 +21,18 @@ import timber.log.Timber;
  * Created by steve on 9/19/17.
  */
 public final class ImageLoaderImp implements ImageLoader {
-    public ImageLoaderImp() {}
+    private final Context context;
+
+    public ImageLoaderImp(final Context context) {
+        this.context = context;
+    }
 
     @Override
-    public void load(final Context context,
-                     final String path,
+    public void load(final String path,
                      final int placeholder,
                      final ImageView imageView,
                      final Priority priority) {
-        GlideApp.with(context)
+        GlideApp.with(this.context)
                 .load(path)
                 .placeholder(placeholder)
                 .priority(priority)
@@ -37,8 +40,7 @@ public final class ImageLoaderImp implements ImageLoader {
     }
 
     @Override
-    public void load(final Context context,
-                     final int targetWidth,
+    public void load(final int targetWidth,
                      final int targetHeight,
                      final int maximumColorCount,
                      final int placeHolder,
@@ -50,7 +52,7 @@ public final class ImageLoaderImp implements ImageLoader {
         final String fullImagePath = MovieImage.build(posterPath, MovieImage.ImageSize.w185);
         Timber.d("%s - %s", textContent, fullImagePath);
 
-        Picasso.with(context)
+        Picasso.with(this.context)
                 .load(fullImagePath)
                 .resize(200, 300)
                 .centerCrop()
@@ -86,6 +88,5 @@ public final class ImageLoaderImp implements ImageLoader {
                         imageView.setImageDrawable(placeHolderDrawable);
                     }
                 });
-
     }
 }

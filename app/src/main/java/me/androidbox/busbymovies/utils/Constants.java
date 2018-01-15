@@ -11,19 +11,5 @@ public final class Constants {
     public static final String IMAGE_URL = "https://image.tmdb.org/t/p/";
     public static final String YOUTUBE_URL = "http://img.youtube.com/vi/";
     public static final String FORMAT_MOVIE_DATE = "dd MMM yyyy";
-
-
-    public enum  MovieListViewHolderType {
-        NORMAL(1);
-
-        private final int type;
-
-        MovieListViewHolderType(int type) {
-            this.type = type;
-        }
-
-        public int getMovieListViewHolderType() {
-            return this.type;
-        }
-    }
+    public static final int PORTRAIT = 1;
 }

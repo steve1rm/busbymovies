@@ -5,8 +5,8 @@ import me.androidbox.busbymovies.R
 import me.androidbox.busbymovies.moviedetails.MovieDetailActivity
 import me.androidbox.busbymovies.moviedetails.MovieDetailViewImp
 
-class MovieListItemClickedListenerImp: MovieListItemClickedListener {
-    override fun onMovieListItemClickedListener(movieId: Int, movieListActivity: MovieListActivity) {
+class MovieListItemClickedListenerImp(private val movieListActivity: MovieListActivity): MovieListItemClickedListener {
+    override fun onMovieListItemClickedListener(movieId: Int) {
         val intent = Intent(movieListActivity, MovieDetailActivity::class.java)
         intent.putExtra(MovieDetailViewImp.MOVIE_ID_KEY, movieId)
 

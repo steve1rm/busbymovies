@@ -16,8 +16,9 @@ import me.androidbox.busbymovies.R;
 import me.androidbox.busbymovies.models.Movies;
 import me.androidbox.busbymovies.models.Results;
 import me.androidbox.busbymovies.movielist.IMovieListViewHolderFactory;
+import me.androidbox.busbymovies.movielist.MovieListItemClickedListener;
 import me.androidbox.busbymovies.movielist.MovieListViewHolder;
-import me.androidbox.busbymovies.movielist.MovieListViewHolderFactory;
+import me.androidbox.busbymovies.utils.Constants;
 import me.androidbox.busbymovies.utils.ImageLoader;
 
 /**
@@ -27,29 +28,36 @@ import me.androidbox.busbymovies.utils.ImageLoader;
 public class MovieAdapter extends RecyclerView.Adapter<MovieListViewHolder> {
     /* Make this more generic */
     private List<? extends Movies> mMovieList;
-    private Map<Integer, MovieListViewHolderFactory> viewHolderFactories;
     private ImageLoader imageLoader;
+    private Map<Integer, IMovieListViewHolderFactory> viewHolderFactories;
+    private MovieListItemClickedListener movieListItemClickedListener;
 
-    public MovieAdapter(final ImageLoader imageLoader, final Map<Integer, MovieListViewHolderFactory> viewHolderFactories) {
+    @Inject
+    public MovieAdapter(final ImageLoader imageLoader, final Map<Integer, IMovieListViewHolderFactory> viewHolderFactories, final MovieListItemClickedListener movieListItemClickedListener) {
         this.mMovieList = new ArrayList<>(Collections.emptyList());
         this.imageLoader = imageLoader;
         this.viewHolderFactories = viewHolderFactories;
+        this.movieListItemClickedListener = movieListItemClickedListener;
     }
 
     @Override
-    public MovieListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MovieListViewHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
         final LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         final View view = layoutInflater.inflate(R.layout.movielist_item, parent, false);
 
-        return viewHolderFactories.get(1).createViewHolder(parent, imageLoader);
+        return viewHolderFactories.get(Constants.PORTRAIT).createViewHolder(
+                view,
+                MovieAdapter.this,
+                imageLoader,
+                movieListItemClickedListener);
     }
 
     @Override
-    public void onBindViewHolder(MovieListViewHolder holder, int position) {
+    public void onBindViewHolder(final MovieListViewHolder holder, final int position) {
         holder.bindViewData(mMovieList.get(position).getTitle(), mMovieList.get(position).getPoster_path());
     }
 
-    public void loadAdapter(Results<? extends Movies> results) {
+    public void loadAdapter(final Results<? extends Movies> results) {
         clearAllMovies();
         mMovieList = results.getResults();
         notifyItemRangeInserted(0, mMovieList.size());
@@ -57,6 +65,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieListViewHolder> {
 
     private void clearAllMovies() {
         int count = getItemCount();
+
         mMovieList.clear();
         notifyItemRangeRemoved(0, count);
     }
@@ -71,7 +80,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieListViewHolder> {
         }
     }
 
-    public int getMovieId(int moviePosition) {
+    public int getMovieId(final int moviePosition) {
         return mMovieList.get(moviePosition).getId();
     }
 }

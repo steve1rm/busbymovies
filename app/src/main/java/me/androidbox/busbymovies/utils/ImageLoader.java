@@ -1,6 +1,5 @@
 package me.androidbox.busbymovies.utils;
 
-import android.content.Context;
 import android.support.annotation.DrawableRes;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,14 +12,12 @@ import com.bumptech.glide.Priority;
  */
 
 public interface ImageLoader {
-    void load(final Context context,
-              final String path,
+    void load(final String path,
               final @DrawableRes int placeholder,
               final ImageView imageView,
               final Priority priority);
 
-    void load(final Context context,
-              final int targetWidth,
+    void load(final int targetWidth,
               final int targetHeight,
               final int maximumColorCount,
               final int placeHolder,

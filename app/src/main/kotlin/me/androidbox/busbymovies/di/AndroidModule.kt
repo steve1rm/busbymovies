@@ -11,7 +11,6 @@ import dagger.Provides
 import dagger.Reusable
 import me.androidbox.busbymovies.moviedetails.ImageLoaderImp
 import me.androidbox.busbymovies.utils.*
-import javax.inject.Singleton
 
 /**
  * Created by steve on 10/22/17.
@@ -43,7 +42,7 @@ class AndroidModule(val application: Application) {
 
     @Reusable
     @Provides
-    fun providesImageLoader(): ImageLoader = ImageLoaderImp()
+    fun providesImageLoader(): ImageLoader = ImageLoaderImp(this.context)
 
     @Reusable
     @Provides
