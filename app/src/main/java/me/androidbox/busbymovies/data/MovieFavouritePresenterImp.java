@@ -1,7 +1,5 @@
 package me.androidbox.busbymovies.data;
 
-import javax.inject.Inject;
-
 import me.androidbox.busbymovies.models.Movie;
 import me.androidbox.busbymovies.models.Results;
 
