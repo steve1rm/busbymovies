@@ -16,6 +16,7 @@ import org.robolectric.shadows.support.v4.SupportFragmentTestUtil
 /**
  * Created by steve on 11/22/17.
  */
+
 @Config(sdk = intArrayOf(Build.VERSION_CODES.LOLLIPOP),
         constants = BuildConfig::class,
         packageName = "me.androidbox.busbymovies",

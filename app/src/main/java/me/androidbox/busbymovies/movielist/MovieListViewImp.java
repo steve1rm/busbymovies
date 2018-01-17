@@ -81,9 +81,8 @@ public class MovieListViewImp
         super.onCreate(savedInstanceState);
 
         ((BusbyMoviesMainApplication)getActivity().getApplication())
-                .getMovieListComponent(MovieListViewImp.this, (MovieListActivity)getActivity())
+                .getMovieListComponent(MovieListViewImp.this, getActivity())
                 .inject(this);
-
 
         mMovieListPresenterImp.attachView(MovieListViewImp.this);
     }

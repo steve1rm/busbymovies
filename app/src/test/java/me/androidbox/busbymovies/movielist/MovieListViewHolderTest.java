@@ -37,13 +37,11 @@ public class MovieListViewHolderTest extends BaseRobolectricTestRunner {
     private MovieAdapter movieAdapter;
     private ImageLoader imageLoader;
     private MovieListViewHolder movieListViewHolder;
-    private MovieListActivity movieListActivity;
-
-    private Context context;
+    private MovieListItemClickedListener movieListItemClickedListener;
 
     @Before
     public void setup() {
-        context = ShadowApplication.getInstance().getApplicationContext();
+        final Context context = ShadowApplication.getInstance().getApplicationContext();
         final View itemView = LayoutInflater.from(context)
                 .inflate(R.layout.movielist_item, new RelativeLayout(context));
 
@@ -51,7 +49,8 @@ public class MovieListViewHolderTest extends BaseRobolectricTestRunner {
         movieListViewHolder = new MovieListViewHolder(
                 itemView,
                 movieAdapter,
-                imageLoader);
+                imageLoader,
+                movieListItemClickedListener);
     }
 
     @Test
@@ -67,7 +66,6 @@ public class MovieListViewHolderTest extends BaseRobolectricTestRunner {
         movieListViewHolder.bindViewData(TAG_LINE, POSTER_PATH);
 
         verify(imageLoader).load(
-                context,
                 200,
                 300,
                 16,
@@ -87,9 +85,10 @@ public class MovieListViewHolderTest extends BaseRobolectricTestRunner {
 
         movieListViewHolder.onMovieClicked();
 
-   //     verify(movieListActivity).onMovieClicked(0);
-/*
+        verify(movieListItemClickedListener).onMovieListItemClickedListener(0);
+        verifyNoMoreInteractions(movieListItemClickedListener);
 
+/*
         final ShadowActivity shadowActivity = shadowOf(new MovieDetailActivity());
         final Intent startedIntent = shadowActivity.getNextStartedActivity();
         startedIntent.putExtra(MovieDetailViewImp.MOVIE_ID_KEY, 0);
@@ -102,6 +101,6 @@ public class MovieListViewHolderTest extends BaseRobolectricTestRunner {
     private void setupMocks() {
         movieAdapter = mock(MovieAdapter.class);
         imageLoader = mock(ImageLoader.class);
-        movieListActivity = mock(MovieListActivity.class);
+        movieListItemClickedListener = mock(MovieListItemClickedListener.class);
     }
 }

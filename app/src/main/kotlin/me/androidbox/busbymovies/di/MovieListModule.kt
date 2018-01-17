@@ -1,5 +1,6 @@
 package me.androidbox.busbymovies.di
 
+import android.app.Activity
 import android.content.Context
 import dagger.Module
 import dagger.Provides
@@ -21,7 +22,7 @@ import me.androidbox.busbymovies.utils.MovieSchedulers
  */
 @Module
 class MovieListModule(private val movieListViewImp: MovieListViewImp,
-                      private val movieListActivity: MovieListActivity) {
+                      private val movieListActivity: Activity) {
 
     @MovieListScope
     @Provides
