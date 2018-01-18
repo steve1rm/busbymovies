@@ -2,8 +2,6 @@ package me.androidbox.busbymovies.movielist;
 
 import android.support.annotation.NonNull;
 
-import javax.inject.Inject;
-
 import me.androidbox.busbymovies.basepresenter.BasePresenterImp;
 import me.androidbox.busbymovies.models.Movies;
 import me.androidbox.busbymovies.models.Results;

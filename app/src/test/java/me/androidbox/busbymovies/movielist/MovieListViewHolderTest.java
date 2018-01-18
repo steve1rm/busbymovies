@@ -1,26 +1,17 @@
 package me.androidbox.busbymovies.movielist;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RelativeLayout;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
-import org.robolectric.Shadows;
-import org.robolectric.shadows.ShadowActivity;
 import org.robolectric.shadows.ShadowApplication;
-import org.robolectric.shadows.ShadowIntent;
 
 import me.androidbox.busbymovies.R;
 import me.androidbox.busbymovies.adapters.MovieAdapter;
-import me.androidbox.busbymovies.moviedetails.MovieDetailActivity;
-import me.androidbox.busbymovies.moviedetails.MovieDetailViewImp;
 import me.androidbox.busbymovies.utils.ImageLoader;
-import me.androidbox.busbymovies.utils.MovieImage;
-import me.androidbox.busbymovies.utils.MovieImage.ImageSize;
 import support.BaseRobolectricTestRunner;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -30,7 +21,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
-import static org.robolectric.Shadows.shadowOf;
 
 public class MovieListViewHolderTest extends BaseRobolectricTestRunner {
 
