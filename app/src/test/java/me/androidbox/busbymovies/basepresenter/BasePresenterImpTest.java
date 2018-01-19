@@ -3,6 +3,7 @@ package me.androidbox.busbymovies.basepresenter;
 import android.view.View;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -45,6 +46,12 @@ public class BasePresenterImpTest {
         basePresenter.attachView(view);
 
         assertTrue(basePresenter.isViewAttached());
+    }
+
+    @DisplayName("Should return false when reference has a null value")
+    @Test
+    void testIsViewAttached_returnFalse_whenReferenceIsNullValue() {
+        assertFalse(basePresenter.isViewAttached());
     }
 
     @Test
