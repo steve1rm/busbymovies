@@ -32,9 +32,9 @@ public interface MovieFavouriteModelContract {
     }
     void queryMovie(int movieId, QueryMovieListener queryMovieListener);
 
-    interface GetMovieFavourite {
+    interface GetMovieFavouriteListener {
         void onGetMovieFavouriteFailure(String errorMessage);
         void onGetMovieFavouriteSuccess(Movie favourite);
     }
-    void getMovieFavourite(int movieId, GetMovieFavourite getMovieFavourite);
+    void getMovieFavourite(int movieId, GetMovieFavouriteListener getMovieFavouriteListener);
 }

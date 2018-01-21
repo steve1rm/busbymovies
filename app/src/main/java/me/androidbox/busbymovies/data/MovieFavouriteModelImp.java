@@ -66,7 +66,7 @@ public final class MovieFavouriteModelImp implements MovieFavouriteModelContract
                     null,
                     MovieEntry.MOVIE_ID);
 
-            if (cursor != null) {
+            if(cursor != null) {
                 /* Return the favourite movies */
                 final List<Movie> favouriteList = new ArrayList<>();
 
@@ -117,7 +117,8 @@ public final class MovieFavouriteModelImp implements MovieFavouriteModelContract
             else {
                 retrieveListener.onRetrieveFailed(resources.getString(R.string.database_retrieve_failure));
             }
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             Timber.d(e, "Failed to query database: %s", e.getMessage());
             retrieveListener.onRetrieveFailed(e.getMessage());
         }
@@ -158,8 +159,12 @@ public final class MovieFavouriteModelImp implements MovieFavouriteModelContract
         final Uri uri = MovieEntry.CONTENT_URI.buildUpon().appendPath(strMovieId).build();
 
         final String[] selectionArgs = new String[]{strMovieId};
-        final Cursor cursor =
-                contentResolver.query(uri, null, MovieEntry.MOVIE_ID + "=?", selectionArgs, null);
+        final Cursor cursor = contentResolver.query(
+                uri,
+                null,
+                MovieEntry.MOVIE_ID + "=?",
+                selectionArgs,
+                null);
 
         if(cursor == null) {
             /* Movie movie cannot be found */
@@ -178,7 +183,7 @@ public final class MovieFavouriteModelImp implements MovieFavouriteModelContract
     }
 
     @Override
-    public void getMovieFavourite(final int movieId, final GetMovieFavourite getMovieFavourite) {
+    public void getMovieFavourite(final int movieId, final GetMovieFavouriteListener getMovieFavouriteListener) {
         final String strMovieId = String.valueOf(movieId);
         final Uri uri = MovieEntry.CONTENT_URI.buildUpon().appendPath(strMovieId).build();
 
@@ -188,15 +193,16 @@ public final class MovieFavouriteModelImp implements MovieFavouriteModelContract
 
         if(cursor == null) {
             /* Movie cannot be found */
-            getMovieFavourite.onGetMovieFavouriteFailure("Failed to query database");
+            getMovieFavouriteListener.onGetMovieFavouriteFailure("Failed to query database");
         }
         else {
-            if(cursor.getCount() == 1) {cursor.moveToFirst();
-            final Movie favourite = populateFavourite(cursor);
-                getMovieFavourite.onGetMovieFavouriteSuccess(favourite);
+            if(cursor.getCount() == 1) {
+                cursor.moveToFirst();
+                final Movie favourite = populateFavourite(cursor);
+                getMovieFavouriteListener.onGetMovieFavouriteSuccess(favourite);
             }
             else {
-                getMovieFavourite.onGetMovieFavouriteFailure("Movie was not found");
+                getMovieFavouriteListener.onGetMovieFavouriteFailure("Movie was not found");
             }
             cursor.close();
         }

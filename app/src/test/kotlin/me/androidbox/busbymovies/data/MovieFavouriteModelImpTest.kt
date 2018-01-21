@@ -26,6 +26,8 @@ class MovieFavouriteModelImpTest: BaseRobolectricTestRunner() {
     private val insertListener = mock(InsertListener::class.java)
     private val retrieveListener = mock(RetrieveListener::class.java)
     private val deleteListener = mock(DeleteListener::class.java)
+    private val queryMovieListener = mock(QueryMovieListener::class.java)
+    private val getMovieFavouriteListener = mock(GetMovieFavouriteListener::class.java)
     private val resources = mock(Resources::class.java)
 
     @Before
@@ -94,7 +96,7 @@ class MovieFavouriteModelImpTest: BaseRobolectricTestRunner() {
     fun testRetrieveFavouriteMovies() {
         val movie = createFavouriteMovie()
         val movieResults = Results<Movie>(listOf(movie))
-        val cursor = createCursor()
+        val cursor = createCursorWithRow()
 
         whenever(resources.getString(R.string.database_retrieve_failure))
                 .thenReturn("Failed to retrieve from database")
@@ -111,6 +113,25 @@ class MovieFavouriteModelImpTest: BaseRobolectricTestRunner() {
         verify(retrieveListener).onRetrievedSuccess(ArgumentMatchers.any())
         verify(retrieveListener, never())
                 .onRetrieveFailed(resources.getString(R.string.database_retrieve_failure))
+        verifyNoMoreInteractions(retrieveListener)
+    }
+
+    @Test
+    fun testRetrieveFavouriteMoviesCursorThrowsException() {
+        whenever(resources.getString(R.string.database_retrieve_failure))
+                .thenReturn("Failed to retrieve from database")
+        whenever(contentResolver.query(
+                CONTENT_URI,
+                null,
+                null,
+                null,
+                MOVIE_ID))
+                .thenThrow(IllegalArgumentException("Something bad happened"))
+
+        movieFavouriteModelImp.retrieve(retrieveListener)
+
+        verify(retrieveListener).onRetrieveFailed("Something bad happened")
+        verify(retrieveListener, never()).onRetrievedSuccess(ArgumentMatchers.any())
         verifyNoMoreInteractions(retrieveListener)
     }
 
@@ -150,8 +171,137 @@ class MovieFavouriteModelImpTest: BaseRobolectricTestRunner() {
         verify(deleteListener, never()).onDeleteFailed("Failed to delete movie from the database")
     }
 
+    @Test
+    fun testQueryMovieFoundMovie() {
+        val movieId = 35764
+        val strMovieId = movieId.toString()
+        val uri = CONTENT_URI.buildUpon().appendPath(strMovieId).build()
+        val selectionArgs = arrayOf(strMovieId)
+        val cursor = createCursorWithRow()
 
-    private fun createCursor(): Cursor {
+        whenever(contentResolver.query(uri, null, MOVIE_ID + "=?", selectionArgs, null))
+                .thenReturn(cursor)
+
+        movieFavouriteModelImp.queryMovie(movieId, queryMovieListener)
+
+        verify(contentResolver).query(uri, null, MOVIE_ID + "=?", selectionArgs, null)
+        verifyNoMoreInteractions(contentResolver)
+        verify(queryMovieListener).onQueryMovieSuccess(movieId, true)
+        verify(queryMovieListener, never()).onQueryMovieFailed("Failed to query database")
+        verifyNoMoreInteractions(queryMovieListener)
+    }
+
+    @Test
+    fun testQueryMovieFoundMovieFailedWithNullCursor() {
+        val movieId = 35764
+        val strMovieId = movieId.toString()
+        val uri = CONTENT_URI.buildUpon().appendPath(strMovieId).build()
+        val selectionArgs = arrayOf(strMovieId)
+
+        whenever(contentResolver.query(uri, null, MOVIE_ID + "=?", selectionArgs, null))
+                .thenReturn(null)
+
+        movieFavouriteModelImp.queryMovie(movieId, queryMovieListener)
+
+        verify(contentResolver).query(uri, null, MOVIE_ID + "=?", selectionArgs, null)
+        verifyNoMoreInteractions(contentResolver)
+        verify(queryMovieListener, never()).onQueryMovieSuccess(movieId, true)
+        verify(queryMovieListener).onQueryMovieFailed("Failed to query database")
+        verifyNoMoreInteractions(queryMovieListener)
+    }
+
+    @Test
+    fun testQueryMovieFoundMovieFailsWithEmptyCursor() {
+        val movieId = 35764
+        val strMovieId = movieId.toString()
+        val uri = CONTENT_URI.buildUpon().appendPath(strMovieId).build()
+        val selectionArgs = arrayOf(strMovieId)
+        val cursor = createEmptyCursor()
+
+        whenever(contentResolver.query(uri, null, MOVIE_ID + "=?", selectionArgs, null))
+                .thenReturn(cursor)
+
+        movieFavouriteModelImp.queryMovie(movieId, queryMovieListener)
+
+        verify(contentResolver).query(uri, null, MOVIE_ID + "=?", selectionArgs, null)
+        verifyNoMoreInteractions(contentResolver)
+        verify(queryMovieListener).onQueryMovieSuccess(movieId, false)
+        verify(queryMovieListener, never()).onQueryMovieFailed("Failed to query database")
+        verifyNoMoreInteractions(queryMovieListener)
+    }
+
+    @Test
+    fun testGetMovieFavourite() {
+        val movieId = 374649
+        val strMovieId = movieId.toString()
+        val uri = CONTENT_URI.buildUpon().appendPath(strMovieId).build()
+        val selectionArgs = arrayOf(strMovieId)
+        val cursor = createCursorWithRow()
+
+        whenever(contentResolver.query(
+                uri,
+                null,
+                MOVIE_ID + "=?",
+                selectionArgs,
+                null)).thenReturn(cursor)
+
+        movieFavouriteModelImp.getMovieFavourite(movieId, getMovieFavouriteListener)
+
+        verify(contentResolver).query(uri, null, MOVIE_ID + "=?", selectionArgs, null)
+        verifyNoMoreInteractions(contentResolver)
+        verify(getMovieFavouriteListener).onGetMovieFavouriteSuccess(ArgumentMatchers.any())
+        verify(getMovieFavouriteListener, never()).onGetMovieFavouriteFailure("Movie was not found")
+        verifyNoMoreInteractions(getMovieFavouriteListener)
+    }
+
+    @Test
+    fun testGetMovieFavouriteFailureIfCursorNull() {
+        val movieId = 374649
+        val strMovieId = movieId.toString()
+        val uri = CONTENT_URI.buildUpon().appendPath(strMovieId).build()
+        val selectionArgs = arrayOf(strMovieId)
+
+        whenever(contentResolver.query(
+                uri,
+                null,
+                MOVIE_ID + "=?",
+                selectionArgs,
+                null)).thenReturn(null)
+
+        movieFavouriteModelImp.getMovieFavourite(movieId, getMovieFavouriteListener)
+
+        verify(contentResolver).query(uri, null, MOVIE_ID + "=?", selectionArgs, null)
+        verifyNoMoreInteractions(contentResolver)
+        verify(getMovieFavouriteListener).onGetMovieFavouriteFailure("Failed to query database")
+        verify(getMovieFavouriteListener, never()).onGetMovieFavouriteSuccess(ArgumentMatchers.any())
+        verifyNoMoreInteractions(getMovieFavouriteListener)
+    }
+
+    @Test
+    fun testGetMovieFavouriteFailureToFindFavouriteMovie() {
+        val movieId = 374649
+        val strMovieId = movieId.toString()
+        val uri = CONTENT_URI.buildUpon().appendPath(strMovieId).build()
+        val selectionArgs = arrayOf(strMovieId)
+        val cursor = createEmptyCursor()
+
+        whenever(contentResolver.query(
+                uri,
+                null,
+                MOVIE_ID + "=?",
+                selectionArgs,
+                null)).thenReturn(cursor)
+
+        movieFavouriteModelImp.getMovieFavourite(movieId, getMovieFavouriteListener)
+
+        verify(contentResolver).query(uri, null, MOVIE_ID + "=?", selectionArgs, null)
+        verifyNoMoreInteractions(contentResolver)
+        verify(getMovieFavouriteListener).onGetMovieFavouriteFailure("Movie was not found")
+        verify(getMovieFavouriteListener, never()).onGetMovieFavouriteSuccess(ArgumentMatchers.any())
+        verifyNoMoreInteractions(getMovieFavouriteListener)
+    }
+
+    private fun createCursorWithRow(): Cursor {
         val movie = createFavouriteMovie()
 
         val cursor = MatrixCursor(arrayOf(
@@ -181,6 +331,21 @@ class MovieFavouriteModelImpTest: BaseRobolectricTestRunner() {
                 movie.runtime))
 
         return cursor
+    }
+
+    private fun createEmptyCursor(): Cursor {
+        return MatrixCursor(arrayOf(
+                MOVIE_ID,
+                POSTER_PATH,
+                OVERVIEW,
+                RELEASE_DATE,
+                TITLE,
+                BACKDROP_PATH,
+                VOTE_AVERAGE,
+                VOTE_COUNT,
+                TAGLINE,
+                HOMEPATH,
+                RUNTIME))
     }
 
     private fun createFavouriteMovieContentValues(favourite: Movie): ContentValues {

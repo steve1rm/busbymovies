@@ -13,7 +13,7 @@ public final class MovieFavouritePresenterImp
         MovieFavouriteModelContract.InsertListener,
         MovieFavouriteModelContract.RetrieveListener,
         MovieFavouriteModelContract.QueryMovieListener,
-        MovieFavouriteModelContract.GetMovieFavourite,
+        MovieFavouriteModelContract.GetMovieFavouriteListener,
         MovieFavouritePresenterContract {
 
     private final MovieFavouriteModelContract mMovieFavouriteModelContract;
