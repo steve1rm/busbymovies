@@ -35,7 +35,7 @@ class TestMovieListModule {
     @MovieListScope
     @Provides
     fun providesMovieFavouriteModel(): MovieFavouriteModelContract {
-        return mock(MovieFavouriteModelImp::class.java)
+        return mock(MovieFavouriteModelContract::class.java)
     }
 
     @MovieListScope

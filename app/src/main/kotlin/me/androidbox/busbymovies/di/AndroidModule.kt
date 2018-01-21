@@ -1,6 +1,7 @@
 package me.androidbox.busbymovies.di
 
 import android.app.Application
+import android.content.ContentResolver
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Resources
@@ -30,6 +31,10 @@ class AndroidModule(val application: Application) {
     @Reusable
     @Provides
     fun providesResources(): Resources = context.resources
+
+    @Reusable
+    @Provides
+    fun providesContentResolver(): ContentResolver = context.contentResolver
 
     @Reusable
     @Provides

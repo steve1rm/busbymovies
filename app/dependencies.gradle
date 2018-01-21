@@ -62,6 +62,9 @@ def UnitTesting = dependencyGroup {
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.jacoco:org.jacoco.core:0.8.0'
     testImplementation 'org.mockito:mockito-core:2.11.0'
+    testImplementation ('com.nhaarman:mockito-kotlin:1.5.0', {
+            exclude group: 'org.jetbrains.kotlin', module: 'kotlin_stdlib'})
+
     testImplementation 'org.robolectric:robolectric:3.6.1'
     testImplementation 'org.robolectric:shadows-supportv4:3.6.1'
     kaptTest 'com.google.dagger:dagger-compiler:' + daggerVersion

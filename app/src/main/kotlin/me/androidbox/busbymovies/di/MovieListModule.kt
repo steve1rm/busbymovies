@@ -1,7 +1,9 @@
 package me.androidbox.busbymovies.di
 
 import android.app.Activity
+import android.content.ContentResolver
 import android.content.Context
+import android.content.res.Resources
 import dagger.Module
 import dagger.Provides
 import dagger.multibindings.IntKey
@@ -42,8 +44,8 @@ class MovieListModule(private val movieListViewImp: MovieListViewImp,
 
     @MovieListScope
     @Provides
-    fun providesMovieFavouriteModel(context: Context): MovieFavouriteModelContract {
-        return MovieFavouriteModelImp(context)
+    fun providesMovieFavouriteModel(contentResolver: ContentResolver, resources: Resources): MovieFavouriteModelContract {
+        return MovieFavouriteModelImp(contentResolver, resources)
     }
 
     @MovieListScope

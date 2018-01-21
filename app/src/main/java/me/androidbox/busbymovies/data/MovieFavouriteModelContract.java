@@ -37,7 +37,4 @@ public interface MovieFavouriteModelContract {
         void onGetMovieFavouriteSuccess(Movie favourite);
     }
     void getMovieFavourite(int movieId, GetMovieFavourite getMovieFavourite);
-
-    void startup();
-    void closeDown();
 }

@@ -1,21 +1,18 @@
 package me.androidbox.busbymovies.data;
 
 import android.annotation.TargetApi;
+import android.content.ContentResolver;
 import android.content.ContentValues;
-import android.content.Context;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-import javax.inject.Inject;
-
+import me.androidbox.busbymovies.R;
 import me.androidbox.busbymovies.data.MovieContract.MovieEntry;
-import me.androidbox.busbymovies.models.Favourite;
 import me.androidbox.busbymovies.models.Movie;
 import me.androidbox.busbymovies.models.Results;
 import timber.log.Timber;
@@ -25,59 +22,44 @@ import timber.log.Timber;
  */
 
 public final class MovieFavouriteModelImp implements MovieFavouriteModelContract {
-    private MovieDbHelper mMovieDbHelper;
-    private final WeakReference<Context> mContext;
+    private final ContentResolver contentResolver;
+    private final Resources resources;
 
-    @Inject
-    public MovieFavouriteModelImp(final Context context) {
-        mContext = new WeakReference<>(context);
+    public MovieFavouriteModelImp(final ContentResolver contentResolver, final Resources resources) {
+        this.contentResolver = contentResolver;
+        this.resources = resources;
     }
 
     @Override
-    public void startup() {
-        mMovieDbHelper = new MovieDbHelper(mContext.get());
-    }
-
-    @Override
-    public void closeDown() {
-        mMovieDbHelper.close();
-        mContext.clear();
-    }
-
-    @Override
-    public void insert(Movie favourite, InsertListener insertListener) {
-
+    public void insert(final Movie favourite, final InsertListener insertListener) {
         final ContentValues contentValues = new ContentValues();
         contentValues.put(MovieEntry.MOVIE_ID, favourite.getId());
-        contentValues.put(MovieEntry.BACKDROP_PATH, favourite.getBackdrop_path());
-        contentValues.put(MovieEntry.OVERVIEW, favourite.getOverview());
-        contentValues.put(MovieEntry.HOMEPATH, favourite.getHomepage());
         contentValues.put(MovieEntry.POSTER_PATH, favourite.getPoster_path());
+        contentValues.put(MovieEntry.OVERVIEW, favourite.getOverview());
         contentValues.put(MovieEntry.RELEASE_DATE, favourite.getRelease_date());
-        contentValues.put(MovieEntry.RUNTIME, favourite.getRuntime());
-        contentValues.put(MovieEntry.TAGLINE, favourite.getTagline());
         contentValues.put(MovieEntry.TITLE, favourite.getTitle());
+        contentValues.put(MovieEntry.BACKDROP_PATH, favourite.getBackdrop_path());
         contentValues.put(MovieEntry.VOTE_AVERAGE, favourite.getVote_average());
         contentValues.put(MovieEntry.VOTE_COUNT, favourite.getVote_count());
+        contentValues.put(MovieEntry.TAGLINE, favourite.getTagline());
+        contentValues.put(MovieEntry.HOMEPATH, favourite.getHomepage());
+        contentValues.put(MovieEntry.RUNTIME, favourite.getRuntime());
 
-        if(mContext.get().getContentResolver().insert(MovieEntry.CONTENT_URI, contentValues) != null) {
-            Timber.d("Success to insert movie %d into database", favourite.getId());
-
+        if(contentResolver.insert(MovieEntry.CONTENT_URI, contentValues) != null) {
             insertListener.onInsertSuccess();
         }
         else {
             Timber.e("Failed to insert movie %d into database", favourite.getId());
             insertListener.onInsertFailed("Failed to insert movie into database");
         }
-
-        contentValues.clear();
     }
 
     /* try with resources don't work for API under API 19 */
-    private void retrieveAPI16(RetrieveListener retrieveListener) {
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
+    private void retrieveAPI16(final RetrieveListener retrieveListener) {
         Cursor cursor = null;
         try {
-            cursor = mContext.get().getContentResolver().query(
+            cursor = contentResolver.query(
                     MovieEntry.CONTENT_URI,
                     null,
                     null,
@@ -112,35 +94,39 @@ public final class MovieFavouriteModelImp implements MovieFavouriteModelContract
     }
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
-    @Override
-    public void retrieve(RetrieveListener retrieveListener) {
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            try (Cursor cursor = mContext.get().getContentResolver().query(
-                    MovieEntry.CONTENT_URI,
-                    null,
-                    null,
-                    null,
-                    MovieEntry.MOVIE_ID)) {
+    private void retrieveGreaterThanAPI18(final RetrieveListener retrieveListener) {
+        try (final Cursor cursor = contentResolver.query(
+                MovieEntry.CONTENT_URI,
+                null,
+                null,
+                null,
+                MovieEntry.MOVIE_ID)) {
 
-                if (cursor != null) {
-                    /* Return the favourite movies */
-                    final List<Movie> favouriteList = new ArrayList<>();
+            if (cursor != null) {
+                /* Return the favourite movies */
+                final List<Movie> favouriteList = new ArrayList<>();
 
-                    while (cursor.moveToNext()) {
-                        final Movie favourite = populateFavourite(cursor);
-                        favouriteList.add(favourite);
-                    }
-
-                    Results<Movie> data = new Results<>(favouriteList);
-                    retrieveListener.onRetrievedSuccess(data);
+                while (cursor.moveToNext()) {
+                    final Movie favourite = populateFavourite(cursor);
+                    favouriteList.add(favourite);
                 }
-                else {
-                    retrieveListener.onRetrieveFailed("Failed to retrieve from database");
-                }
-            } catch (Exception e) {
-                Timber.d(e, "Failed to query database: %s", e.getMessage());
-                retrieveListener.onRetrieveFailed(e.getMessage());
+
+                Results<Movie> data = new Results<>(favouriteList);
+                retrieveListener.onRetrievedSuccess(data);
             }
+            else {
+                retrieveListener.onRetrieveFailed(resources.getString(R.string.database_retrieve_failure));
+            }
+        } catch (Exception e) {
+            Timber.d(e, "Failed to query database: %s", e.getMessage());
+            retrieveListener.onRetrieveFailed(e.getMessage());
+        }
+    }
+
+    @Override
+    public void retrieve(final RetrieveListener retrieveListener) {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            retrieveGreaterThanAPI18(retrieveListener);
         }
         else {
             /* Target api 16 as try - resources only works with API 19 and above */
@@ -149,13 +135,13 @@ public final class MovieFavouriteModelImp implements MovieFavouriteModelContract
     }
 
     @Override
-    public void delete(int movieId, DeleteListener deleteListener) {
+    public void delete(final int movieId, final DeleteListener deleteListener) {
         final String strMovieId = String.valueOf(movieId);
         final Uri uri = MovieEntry.CONTENT_URI.buildUpon().appendPath(strMovieId).build();
 
         final String[] selectionArgs = new String[]{strMovieId};
         final int rowId =
-                mContext.get().getContentResolver().delete(uri, MovieEntry.MOVIE_ID +"=?", selectionArgs);
+                contentResolver.delete(uri, MovieEntry.MOVIE_ID +"=?", selectionArgs);
         if(rowId != 0) {
             Timber.d("Deleted movie %d from the database", movieId);
             deleteListener.onDeleteSuccess(rowId);
@@ -167,13 +153,13 @@ public final class MovieFavouriteModelImp implements MovieFavouriteModelContract
     }
 
     @Override
-    public void queryMovie(int movieId, QueryMovieListener queryMovieListener) {
+    public void queryMovie(final int movieId, final QueryMovieListener queryMovieListener) {
         final String strMovieId = String.valueOf(movieId);
         final Uri uri = MovieEntry.CONTENT_URI.buildUpon().appendPath(strMovieId).build();
 
         final String[] selectionArgs = new String[]{strMovieId};
         final Cursor cursor =
-                mContext.get().getContentResolver().query(uri, null, MovieEntry.MOVIE_ID + "=?", selectionArgs, null);
+                contentResolver.query(uri, null, MovieEntry.MOVIE_ID + "=?", selectionArgs, null);
 
         if(cursor == null) {
             /* Movie movie cannot be found */
@@ -192,13 +178,13 @@ public final class MovieFavouriteModelImp implements MovieFavouriteModelContract
     }
 
     @Override
-    public void getMovieFavourite(int movieId, GetMovieFavourite getMovieFavourite) {
+    public void getMovieFavourite(final int movieId, final GetMovieFavourite getMovieFavourite) {
         final String strMovieId = String.valueOf(movieId);
         final Uri uri = MovieEntry.CONTENT_URI.buildUpon().appendPath(strMovieId).build();
 
         final String[] selectionArgs = new String[]{strMovieId};
         final Cursor cursor =
-                mContext.get().getContentResolver().query(uri, null, MovieEntry.MOVIE_ID + "=?", selectionArgs, null);
+                contentResolver.query(uri, null, MovieEntry.MOVIE_ID + "=?", selectionArgs, null);
 
         if(cursor == null) {
             /* Movie cannot be found */
@@ -216,20 +202,18 @@ public final class MovieFavouriteModelImp implements MovieFavouriteModelContract
         }
     }
 
-    private Movie populateFavourite(Cursor cursor) {
-                final Movie favourite = new Movie(
-                        cursor.getInt(cursor.getColumnIndex(MovieEntry.MOVIE_ID)),
-                        cursor.getString(cursor.getColumnIndex(MovieEntry.POSTER_PATH)),
-                        cursor.getString(cursor.getColumnIndex(MovieEntry.OVERVIEW)),
-                        cursor.getString(cursor.getColumnIndex(MovieEntry.RELEASE_DATE)),
-                        cursor.getString(cursor.getColumnIndex(MovieEntry.TITLE)),
-                        cursor.getString(cursor.getColumnIndex(MovieEntry.BACKDROP_PATH)),
-                        cursor.getFloat(cursor.getColumnIndex(MovieEntry.VOTE_AVERAGE)),
-                        cursor.getFloat(cursor.getColumnIndex(MovieEntry.VOTE_COUNT)),
-                        cursor.getString(cursor.getColumnIndex(MovieEntry.TAGLINE)),
-                        cursor.getString(cursor.getColumnIndex(MovieEntry.HOMEPATH)),
-                        cursor.getInt(cursor.getColumnIndex(MovieEntry.RUNTIME)));
-
-        return favourite;
+    private Movie populateFavourite(final Cursor cursor) {
+        return new Movie(
+                cursor.getInt(cursor.getColumnIndex(MovieEntry.MOVIE_ID)),
+                cursor.getString(cursor.getColumnIndex(MovieEntry.POSTER_PATH)),
+                cursor.getString(cursor.getColumnIndex(MovieEntry.OVERVIEW)),
+                cursor.getString(cursor.getColumnIndex(MovieEntry.RELEASE_DATE)),
+                cursor.getString(cursor.getColumnIndex(MovieEntry.TITLE)),
+                cursor.getString(cursor.getColumnIndex(MovieEntry.BACKDROP_PATH)),
+                cursor.getFloat(cursor.getColumnIndex(MovieEntry.VOTE_AVERAGE)),
+                cursor.getFloat(cursor.getColumnIndex(MovieEntry.VOTE_COUNT)),
+                cursor.getString(cursor.getColumnIndex(MovieEntry.TAGLINE)),
+                cursor.getString(cursor.getColumnIndex(MovieEntry.HOMEPATH)),
+                cursor.getInt(cursor.getColumnIndex(MovieEntry.RUNTIME)));
     }
 }

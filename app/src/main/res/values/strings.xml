@@ -10,5 +10,6 @@
     <string name="clear">Clear</string>
     <string name="movie_search">Movie Search</string>
     <string name="similar_movies">Similar Movies</string>
+    <string name="database_retrieve_failure">Failed to retrieve from database</string>
 
 </resources>

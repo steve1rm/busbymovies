@@ -1,6 +1,8 @@
 package me.androidbox.busbymovies.di
 
+import android.content.ContentResolver
 import android.content.Context
+import android.content.res.Resources
 import dagger.Module
 import dagger.Provides
 import me.androidbox.busbymovies.adapters.MovieActorsAdapter
@@ -38,8 +40,8 @@ class MovieDetailModule(private val movieDetailViewImp: MovieDetailViewImp) {
 
     @MovieDetailScope
     @Provides
-    fun providesMovieFavouriteModel(context: Context): MovieFavouriteModelContract {
-        return MovieFavouriteModelImp(context)
+    fun providesMovieFavouriteModel(contentResolver: ContentResolver, resources: Resources): MovieFavouriteModelContract {
+        return MovieFavouriteModelImp(contentResolver, resources)
     }
 
     @MovieDetailScope
