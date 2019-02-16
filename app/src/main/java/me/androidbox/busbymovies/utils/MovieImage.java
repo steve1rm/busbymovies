@@ -2,7 +2,7 @@ package me.androidbox.busbymovies.utils;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.support.v7.graphics.Palette;
+import androidx.palette.graphics.Palette;
 import android.widget.ImageView;
 
 import kotlin.jvm.JvmStatic;

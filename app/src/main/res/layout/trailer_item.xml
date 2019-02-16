@@ -9,7 +9,7 @@
     android:paddingEnd="8dp"
     android:orientation="vertical">
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:elevation="8dp"
@@ -43,6 +43,6 @@
             android:visibility="visible"
             app:srcCompat="@drawable/ic_play_circle_outline_black_64dp"
             android:contentDescription="@string/play_trailer_icon"/>
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
 </LinearLayout>

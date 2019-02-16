@@ -1,6 +1,6 @@
 package me.androidbox.busbymovies.utils
 
-import android.support.annotation.Nullable
+import androidx.annotation.Nullable
 
 /**
  * Created by smason on 11/2/17.

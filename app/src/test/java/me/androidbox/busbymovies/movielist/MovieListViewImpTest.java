@@ -1,8 +1,8 @@
 package me.androidbox.busbymovies.movielist;
 
 import android.app.Dialog;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.widget.ContentLoadingProgressBar;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import androidx.core.widget.ContentLoadingProgressBar;
 import android.widget.TextView;
 
 import org.junit.Before;

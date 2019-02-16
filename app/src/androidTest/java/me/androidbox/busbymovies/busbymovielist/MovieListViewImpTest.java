@@ -1,9 +1,9 @@
 package me.androidbox.busbymovies.busbymovielist;
 
-import android.support.test.espresso.Espresso;
-import android.support.test.espresso.IdlingResource;
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
+import androidx.test.espresso.Espresso;
+import androidx.test.espresso.IdlingResource;
+import androidx.test.rule.ActivityTestRule;
+import androidx.test.runner.AndroidJUnit4;
 
 import com.jakewharton.espresso.OkHttp3IdlingResource;
 
@@ -16,11 +16,11 @@ import me.androidbox.busbymovies.movielist.MovieListActivity;
 import me.androidbox.busbymovies.network.OkHttpProvider;
 import me.androidbox.busbymovies.utils.RecyclerViewAssertions;
 
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.equalTo;
 
 /**

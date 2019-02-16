@@ -1,4 +1,4 @@
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -55,7 +55,7 @@
 
         </FrameLayout>
 
-        <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+        <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/tool_bar"
             android:layout_width="match_parent"
@@ -136,7 +136,7 @@
                     android:fontFamily="sans-serif-condensed"
                     android:textSize="@dimen/runtime_textsize" />
 
-                <android.support.v7.widget.RecyclerView
+                <androidx.recyclerview.widget.RecyclerView
                     xmlns:android="http://schemas.android.com/apk/res/android"
                     android:id="@+id/rvMovieActors"
                     android:layout_width="match_parent"
@@ -168,7 +168,7 @@
                     android:fontFamily="sans-serif-medium"
                     android:background="@drawable/blue_border"/>
 
-                <android.support.v7.widget.RecyclerView
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvSimilarMovies"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -188,4 +188,4 @@
         app:layout_behavior="@string/bottom_sheet_behavior"
         layout="@layout/bottomsheet"/>
 
-</android.support.design.widget.CoordinatorLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

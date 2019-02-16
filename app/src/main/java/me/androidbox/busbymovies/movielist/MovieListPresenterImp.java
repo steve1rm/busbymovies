@@ -1,6 +1,6 @@
 package me.androidbox.busbymovies.movielist;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import me.androidbox.busbymovies.basepresenter.BasePresenterImp;
 import me.androidbox.busbymovies.models.Movies;

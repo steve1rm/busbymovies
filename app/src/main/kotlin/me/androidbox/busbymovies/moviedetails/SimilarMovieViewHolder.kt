@@ -1,6 +1,6 @@
 package me.androidbox.busbymovies.moviedetails
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import kotlinx.android.synthetic.main.similar_movie_item.view.*
@@ -12,7 +12,7 @@ import me.androidbox.busbymovies.utils.MovieImage
 /**
  * Created by steve on 10/8/17.
  */
-class SimilarMovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class SimilarMovieViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
     private val similarMovieThumbnail = itemView.ivSimilarMovieThumbnail
 
     fun assignSimilarMovieImage(movie: Movies) {

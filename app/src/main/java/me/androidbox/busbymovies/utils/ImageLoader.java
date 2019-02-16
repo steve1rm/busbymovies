@@ -1,6 +1,6 @@
 package me.androidbox.busbymovies.utils;
 
-import android.support.annotation.DrawableRes;
+import androidx.annotation.DrawableRes;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;

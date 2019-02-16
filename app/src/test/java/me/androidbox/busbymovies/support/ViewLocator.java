@@ -1,9 +1,9 @@
 package me.androidbox.busbymovies.support;
 
 import android.app.Activity;
-import android.support.annotation.IdRes;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.IdRes;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;

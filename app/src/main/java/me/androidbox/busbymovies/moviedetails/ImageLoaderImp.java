@@ -3,7 +3,7 @@ package me.androidbox.busbymovies.moviedetails;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
-import android.support.v7.graphics.Palette;
+import androidx.palette.graphics.Palette;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;

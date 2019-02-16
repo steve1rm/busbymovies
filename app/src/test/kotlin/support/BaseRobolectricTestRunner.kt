@@ -1,7 +1,7 @@
 package support
 
 import android.os.Build
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import di.DaggerTestBusbyMoviesAppComponent
 import di.TestAndroidModule
 import di.TestBusbyMoviesAppComponent
@@ -24,7 +24,7 @@ import org.robolectric.shadows.support.v4.SupportFragmentTestUtil
 @RunWith(RobolectricTestRunner::class)
 abstract class BaseRobolectricTestRunner {
 
-    protected fun initializeFragment(fragment: Fragment) {
+    protected fun initializeFragment(fragment: androidx.fragment.app.Fragment) {
         SupportFragmentTestUtil.startVisibleFragment(fragment)
     }
 
