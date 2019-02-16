@@ -69,9 +69,9 @@ def UnitTesting = dependencyGroup {
     testImplementation 'org.robolectric:shadows-supportv4:3.6.1'
     kaptTest 'com.google.dagger:dagger-compiler:' + daggerVersion
 
-    testImplementation junit5.unitTests()
-    testImplementation junit5.parameterized()
-    testCompileOnly junit5.unitTestsRuntime()
+//    testImplementation junit5.unitTests()
+ //   testImplementation junit5.parameterized()
+ //   testCompileOnly junit5.unitTestsRuntime()
 }
 
 def network = dependencyGroup {
@@ -101,7 +101,6 @@ def media = dependencyGroup {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 
     logging()
     supportLibraries()

@@ -3,10 +3,10 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'jacoco'
-apply plugin: 'de.mannodermaus.android-junit5'
+// apply plugin: 'de.mannodermaus.android-junit5'
 android {
-    compileSdkVersion 27
-    buildToolsVersion '27.0.1'
+    compileSdkVersion 28
+    buildToolsVersion '28.0.3'
 
     dexOptions {
         maxProcessCount 2
@@ -15,19 +15,18 @@ android {
     defaultConfig {
         applicationId "me.androidbox.busbymovies"
         minSdkVersion 17
-        targetSdkVersion 27
+        targetSdkVersion 28
         versionCode 7
         versionName "1.4.1"
         /*testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"*/
         testInstrumentationRunner "me.androidbox.busbymovies.testrunner.CustomTestRunner"
-        jackOptions {
-            /* Use of rendering for palette library */
-            renderscriptTargetApi 25
-            renderscriptSupportModeEnabled true
+        /* Use of rendering for palette library */
+        renderscriptTargetApi 25
+        renderscriptSupportModeEnabled true
 
-            /* Config only works for Android Gradle Plugin v2.1.0 or higher */
-            vectorDrawables.useSupportLibrary = true
-        }
+        /* Config only works for Android Gradle Plugin v2.1.0 or higher */
+        vectorDrawables.useSupportLibrary = true
+
         javaCompileOptions {
             annotationProcessorOptions {
                 includeCompileClasspath false
